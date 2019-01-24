@@ -48,7 +48,6 @@
         "ownedBy": "mv:ownedBy",
         "operatedBy": "mv:operatedBy",
         "dataOwner": "vp:dataOwner",
-        "priceDescription": "vp:priceDescription",
         "rights": "dct:rights",
         "description": {
             "@id": "schema:description",
@@ -416,7 +415,6 @@
                     "description": "Each hour after the first costs 3 EUR"
                 }
             ],
-            "priceDescription": "http://data.gent.be/parking/bikes/prices",
             "amenityFeature": [
                 {
                     "@type": "CameraSurveillance",
@@ -498,7 +496,6 @@
                     "description": "Free for 90 days"
                 }
             ],
-            "priceDescription": "http://data.gent.be/parking/bikes/prices",
             "amenityFeature": [
                 {
                     "@type": "CameraSurveillance",
