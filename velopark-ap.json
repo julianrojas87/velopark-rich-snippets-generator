@@ -26,6 +26,7 @@
         "NoPersonnelSupervision": "vp:NoPersonnelSupervision",
         "NeighborhoodParking": "vp:NeighborhoodParking",
         "BicycleCase": "vp:BicycleCase",
+        "AllowedBicycle": "vp:AllowedBicycle",
         "RegularBicycle": "vp:RegularBicycle",
         "ElectricBicycle": "vp:ElectricBicycle",
         "CargoBicycle": "vp:CargoBicycle",
@@ -35,7 +36,6 @@
         "BicyclePump": "vp:BicyclePump",
         "MaintenanceService": "vp:MaintenanceService",
         "BusinessEntity": "gr:BusinessEntity",
-        "about": "schema:about",
         "address": "schema:address",
         "geo": "schema:geo",
         "map": "schema:hasMap",
@@ -133,6 +133,10 @@
         "photos": {
             "@id": "schema:photos",
             "@container": "@set"
+        },
+        "about": {
+            "@id": "schema:about",
+            "@type": "@id"
         },
         "entrance": {
             "@id": "mv:entrance",
@@ -315,16 +319,12 @@
         {
             "@type": "Photograph",
             "image": "http://data.gent.be/pic/546213_1.png",
-            "about": {
-                "@type": "Entrance"
-            }
+            "about": "mv:Entrance"
         },
         {
             "@type": "Photograph",
             "image": "http://data.gent.be/pic/546213_2.png",
-            "about": {
-                "@type": "BicyclePump"
-            }
+            "about": "vp:BicyclePump"
         }
     ],
     "rights": "https://tinyurl.com/yb3ywacm",
@@ -345,19 +345,19 @@
             "allowed": [
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "RegularBicycle",
+                    "bikeType": "vp:RegularBicycle",
                     "bikesAmount": 100,
                     "countingSystem": true
                 },
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "ElectricBicycle",
+                    "bikeType": "vp:ElectricBicycle",
                     "bikesAmount": 100,
                     "countingSystem": true
                 },
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "CargoBicycle",
+                    "bikeType": "vp:CargoBicycle",
                     "bikesAmount": 50,
                     "countingSystem": true
                 }
@@ -448,13 +448,13 @@
             "allowed": [
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "RegularBicycle",
+                    "bikeType": "vp:RegularBicycle",
                     "bikesAmount": 100,
                     "countingSystem": false
                 },
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "ElectricBicycle",
+                    "bikeType": "vp:ElectricBicycle",
                     "bikesAmount": 100,
                     "countingSystem": false
                 }
