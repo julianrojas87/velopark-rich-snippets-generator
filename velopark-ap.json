@@ -3,7 +3,7 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "schema": "http://schema.org/",
         "mv": "http://schema.mobivoc.org/",
-        "dct": "http://purl.org/dc/terms/",
+        "dct": "http://purl.org/dc/terms#",
         "dbo": "http://dbpedia.org/ontology/",
         "gr": "http://purl.org/goodrelations/v1#",
         "vp": "http://openvelopark.be/vocabulary/",
@@ -109,6 +109,10 @@
             "@id": "schema:telephone",
             "@type": "xsd:string"
         },
+        "availableLanguage": {
+            "@id": "schema:availableLanguage",
+            "@container": "@set"
+        },
         "publicAccess": {
             "@id": "schema:publicAccess",
             "@type": "xsd:boolean"
@@ -205,12 +209,12 @@
             "@id": "vp:postRemovalAction",
             "@type": "xsd:string"
         },
-        "bikeType": {
-            "@id": "vp:bikeType",
+        "bicycleType": {
+            "@id": "vp:bicycleType",
             "@type": "@id"
         },
-        "bikesAmount": {
-            "@id": "vp:bikesAmount",
+        "bicyclesAmount": {
+            "@id": "vp:bicyclesAmount",
             "@type": "xsd:integer"
         },
         "countingSystem": {
@@ -308,7 +312,9 @@
         "@type": "ContactPoint",
         "contactType": "customer service",
         "email": "parking@nmbs.be",
-        "telephone": "+3292101010"
+        "telephone": "+3292101010",
+        "availableLanguage": ["nl", "fr", "en"],
+        "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00"
     },
     "interactionService": {
         "@type": "WebSite",
@@ -344,20 +350,20 @@
             "allowed": [
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "vp:RegularBicycle",
-                    "bikesAmount": 100,
+                    "bicycleType": "vp:RegularBicycle",
+                    "bicyclesAmount": 100,
                     "countingSystem": true
                 },
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "vp:ElectricBicycle",
-                    "bikesAmount": 100,
+                    "bicycleType": "vp:ElectricBicycle",
+                    "bicyclesAmount": 100,
                     "countingSystem": true
                 },
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "vp:CargoBicycle",
-                    "bikesAmount": 50,
+                    "bicycleType": "vp:CargoBicycle",
+                    "bicyclesAmount": 50,
                     "countingSystem": true
                 }
             ],
@@ -446,14 +452,14 @@
             "allowed": [
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "vp:RegularBicycle",
-                    "bikesAmount": 100,
+                    "bicycleType": "vp:RegularBicycle",
+                    "bicyclesAmount": 100,
                     "countingSystem": false
                 },
                 {
                     "@type": "AllowedBicycle",
-                    "bikeType": "vp:ElectricBicycle",
-                    "bikesAmount": 100,
+                    "bicycleType": "vp:ElectricBicycle",
+                    "bicyclesAmount": 100,
                     "countingSystem": false
                 }
             ],
