@@ -137,10 +137,6 @@
             "@id": "schema:photos",
             "@container": "@set"
         },
-        "about": {
-            "@id": "schema:about",
-            "@type": "@id"
-        },
         "entrance": {
             "@id": "mv:entrance",
             "@container": "@set"
@@ -324,12 +320,12 @@
         {
             "@type": "Photograph",
             "image": "http://data.gent.be/pic/546213_1.png",
-            "about": "mv:Entrance"
+            "description": "Facility entrance."
         },
         {
             "@type": "Photograph",
             "image": "http://data.gent.be/pic/546213_2.png",
-            "about": "vp:BicyclePump"
+            "description": "Bicycle pump."
         }
     ],
     "rights": "https://tinyurl.com/yb3ywacm",
