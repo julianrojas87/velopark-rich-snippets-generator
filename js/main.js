@@ -45,6 +45,10 @@
             "ElectronicAccess": "vp:ElectronicAccess",
             "BicyclePump": "vp:BicyclePump",
             "MaintenanceService": "vp:MaintenanceService",
+            "ChargingPoint": "vp:ChargingPoint",
+            "LockerService": "vp:LockerService",
+            "ToiletService": "vp:ToiletService",
+            "BikeRentalService": "vp:BikeRentalService",
             "BusinessEntity": "gr:BusinessEntity",
             "address": "schema:address",
             "geo": "schema:geo",
@@ -147,10 +151,6 @@
                 "@id": "schema:photos",
                 "@container": "@set"
             },
-            "about": {
-                "@id": "schema:about",
-                "@type": "@id"
-            },
             "entrance": {
                 "@id": "mv:entrance",
                 "@container": "@set"
@@ -211,8 +211,8 @@
                 "@id": "vp:restrictions",
                 "@type": "xsd:string"
             },
-            "removalPolicy": {
-                "@id": "vp:removalPolicy",
+            "removalConditions": {
+                "@id": "vp:removalConditions",
                 "@type": "xsd:string"
             },
             "postRemovalAction": {
@@ -334,12 +334,12 @@
             {
                 "@type": "Photograph",
                 "image": "http://data.gent.be/pic/546213_1.png",
-                "about": "mv:Entrance"
+                "description": "Facility entrance."
             },
             {
                 "@type": "Photograph",
                 "image": "http://data.gent.be/pic/546213_2.png",
-                "about": "vp:BicyclePump"
+                "description": "Bicycle pump."
             }
         ],
         "rights": "https://tinyurl.com/yb3ywacm",
@@ -349,7 +349,11 @@
                 "@type": "PermanentPersonnelSupervision",
                 "openingHours": "Mo,Tu,We,Th 09:00-12:00",
                 "maximumStorageTime": "P30D",
-                "publicAccess": true,
+                "publicAccess": false,
+                "intendedAudience": "Residents in Ghent",
+                "restrictions": "Only one bicycle per resident",
+                "removalConditions": "Bicycle left outside parking racks. Bicycle left for more than 30 days.",
+                "postRemovalAction": "Contact APCOA on 0473 33 89 11",
                 "numberOfLevels": 2,
                 "totalCapacity": 250,
                 "capacity": {
@@ -452,6 +456,9 @@
                 "openingHours": "Mo,Tu,We,Th 09:00-12:00",
                 "maximumStorageTime": "P90D",
                 "publicAccess": true,
+                "intendedAudience": "General public",
+                "removalConditions": "Bicycle left for more than 90 days.",
+                "postRemovalAction": "Contact APCOA on 0473 33 89 11",
                 "numberOfLevels": 1,
                 "totalCapacity": 200,
                 "capacity": {
@@ -528,7 +535,7 @@
                 ]
             }
         ]
-    }
+    };
     $('#ld-script').html(JSON.stringify(json, null, 4));
 
     $('#ld_generate').on('click', () => {

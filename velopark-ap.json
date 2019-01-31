@@ -35,6 +35,10 @@
         "ElectronicAccess": "vp:ElectronicAccess",
         "BicyclePump": "vp:BicyclePump",
         "MaintenanceService": "vp:MaintenanceService",
+        "ChargingPoint": "vp:ChargingPoint",
+        "LockerService": "vp:LockerService",
+        "ToiletService": "vp:ToiletService",
+        "BikeRentalService": "vp:BikeRentalService",
         "BusinessEntity": "gr:BusinessEntity",
         "address": "schema:address",
         "geo": "schema:geo",
@@ -197,8 +201,8 @@
             "@id": "vp:restrictions",
             "@type": "xsd:string"
         },
-        "removalPolicy": {
-            "@id": "vp:removalPolicy",
+        "removalConditions": {
+            "@id": "vp:removalConditions",
             "@type": "xsd:string"
         },
         "postRemovalAction": {
@@ -335,7 +339,11 @@
             "@type": "PermanentPersonnelSupervision",
             "openingHours": "Mo,Tu,We,Th 09:00-12:00",
             "maximumStorageTime": "P30D",
-            "publicAccess": true,
+            "publicAccess": false,
+            "intendedAudience": "Residents in Ghent",
+            "restrictions": "Only one bicycle per resident",
+            "removalConditions": "Bicycle left outside parking racks. Bicycle left for more than 30 days.",
+            "postRemovalAction": "Contact APCOA on 0473 33 89 11",
             "numberOfLevels": 2,
             "totalCapacity": 250,
             "capacity": {
@@ -438,6 +446,9 @@
             "openingHours": "Mo,Tu,We,Th 09:00-12:00",
             "maximumStorageTime": "P90D",
             "publicAccess": true,
+            "intendedAudience": "General public",
+            "removalConditions": "Bicycle left for more than 90 days.",
+            "postRemovalAction": "Contact APCOA on 0473 33 89 11",
             "numberOfLevels": 1,
             "totalCapacity": 200,
             "capacity": {
