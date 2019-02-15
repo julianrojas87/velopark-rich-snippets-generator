@@ -202,7 +202,7 @@ iframe {
   align-items: center;
   padding: 15px;
   background: #e6e6e6;
-  
+  margin-top: 100px;
 }
 
 .wrap-contact100 {
@@ -819,5 +819,11 @@ textarea.input100 {
 
   .wrap-contact100-form-radio {
     padding: 15px 0px 0 0px;
+  }
+}
+
+@media screen and (max-width: 1370px) {
+  .container-contact100 {
+    margin-top: 150px;
   }
 }

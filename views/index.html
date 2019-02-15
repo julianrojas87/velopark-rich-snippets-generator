@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Velopark Rich Snippets Generator</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/noui/nouislider.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/default.css">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/navbar.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<!--===============================================================================================-->
+</head>
+
+<body>
+	<!-- Login/Sign up form -->
+	<div id="login-form" class="log-form" style="display: none">
+		<h2>Login to your account</h2>
+		<input type="image" id="login_close_button" src="images/icons/close_white.png" style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+		<form>
+			<input id="login-email" type="email" title="username" placeholder="username" />
+			<input id="login-pass" type="password" title="username" placeholder="password" />
+			<button id="login-button" type="submit" class="btn">Login</button>
+		</form>
+	</div>
+	<div id="signin-form" class="log-form">
+		<h2>Create a new account</h2>
+		<input type="image" id="signin_close_button" src="images/icons/close_white.png" style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+		<form>
+			<input id="signin-email" type="email" title="email" placeholder="email" />
+			<input id="signin-pass" type="password" title="username" placeholder="password" />
+			<button id="signin-button" type="submit" class="btn">Sign Up</button>
+		</form>
+	</div>
+	<!--end log form -->
+
+	<!-- Resulting JSON-LD -->
+	<div class="overlay"></div>
+	<div class="jsonld">
+		<span class="contact100-form-section" style="width: 90%; float: left; position: relative; top: 20px; left: 10px;">
+			Resulting Linked Data in JSON-LD
+		</span>
+		<input type="image" id="close_button" src="images/icons/close_black.png" style="position: relative; top: 20px; left: 47px; float: left; width: 25px;">
+		<pre style="float: left">
+			<code id="ld-script" class="JSON"></code>
+		</pre>
+	</div>
+
+	<!-- Navigation Bar -->
+	<div id="navbar" class="sticky">
+		<a id="signin">Sign In</a>
+		<a id="login">Log In</a>
+		<span class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 24%;">
+			Velopark Rich Snippets Generator
+		</span>
+	</div>
+
+	<!-- Data Input Form-->
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form">
+				<span class="contact100-form-section">
+					General Information
+				</span>
+
+				<div class="wrap-contact100-section">
+					<div class="wrap-input100 validate-input bg1" data-validate="Please enter a valid URI">
+						<span class="label-input100">Parking Facility URI *</span>
+						<input class="input100" type="url" name="@id" placeholder="Enter the parking facility URI">
+					</div>
+
+					<div class="wrap-input100 validate-input bg1 rs2-wrap-input100" data-validate="Enter the facility name">
+						<span class="label-input100">Name *</span>
+						<input class="input100" type="text" name="name" placeholder="Parking facility name ">
+					</div>
+
+					<div class="wrap-input100 bg1 rs2-wrap-input100">
+						<span class="label-input100">Local Identifier</span>
+						<input class="input100" type="text" name="identifier" placeholder="Facility local ID">
+					</div>
+
+					<div class="wrap-input100 validate-input bg1 rs2-wrap-input100" data-validate="Enter the opening date">
+						<span class="label-input100">Initial Opening Date *</span>
+						<input class="input100" type="date" name="startDate" placeholder="Enter the opening date">
+					</div>
+
+					<div class="wrap-input100 bg1 rs2-wrap-input100">
+						<span class="label-input100">Final Closing Date</span>
+						<input class="input100" type="date" name="endDate" placeholder="Final closing date">
+					</div>
+
+					<div class="wrap-input100 bg1" style="float: left">
+						<span class="label-input100">Regulations</span>
+						<input class="input100" type="url" name="rights" placeholder="Enter the link for the regulations document">
+					</div>
+
+					<span class="contact100-form-subsection">
+						Location
+					</span>
+					<div class="wrap-contact100-subsection">
+						<div class="wrap-input100 validate-input bg1" data-validate="Enter the street name">
+							<span class="label-input100">Street Name *</span>
+							<input class="input100" type="text" name="streetName" placeholder="Enter the street name">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the street number">
+							<span class="label-input100">Street Number *</span>
+							<input class="input100" type="text" name="streetNumber" placeholder="Enter the street number">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the postal code">
+							<span class="label-input100">Postal Code *</span>
+							<input class="input100" type="text" name="postalCode" placeholder="Enter the postal code">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
+							<span class="label-input100">Latitude *</span>
+							<input class="input100" type="text" name="location.latitude" placeholder="Enter the latitude">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
+							<span class="label-input100">Longitude *</span>
+							<input class="input100" type="text" name="location.longitude" placeholder="Enter the longitude">
+						</div>
+						<div class="wrap-input100 bg1" style="float: left">
+							<span class="label-input100">Geo Polygon</span>
+							<input class="input100" type="text" name="location.polygon" placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))">
+						</div>
+						<div class="wrap-input100 bg1" style="float: left">
+							<span class="label-input100">Map URL</span>
+							<input class="input100" type="url" name="map" placeholder="Enter the map URL">
+						</div>
+						<div class="wrap-input100 bg1" style="float: left">
+							<span class="label-input100">Close To</span>
+							<input class="input100" type="text" name="closeTo" style="float: left; width: 90%;" placeholder="Enter the name of nearby known place">
+							<input type="image" class="plus_button_input" src="images/icons/plus.png" style="float: left; width: 25px;">
+						</div>
+					</div>
+
+					<span class="contact100-form-subsection">
+						Data Owner
+					</span>
+					<div class="wrap-contact100-subsection">
+						<div class="wrap-input100 bg1 rs3-wrap-input100">
+							<span class="label-input100">Organization URL</span>
+							<input class="input100" type="url" name="dataOwner" placeholder="Enter the organization URL">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
+							<span class="label-input100">Organization Name *</span>
+							<input class="input100" type="text" name="dataOwner.companyName" placeholder="Enter the organization name">
+						</div>
+					</div>
+
+					<span class="contact100-form-subsection">
+						Facility Owner
+					</span>
+					<div class="wrap-contact100-subsection">
+						<div class="wrap-input100 bg1 rs3-wrap-input100">
+							<span class="label-input100">Organization URL</span>
+							<input class="input100" type="url" name="facilityOwner" placeholder="Enter the organization URL">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
+							<span class="label-input100">Organization Name *</span>
+							<input class="input100" type="text" name="facilityOwner.companyName" placeholder="Enter the organization name">
+						</div>
+					</div>
+
+					<span class="contact100-form-subsection">
+						Facility Operator
+					</span>
+					<div class="wrap-contact100-subsection">
+						<div class="wrap-input100 bg1 rs3-wrap-input100">
+							<span class="label-input100">Organization URL</span>
+							<input class="input100" type="url" name="facilityOperator" placeholder="Enter the organization URL">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
+							<span class="label-input100">Organization Name *</span>
+							<input class="input100" type="text" name="facilityOperator.companyName" placeholder="Enter the organization name">
+						</div>
+					</div>
+
+					<span class="contact100-form-subsection">
+						Contact Information
+					</span>
+					<div class="wrap-contact100-subsection">
+						<div class="wrap-input100 validate-input bg1" data-validate="Enter the service website">
+							<span class="label-input100">Website *</span>
+							<input class="input100" type="url" name="interactionService.url" placeholder="Enter the service website">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid email">
+							<span class="label-input100">Email *</span>
+							<input class="input100" type="email" name="contactPoint.email" placeholder="Enter the contact email">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the phone number">
+							<span class="label-input100">Phone Number *</span>
+							<input class="input100" type="text" name="contactPoint.telephone" placeholder="Enter the contact telephone">
+						</div>
+
+						<span class="contact100-form-subsection" style="width: 90%; float: left;">
+							Opening Hours
+						</span>
+						<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 30px;">
+
+						<div class="wrap-contact100-subsection">
+							<div class="wrap-input100" style="padding: 18px 0px 9px 150px">
+								<span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox" name="Mon">
+								<span class="label-input100">Tue </span><input class="opening-checkbox" type="checkbox" name="Tue">
+								<span class="label-input100">Wed </span><input class="opening-checkbox" type="checkbox" name="Wed">
+								<span class="label-input100">Thu </span><input class="opening-checkbox" type="checkbox" name="Thu">
+								<span class="label-input100">Fri </span><input class="opening-checkbox" type="checkbox" name="Fri">
+								<span class="label-input100">Sat </span><input class="opening-checkbox" type="checkbox" name="Sat">
+								<span class="label-input100">Sun </span><input class="opening-checkbox" type="checkbox" name="Sun">
+							</div>
+							<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid opening time">
+								<span class="label-input100">Opening Time *</span>
+								<input class="input100" type="number" min="0" max="23" name="contactPoint.open" placeholder="Enter the opening time">
+							</div>
+							<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid closing time">
+								<span class="label-input100">Closing Time *</span>
+								<input class="input100" type="number" min="0" max="23" name="contactPoint.close" placeholder="Enter the closing time">
+							</div>
+						</div>
+					</div>
+
+					<span class="contact100-form-subsection">
+						Photos
+					</span>
+					<div class="wrap-contact100-subsection">
+						<span class="contact100-form-subsubsection" style="width: 90%; float: left;">
+							Photo
+						</span>
+						<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 25px;">
+
+						<div class="wrap-contact100-subsection">
+							<div class="wrap-input100 bg1" style="float: left">
+								<span class="label-input100">Photo URL</span>
+								<input class="input100" type="url" name="photo" style="float: left; width: 90%;" placeholder="Enter the photo URL">
+							</div>
+							<div class="wrap-input100 bg0" style="float: left">
+								<span class="label-input100">Description</span>
+								<textarea class="input100" name="photo.description" placeholder="Describe your photo"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<span class="contact100-form-section">
+					Parking Facility Sections
+				</span>
+				<div class="wrap-contact100-section">
+					<span class="contact100-form-subsection" style="width: 90%; float: left;">
+						Parking Section
+					</span>
+					<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 30px;">
+
+					<div class="wrap-contact100-subsection">
+						<div class="wrap-input100 input100-select bg1" style="float: left">
+							<span class="label-input100">Parking Type</span>
+							<div>
+								<select class="js-select2" name="service">
+									<option value="">Select Parking Type</option>
+									<option value="PermanentPersonnelSupervision">Permanent Personnel Supervision</option>
+									<option value="LimitedPersonnelSupervision">Limited Personnel Supervision</option>
+									<option value="NoPersonnelSupervision">No Personnel Supervision</option>
+									<option value="NeighborhoodParking">Neighborhood Parking</option>
+									<option value="BicycleCase">Bicycle Case</option>
+								</select>
+								<div class="dropDownSelect2"></div>
+							</div>
+						</div>
+						<div class="wrap-input100 bg1 rs3-wrap-input100">
+							<span class="label-input100">Number of Levels</span>
+							<input class="input100" type="number" name="numberOfLevels" placeholder="Enter the number of levels">
+						</div>
+						<div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+							<span class="label-input100">Public Access</span>
+							<div>
+								<select class="js-select2" name="service">
+									<option value="true">Yes</option>
+									<option value="false">No</option>
+								</select>
+								<div class="dropDownSelect2"></div>
+							</div>
+						</div>
+						<div class="wrap-input100 bg1" style="float: left;">
+							<span class="label-input100">Intended Audience</span>
+							<input class="input100" type="text" name="intendedAudience" placeholder="Enter the intended audience (e.g. general public)">
+						</div>
+						<div class="wrap-input100 bg1" style="float: left;">
+							<span class="label-input100">Restrictions</span>
+							<input class="input100" type="text" name="restrictions" placeholder="Enter the restrictions">
+						</div>
+						<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+							<span class="label-input100">Maximum storage time (days) *</span>
+							<input class="input100" type="number" name="maximumStorageTime" placeholder="Enter the amount of days">
+						</div>
+						<div class="wrap-input100 bg1 rs3-wrap-input100">
+							<span class="label-input100">Minimum storage time (minutes)</span>
+							<input class="input100" type="number" name="minimumStorageTime" placeholder="Enter the amount of minutes">
+						</div>
+						<div class="wrap-input100 bg1" style="float: left;">
+							<span class="label-input100">Removal Conditions</span>
+							<input class="input100" type="text" name="removalConditions" placeholder="Enter the removal conditions">
+						</div>
+						<div class="wrap-input100 bg1" style="float: left;">
+							<span class="label-input100">Post Removal Action</span>
+							<input class="input100" type="text" name="postRemovalActions" placeholder="Enter the post removal action">
+						</div>
+
+						<span class="contact100-form-subsection" style="width: 90%; float: left;">
+							Opening Hours
+						</span>
+						<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 30px;">
+
+						<div class="wrap-contact100-subsection">
+							<div class="wrap-input100" style="padding: 18px 0px 9px 150px">
+								<span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox" name="Mon">
+								<span class="label-input100">Tue </span><input class="opening-checkbox" type="checkbox" name="Tue">
+								<span class="label-input100">Wed </span><input class="opening-checkbox" type="checkbox" name="Wed">
+								<span class="label-input100">Thu </span><input class="opening-checkbox" type="checkbox" name="Thu">
+								<span class="label-input100">Fri </span><input class="opening-checkbox" type="checkbox" name="Fri">
+								<span class="label-input100">Sat </span><input class="opening-checkbox" type="checkbox" name="Sat">
+								<span class="label-input100">Sun </span><input class="opening-checkbox" type="checkbox" name="Sun">
+							</div>
+							<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid opening time">
+								<span class="label-input100">Opening Time *</span>
+								<input class="input100" type="number" min="0" max="23" name="contactPoint.open" placeholder="Enter the opening time">
+							</div>
+							<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid closing time">
+								<span class="label-input100">Closing Time *</span>
+								<input class="input100" type="number" min="0" max="23" name="contactPoint.close" placeholder="Enter the closing time">
+							</div>
+						</div>
+
+						<span class="contact100-form-subsection">
+							Location
+						</span>
+						<div class="wrap-contact100-subsection">
+							<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
+								<span class="label-input100">Latitude *</span>
+								<input class="input100" type="text" name="latitude" placeholder="Enter the latitude">
+							</div>
+							<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
+								<span class="label-input100">Longitude *</span>
+								<input class="input100" type="text" name="longitude" placeholder="Enter the longitude">
+							</div>
+							<div class="wrap-input100 bg1" style="float: left">
+								<span class="label-input100">Geo Polygon</span>
+								<input class="input100" type="text" name="polygon" placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))">
+							</div>
+
+							<span class="contact100-form-subsubsection" style="width: 89%; float: left;">
+								Entrance
+							</span>
+							<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 25px;">
+
+							<div class="wrap-contact100-subsection">
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
+									<span class="label-input100">Latitude *</span>
+									<input class="input100" type="text" name="latitude" placeholder="Enter the latitude">
+								</div>
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
+									<span class="label-input100">Longitude *</span>
+									<input class="input100" type="text" name="longitude" placeholder="Enter the longitude">
+								</div>
+								<div class="wrap-input100 bg0" style="float: left">
+									<span class="label-input100">Description</span>
+									<textarea class="input100" name="photo.description" placeholder="Describe how to get here"></textarea>
+								</div>
+							</div>
+
+							<span class="contact100-form-subsubsection" style="width: 89%; float: left;">
+								Exit
+							</span>
+							<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 25px;">
+
+							<div class="wrap-contact100-subsection">
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
+									<span class="label-input100">Latitude *</span>
+									<input class="input100" type="text" name="latitude" placeholder="Enter the latitude">
+								</div>
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
+									<span class="label-input100">Longitude *</span>
+									<input class="input100" type="text" name="longitude" placeholder="Enter the longitude">
+								</div>
+								<div class="wrap-input100 bg0" style="float: left">
+									<span class="label-input100">Description</span>
+									<textarea class="input100" name="photo.description" placeholder="Describe how to get here"></textarea>
+								</div>
+							</div>
+						</div>
+
+						<span class="contact100-form-subsection">
+							Types of Allowed Bicycles
+						</span>
+						<div class="wrap-contact100-subsection">
+							<span class="contact100-form-subsubsection" style="width: 89%; float: left;">
+								Bicycle Allowed
+							</span>
+							<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 25px;">
+
+							<div class="wrap-contact100-subsection">
+								<div class="wrap-input100 input100-select bg1">
+									<span class="label-input100">Bicycle Type</span>
+									<div>
+										<select class="js-select2" name="bicycleType">
+											<option value="RegularBicycle">Regular Bicycle</option>
+											<option value="ElectricBicycle">Electric Bicycle</option>
+											<option value="CargoBicycle">Cargo Bicycle</option>
+											<option value="TandemBicycle">Tandem Bicycle</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+									<span class="label-input100">Capacity</span>
+									<input class="input100" type="number" name="bicycleAmount" placeholder="Enter the allowed capacity">
+								</div>
+								<div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+									<span class="label-input100">Counting System</span>
+									<div>
+										<select class="js-select2" name="countingSystem">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<span class="contact100-form-subsection">
+							Section Features
+						</span>
+						<div class="wrap-contact100-subsection">
+							<div class="wrap-input100 input100-select bg1" style="float: left; width: 92%;">
+								<span class="label-input100">Feature</span>
+								<div>
+									<select class="js-select2" name="feature">
+										<option value="">Select a Feature</option>
+										<option value="CameraSurveillance">Camera Surveillance</option>
+										<option value="ElectronicAccess">Electronic Access</option>
+										<option value="BicyclePump">Bicycle Pump</option>
+										<option value="MaintenanceService">Maintenance Service</option>
+										<option value="ElectronicAccess">Electronic Access</option>
+										<option value="ChargingPoint">Charging Point</option>
+										<option value="Lockers">Lockers</option>
+										<option value="Toilets">Toilets</option>
+										<option value="BikeRental">Bike Rental</option>
+									</select>
+									<div class="dropDownSelect2"></div>
+								</div>
+							</div>
+							<input type="image" class="plus_button_select" src="images/icons/plus.png" style="position: relative; float: left; width: 25px; top: 32px; left: 10px;">
+						</div>
+
+						<span class="contact100-form-subsection">
+							Cost Model
+						</span>
+						<div class="wrap-contact100-subsection">
+							<div class="wrap-input100 bg1">
+								<span class="label-input100">Costs Description</span>
+								<input class="input100" type="url" name="priceSpecification.url" placeholder="Enter the link to costs description">
+							</div>
+
+							<span class="contact100-form-subsubsection" style="width: 89%; float: left;">
+								Price Specification
+							</span>
+							<input type="image" class="plus_button_section" src="images/icons/plus.png" style="float: left; width: 25px;">
+
+							<div class="wrap-contact100-subsection">
+								<div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+									<span class="label-input100">Free of Charge</span>
+									<div>
+										<select class="js-select2" name="freeOfCharge">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+									<span class="label-input100">Price</span>
+									<input class="input100" type="number" name="price" placeholder="Enter the price">
+								</div>
+								<div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+									<span class="label-input100">Currency</span>
+									<div>
+										<select class="js-select2" name="currency">
+											<option value="EUR">EUR</option>
+											<option value="GBP">GBP</option>
+											<option value="USD">USD</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+								<div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+									<span class="label-input100">Overnight</span>
+									<div>
+										<select class="js-select2" name="Overnight">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+									<span class="label-input100">Time Start Value</span>
+									<input class="input100" type="number" name="timeStartValue" placeholder="Enter the start value">
+								</div>
+								<div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+									<span class="label-input100">Time End Value</span>
+									<input class="input100" type="number" name="timeEndValue" placeholder="Enter the end value">
+								</div>
+								<div class="wrap-input100 input100-select bg1" style="float: left">
+									<span class="label-input100">Time Unit</span>
+									<div>
+										<select class="js-select2" name="timeUnit">
+											<option value="hour">Hour</option>
+											<option value="minute">Minute</option>
+											<option value="second">Second</option>
+											<option value="day">Day</option>
+											<option value="week">Week</option>
+											<option value="month">Month</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+								<div class="wrap-input100 bg0" style="float: left">
+									<span class="label-input100">Description</span>
+									<textarea class="input100" name="priceSpecification.description" placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="container-contact100-form-btn">
+					<button id="ld_generate" class="contact100-form-btn">
+						<span>
+							Generate Linked Data
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function () {
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+	<!--===============================================================================================-->
+	<script src="js/highlight.pack.js"></script>
+	<!--<script>hljs.initHighlightingOnLoad();</script> -->
+	<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+	<script src="js/loginController.js"></script>
+</body>
+
+</html>
