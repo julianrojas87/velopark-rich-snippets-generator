@@ -1,7 +1,7 @@
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 
-module.exports = function (app) {
+module.exports = app => {
 
 
 	/*
@@ -9,7 +9,22 @@ module.exports = function (app) {
 	*/
 
 	app.get('/', function (req, res) {
-		res.render('index.html');
+		// check if the user has an auto login key saved in a cookie //
+		if (req.cookies.login == undefined) {
+			res.render('index.html');
+		} else {
+			// attempt automatic login //
+			AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) {
+				if (o) {
+					AM.autoLogin(o.email, o.pass, function (o) {
+						req.session.user = o;
+						res.redirect('/home?username=' + o.email);
+					});
+				} else {
+					res.render('index.html');
+				}
+			});
+		}
 	});
 
 	/*
@@ -21,7 +36,7 @@ module.exports = function (app) {
 		if (req.session.user == null) {
 			res.redirect('/');
 		} else {
-			res.render('home.html', {username: req.query.username})
+			res.render('home.html', { username: req.query.username })
 		}
 	});
 
@@ -29,32 +44,13 @@ module.exports = function (app) {
 		login & logout
 	*/
 
-	app.get('/login', function (req, res) {
-		// check if the user has an auto login key saved in a cookie //
-		if (req.cookies.login == undefined) {
-			res.render('login', { title: 'Hello - Please Login To Your Account' });
-		} else {
-			// attempt automatic login //
-			AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) {
-				if (o) {
-					AM.autoLogin(o.user, o.pass, function (o) {
-						req.session.user = o;
-						res.redirect('/home');
-					});
-				} else {
-					res.render('login', { title: 'Hello - Please Login To Your Account' });
-				}
-			});
-		}
-	});
-
 	app.post('/login', function (req, res) {
 		AM.manualLogin(req.body['email'], req.body['pass'], function (e, o) {
 			if (!o) {
 				res.status(400).send(e);
 			} else {
 				req.session.user = o;
-				AM.generateLoginKey(o.user, req.ip, function (key) {
+				AM.generateLoginKey(o.email, req.ip, function (key) {
 					res.cookie('login', key, { maxAge: 900000 });
 					res.status(200).send(o);
 				});
@@ -68,34 +64,9 @@ module.exports = function (app) {
 		req.session.destroy(function (e) { res.status(200).send('ok'); });
 	})
 
-	app.post('/home', function (req, res) {
-		if (req.session.user == null) {
-			res.redirect('/');
-		} else {
-			AM.updateAccount({
-				id: req.session.user._id,
-				name: req.body['name'],
-				email: req.body['email'],
-				pass: req.body['pass'],
-				country: req.body['country']
-			}, function (e, o) {
-				if (e) {
-					res.status(400).send('error-updating-account');
-				} else {
-					req.session.user = o.value;
-					res.status(200).send('ok');
-				}
-			});
-		}
-	});
-
 	/*
 		new accounts
 	*/
-
-	app.get('/signup', function (req, res) {
-		res.render('signup', { title: 'Signup', countries: CT });
-	});
 
 	app.post('/signup', function (req, res) {
 		AM.addNewAccount({

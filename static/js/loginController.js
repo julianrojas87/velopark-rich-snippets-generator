@@ -36,7 +36,17 @@
             url: '/signup',
             data: { 'email': email, 'pass': pass },
             success: () => {
-                alert('Account created correctly!!');
+                $.ajax({
+                    type: "POST",
+                    url: '/login',
+                    data: { 'email': email, 'pass': pass },
+                    success: () => {
+                        window.location.href = '/home?username=' + email;
+                    },
+                    error: e => {
+                        alert('Error: ' + e.responseText);
+                    }
+                });
             },
             error: e => {
                 alert('Error: ' + e.responseText);

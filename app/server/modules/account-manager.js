@@ -22,8 +22,8 @@ const guid = function () { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace
 	login validation methods
 */
 
-exports.autoLogin = function (user, pass, callback) {
-	accounts.findOne({ user: user }, function (e, o) {
+exports.autoLogin = function (email, pass, callback) {
+	accounts.findOne({ email: email }, function (e, o) {
 		if (o) {
 			o.pass == pass ? callback(o) : callback(null);
 		} else {
@@ -48,9 +48,9 @@ exports.manualLogin = function (email, pass, callback) {
 	});
 }
 
-exports.generateLoginKey = function (user, ipAddress, callback) {
+exports.generateLoginKey = function (email, ipAddress, callback) {
 	let cookie = guid();
-	accounts.findOneAndUpdate({ user: user }, {
+	accounts.findOneAndUpdate({ email: email }, {
 		$set: {
 			ip: ipAddress,
 			cookie: cookie

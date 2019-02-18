@@ -22,8 +22,7 @@ app.engine('html', require('ejs').renderFile);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
-app.use(express.static(__dirname + '/views'));
+app.use('/static', express.static(__dirname + '/static'));
 
 // build mongo database connection url //
 
