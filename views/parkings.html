@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Velopark Rich Snippets Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="static/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/vendor/noui/nouislider.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/css/default.css">
+    <link rel="stylesheet" type="text/css" href="static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="static/css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="static/css/parkings.css">
+    <!--===============================================================================================-->
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div id="navbar" class="sticky">
+        <a id="logout">Log out</a>
+        <a id="user-email">
+            <%= username %></a>
+        <span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 24%; cursor: pointer;">
+            Velopark Rich Snippets Generator
+        </span>
+    </div>
+
+    <div id="drop-menu" class="dropdown-content">
+        <a id="myParkings" href="#">My Parking Facilities</a>
+    </div>
+
+    <div class="container-contact100">
+        <div class="wrap-contact100" style="width: 100%;">
+            <table class="table-fill">
+                <thead>
+                    <tr>
+                        <th class="text-left">Parking Facility URI</th>
+                        <th class="text-left">Parking Name</th>
+                        <th class="text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-hover">
+                    <% for (var i = 0; i < parkings.length; i++) { %>
+                    <tr>
+                        <td class="text-left">
+                            <%= parkings[i]['@id'] %>
+                        </td>
+                        <td class="text-left">
+                            <%= parkings[i]['name'] %>
+                        </td>
+                        <td class="text-left">
+                            <input title="Edit" type="image" id="close_button" src="static/images/icons/edit.png" style="float: left; width: 40px;">
+                            <input title="Delete" type="image" id="close_button" src="static/images/icons/delete.png"
+                                style="position: relative; left: 10px; bottom: 2px; float: left; width: 40px;">
+                            <input title="Download" type="image" id="close_button" src="static/images/icons/download.png"
+                                style="position: relative; left: 16px; bottom: 2px; float: left; width: 40px;">
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="static/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="static/vendor/bootstrap/js/popper.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="static/vendor/select2/select2.min.js"></script>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="static/vendor/daterangepicker/moment.min.js"></script>
+    <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="static/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="static/js/highlight.pack.js"></script>
+    <!--===============================================================================================-->
+    <script src="static/js/main.js"></script>
+    <script src="static/js/loginController.js"></script>
+    <script src="static/js/router.js"></script>
+</body>
+
+</html>

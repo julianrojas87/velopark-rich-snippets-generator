@@ -541,8 +541,18 @@
     $('#ld-script').html(JSON.stringify(json, null, 4));
 
     $('#ld_generate').on('click', () => {
-        $('.overlay').toggle();
-        $('.jsonld').toggle();
+        var check = true;
+
+        for (var i = 0; i < input.length; i++) {
+            if (validate(input[i]) == false) {
+                showValidate(input[i]);
+                check = false;
+            }
+        }
+        if (check) {
+            $('.overlay').toggle();
+            $('.jsonld').toggle();
+        }
 
         return false;
     });
@@ -554,6 +564,7 @@
 
     /*==================================================================
     [ Make the navigation bar sticky ]*/
+
     // When the user scrolls the page, execute sticky function
     window.onscroll = function () { sticky() };
 
@@ -571,6 +582,21 @@
             navbar.classList.remove("sticky");
         }
     }
+
+    sticky();
+
+    // Hover function for user dropdown menu
+    $('#user-email').hover(() => {
+        $('#drop-menu').show();
+    });
+
+    $('#myParkings').click(e => {
+        e.stopPropagation();
+    });
+
+    $('body,html').click(e => {
+        $('#drop-menu').hide();
+    });
 
     /*==================================================================
     [ Validate after type ]*/

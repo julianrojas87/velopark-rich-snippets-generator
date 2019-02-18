@@ -50,12 +50,15 @@
 	<div id="navbar" class="sticky">
 		<a id="logout">Log out</a>
 		<a id="user-email"><%= username %></a>
-		<span class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 24%;">
+		<span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 24%; cursor: pointer;">
 			Velopark Rich Snippets Generator
 		</span>
 	</div>
 
-	<!-- Data Input Form-->
+	<div id="drop-menu" class="dropdown-content">
+		<a id="myParkings" href="#">My Parking Facilities</a>
+	</div>
+
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form validate-form">
@@ -569,12 +572,11 @@
 	<!--===============================================================================================-->
 	<script src="static/vendor/countdowntime/countdowntime.js"></script>
 	<!--===============================================================================================-->
-	<!--===============================================================================================-->
 	<script src="static/js/highlight.pack.js"></script>
-	<!--<script>hljs.initHighlightingOnLoad();</script> -->
 	<!--===============================================================================================-->
 	<script src="static/js/main.js"></script>
 	<script src="static/js/loginController.js"></script>
+	<script src="static/js/router.js"></script>
 </body>
 
 </html>

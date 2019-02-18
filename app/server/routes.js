@@ -1,5 +1,6 @@
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
+const Parkings = require('./modules/parkings-manager');
 
 module.exports = app => {
 
@@ -28,16 +29,21 @@ module.exports = app => {
 	});
 
 	/*
-		secured home
+		new accounts
 	*/
 
-	app.get('/home', function (req, res) {
-		// check if the user is logged in
-		if (req.session.user == null) {
-			res.redirect('/');
-		} else {
-			res.render('home.html', { username: req.query.username })
-		}
+	app.post('/signup', function (req, res) {
+		AM.addNewAccount({
+			email: req.body['email'],
+			pass: req.body['pass']
+		}, function (e) {
+			if (e) {
+				res.status(400).send(e);
+			} else {
+				Parkings.initUser(req.body['email']);
+				res.status(200).send('ok');
+			}
+		});
 	});
 
 	/*
@@ -62,23 +68,33 @@ module.exports = app => {
 	app.post('/logout', function (req, res) {
 		res.clearCookie('login');
 		req.session.destroy(function (e) { res.status(200).send('ok'); });
-	})
+	});
 
 	/*
-		new accounts
+		secured home
 	*/
 
-	app.post('/signup', function (req, res) {
-		AM.addNewAccount({
-			email: req.body['email'],
-			pass: req.body['pass']
-		}, function (e) {
-			if (e) {
-				res.status(400).send(e);
-			} else {
-				res.status(200).send('ok');
-			}
-		});
+	app.get('/home', function (req, res) {
+		// check if the user is logged in
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			res.render('home.html', { username: req.query.username })
+		}
+	});
+
+	/*
+		secured parkings
+	*/
+
+	app.get('/parkings', async function (req, res) {
+		// check if the user is logged in
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			let parkings = await Parkings.listParkings(req.query.username);
+			res.render('parkings.html', { username: req.query.username, parkings: parkings })
+		}
 	});
 
 	/*
