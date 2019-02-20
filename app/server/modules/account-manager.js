@@ -61,8 +61,7 @@ exports.generateLoginKey = function (email, ipAddress, callback) {
 }
 
 exports.validateLoginKey = function (cookie, ipAddress, callback) {
-	// ensure the cookie maps to the user's last recorded ip address //
-	accounts.findOne({ cookie: cookie, ip: ipAddress }, callback);
+	accounts.findOne({ cookie: cookie }, callback);
 }
 
 exports.generatePasswordKey = function (email, ipAddress, callback) {
