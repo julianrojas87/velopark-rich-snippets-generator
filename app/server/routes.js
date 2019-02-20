@@ -19,7 +19,7 @@ module.exports = app => {
 				if (o) {
 					AM.autoLogin(o.email, o.pass, function (o) {
 						req.session.user = o;
-						res.redirect('/home?username=' + o.email);
+						res.redirect('/rich-snippets-generator/home?username=' + o.email);
 					});
 				} else {
 					res.render('index.html');
@@ -77,7 +77,7 @@ module.exports = app => {
 	app.get('/home', function (req, res) {
 		// check if the user is logged in
 		if (req.session.user == null) {
-			res.redirect('/');
+			res.redirect('/rich-snippets-generator');
 		} else {
 			res.render('home.html', { username: req.query.username })
 		}
@@ -90,7 +90,7 @@ module.exports = app => {
 	app.get('/parkings', async function (req, res) {
 		// check if the user is logged in
 		if (req.session.user == null) {
-			res.redirect('/');
+			res.redirect('/rich-snippets-generator');
 		} else {
 			let parkings = await Parkings.listParkings(req.query.username);
 			res.render('parkings.html', { username: req.query.username, parkings: parkings })
