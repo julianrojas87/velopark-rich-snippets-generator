@@ -22,5 +22,7 @@ exports.listParkings = async username => {
         }));
 
         return tableData;
+    } else {
+        return [];
     }
 }

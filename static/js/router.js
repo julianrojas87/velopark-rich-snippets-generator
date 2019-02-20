@@ -1,7 +1,7 @@
 ($ => {
 
     $('#main-title').click(() => {
-        window.location.href = '/rich-snippets-generator';
+        window.location.href = '/rich-snippets-generator/';
     });
 
     $('#myParkings').click(() => {
