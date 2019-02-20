@@ -19,9 +19,9 @@
     $('#logout').on('click', () => {
         $.ajax({
             type: "POST",
-            url: '/logout',
+            url: '/rich-snippets-generator/logout',
             success: () => {
-                window.location.href = '/';
+                window.location.href = '/rich-snippets-generator';
             }
         });
         return false;
@@ -33,15 +33,15 @@
 
         $.ajax({
             type: "POST",
-            url: '/signup',
+            url: '/rich-snippets-generator/signup',
             data: { 'email': email, 'pass': pass },
             success: () => {
                 $.ajax({
                     type: "POST",
-                    url: '/login',
+                    url: '/rich-snippets-generator/login',
                     data: { 'email': email, 'pass': pass },
                     success: () => {
-                        window.location.href = '/home?username=' + email;
+                        window.location.href = '/rich-snippets-generator/home?username=' + email;
                     },
                     error: e => {
                         alert('Error: ' + e.responseText);
@@ -61,10 +61,10 @@
 
         $.ajax({
             type: "POST",
-            url: '/login',
+            url: '/rich-snippets-generator/login',
             data: { 'email': email, 'pass': pass },
             success: () => {
-                window.location.href = '/home?username=' + email;
+                window.location.href = '/rich-snippets-generator/home?username=' + email;
             },
             error: e => {
                 alert('Error: ' + e.responseText);

@@ -1,11 +1,11 @@
 ($ => {
 
     $('#main-title').click(() => {
-        window.location.href = '/';
+        window.location.href = '/rich-snippets-generator';
     });
 
     $('#myParkings').click(() => {
         let username = $('#user-email').text().trim();
-        window.location.href = '/parkings?username=' + username;
+        window.location.href = '/rich-snippets-generator/parkings?username=' + username;
     });
 })(jQuery);
