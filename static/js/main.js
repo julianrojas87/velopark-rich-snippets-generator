@@ -1,3 +1,5 @@
+const domainName = $('#domainName').text();
+
 (function ($) {
     "use strict";
 
@@ -6,7 +8,6 @@
             hljs.highlightBlock(block);
         });
     });
-
 
     $('.plus_button_input').on('click', function () {
         var parent = $(this).parent().clone(true);

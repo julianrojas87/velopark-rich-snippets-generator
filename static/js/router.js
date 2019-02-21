@@ -1,11 +1,13 @@
 ($ => {
 
     $('#main-title').click(() => {
-        window.location.href = '/';
+        let domain = domainName != '' ? '/' + domainName : '';
+        window.location.href = domain + '/';
     });
 
     $('#myParkings').click(() => {
+        let domain = domainName != '' ? '/' + domainName : '';
         let username = $('#user-email').text().trim();
-        window.location.href = '/parkings?username=' + username;
+        window.location.href = domain + '/parkings?username=' + username;
     });
 })(jQuery);

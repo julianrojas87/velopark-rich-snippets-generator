@@ -1,6 +1,9 @@
-var AM = require('./modules/account-manager');
-var EM = require('./modules/email-dispatcher');
+const fs = require('fs');
+const AM = require('./modules/account-manager');
+const EM = require('./modules/email-dispatcher');
 const Parkings = require('./modules/parkings-manager');
+
+const domainName = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['domain'] || '';
 
 module.exports = app => {
 
@@ -12,17 +15,18 @@ module.exports = app => {
 	app.get('/', function (req, res) {
 		// check if the user has an auto login key saved in a cookie //
 		if (req.cookies.login == undefined) {
-			res.render('index.html');
+			res.render('index.html', { domainName: domainName });
 		} else {
 			// attempt automatic login //
 			AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) {
 				if (o) {
 					AM.autoLogin(o.email, o.pass, function (o) {
+						let domain = domainName != '' ? '/' + domainName : '';
 						req.session.user = o;
-						res.redirect('/home?username=' + o.email);
+						res.redirect(domain + '/home?username=' + o.email);
 					});
 				} else {
-					res.render('index.html');
+					res.render('index.html', { domainName: domainName });
 				}
 			});
 		}
@@ -77,9 +81,13 @@ module.exports = app => {
 	app.get('/home', function (req, res) {
 		// check if the user is logged in
 		if (req.session.user == null) {
-			res.redirect('/');
+			let domain = domainName != '' ? '/' + domainName : '';
+			res.redirect(domain + '/');
 		} else {
-			res.render('home.html', { username: req.query.username })
+			res.render('home.html', {
+				domainName: domainName,
+				username: req.query.username
+			});
 		}
 	});
 
@@ -90,10 +98,15 @@ module.exports = app => {
 	app.get('/parkings', async function (req, res) {
 		// check if the user is logged in
 		if (req.session.user == null) {
-			res.redirect('/');
+			let domain = domainName != '' ? '/' + domainName : '';
+			res.redirect(domain + '/');
 		} else {
 			let parkings = await Parkings.listParkings(req.query.username);
-			res.render('parkings.html', { username: req.query.username, parkings: parkings })
+			res.render('parkings.html', { 
+				domainName: domainName,
+				username: req.query.username, 
+				parkings: parkings 
+			});
 		}
 	});
 

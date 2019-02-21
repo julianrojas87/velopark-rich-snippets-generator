@@ -17,31 +17,33 @@
     });
 
     $('#logout').on('click', () => {
+        let domain = domainName != '' ? '/' + domainName : '';
         $.ajax({
             type: "POST",
-            url: '/logout',
+            url: domain + '/logout',
             success: () => {
-                window.location.href = '/';
+                window.location.href = domain + '/';
             }
         });
         return false;
     });
 
     $('#signin-button').on('click', () => {
+        let domain = domainName != '' ? '/' + domainName : '';
         let email = $('#signin-email').val();
         let pass = $('#signin-pass').val();
 
         $.ajax({
             type: "POST",
-            url: '/signup',
+            url: domain + '/signup',
             data: { 'email': email, 'pass': pass },
             success: () => {
                 $.ajax({
                     type: "POST",
-                    url: '/login',
+                    url: domain + '/login',
                     data: { 'email': email, 'pass': pass },
                     success: () => {
-                        window.location.href = '/home?username=' + email;
+                        window.location.href = domain + '/home?username=' + email;
                     },
                     error: e => {
                         alert('Error: ' + e.responseText);
@@ -56,15 +58,16 @@
     });
 
     $('#login-button').on('click', () => {
+        let domain = domainName != '' ? '/' + domainName : '';
         let email = $('#login-email').val();
         let pass = $('#login-pass').val();
 
         $.ajax({
             type: "POST",
-            url: '/login',
+            url: domain + '/login',
             data: { 'email': email, 'pass': pass },
             success: () => {
-                window.location.href = '/home?username=' + email;
+                window.location.href = domain + '/home?username=' + email;
             },
             error: e => {
                 alert('Error: ' + e.responseText);
