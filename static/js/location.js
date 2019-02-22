@@ -15,73 +15,37 @@ var raster = new TileLayer({
     source: new OSM()
 });
 
-var pointSource = new VectorSource({ wrapX: false });
-var pointVector = new VectorLayer({
-    source: pointSource,
-    style: new Style({
-        image: new CircleStyle({
-            radius: 5,
-            fill: new Fill({
-                color: '#36ff1c'
-            }),
-            stroke: new Stroke({
-                width: 3
+function initPointMap(target, latid, lonid, clear) {
+    var pointSource = new VectorSource({ wrapX: false });
+    var pointVector = new VectorLayer({
+        source: pointSource,
+        style: new Style({
+            image: new CircleStyle({
+                radius: 5,
+                fill: new Fill({
+                    color: '#36ff1c'
+                }),
+                stroke: new Stroke({
+                    width: 3
+                })
             })
         })
-    })
-});
+    });
 
-var polygonSource = new VectorSource({ wrapX: false });
-var polygonVector = new VectorLayer({
-    source: polygonSource,
-    style: new Style({
-        fill: new Fill({
-            color: 'rgba(255, 255, 255, 0.2)'
-        }),
-        stroke: new Stroke({
-            color: '#2912bc',
-            width: 4
-        }),
-    })
-});
+    var pointMap = new Map({
+        target: target,
+        layers: [raster, pointVector],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([4.30, 50.85]),
+            zoom: 8
+        })
+    });
 
-var pointMap = new Map({
-    target: 'point-map',
-    layers: [raster, pointVector],
-    view: new ol.View({
-        center: ol.proj.fromLonLat([4.30, 50.85]),
-        zoom: 8
-    })
-});
-
-var polygonMap = new Map({
-    target: 'polygon-map',
-    layers: [raster, polygonVector],
-    view: new ol.View({
-        center: ol.proj.fromLonLat([4.30, 50.85]),
-        zoom: 8
-    })
-});
-
-var point;
-var polygon;
-
-function addInteractions() {
-    point = new Draw({
+    var point = new Draw({
         source: pointSource,
         type: 'Point'
     });
     pointMap.addInteraction(point);
-
-    polygon = new Draw({
-        source: polygonSource,
-        type: 'Polygon'
-    });
-    polygonMap.addInteraction(polygon);
-}
-
-($ => {
-    addInteractions();
 
     pointSource.on('addfeature', event => {
         if (pointSource.getFeatures().length > 1) {
@@ -91,9 +55,47 @@ function addInteractions() {
         let lat = coordinates[1];
         let long = coordinates[0];
 
-        $('input[name = "location.latitude"]').val(lat);
-        $('input[name = "location.longitude"]').val(long);
+        $('#' + latid).val(lat);
+        $('#' + lonid).val(long);
     });
+
+    $('#' + clear).click(() => {
+        pointSource.clear();
+        $('#' + latid).val('');
+        $('#' + lonid).val('');
+    });
+}
+
+
+function initPolygonMap(target, polyid, clear) {
+    var polygonSource = new VectorSource({ wrapX: false });
+    var polygonVector = new VectorLayer({
+        source: polygonSource,
+        style: new Style({
+            fill: new Fill({
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new Stroke({
+                color: '#2912bc',
+                width: 4
+            }),
+        })
+    });
+
+    var polygonMap = new Map({
+        target: target,
+        layers: [raster, polygonVector],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([4.30, 50.85]),
+            zoom: 8
+        })
+    });
+
+    var polygon = new Draw({
+        source: polygonSource,
+        type: 'Polygon'
+    });
+    polygonMap.addInteraction(polygon);
 
     polygonSource.on('addfeature', event => {
         if (polygonSource.getFeatures().length > 1) {
@@ -101,10 +103,10 @@ function addInteractions() {
         }
 
         let coordinates = event.feature.getGeometry().getCoordinates()[0];
-        let polygonString = 'POLYGON (('; 
+        let polygonString = 'POLYGON ((';
 
 
-        for(let i = 0; i < coordinates.length; i++) {
+        for (let i = 0; i < coordinates.length; i++) {
             let coord = ol.proj.toLonLat(coordinates[i]);
             let lat = coord[1];
             let long = coord[0];
@@ -114,18 +116,20 @@ function addInteractions() {
 
         polygonString = polygonString.slice(0, -2) + '))';
 
-        $('input[name = "location.polygon"]').val(polygonString);
+        $('#' + polyid).val(polygonString);
     });
 
-    $('#clear-point').click(() => {
-        pointSource.clear();
-        $('input[name = "location.latitude"]').val('');
-        $('input[name = "location.longitude"]').val('');
-    });
-
-    $('#clear-polygon').click(() => {
+    $('#' + clear).click(() => {
         polygonSource.clear();
-        $('input[name = "location.polygon"]').val('');
+        $('#' + polyid).val('');
     });
+}
+
+($ => {
+    initPointMap('point-map', 'point_lat', 'point_lon', 'clear-point');
+    initPointMap('entrance-point-map', 'entrance_lat', 'entrance_lon', 'clear-entrance-point');
+    initPointMap('exit-point-map', 'exit_lat', 'exit_lon', 'clear-exit-point');
+
+    initPolygonMap('polygon-map', 'poly_string', 'clear-polygon')
 
 })(jQuery);

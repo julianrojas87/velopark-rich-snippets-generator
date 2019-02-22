@@ -102,13 +102,50 @@ module.exports = app => {
 			res.redirect(domain + '/');
 		} else {
 			let parkings = await Parkings.listParkings(req.query.username);
-			res.render('parkings.html', { 
+			res.render('parkings.html', {
 				domainName: domainName,
-				username: req.query.username, 
-				parkings: parkings 
+				username: req.query.username,
+				parkings: parkings
 			});
 		}
 	});
+
+	/*
+		list of terms
+	*/
+
+	app.get('/terms', async function (req, res) {
+		let list = await Parkings.getListOfTerms();
+		res.status(200).json(list);
+	});
+
+	/*
+		list of parking types
+	*/
+
+	app.get('/parkingTypes', async function (req, res) {
+		let list = await Parkings.getParkingTypes();
+		res.status(200).json(list);
+	});
+
+	/*
+		list of bike types
+	*/
+
+	app.get('/bikeTypes', async function (req, res) {
+		let list = await Parkings.getBikeTypes();
+		res.status(200).json(list);
+	});
+
+	/*
+		list of features
+	*/
+
+	app.get('/features', async function (req, res) {
+		let list = await Parkings.getFeatures();
+		res.status(200).json(list);
+	});
+
 
 	/*
 		password reset

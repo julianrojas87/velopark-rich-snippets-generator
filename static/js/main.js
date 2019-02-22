@@ -1,5 +1,61 @@
 const domainName = $('#domainName').text();
 
+function getListOfTerms(done) {
+    let domain = domainName != '' ? '/' + domainName : '';
+    $.ajax({
+        type: "GET",
+        url: domain + '/terms',
+        success: data => {
+            done(data);
+        },
+        error: e => {
+            alert('Error: ' + e.responseText);
+        }
+    });
+}
+
+function getParkingTypes(done) {
+    let domain = domainName != '' ? '/' + domainName : '';
+    $.ajax({
+        type: "GET",
+        url: domain + '/parkingTypes',
+        success: data => {
+            done(data);
+        },
+        error: e => {
+            alert('Error: ' + e.responseText);
+        }
+    });
+}
+
+function getBikeTypes(done) {
+    let domain = domainName != '' ? '/' + domainName : '';
+    $.ajax({
+        type: "GET",
+        url: domain + '/bikeTypes',
+        success: data => {
+            done(data);
+        },
+        error: e => {
+            alert('Error: ' + e.responseText);
+        }
+    });
+}
+
+function getFeatures(done) {
+    let domain = domainName != '' ? '/' + domainName : '';
+    $.ajax({
+        type: "GET",
+        url: domain + '/features',
+        success: data => {
+            done(data);
+        },
+        error: e => {
+            alert('Error: ' + e.responseText);
+        }
+    });
+}
+
 (function ($) {
     "use strict";
 
@@ -8,6 +64,39 @@ const domainName = $('#domainName').text();
             hljs.highlightBlock(block);
         });
     });
+
+    getListOfTerms(listOfTerms => {
+        $('select[terms = "true"]').each(function () {
+            for (var i = 0; i < listOfTerms.length; i++) {
+                $(this).append('<option value="' + listOfTerms[i]['@id'] + '">' + listOfTerms[i]['label'] + '</option>');
+            }
+        });
+    });
+
+    getParkingTypes(parkingTypes => {
+        $('select[parking-types = "true"]').each(function () {
+            for (var i = 0; i < parkingTypes.length; i++) {
+                $(this).append('<option value="' + parkingTypes[i]['@id'] + '">' + parkingTypes[i]['label'] + '</option>');
+            }
+        });
+    });
+
+    getBikeTypes(bikeTypes => {
+        $('select[bike-types = "true"]').each(function () {
+            for (var i = 0; i < bikeTypes.length; i++) {
+                $(this).append('<option value="' + bikeTypes[i]['@id'] + '">' + bikeTypes[i]['label'] + '</option>');
+            }
+        });
+    });
+
+    getFeatures(features => {
+        $('select[feature-types = "true"]').each(function () {
+            for (var i = 0; i < features.length; i++) {
+                $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
+            }
+        });
+    });
+
 
     $('.plus_button_input').on('click', function () {
         var parent = $(this).parent().clone(true);
@@ -93,6 +182,32 @@ const domainName = $('#domainName').text();
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
+        });
+
+        newSection.find('.ol-point-map').each(function () {
+            $(this).empty();
+            let newMap = $(this).attr('id') + '_';
+            $(this).attr('id', newMap);
+            let newClear = $(this).prev().attr('id') + '_';
+            $(this).prev().attr('id', newClear);
+            let newLat = $(this).next().find('input').attr('id') + '_';
+            $(this).next().find('input').attr('id', newLat);
+            let newLon = $(this).next().next().find('input').attr('id') + '_';
+            $(this).next().next().find('input').attr('id', newLon);
+
+            initPointMap(newMap, newLat, newLon, newClear);
+        });
+
+        newSection.find('.ol-polygon-map').each(function () {
+            $(this).empty();
+            let newMap = $(this).attr('id') + '_';
+            $(this).attr('id', newMap);
+            let newClear = $(this).prev().attr('id') + '_';
+            $(this).prev().attr('id', newClear);
+            let newPoly = $(this).next().find('input').attr('id') + '_';
+            $(this).next().find('input').attr('id', newPoly);
+
+            initPolygonMap(newMap, newPoly, newClear);
         });
 
         return false;

@@ -8,7 +8,7 @@
             <div class="wrap-contact100-section">
                 <div class="wrap-input100 validate-input bg1" data-validate="Please enter a valid URI">
                     <span class="label-input100">Parking Facility URI *</span>
-                    <input class="input100" type="url" name="@id" placeholder="Enter the parking facility URI">
+                    <input class="input100" type="url" name="@id" placeholder="For example: http://data.gent.be/parkings/fiets/35677">
                 </div>
 
                 <div class="wrap-input100 validate-input bg1 rs2-wrap-input100" data-validate="Enter the facility name">
@@ -37,7 +37,7 @@
                 </div>
 
                 <span class="contact100-form-subsection">
-                    Location
+                    Address Information
                 </span>
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 validate-input bg1" data-validate="Enter the street name">
@@ -57,40 +57,14 @@
                         <textarea class="input100" name="address.description" placeholder="Describe how to arrive here"></textarea>
                     </div>
 
-                    <span class="contact100-form-subsubsection" style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
-                        Select the Parking Facility location in the map:
-                    </span>
-                    <input id="clear-point" type="button" value="clear" style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
-
-                    <div id="point-map" style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-
-                    <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
-                        <span class="label-input100">Latitude *</span>
-                        <input class="input100" type="text" name="location.latitude" placeholder="Enter the latitude">
-                    </div>
-                    <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
-                        <span class="label-input100">Longitude *</span>
-                        <input class="input100" type="text" name="location.longitude" placeholder="Enter the longitude">
-                    </div>
-
-                    <span class="contact100-form-subsubsection" style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
-                        Draw the Parking Facility geometry in the map:
-                    </span>
-                    <input id="clear-polygon" type="button" value="clear" style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
-
-                    <div id="polygon-map" style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-
-                    <div class="wrap-input100 bg1" style="float: left">
-                        <span class="label-input100">Geo Polygon</span>
-                        <input class="input100" type="text" name="location.polygon" placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))">
-                    </div>
                     <div class="wrap-input100 bg1" style="float: left">
                         <span class="label-input100">Map URL</span>
-                        <input class="input100" type="url" name="map" placeholder="Enter the map URL">
+                        <input class="input100" type="url" name="map.url" placeholder="Enter the map URL">
                     </div>
                     <div class="wrap-input100 bg1" style="float: left">
                         <span class="label-input100">Close To</span>
-                        <input class="input100" type="text" name="closeTo" style="float: left; width: 90%;" placeholder="Enter the name of nearby known place">
+                        <input class="input100" type="text" name="closeTo._Place.name" style="float: left; width: 90%;"
+                            placeholder="Enter the name of a nearby known place">
                         <input type="image" class="plus_button_input" src="static/images/icons/plus.png" style="float: left; width: 25px;">
                     </div>
                 </div>
@@ -101,7 +75,7 @@
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 bg1 rs3-wrap-input100">
                         <span class="label-input100">Organization URL</span>
-                        <input class="input100" type="url" name="dataOwner" placeholder="Enter the organization URL">
+                        <input class="input100" type="url" name="dataOwner.@id" placeholder="Enter the organization URL">
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
                         <span class="label-input100">Organization Name *</span>
@@ -115,11 +89,11 @@
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 bg1 rs3-wrap-input100">
                         <span class="label-input100">Organization URL</span>
-                        <input class="input100" type="url" name="facilityOwner" placeholder="Enter the organization URL">
+                        <input class="input100" type="url" name="ownedBy.@id" placeholder="Enter the organization URL">
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
                         <span class="label-input100">Organization Name *</span>
-                        <input class="input100" type="text" name="facilityOwner.companyName" placeholder="Enter the organization name">
+                        <input class="input100" type="text" name="ownedBy.companyName" placeholder="Enter the organization name">
                     </div>
                 </div>
 
@@ -129,11 +103,11 @@
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 bg1 rs3-wrap-input100">
                         <span class="label-input100">Organization URL</span>
-                        <input class="input100" type="url" name="facilityOperator" placeholder="Enter the organization URL">
+                        <input class="input100" type="url" name="operatedBy.@id" placeholder="Enter the organization URL">
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
                         <span class="label-input100">Organization Name *</span>
-                        <input class="input100" type="text" name="facilityOperator.companyName" placeholder="Enter the organization name">
+                        <input class="input100" type="text" name="operatedBy.companyName" placeholder="Enter the organization name">
                     </div>
                 </div>
 
@@ -154,12 +128,33 @@
                         <input class="input100" type="text" name="contactPoint.telephone" placeholder="Enter the contact telephone">
                     </div>
 
+                    <span class="contact100-form-subsection">
+                        Available Languages
+                    </span>
+                    <div class="wrap-contact100-subsection">
+                        <div class="wrap-input100 input100-select bg1" style="float: left; width: 92%;">
+                            <span class="label-input100">Language</span>
+                            <div>
+                                <select name="contactPoint.availableLanguage" class="js-select2" name="feature">
+                                    <option value="">Select a Language</option>
+                                    <option value="nl">Dutch</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                    <option value="en">English</option>
+                                    <option value="es">Spanish</option>
+                                </select>
+                                <div class="dropDownSelect2"></div>
+                            </div>
+                        </div>
+                        <input type="image" class="plus_button_select" src="static/images/icons/plus.png" style="position: relative; float: left; width: 25px; top: 32px; left: 10px;">
+                    </div>
+
                     <span class="contact100-form-subsection" style="width: 90%; float: left;">
-                        Opening Hours
+                        Hours Available
                     </span>
                     <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 30px;">
 
-                    <div class="wrap-contact100-subsection">
+                    <div name="contactPoint.hoursAvailable" class="wrap-contact100-subsection">
                         <div class="wrap-input100" style="padding: 18px 0px 9px 150px">
                             <span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox"
                                 name="Mon">
@@ -176,13 +171,14 @@
                             <span class="label-input100">Sun </span><input class="opening-checkbox" type="checkbox"
                                 name="Sun">
                         </div>
-                        <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid opening time">
-                            <span class="label-input100">Opening Time *</span>
-                            <input class="input100" type="number" min="0" max="23" name="contactPoint.open" placeholder="Enter the opening time">
+                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                            <span class="label-input100">Opening Time</span>
+                            <input class="input100" type="number" min="0" max="23" name="contactPoint.hoursAvailable.opens"
+                                placeholder="Enter the opening time">
                         </div>
-                        <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid closing time">
-                            <span class="label-input100">Closing Time *</span>
-                            <input class="input100" type="number" min="0" max="23" name="contactPoint.close"
+                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                            <span class="label-input100">Closing Time</span>
+                            <input class="input100" type="number" min="0" max="23" name="contactPoint.hoursAvailable.closes"
                                 placeholder="Enter the closing time">
                         </div>
                     </div>
@@ -200,12 +196,17 @@
                     <div class="wrap-contact100-subsection">
                         <div class="wrap-input100 bg1" style="float: left">
                             <span class="label-input100">Photo URL</span>
-                            <input class="input100" type="url" name="photo" style="float: left; width: 90%;"
+                            <input class="input100" type="url" name="photos._Photograph.image" style="float: left; width: 90%;"
                                 placeholder="Enter the photo URL">
                         </div>
-                        <div class="wrap-input100 bg0" style="float: left">
-                            <span class="label-input100">Description</span>
-                            <textarea class="input100" name="photo.description" placeholder="Describe your photo"></textarea>
+                        <div class="wrap-input100 input100-select bg1" style="float: left;">
+                            <span class="label-input100">About</span>
+                            <div>
+                                <select terms="true" name="photos._Photograph.about" class="js-select2" name="feature">
+                                    <option value="">Select the Photo's topic</option>
+                                </select>
+                                <div class="dropDownSelect2"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,13 +225,8 @@
                     <div class="wrap-input100 input100-select bg1" style="float: left">
                         <span class="label-input100">Parking Type</span>
                         <div>
-                            <select class="js-select2" name="service">
-                                <option value="">Select Parking Type</option>
-                                <option value="PermanentPersonnelSupervision">Permanent Personnel Supervision</option>
-                                <option value="LimitedPersonnelSupervision">Limited Personnel Supervision</option>
-                                <option value="NoPersonnelSupervision">No Personnel Supervision</option>
-                                <option value="NeighborhoodParking">Neighborhood Parking</option>
-                                <option value="BicycleCase">Bicycle Case</option>
+                            <select name="@type" parking-types="true" class="js-select2">
+                                <option value="http://schema.mobivoc.org/BicycleParkingStation">Bicycle Parking Station</option>
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
@@ -242,20 +238,12 @@
                     <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
                         <span class="label-input100">Public Access</span>
                         <div>
-                            <select class="js-select2" name="service">
+                            <select class="js-select2" name="publicAccess">
                                 <option value="true">Yes</option>
                                 <option value="false">No</option>
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
-                    </div>
-                    <div class="wrap-input100 bg1" style="float: left;">
-                        <span class="label-input100">Intended Audience</span>
-                        <input class="input100" type="text" name="intendedAudience" placeholder="Enter the intended audience (e.g. general public)">
-                    </div>
-                    <div class="wrap-input100 bg1" style="float: left;">
-                        <span class="label-input100">Restrictions</span>
-                        <input class="input100" type="text" name="restrictions" placeholder="Enter the restrictions">
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
                         <span class="label-input100">Maximum storage time (days) *</span>
@@ -266,12 +254,20 @@
                         <input class="input100" type="number" name="minimumStorageTime" placeholder="Enter the amount of minutes">
                     </div>
                     <div class="wrap-input100 bg1" style="float: left;">
-                        <span class="label-input100">Removal Conditions</span>
-                        <input class="input100" type="text" name="removalConditions" placeholder="Enter the removal conditions">
+                        <span class="label-input100">Intended Audience</span>
+                        <input class="input100" type="text" name="intendedAudience" placeholder="Enter the intended audience (e.g. general public, neighborhood residents)">
                     </div>
-                    <div class="wrap-input100 bg1" style="float: left;">
+                    <div class="wrap-input100 bg0" style="float:left;">
+                        <span class="label-input100">Restrictions</span>
+                        <textarea class="input100" name="restrictions" placeholder="Enter the restrictions (e.g. maximum 2 bikes per resident)"></textarea>
+                    </div>
+                    <div class="wrap-input100 bg0" style="float:left;">
+                        <span class="label-input100">Removal Conditions</span>
+                        <textarea class="input100" name="removalConditions" placeholder="Describe the conditions to be met for removing a bike (e.g. exceed maximum storage time)"></textarea>
+                    </div>
+                    <div class="wrap-input100 bg0" style="float:left;">
                         <span class="label-input100">Post Removal Action</span>
-                        <input class="input100" type="text" name="postRemovalActions" placeholder="Enter the post removal action">
+                        <textarea class="input100" name="postRemovalAction" placeholder="Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"></textarea>
                     </div>
 
                     <span class="contact100-form-subsection" style="width: 90%; float: left;">
@@ -279,7 +275,7 @@
                     </span>
                     <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 30px;">
 
-                    <div class="wrap-contact100-subsection">
+                    <div name="openingHoursSpecification" class="wrap-contact100-subsection">
                         <div class="wrap-input100" style="padding: 18px 0px 9px 150px">
                             <span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox"
                                 name="Mon">
@@ -298,11 +294,12 @@
                         </div>
                         <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid opening time">
                             <span class="label-input100">Opening Time *</span>
-                            <input class="input100" type="number" min="0" max="23" name="contactPoint.open" placeholder="Enter the opening time">
+                            <input class="input100" type="number" min="0" max="23" name="openingHoursSpecification.opens"
+                                placeholder="Enter the opening time">
                         </div>
                         <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid closing time">
                             <span class="label-input100">Closing Time *</span>
-                            <input class="input100" type="number" min="0" max="23" name="contactPoint.close"
+                            <input class="input100" type="number" min="0" max="23" name="openingHoursSpecification.closes"
                                 placeholder="Enter the closing time">
                         </div>
                     </div>
@@ -311,17 +308,35 @@
                         Location
                     </span>
                     <div class="wrap-contact100-subsection">
+                        <span class="contact100-form-subsubsection" style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
+                            Select the Parking Facility location in the map:
+                        </span>
+                        <input id="clear-point" type="button" value="clear" style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+
+                        <div id="point-map" class="ol-point-map" style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+
                         <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
                             <span class="label-input100">Latitude *</span>
-                            <input class="input100" type="text" name="latitude" placeholder="Enter the latitude">
+                            <input id="point_lat" class="input100" type="text" name="geo._GeoCoordinates.latitude"
+                                placeholder="Enter the latitude">
                         </div>
                         <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
                             <span class="label-input100">Longitude *</span>
-                            <input class="input100" type="text" name="longitude" placeholder="Enter the longitude">
+                            <input id="point_lon" class="input100" type="text" name="geo._GeoCoordinates.longitude"
+                                placeholder="Enter the longitude">
                         </div>
+
+                        <span class="contact100-form-subsubsection" style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
+                            Draw the Parking Facility geometry in the map:
+                        </span>
+                        <input id="clear-polygon" type="button" value="clear" style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+
+                        <div id="polygon-map" class="ol-polygon-map" style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+
                         <div class="wrap-input100 bg1" style="float: left">
                             <span class="label-input100">Geo Polygon</span>
-                            <input class="input100" type="text" name="polygon" placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))">
+                            <input id="poly_string" class="input100" type="text" name="geo._GeoShape.polygon"
+                                placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))">
                         </div>
 
                         <span class="contact100-form-subsubsection" style="width: 89%; float: left;">
@@ -330,17 +345,25 @@
                         <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 25px;">
 
                         <div class="wrap-contact100-subsection">
-                            <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
-                                <span class="label-input100">Latitude *</span>
-                                <input class="input100" type="text" name="latitude" placeholder="Enter the latitude">
+                            <span class="contact100-form-subsubsection" style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
+                                Select the Entrance location in the map:
+                            </span>
+                            <input id="clear-entrance-point" type="button" value="clear" style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+
+                            <div id="entrance-point-map" class="ol-point-map" style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+                            <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                <span class="label-input100">Latitude</span>
+                                <input id="entrance_lat" class="input100" type="text" name="entrance._Entrance.geo.latitude"
+                                    placeholder="Enter the latitude">
                             </div>
-                            <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
-                                <span class="label-input100">Longitude *</span>
-                                <input class="input100" type="text" name="longitude" placeholder="Enter the longitude">
+                            <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                <span class="label-input100">Longitude</span>
+                                <input id="entrance_lon" class="input100" type="text" name="entrance._Entrance.geo.longitude"
+                                    placeholder="Enter the longitude">
                             </div>
                             <div class="wrap-input100 bg0" style="float: left">
                                 <span class="label-input100">Description</span>
-                                <textarea class="input100" name="photo.description" placeholder="Describe how to get here"></textarea>
+                                <textarea class="input100" name="entrance._Entrance.description" placeholder="Describe how to get here"></textarea>
                             </div>
                         </div>
 
@@ -350,23 +373,31 @@
                         <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 25px;">
 
                         <div class="wrap-contact100-subsection">
-                            <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
-                                <span class="label-input100">Latitude *</span>
-                                <input class="input100" type="text" name="latitude" placeholder="Enter the latitude">
+                            <span class="contact100-form-subsubsection" style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
+                                Select the Exit location in the map:
+                            </span>
+                            <input id="clear-exit-point" type="button" value="clear" style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+
+                            <div id="exit-point-map" class="ol-point-map" style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+                            <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                <span class="label-input100">Latitude</span>
+                                <input id="exit_lat" class="input100" type="text" name="exit._Exit.geo.latitude"
+                                    placeholder="Enter the latitude">
                             </div>
-                            <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the longitude">
-                                <span class="label-input100">Longitude *</span>
-                                <input class="input100" type="text" name="longitude" placeholder="Enter the longitude">
+                            <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                <span class="label-input100">Longitude</span>
+                                <input id="exit_lon" class="input100" type="text" name="exit._Exit.geo.longitude"
+                                    placeholder="Enter the longitude">
                             </div>
                             <div class="wrap-input100 bg0" style="float: left">
                                 <span class="label-input100">Description</span>
-                                <textarea class="input100" name="photo.description" placeholder="Describe how to get here"></textarea>
+                                <textarea class="input100" name="exit._Exit.description" placeholder="Describe how to get here"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <span class="contact100-form-subsection">
-                        Types of Allowed Bicycles
+                        Types of Bicycles Allowed
                     </span>
                     <div class="wrap-contact100-subsection">
                         <span class="contact100-form-subsubsection" style="width: 89%; float: left;">
@@ -378,23 +409,19 @@
                             <div class="wrap-input100 input100-select bg1">
                                 <span class="label-input100">Bicycle Type</span>
                                 <div>
-                                    <select class="js-select2" name="bicycleType">
-                                        <option value="RegularBicycle">Regular Bicycle</option>
-                                        <option value="ElectricBicycle">Electric Bicycle</option>
-                                        <option value="CargoBicycle">Cargo Bicycle</option>
-                                        <option value="TandemBicycle">Tandem Bicycle</option>
-                                    </select>
+                                    <select class="js-select2" name="allows._AllowedBicycle.bicycleType" bike-types="true"></select>
                                     <div class="dropDownSelect2"></div>
                                 </div>
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
                                 <span class="label-input100">Capacity</span>
-                                <input class="input100" type="number" name="bicycleAmount" placeholder="Enter the allowed capacity">
+                                <input class="input100" type="number" name="allows._AllowedBicycle.bicycleAmount"
+                                    placeholder="Enter the allowed capacity">
                             </div>
                             <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
                                 <span class="label-input100">Counting System</span>
                                 <div>
-                                    <select class="js-select2" name="countingSystem">
+                                    <select class="js-select2" name="allows._AllowedBicycle.countingSystem">
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
@@ -409,25 +436,54 @@
                         Section Features
                     </span>
                     <div class="wrap-contact100-subsection">
-                        <div class="wrap-input100 input100-select bg1" style="float: left; width: 92%;">
-                            <span class="label-input100">Feature</span>
-                            <div>
-                                <select class="js-select2" name="feature">
-                                    <option value="">Select a Feature</option>
-                                    <option value="CameraSurveillance">Camera Surveillance</option>
-                                    <option value="ElectronicAccess">Electronic Access</option>
-                                    <option value="BicyclePump">Bicycle Pump</option>
-                                    <option value="MaintenanceService">Maintenance Service</option>
-                                    <option value="ElectronicAccess">Electronic Access</option>
-                                    <option value="ChargingPoint">Charging Point</option>
-                                    <option value="Lockers">Lockers</option>
-                                    <option value="Toilets">Toilets</option>
-                                    <option value="BikeRental">Bike Rental</option>
-                                </select>
-                                <div class="dropDownSelect2"></div>
+                        <span class="contact100-form-subsubsection" style="width: 89%; float: left;">
+                            Feature
+                        </span>
+                        <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 25px;">
+                        <div class="wrap-contact100-subsection">
+                            <div class="wrap-input100 input100-select bg1" style="float: left;">
+                                <span class="label-input100">Feature</span>
+                                <div>
+                                    <select class="js-select2" name="amenityFeature._@type" feature-types="true">
+                                        <option value="">Select a Feature</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                            </div>
+                            <span class="contact100-form-subsubsection" style="width: 90%; float: left;">
+                                Hours Available
+                            </span>
+                            <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 23px;">
+
+                            <div name="amenityFeature._@type.hoursAvailable" class="wrap-contact100-subsection">
+                                <div class="wrap-input100" style="padding: 18px 0px 9px 110px">
+                                    <span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox"
+                                        name="Mon">
+                                    <span class="label-input100">Tue </span><input class="opening-checkbox" type="checkbox"
+                                        name="Tue">
+                                    <span class="label-input100">Wed </span><input class="opening-checkbox" type="checkbox"
+                                        name="Wed">
+                                    <span class="label-input100">Thu </span><input class="opening-checkbox" type="checkbox"
+                                        name="Thu">
+                                    <span class="label-input100">Fri </span><input class="opening-checkbox" type="checkbox"
+                                        name="Fri">
+                                    <span class="label-input100">Sat </span><input class="opening-checkbox" type="checkbox"
+                                        name="Sat">
+                                    <span class="label-input100">Sun </span><input class="opening-checkbox" type="checkbox"
+                                        name="Sun">
+                                </div>
+                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                    <span class="label-input100">Opening Time</span>
+                                    <input class="input100" type="number" min="0" max="23" name="amenityFeature._@type.hoursAvailable.opens"
+                                        placeholder="Enter the opening time">
+                                </div>
+                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                    <span class="label-input100">Closing Time</span>
+                                    <input class="input100" type="number" min="0" max="23" name="amenityFeature._@type.hoursAvailable.closes"
+                                        placeholder="Enter the closing time">
+                                </div>
                             </div>
                         </div>
-                        <input type="image" class="plus_button_select" src="static/images/icons/plus.png" style="position: relative; float: left; width: 25px; top: 32px; left: 10px;">
                     </div>
 
                     <span class="contact100-form-subsection">
@@ -436,7 +492,8 @@
                     <div class="wrap-contact100-subsection">
                         <div class="wrap-input100 bg1">
                             <span class="label-input100">Costs Description</span>
-                            <input class="input100" type="url" name="priceSpecification.url" placeholder="Enter the link to costs description">
+                            <input class="input100" type="url" name="priceSpecification._PriceSpecification.url"
+                                placeholder="Enter the link to the costs description">
                         </div>
 
                         <span class="contact100-form-subsubsection" style="width: 89%; float: left;">
@@ -448,7 +505,7 @@
                             <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
                                 <span class="label-input100">Free of Charge</span>
                                 <div>
-                                    <select class="js-select2" name="freeOfCharge">
+                                    <select class="js-select2" name="priceSpecification._PriceSpecification.freeOfCharge">
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
@@ -457,12 +514,13 @@
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
                                 <span class="label-input100">Price</span>
-                                <input class="input100" type="number" name="price" placeholder="Enter the price">
+                                <input class="input100" type="number" name="priceSpecification._PriceSpecification.price"
+                                    placeholder="Enter the price">
                             </div>
                             <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
                                 <span class="label-input100">Currency</span>
                                 <div>
-                                    <select class="js-select2" name="currency">
+                                    <select class="js-select2" name="priceSpecification._PriceSpecification.currency">
                                         <option value="EUR">EUR</option>
                                         <option value="GBP">GBP</option>
                                         <option value="USD">USD</option>
@@ -473,7 +531,7 @@
                             <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
                                 <span class="label-input100">Overnight</span>
                                 <div>
-                                    <select class="js-select2" name="Overnight">
+                                    <select class="js-select2" name="priceSpecification._PriceSpecification.dueForTime.overnight">
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
@@ -482,16 +540,18 @@
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
                                 <span class="label-input100">Time Start Value</span>
-                                <input class="input100" type="number" name="timeStartValue" placeholder="Enter the start value">
+                                <input class="input100" type="number" name="priceSpecification._PriceSpecification.dueForTime.timeStartValue"
+                                    placeholder="Enter the start value">
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
                                 <span class="label-input100">Time End Value</span>
-                                <input class="input100" type="number" name="timeEndValue" placeholder="Enter the end value">
+                                <input class="input100" type="number" name="priceSpecification._PriceSpecification.dueForTime.timeEndValue"
+                                    placeholder="Enter the end value">
                             </div>
                             <div class="wrap-input100 input100-select bg1" style="float: left">
                                 <span class="label-input100">Time Unit</span>
                                 <div>
-                                    <select class="js-select2" name="timeUnit">
+                                    <select class="js-select2" name="priceSpecification._PriceSpecification.dueForTime.timeUnit">
                                         <option value="hour">Hour</option>
                                         <option value="minute">Minute</option>
                                         <option value="second">Second</option>
@@ -504,7 +564,7 @@
                             </div>
                             <div class="wrap-input100 bg0" style="float: left">
                                 <span class="label-input100">Description</span>
-                                <textarea class="input100" name="priceSpecification.description" placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+                                <textarea class="input100" name="priceSpecification._PriceSpecification.description" placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
                             </div>
                         </div>
                     </div>
