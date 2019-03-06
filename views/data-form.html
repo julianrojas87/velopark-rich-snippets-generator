@@ -1,11 +1,11 @@
 <div class="container-contact100">
     <div class="wrap-contact100">
-        <form class="contact100-form validate-form">
+        <form class="contact100-form validate-form" novalidate>
             <span class="contact100-form-section">
                 General Information
             </span>
 
-            <div class="wrap-contact100-section">
+            <div id="general-information" class="wrap-contact100-section">
                 <div class="wrap-input100 validate-input bg1" data-validate="Please enter a valid URI">
                     <span class="label-input100">Parking Facility URI *</span>
                     <input class="input100" type="url" name="@id" placeholder="For example: http://data.gent.be/parkings/fiets/35677">
@@ -16,8 +16,8 @@
                     <input class="input100" type="text" name="name" placeholder="Parking facility name ">
                 </div>
 
-                <div class="wrap-input100 bg1 rs2-wrap-input100">
-                    <span class="label-input100">Local Identifier</span>
+                <div class="wrap-input100 validate-input bg1 rs2-wrap-input100" data-validate="Enter the identifier">
+                    <span class="label-input100">Local Identifier *</span>
                     <input class="input100" type="text" name="identifier" placeholder="Facility local ID">
                 </div>
 
@@ -41,16 +41,12 @@
                 </span>
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 validate-input bg1" data-validate="Enter the street name">
-                        <span class="label-input100">Street Name *</span>
-                        <input class="input100" type="text" name="address.streetName" placeholder="Enter the street name">
+                        <span class="label-input100">Street Name and Number*</span>
+                        <input class="input100" type="text" name="address.streetAddress" placeholder="Enter the street name">
                     </div>
-                    <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the street number">
-                        <span class="label-input100">Street Number *</span>
-                        <input class="input100" type="text" name="address.streetNumber" placeholder="Enter the street number">
-                    </div>
-                    <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the postal code">
+                    <div class="wrap-input100 validate-input bg1" data-validate="Enter the postal code">
                         <span class="label-input100">Postal Code *</span>
-                        <input class="input100" type="text" name="address.postalCode" placeholder="Enter the postal code">
+                        <input class="input100" type="number" name="address.postalCode" placeholder="Enter the postal code">
                     </div>
                     <div class="wrap-input100 bg0" style="float:left;">
                         <span class="label-input100">Address Description</span>
@@ -59,7 +55,7 @@
 
                     <div class="wrap-input100 bg1" style="float: left">
                         <span class="label-input100">Map URL</span>
-                        <input class="input100" type="url" name="map.url" placeholder="Enter the map URL">
+                        <input class="input100" type="url" name="hasMap.url" placeholder="Enter the map URL">
                     </div>
                     <div class="wrap-input100 bg1" style="float: left">
                         <span class="label-input100">Close To</span>
@@ -74,8 +70,8 @@
                 </span>
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 bg1 rs3-wrap-input100">
-                        <span class="label-input100">Organization URL</span>
-                        <input class="input100" type="url" name="dataOwner.@id" placeholder="Enter the organization URL">
+                        <span class="label-input100">Organization Website</span>
+                        <input class="input100" type="url" name="dataOwner.@id" placeholder="Enter the organization Website">
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
                         <span class="label-input100">Organization Name *</span>
@@ -88,8 +84,8 @@
                 </span>
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 bg1 rs3-wrap-input100">
-                        <span class="label-input100">Organization URL</span>
-                        <input class="input100" type="url" name="ownedBy.@id" placeholder="Enter the organization URL">
+                        <span class="label-input100">Organization Website</span>
+                        <input class="input100" type="url" name="ownedBy.@id" placeholder="Enter the organization Website">
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
                         <span class="label-input100">Organization Name *</span>
@@ -102,8 +98,8 @@
                 </span>
                 <div class="wrap-contact100-subsection">
                     <div class="wrap-input100 bg1 rs3-wrap-input100">
-                        <span class="label-input100">Organization URL</span>
-                        <input class="input100" type="url" name="operatedBy.@id" placeholder="Enter the organization URL">
+                        <span class="label-input100">Organization Website</span>
+                        <input class="input100" type="url" name="operatedBy.@id" placeholder="Enter the organization Website">
                     </div>
                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the organization name">
                         <span class="label-input100">Organization Name *</span>
@@ -135,7 +131,7 @@
                         <div class="wrap-input100 input100-select bg1" style="float: left; width: 92%;">
                             <span class="label-input100">Language</span>
                             <div>
-                                <select name="contactPoint.availableLanguage" class="js-select2" name="feature">
+                                <select name="contactPoint.availableLanguage._Language.name" class="js-select2">
                                     <option value="">Select a Language</option>
                                     <option value="nl">Dutch</option>
                                     <option value="fr">French</option>
@@ -157,29 +153,27 @@
                     <div name="contactPoint.hoursAvailable" class="wrap-contact100-subsection">
                         <div class="wrap-input100" style="padding: 18px 0px 9px 150px">
                             <span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox"
-                                name="Mon">
+                                value="http://schema.org/Monday">
                             <span class="label-input100">Tue </span><input class="opening-checkbox" type="checkbox"
-                                name="Tue">
+                                value="http://schema.org/Tuesday">
                             <span class="label-input100">Wed </span><input class="opening-checkbox" type="checkbox"
-                                name="Wed">
+                                value="http://schema.org/Wednesday">
                             <span class="label-input100">Thu </span><input class="opening-checkbox" type="checkbox"
-                                name="Thu">
+                                value="http://schema.org/Thursday">
                             <span class="label-input100">Fri </span><input class="opening-checkbox" type="checkbox"
-                                name="Fri">
+                                value="http://schema.org/Friday">
                             <span class="label-input100">Sat </span><input class="opening-checkbox" type="checkbox"
-                                name="Sat">
+                                value="http://schema.org/Saturday">
                             <span class="label-input100">Sun </span><input class="opening-checkbox" type="checkbox"
-                                name="Sun">
+                                value="http://schema.org/Sunday">
                         </div>
                         <div class="wrap-input100 bg1 rs3-wrap-input100">
                             <span class="label-input100">Opening Time</span>
-                            <input class="input100" type="number" min="0" max="23" name="contactPoint.hoursAvailable.opens"
-                                placeholder="Enter the opening time">
+                            <input class="input100" type="time" placeholder="Enter the opening time">
                         </div>
                         <div class="wrap-input100 bg1 rs3-wrap-input100">
                             <span class="label-input100">Closing Time</span>
-                            <input class="input100" type="number" min="0" max="23" name="contactPoint.hoursAvailable.closes"
-                                placeholder="Enter the closing time">
+                            <input class="input100" type="time" placeholder="Enter the closing time">
                         </div>
                     </div>
                 </div>
@@ -202,7 +196,7 @@
                         <div class="wrap-input100 input100-select bg1" style="float: left;">
                             <span class="label-input100">About</span>
                             <div>
-                                <select terms="true" name="photos._Photograph.about" class="js-select2" name="feature">
+                                <select terms="true" name="photos._Photograph.about" class="js-select2">
                                     <option value="">Select the Photo's topic</option>
                                 </select>
                                 <div class="dropDownSelect2"></div>
@@ -221,7 +215,7 @@
                 </span>
                 <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 30px;">
 
-                <div class="wrap-contact100-subsection">
+                <div parking-section="true" class="wrap-contact100-subsection">
                     <div class="wrap-input100 input100-select bg1" style="float: left">
                         <span class="label-input100">Parking Type</span>
                         <div>
@@ -278,29 +272,27 @@
                     <div name="openingHoursSpecification" class="wrap-contact100-subsection">
                         <div class="wrap-input100" style="padding: 18px 0px 9px 150px">
                             <span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox"
-                                name="Mon">
+                                value="http://schema.org/Monday">
                             <span class="label-input100">Tue </span><input class="opening-checkbox" type="checkbox"
-                                name="Tue">
+                                value="http://schema.org/Tuesday">
                             <span class="label-input100">Wed </span><input class="opening-checkbox" type="checkbox"
-                                name="Wed">
+                                value="http://schema.org/Wednesday">
                             <span class="label-input100">Thu </span><input class="opening-checkbox" type="checkbox"
-                                name="Thu">
+                                value="http://schema.org/Thursday">
                             <span class="label-input100">Fri </span><input class="opening-checkbox" type="checkbox"
-                                name="Fri">
+                                value="http://schema.org/Friday">
                             <span class="label-input100">Sat </span><input class="opening-checkbox" type="checkbox"
-                                name="Sat">
+                                value="http://schema.org/Saturday">
                             <span class="label-input100">Sun </span><input class="opening-checkbox" type="checkbox"
-                                name="Sun">
+                                value="http://schema.org/Sunday">
                         </div>
                         <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid opening time">
                             <span class="label-input100">Opening Time *</span>
-                            <input class="input100" type="number" min="0" max="23" name="openingHoursSpecification.opens"
-                                placeholder="Enter the opening time">
+                            <input class="input100" type="time" placeholder="Enter the opening time">
                         </div>
                         <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a valid closing time">
                             <span class="label-input100">Closing Time *</span>
-                            <input class="input100" type="number" min="0" max="23" name="openingHoursSpecification.closes"
-                                placeholder="Enter the closing time">
+                            <input class="input100" type="time" placeholder="Enter the closing time">
                         </div>
                     </div>
 
@@ -315,7 +307,7 @@
 
                         <div id="point-map" class="ol-point-map" style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
 
-                        <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter latitude">
+                        <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter the latitude">
                             <span class="label-input100">Latitude *</span>
                             <input id="point_lat" class="input100" type="text" name="geo._GeoCoordinates.latitude"
                                 placeholder="Enter the latitude">
@@ -414,14 +406,15 @@
                                 </div>
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
-                                <span class="label-input100">Capacity</span>
-                                <input class="input100" type="number" name="allows._AllowedBicycle.bicycleAmount"
+                                <span class="label-input100">Capacity *</span>
+                                <input class="input100" type="number" name="allows._AllowedBicycle.bicyclesAmount"
                                     placeholder="Enter the allowed capacity">
                             </div>
                             <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
                                 <span class="label-input100">Counting System</span>
                                 <div>
                                     <select class="js-select2" name="allows._AllowedBicycle.countingSystem">
+                                        <option value="">Select</option>
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
@@ -444,7 +437,7 @@
                             <div class="wrap-input100 input100-select bg1" style="float: left;">
                                 <span class="label-input100">Feature</span>
                                 <div>
-                                    <select class="js-select2" name="amenityFeature._@type" feature-types="true">
+                                    <select class="js-select2" name="amenityFeature._.@type" feature-types="true">
                                         <option value="">Select a Feature</option>
                                     </select>
                                     <div class="dropDownSelect2"></div>
@@ -455,32 +448,30 @@
                             </span>
                             <input type="image" class="plus_button_section" src="static/images/icons/plus.png" style="float: left; width: 23px;">
 
-                            <div name="amenityFeature._@type.hoursAvailable" class="wrap-contact100-subsection">
+                            <div name="amenityFeature._.hoursAvailable" class="wrap-contact100-subsection">
                                 <div class="wrap-input100" style="padding: 18px 0px 9px 110px">
                                     <span class="label-input100">Mon </span><input class="opening-checkbox" type="checkbox"
-                                        name="Mon">
+                                        value="http://schema.org/Monday">
                                     <span class="label-input100">Tue </span><input class="opening-checkbox" type="checkbox"
-                                        name="Tue">
+                                        value="http://schema.org/Tuesday">
                                     <span class="label-input100">Wed </span><input class="opening-checkbox" type="checkbox"
-                                        name="Wed">
+                                        value="http://schema.org/Wednesday">
                                     <span class="label-input100">Thu </span><input class="opening-checkbox" type="checkbox"
-                                        name="Thu">
+                                        value="http://schema.org/Thursday">
                                     <span class="label-input100">Fri </span><input class="opening-checkbox" type="checkbox"
-                                        name="Fri">
+                                        value="http://schema.org/Friday">
                                     <span class="label-input100">Sat </span><input class="opening-checkbox" type="checkbox"
-                                        name="Sat">
+                                        value="http://schema.org/Saturday">
                                     <span class="label-input100">Sun </span><input class="opening-checkbox" type="checkbox"
-                                        name="Sun">
+                                        value="http://schema.org/Sunday">
                                 </div>
                                 <div class="wrap-input100 bg1 rs3-wrap-input100">
                                     <span class="label-input100">Opening Time</span>
-                                    <input class="input100" type="number" min="0" max="23" name="amenityFeature._@type.hoursAvailable.opens"
-                                        placeholder="Enter the opening time">
+                                    <input class="input100" type="time" placeholder="Enter the opening time">
                                 </div>
                                 <div class="wrap-input100 bg1 rs3-wrap-input100">
                                     <span class="label-input100">Closing Time</span>
-                                    <input class="input100" type="number" min="0" max="23" name="amenityFeature._@type.hoursAvailable.closes"
-                                        placeholder="Enter the closing time">
+                                    <input class="input100" type="time" placeholder="Enter the closing time">
                                 </div>
                             </div>
                         </div>
@@ -506,13 +497,14 @@
                                 <span class="label-input100">Free of Charge</span>
                                 <div>
                                     <select class="js-select2" name="priceSpecification._PriceSpecification.freeOfCharge">
+                                        <option value="">Select</option>
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
                                     <div class="dropDownSelect2"></div>
                                 </div>
                             </div>
-                            <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+                            <div class="wrap-input100 bg1 rs3-wrap-input100">
                                 <span class="label-input100">Price</span>
                                 <input class="input100" type="number" name="priceSpecification._PriceSpecification.price"
                                     placeholder="Enter the price">
@@ -521,6 +513,7 @@
                                 <span class="label-input100">Currency</span>
                                 <div>
                                     <select class="js-select2" name="priceSpecification._PriceSpecification.currency">
+                                        <option value="">Select currency</option>
                                         <option value="EUR">EUR</option>
                                         <option value="GBP">GBP</option>
                                         <option value="USD">USD</option>
@@ -532,18 +525,19 @@
                                 <span class="label-input100">Overnight</span>
                                 <div>
                                     <select class="js-select2" name="priceSpecification._PriceSpecification.dueForTime.overnight">
+                                        <option value="">Select</option>
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
                                     <div class="dropDownSelect2"></div>
                                 </div>
                             </div>
-                            <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+                            <div class="wrap-input100 bg1 rs3-wrap-input100">
                                 <span class="label-input100">Time Start Value</span>
                                 <input class="input100" type="number" name="priceSpecification._PriceSpecification.dueForTime.timeStartValue"
                                     placeholder="Enter the start value">
                             </div>
-                            <div class="wrap-input100 validate-input bg1 rs3-wrap-input100" data-validate="Enter a value">
+                            <div class="wrap-input100 bg1 rs3-wrap-input100">
                                 <span class="label-input100">Time End Value</span>
                                 <input class="input100" type="number" name="priceSpecification._PriceSpecification.dueForTime.timeEndValue"
                                     placeholder="Enter the end value">
@@ -552,6 +546,7 @@
                                 <span class="label-input100">Time Unit</span>
                                 <div>
                                     <select class="js-select2" name="priceSpecification._PriceSpecification.dueForTime.timeUnit">
+                                        <option value="">Select time unit</option>
                                         <option value="hour">Hour</option>
                                         <option value="minute">Minute</option>
                                         <option value="second">Second</option>
@@ -564,7 +559,8 @@
                             </div>
                             <div class="wrap-input100 bg0" style="float: left">
                                 <span class="label-input100">Description</span>
-                                <textarea class="input100" name="priceSpecification._PriceSpecification.description" placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+                                <textarea class="input100" name="priceSpecification._PriceSpecification.description"
+                                    placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
                             </div>
                         </div>
                     </div>

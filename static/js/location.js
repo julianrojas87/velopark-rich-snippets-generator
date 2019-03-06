@@ -54,15 +54,27 @@ function initPointMap(target, latid, lonid, clear) {
         let coordinates = ol.proj.toLonLat(event.feature.getGeometry().getCoordinates());
         let lat = coordinates[1];
         let long = coordinates[0];
+        let latInput = $('#' + latid);
+        let lonInput = $('#' + lonid);
 
-        $('#' + latid).val(lat);
-        $('#' + lonid).val(long);
+        latInput.val(lat);
+        lonInput.val(long);
+
+        if(latInput.parent().hasClass('validate-input')) {
+            fullValidation(latInput);
+        }
+
+        if(lonInput.parent().hasClass('validate-input')) {
+            fullValidation(lonInput);
+        }
     });
 
     $('#' + clear).click(() => {
         pointSource.clear();
         $('#' + latid).val('');
+        hideValidate($('#' + latid));
         $('#' + lonid).val('');
+        hideValidate($('#' + lonid));
     });
 }
 

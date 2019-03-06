@@ -2,548 +2,34 @@
 
     /*==================================================================
     [ Generate and show JSON-LD script ]*/
-    var json = {
-        "@context": {
-            "xsd": "http://www.w3.org/2001/XMLSchema#",
-            "schema": "http://schema.org/",
-            "mv": "http://schema.mobivoc.org/",
-            "dct": "http://purl.org/dc/terms#",
-            "dbo": "http://dbpedia.org/ontology/",
-            "gr": "http://purl.org/goodrelations/v1#",
-            "vp": "http://openvelopark.be/vocabulary/",
-            "PostalAddress": "schema:PostalAddress",
-            "GeoCoordinates": "schema:GeoCoordinates",
-            "GeoShape": "schema:GeoShape",
-            "Map": "schema:Map",
-            "ContactPoint": "schema:ContactPoint",
-            "WebSite": "schema:WebSite",
-            "PriceSpecification": "schema:PriceSpecification",
-            "Photograph": "schema:Photograph",
-            "Place": "schema:Place",
-            "BicycleParkingStation": "mv:BicycleParkingStation",
-            "Entrance": "mv:ParkingFacilityEntrance",
-            "Exit": "mv:ParkingFacilityExit",
-            "RealTimeCapacity": "mv:RealTimeCapacity",
-            "TimeSpecification": "mv:TimeSpecification",
-            "PermanentPersonnelSupervision": "vp:PermanentPersonnelSupervision",
-            "LimitedPersonnelSupervision": "vp:LimitedPersonnelSupervision",
-            "NoPersonnelSupervision": "vp:NoPersonnelSupervision",
-            "NeighborhoodParking": "vp:NeighborhoodParking",
-            "BicycleCase": "vp:BicycleCase",
-            "AllowedBicycle": "vp:AllowedBicycle",
-            "RegularBicycle": "vp:RegularBicycle",
-            "ElectricBicycle": "vp:ElectricBicycle",
-            "CargoBicycle": "vp:CargoBicycle",
-            "TandemBicycle": "vp:TandemBicycle",
-            "CameraSurveillance": "vp:CameraSurveillance",
-            "ElectronicAccess": "vp:ElectronicAccess",
-            "BicyclePump": "vp:BicyclePump",
-            "MaintenanceService": "vp:MaintenanceService",
-            "ChargingPoint": "vp:ChargingPoint",
-            "LockerService": "vp:LockerService",
-            "ToiletService": "vp:ToiletService",
-            "BikeRentalService": "vp:BikeRentalService",
-            "BusinessEntity": "gr:BusinessEntity",
-            "address": "schema:address",
-            "geo": "schema:geo",
-            "map": "schema:hasMap",
-            "url": "schema:url",
-            "image": "schema:image",
-            "contactPoint": "schema:contactPoint",
-            "interactionService": "schema:interactionService",
-            "capacity": "mv:capacity",
-            "dueForTime": "mv:dueForTime",
-            "ownedBy": "mv:ownedBy",
-            "operatedBy": "mv:operatedBy",
-            "dataOwner": "vp:dataOwner",
-            "rights": "dct:rights",
-            "description": {
-                "@id": "schema:description",
-                "@type": "xsd:string"
-            },
-            "dateModified": {
-                "@id": "schema:dateModified",
-                "@type": "xsd:dateTime"
-            },
-            "name": {
-                "@id": "schema:name",
-                "@container": "@set"
-            },
-            "value": {
-                "@id": "schema:value",
-                "@type": "xsd:boolean"
-            },
-            "postalCode": {
-                "@id": "schema:postalCode",
-                "@type": "xsd:integer"
-            },
-            "streetAddress": {
-                "@id": "schema:streetAddress",
-                "@type": "xsd:string"
-            },
-            "polygon": {
-                "@id": "schema:polygon",
-                "@type": "xsd:string"
-            },
-            "latitude": {
-                "@id": "schema:latitude",
-                "@type": "xsd:double"
-            },
-            "longitude": {
-                "@id": "schema:longitude",
-                "@type": "xsd:double"
-            },
-            "startDate": {
-                "@id": "schema:startDate",
-                "@type": "xsd:dateTime"
-            },
-            "endDate": {
-                "@id": "schema:endDate",
-                "@type": "xsd:dateTime"
-            },
-            "openingHours": {
-                "@id": "schema:openingHours",
-                "@type": "xsd:string"
-            },
-            "contactType": {
-                "@id": "schema:contactType",
-                "@type": "xsd:string"
-            },
-            "email": {
-                "@id": "schema:email",
-                "@type": "xsd:string"
-            },
-            "telephone": {
-                "@id": "schema:telephone",
-                "@type": "xsd:string"
-            },
-            "availableLanguage": {
-                "@id": "schema:availableLanguage",
-                "@container": "@set"
-            },
-            "publicAccess": {
-                "@id": "schema:publicAccess",
-                "@type": "xsd:boolean"
-            },
-            "priceSpecification": {
-                "@id": "schema:priceSpecification",
-                "@container": "@set"
-            },
-            "price": {
-                "@id": "schema:price",
-                "@type": "xsd:double"
-            },
-            "currency": {
-                "@id": "schema:priceCurrency",
-                "@type": "xsd:string"
-            },
-            "amenityFeature": {
-                "@id": "schema:amenityFeature",
-                "@container": "@set"
-            },
-            "photos": {
-                "@id": "schema:photos",
-                "@container": "@set"
-            },
-            "entrance": {
-                "@id": "mv:entrance",
-                "@container": "@set"
-            },
-            "exit": {
-                "@id": "mv:exit",
-                "@container": "@set"
-            },
-            "numberOfLevels": {
-                "@id": "mv:numberOfLevels",
-                "@type": "xsd:integer"
-            },
-            "totalCapacity": {
-                "@id": "mv:totalCapacity",
-                "@type": "xsd:integer"
-            },
-            "currentValue": {
-                "@id": "mv:currentValue",
-                "@type": "xsd:integer"
-            },
-            "freeOfCharge": {
-                "@id": "mv:freeOfCharge",
-                "@type": "xsd:boolean"
-            },
-            "overnight": {
-                "@id": "mv:overnight",
-                "@type": "xsd:boolean"
-            },
-            "timeStartValue": {
-                "@id": "mv:timeStartValue",
-                "@type": "xsd:double"
-            },
-            "timeEndValue": {
-                "@id": "mv:timeEndValue",
-                "@type": "xsd:double"
-            },
-            "timeUnit": {
-                "@id": "mv:timeUnit",
-                "@type": "xsd:string"
-            },
-            "allowed": {
-                "@id": "vp:allowed",
-                "@container": "@set"
-            },
-            "minimumStorageTime": {
-                "@id": "vp:minimumStorageTime",
-                "@type": "xsd:duration"
-            },
-            "maximumStorageTime": {
-                "@id": "vp:maximumStorageTime",
-                "@type": "xsd:duration"
-            },
-            "intendedAudience": {
-                "@id": "vp:intendedAudience",
-                "@type": "xsd:string"
-            },
-            "restrictions": {
-                "@id": "vp:restrictions",
-                "@type": "xsd:string"
-            },
-            "removalConditions": {
-                "@id": "vp:removalConditions",
-                "@type": "xsd:string"
-            },
-            "postRemovalAction": {
-                "@id": "vp:postRemovalAction",
-                "@type": "xsd:string"
-            },
-            "bicycleType": {
-                "@id": "vp:bicycleType",
-                "@type": "@id"
-            },
-            "bicyclesAmount": {
-                "@id": "vp:bicyclesAmount",
-                "@type": "xsd:integer"
-            },
-            "countingSystem": {
-                "@id": "vp:countingSystem",
-                "@type": "xsd:boolean"
-            },
-            "companyName": {
-                "@id": "gr:legalName",
-                "@type": "xsd:string"
-            },
-            "identifier": {
-                "@id": "dct:identifier",
-                "@type": "xsd:string"
-            },
-            "date": {
-                "@id": "dct:date",
-                "@type": "xsd:dateTime"
-            },
-            "closeTo": {
-                "@id": "dbo:closeTo",
-                "@container": "@set"
-            }
-        },
-        "@id": "http://data.gent.be/parking/bikes/546213",
-        "@type": "BicycleParkingStation",
-        "dateModified": "2019-01-20T08:35:15.000Z",
-        "dataOwner": {
-            "@id": "https://fietsambassade.gent.be",
-            "@type": "BusinessEntity",
-            "companyName": "Fietsambassade Gent"
-        },
-        "identifier": "546213",
-        "name": [
-            {
-                "@value": "Gent Sint-Pieters",
-                "@language": "nl"
-            },
-            {
-                "@value": "Gand Saint-Pierre",
-                "@language": "fr"
-            }
-        ],
-        "totalCapacity": 450,
-        "capacity": {
-            "@type": "RealTimeCapacity",
-            "currentValue": 133,
-            "date": "2018-11-08T14:42:00.000Z"
-        },
-        "ownedBy": {
-            "@id": "https://www.wikidata.org/wiki/Q1296",
-            "@type": "BusinessEntity",
-            "companyName": "Stad Gent"
-        },
-        "operatedBy": {
-            "@id": "https://www.wikidata.org/wiki/Q524255",
-            "@type": "BusinessEntity",
-            "companyName": "NMBS"
-        },
-        "address": {
-            "@id": "http://data.vlaanderen.be/id/adres/243766",
-            "@type": "PostalAddress",
-            "postalCode": 9000,
-            "streetAddress": "Koningin Maria Hendrikaplein 1",
-            "description": "Onder Gent Sint-Pieters trein station"
-        },
-        "geo": [
-            {
-                "@type": "GeoCoordinates",
-                "latitude": 51.0369388,
-                "longitude": 3.7078917
-            },
-            {
-                "@type": "GeoShape",
-                "polygon": "POLYGON ((30 10, 40 40, 20 40, 10 20))"
-            }
-        ],
-        "map": {
-            "@type": "Map",
-            "url": "http://parking.nmbs.be/gent-sint-pieters/map.png"
-        },
-        "closeTo": [
-            {
-                "@type": "Place",
-                "name": [
-                    {
-                        "@value": "Grote Markt",
-                        "@language": "nl"
-                    }
-                ]
-            }
-        ],
-        "startDate": "1996-11-23T08:00:00.000Z",
-        "endDate": "2050-12-31T23:59:59.000Z",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "customer service",
-            "email": "parking@nmbs.be",
-            "telephone": "+3292101010",
-            "availableLanguage": ["nl", "fr", "en"],
-            "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00"
-        },
-        "interactionService": {
-            "@type": "WebSite",
-            "url": "http://parking.nmbs.be/gent-sint-pieters"
-        },
-        "photos": [
-            {
-                "@type": "Photograph",
-                "image": "http://data.gent.be/pic/546213_1.png",
-                "description": "Facility entrance."
-            },
-            {
-                "@type": "Photograph",
-                "image": "http://data.gent.be/pic/546213_2.png",
-                "description": "Bicycle pump."
-            }
-        ],
-        "rights": "https://tinyurl.com/yb3ywacm",
-        "@graph": [
-            {
-                "@id": "http://data.gent.be/parking/bikes/546213#secured",
-                "@type": "PermanentPersonnelSupervision",
-                "openingHours": "Mo,Tu,We,Th 09:00-12:00",
-                "maximumStorageTime": "P30D",
-                "publicAccess": false,
-                "intendedAudience": "Residents in Ghent",
-                "restrictions": "Only one bicycle per resident",
-                "removalConditions": "Bicycle left outside parking racks. Bicycle left for more than 30 days.",
-                "postRemovalAction": "Contact APCOA on 0473 33 89 11",
-                "numberOfLevels": 2,
-                "totalCapacity": 250,
-                "capacity": {
-                    "@type": "RealTimeCapacity",
-                    "currentValue": 133,
-                    "date": "2018-11-08T14:42:00.000Z"
-                },
-                "allowed": [
-                    {
-                        "@type": "AllowedBicycle",
-                        "bicycleType": "vp:RegularBicycle",
-                        "bicyclesAmount": 100,
-                        "countingSystem": true
-                    },
-                    {
-                        "@type": "AllowedBicycle",
-                        "bicycleType": "vp:ElectricBicycle",
-                        "bicyclesAmount": 100,
-                        "countingSystem": true
-                    },
-                    {
-                        "@type": "AllowedBicycle",
-                        "bicycleType": "vp:CargoBicycle",
-                        "bicyclesAmount": 50,
-                        "countingSystem": true
-                    }
-                ],
-                "geo": [
-                    {
-                        "@type": "GeoCoordinates",
-                        "latitude": 51.0369388,
-                        "longitude": 3.7078917
-                    },
-                    {
-                        "@type": "GeoShape",
-                        "polygon": "POLYGON ((30 10, 40 40, 20 40, 10 20))"
-                    }
-                ],
-                "entrance": [
-                    {
-                        "@type": "Entrance",
-                        "geo": {
-                            "@type": "GeoCoordinates",
-                            "latitude": 51.0369388,
-                            "longitude": 3.7078917
-                        },
-                        "description": "U rijdt de parking binnen via de Pakhuisstraat, naast het voormalige postgebouw"
-                    }
-                ],
-                "priceSpecification": [
-                    {
-                        "@type": "PriceSpecification",
-                        "freeOfCharge": true,
-                        "price": 0.00,
-                        "currency": "EUR",
-                        "url": "http://parking.nmbs.be/parking/prices",
-                        "dueForTime": {
-                            "@type": "TimeSpecification",
-                            "overnight": false,
-                            "timeStartValue": 0.0,
-                            "timeEndValue": 1.0,
-                            "timeUnit": "hour"
-                        },
-                        "description": "Free for the first hour"
-                    },
-                    {
-                        "@type": "PriceSpecification",
-                        "freeOfCharge": false,
-                        "price": 3.00,
-                        "priceCurrency": "EUR",
-                        "url": "http://parking.nmbs.be/parking/prices",
-                        "dueForTime": {
-                            "@type": "TimeSpecification",
-                            "overnight": false,
-                            "timeStartValue": 1.0,
-                            "timeEndValue": 2.0,
-                            "timeUnit": "hour"
-                        },
-                        "description": "Each hour after the first costs 3 EUR"
-                    }
-                ],
-                "amenityFeature": [
-                    {
-                        "@type": "CameraSurveillance",
-                        "value": true
-                    },
-                    {
-                        "@type": "BicyclePump",
-                        "value": true
-                    },
-                    {
-                        "@type": "MaintenanceService",
-                        "value": false
-                    }
-                ]
-            },
-            {
-                "@id": "http://data.gent.be/parking/bikes/546213#unsecured",
-                "@type": "NoPersonnelSupervision",
-                "openingHours": "Mo,Tu,We,Th 09:00-12:00",
-                "maximumStorageTime": "P90D",
-                "publicAccess": true,
-                "intendedAudience": "General public",
-                "removalConditions": "Bicycle left for more than 90 days.",
-                "postRemovalAction": "Contact APCOA on 0473 33 89 11",
-                "numberOfLevels": 1,
-                "totalCapacity": 200,
-                "capacity": {
-                    "@type": "RealTimeCapacity",
-                    "currentValue": 133,
-                    "date": "2018-11-08T14:42:00.000Z"
-                },
-                "allowed": [
-                    {
-                        "@type": "AllowedBicycle",
-                        "bicycleType": "vp:RegularBicycle",
-                        "bicyclesAmount": 100,
-                        "countingSystem": false
-                    },
-                    {
-                        "@type": "AllowedBicycle",
-                        "bicycleType": "vp:ElectricBicycle",
-                        "bicyclesAmount": 100,
-                        "countingSystem": false
-                    }
-                ],
-                "geo": [
-                    {
-                        "@type": "GeoCoordinates",
-                        "latitude": 51.0369388,
-                        "longitude": 3.7078917
-                    },
-                    {
-                        "@type": "GeoShape",
-                        "polygon": "POLYGON ((30 10, 40 40, 20 40, 10 20))"
-                    }
-                ],
-                "entrance": [
-                    {
-                        "@type": "Entrance",
-                        "geo": {
-                            "@type": "GeoCoordinates",
-                            "latitude": 51.0369388,
-                            "longitude": 3.7078917
-                        },
-                        "description": "U rijdt de parking binnen via de Pakhuisstraat, naast het voormalige postgebouw"
-                    }
-                ],
-                "priceSpecification": [
-                    {
-                        "@type": "PriceSpecification",
-                        "freeOfCharge": true,
-                        "price": 0.00,
-                        "currency": "EUR",
-                        "url": "http://parking.nmbs.be/parking/prices",
-                        "dueForTime": {
-                            "@type": "TimeSpecification",
-                            "overnight": true,
-                            "timeStartValue": 0.0,
-                            "timeEndValue": 90.0,
-                            "timeUnit": "day"
-                        },
-                        "description": "Free for 90 days"
-                    }
-                ],
-                "amenityFeature": [
-                    {
-                        "@type": "CameraSurveillance",
-                        "value": false
-                    },
-                    {
-                        "@type": "BicyclePump",
-                        "value": true
-                    },
-                    {
-                        "@type": "MaintenanceService",
-                        "value": false
-                    }
-                ]
-            }
-        ]
-    };
-    $('#ld-script').html(JSON.stringify(json, null, 4));
-
     $('#ld_generate').on('click', () => {
         var check = true;
+        let wrongInput = null;
 
         for (var i = 0; i < input.length; i++) {
             if (validate(input[i]) == false) {
+                wrongInput = input[i];
                 showValidate(input[i]);
                 check = false;
+                break;
             }
         }
+
         if (check) {
-            $('.overlay').toggle();
-            $('.jsonld').toggle();
+            // JSON-LD skeleton already containing the predefined @context and data structure
+            loadAPSkeleton().then(jsonld => {
+                mapData(jsonld).then(() => {
+                    resultingObject = jsonld;
+                    $('#ld-script').html(JSON.stringify(jsonld, null, 4));
+                    hljs.highlightBlock(document.querySelectorAll('pre code')[0]);
+                    $('.overlay').toggle();
+                    $('.jsonld').toggle();
+                });
+            });
+        } else {
+            $('html, body').animate({
+                scrollTop: $(wrongInput).offset().top - 200
+            }, 500);
         }
 
         return false;
@@ -552,6 +38,270 @@
     $('#close_button').on('click', () => {
         $('.overlay').toggle();
         $('.jsonld').toggle();
+        resultingObject = null;
     });
-    
+
+    $('#save_button').on('click', () => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        let username = $('#user-email').text().trim();
+
+        $.ajax({
+            type: "POST",
+            url: domain + '/save-parking',
+            data: { 'user': username, 'jsonld': JSON.stringify(resultingObject) },
+            success: () => {
+                alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+            }
+        });
+
+        return false;
+    });
+
 })(jQuery);
+
+var resultingObject = null;
+var context = null;
+loadAPSkeleton().then(jsonld => {
+    context = jsonld['@context'];
+});
+
+function loadAPSkeleton() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: 'https://velopark.ilabt.imec.be/openvelopark/application-profile',
+            success: data => resolve(data),
+            error: e => reject(e)
+        });
+    });
+}
+
+async function mapData(jsonld) {
+    let general = $('#general-information').find('[name]');
+    processGeneral(jsonld, general);
+    let sections = $('div[parking-section="true"]');
+    await processSections(jsonld, sections);
+    fillAutomaticData(jsonld);
+    cleanEmptyValues(jsonld);
+}
+
+function processGeneral(jsonld, general) {
+    for (let i = 0; i < general.length; i++) {
+        let element = $(general[i]);
+        processElement(jsonld, element);
+    }
+}
+
+async function processSections(jsonld, sections) {
+    for (let i = 0; i < sections.length; i++) {
+        let inputs = $(sections[i]).find('[name]');
+        if (i > 0) {
+            jsonld['@graph'].push((await loadAPSkeleton())['@graph'][0]);
+        }
+        for (let j = 0; j < inputs.length; j++) {
+            processElement(jsonld['@graph'][i], $(inputs[j]));
+        }
+    }
+}
+
+function fillAutomaticData(jsonld) {
+    jsonld['dateModified'] = (new Date()).toISOString();
+    for (let i = 0; i < jsonld['@graph'].length; i++) {
+        let tc = 0;
+        for (let j = 0; j < jsonld['@graph'][i]['allows'].length; j++) {
+            tc += jsonld['@graph'][i]['allows'][j]['bicyclesAmount'] != '' ? parseInt(jsonld['@graph'][i]['allows'][j]['bicyclesAmount']) : 0;
+        }
+
+        jsonld['@graph'][i]['totalCapacity'] = tc;
+    }
+}
+
+function cleanEmptyValues(obj) {
+
+    // DO NOT REMOVE AMENITY FEATURES WHEN THEY DON'T DEFINE OPENING HOURS!!!
+
+    let keys = Object.keys(obj);
+    for (let i in keys) {
+        if (Array.isArray(obj[`${keys[i]}`])) {
+            for (let j = obj[`${keys[i]}`].length - 1; j >= 0; j--) {
+                cleanEmptyValues(obj[`${keys[i]}`][j]);
+                let l = Object.keys(obj[`${keys[i]}`][j]);
+                if (l.length == 0 || (l.length == 1 && l[0] == '@type')) {
+                    obj[`${keys[i]}`].splice(j, 1);
+                }
+            }
+            if (obj[`${keys[i]}`].length == 1) {
+                let l = Object.keys(obj[`${keys[i]}`][0]);
+                if (l.length == 0 || (l.length == 1 && l[0] == '@type')) {
+                    delete obj[`${keys[i]}`];
+                }
+            }
+
+            if (obj[`${keys[i]}`].length == 0) {
+                delete obj[`${keys[i]}`];
+            }
+        } else if (typeof obj[`${keys[i]}`] == 'object') {
+            cleanEmptyValues(obj[`${keys[i]}`]);
+            let k = Object.keys(obj[`${keys[i]}`]);
+            if (k.length == 0 || (k.length == 1 && k[0] == '@type')) {
+                delete obj[`${keys[i]}`];
+            }
+        } else {
+            if (obj[`${keys[i]}`] === '') {
+                delete obj[`${keys[i]}`];
+            }
+        }
+    }
+}
+
+
+function processElement(jsonld, element) {
+    let dName = element.attr('name').split('.');
+    if (dName.length < 2) {
+        jsonld[`${dName[0]}`] = setElementValue(element, jsonld[`${dName[0]}`], dName[0]);
+    } else {
+        let temp_obj = jsonld;
+
+        for (let i = 0; i < dName.length; i++) {
+            // If last element of dName proceed to assign value
+            if (i == dName.length - 1) {
+                // Handle special case for geo array
+                if (dName[i - 1] == '_GeoCoordinates') {
+                    temp_obj[0][`${dName[i]}`] = setElementValue(element, temp_obj[0][`${dName[i]}`], dName[i]);
+                } else if (dName[i - 1].startsWith('_')) {
+                    // Check if it is an array (name starts with _)
+                    let length = temp_obj.length - 1;
+                    if (!temp_obj[length][`${dName[i]}`] || temp_obj[length][`${dName[i]}`] == '' || element.is('div')) {
+                        temp_obj[length][`${dName[i]}`] = setElementValue(element, temp_obj[length][`${dName[i]}`] || [], dName[i]);
+                    } else {
+                        let newObj = {};
+                        newObj['@type'] = dName[i - 1].substring(1);
+                        newObj[`${dName[i]}`] = setElementValue(element, newObj[`${dName[i]}`], dName[i]);
+                        temp_obj.push(newObj);
+                    }
+                } else {
+                    //Is not an array. Add value to referenced object
+                    temp_obj[`${dName[i]}`] = setElementValue(element, temp_obj[`${dName[i]}`], dName[i]);
+                }
+            } else {
+                // Ignore if current name starts with _
+                if (!dName[i].startsWith('_')) {
+                    // Check if current name exists already
+                    if (!temp_obj[`${dName[i]}`]) {
+                        if (dName[i + 1].startsWith('_')) {
+                            // It does not exist and it's an array. Create it and add an empty object
+                            temp_obj[`${dName[i]}`] = [];
+                            temp_obj[`${dName[i]}`].push({
+                                '@type': dName[i + 1].substring(1)
+                            });
+                        } else {
+                            // It does not exist and is not an array. Create a new empty object
+                            if (!dName[i - 1].startsWith('_')) {
+                                temp_obj[`${dName[i]}`] = {};
+                            }
+                        }
+                    }
+
+                    if (i > 0 && dName[i - 1].startsWith('_')) {
+                        let x = temp_obj[temp_obj.length - 1][`${dName[i]}`];
+                        if (x) {
+                            if (x[`${dName[i + 1]}`] && x[`${dName[i + 1]}`] != '') {
+                                let type = temp_obj[temp_obj.length - 1][`${dName[i]}`]['@type'];
+                                temp_obj.push({
+                                    '@type': dName[i - 1].substring(1),
+                                    [dName[i]]: {
+                                        "@type": type
+                                    }
+                                })
+
+                            }
+                            temp_obj = temp_obj[temp_obj.length - 1][`${dName[i]}`];
+                        } else {
+                            let type = temp_obj[temp_obj.length - 2][`${dName[i]}`]['@type'];
+                            temp_obj[temp_obj.length - 1][`${dName[i]}`] = {
+                                "@type": type
+                            };
+                            temp_obj = temp_obj[temp_obj.length - 1][`${dName[i]}`];
+                        }
+                    } else {
+                        // It already exists and is not an array. Keep a reference of this object for next iteration
+                        temp_obj = temp_obj[`${dName[i]}`];
+                    }
+                }
+            }
+        }
+    }
+}
+
+function setElementValue(el, jsonEl, name) {
+    if (el.is('input') || el.is('textarea')) {
+        jsonEl = formatValue(name, el.val());
+        return jsonEl;
+    } else if (el.is('select')) {
+        jsonEl = formatValue(name, el.find(':selected').val());
+        return jsonEl;
+    } else if (el.is('div')) {
+        let options = el.find('input[type="checkbox"]:checked');
+        let opcl = el.find('input[type="time"]');
+        for (let i = 0; i < options.length; i++) {
+            let day = $(options[i]).val();
+            let newObj = {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": day,
+                "opens": $(opcl[0]).val(),
+                "closes": $(opcl[1]).val()
+            };
+            if (jsonEl.length == 1 && jsonEl[0]['opens'] == '' && jsonEl[0]['closes'] == '') {
+                jsonEl[0] = newObj;
+            } else {
+                jsonEl.push(newObj);
+            }
+        }
+
+        return jsonEl;
+    }
+}
+
+function formatValue(name, value) {
+    if (context[`${name}`]) {
+        let type = context[`${name}`]['@type'];
+        if (type) {
+            if (type == 'xsd:dateTime' && value) {
+                return (new Date(value)).toISOString();
+            }
+            if (type == 'xsd:integer' && value) {
+                try {
+                    return parseInt(value);
+                } catch (e) {
+                    return 0;
+                }
+            }
+            if (type == 'xsd:double' && value) {
+                try {
+                    return parseFloat(value);
+                } catch (e) {
+                    return 0.0;
+                }
+            }
+            if (type == 'xsd:boolean' && value) {
+                if (value == 'true') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            if (type = 'xsd:duration' && value) {
+                if (name == 'maximumStorageTime') {
+                    return 'P' + value + 'D';
+                }
+                if (name == 'minimumStorageTime') {
+                    return 'PT' + value + 'M';
+                }
+            }
+        }
+    }
+    return value;
+}

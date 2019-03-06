@@ -78,15 +78,20 @@ module.exports = app => {
 		secured home
 	*/
 
-	app.get('/home', function (req, res) {
+	app.get('/home', async function (req, res) {
 		// check if the user is logged in
 		if (req.session.user == null) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
+			let parkingData = null;
+			if(req.query.parkingId) {
+				parkingData = await Parkings.getParking(req.query.username, req.query.parkingId);
+			}
 			res.render('home.html', {
 				domainName: domainName,
-				username: req.query.username
+				username: req.query.username,
+				loadedParking: parkingData
 			});
 		}
 	});
@@ -107,6 +112,32 @@ module.exports = app => {
 				username: req.query.username,
 				parkings: parkings
 			});
+		}
+	});
+
+	app.post('/save-parking', async function (req, res) {
+		// check if the user is logged in
+		if (req.session.user == null) {
+			let domain = domainName != '' ? '/' + domainName : '';
+			res.redirect(domain + '/');
+		} else {
+			if (req.body['jsonld'] && req.body['user']) {
+				await Parkings.saveParking(req.body['user'], req.body['jsonld']);
+				res.status(200).send('ok');
+			} else {
+				res.status(400);
+			}
+		}
+	});
+
+	app.get('/get-parking', async function (req, res) {
+		// check if the user is logged in
+		if (req.session.user == null) {
+			let domain = domainName != '' ? '/' + domainName : '';
+			res.redirect(domain + '/');
+		} else {
+			let parking = await Parkings.getParking(req.query.username, req.query.parkingId);
+			res.json(JSON.parse(parking));
 		}
 	});
 

@@ -17,20 +17,6 @@
     /*==================================================================
     [ Validate ]*/
 
-    $('.validate-form').on('submit', function () {
-        var check = true;
-
-        for (var i = 0; i < input.length; i++) {
-            if (validate(input[i]) == false) {
-                showValidate(input[i]);
-                check = false;
-            }
-        }
-
-        return check;
-    });
-
-
     $('.validate-form .input100').each(function () {
         $(this).focus(function () {
             hideValidate(this);
@@ -41,6 +27,15 @@
 })(jQuery);
 
 var input = $('.validate-input .input100');
+
+function fullValidation(input) {
+    if (validate(input) == false) {
+        showValidate(input);
+    } else {
+        hideValidate(input);
+        $(input).parent().addClass('true-validate');
+    }
+}
 
 function validate(input) {
     if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
@@ -78,5 +73,6 @@ function showValidate(input) {
 function hideValidate(input) {
     var thisAlert = $(input).parent();
     $(thisAlert).removeClass('alert-validate');
+    $(thisAlert).removeClass('true-validate');
     $(thisAlert).find('.btn-hide-validate').remove();
 }

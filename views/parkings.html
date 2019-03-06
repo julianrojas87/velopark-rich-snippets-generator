@@ -1,38 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>Velopark Rich Snippets Generator</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="static/images/icons/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/fonts/iconic/css/material-design-iconic-font.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/vendor/noui/nouislider.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="static/css/default.css">
-    <link rel="stylesheet" type="text/css" href="static/css/util.css">
-    <link rel="stylesheet" type="text/css" href="static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="static/css/navbar.css">
-    <link rel="stylesheet" type="text/css" href="static/css/parkings.css">
-    <!--===============================================================================================-->
-</head>
+<!-- head tag -->
+<% include head.html %>
 
 <body>
     <!-- Domain name to deal with reverse proxies -->
@@ -53,7 +23,7 @@
 
     <div class="container-contact100">
         <div class="wrap-contact100" style="width: 100%;">
-            <table class="table-fill">
+            <table id="parking-list" class="table-fill">
                 <thead>
                     <tr>
                         <th class="text-left">Parking Facility URI</th>
@@ -65,16 +35,17 @@
                     <% for (var i = 0; i < parkings.length; i++) { %>
                     <tr>
                         <td class="text-left">
-                            <%= parkings[i]['@id'] %>
+                            <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold;" 
+                                href="<%= parkings[i]['@id'] %>"><%= parkings[i]['@id'] %></a>
                         </td>
-                        <td class="text-left">
+                        <td class="text-left" style="font-size: 20px;">
                             <%= parkings[i]['name'] %>
                         </td>
                         <td class="text-left">
-                            <input title="Edit" type="image" id="close_button" src="static/images/icons/edit.png" style="float: left; width: 40px;">
-                            <input title="Delete" type="image" id="close_button" src="static/images/icons/delete.png"
+                            <input title="Edit" type="image" src="static/images/icons/edit.png" style="float: left; width: 40px;">
+                            <input title="Delete" type="image" src="static/images/icons/delete.png"
                                 style="position: relative; left: 10px; bottom: 2px; float: left; width: 40px;">
-                            <input title="Download" type="image" id="close_button" src="static/images/icons/download.png"
+                            <input title="Download" type="image" src="static/images/icons/download.png"
                                 style="position: relative; left: 16px; bottom: 2px; float: left; width: 40px;">
                         </td>
                     </tr>
@@ -84,37 +55,8 @@
         </div>
     </div>
 
-    <!--===============================================================================================-->
-    <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="static/vendor/animsition/js/animsition.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="static/vendor/bootstrap/js/popper.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="static/vendor/select2/select2.min.js"></script>
-    <script>
-        $(".js-select2").each(function () {
-            $(this).select2({
-                minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
-            });
-        });
-    </script>
-    <!--===============================================================================================-->
-    <script src="static/vendor/daterangepicker/moment.min.js"></script>
-    <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
-    <!--===============================================================================================-->
-    <script src="static/vendor/countdowntime/countdowntime.js"></script>
-    <!--===============================================================================================-->
-    <script src="static/vendor/highlight/js/highlight.pack.js"></script>
-    <!--===============================================================================================-->
-    <script src="static/js/main.js"></script>
-    <script src="static/js/validator.js"></script>
-    <script src="static/js/loginController.js"></script>
-    <script src="static/js/router.js"></script>
-    <script src="static/js/navbar.js"></script>
-    <script src="static/js/ld-mapper.js"></script>
+    <!-- JS scripts-->
+    <% include scripts.html %>
+    
 </body>
-
 </html>

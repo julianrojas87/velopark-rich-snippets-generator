@@ -4,6 +4,7 @@ const N3 = require('n3');
 const request = require('request');
 
 const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 
 exports.initUser = username => {
     fs.mkdirSync('./data/' + username);
@@ -18,13 +19,22 @@ exports.listParkings = async username => {
         await Promise.all(parkings.map(async parking => {
             let tdata = {};
             let parkingData = JSON.parse(await readFile('./data/' + username + '/' + parking, 'utf8'));
-            tdata['@id'] = decodeURIComponent(parking.substring(0, parking.indexOf('.json')));
-            tdata['name'] = parkingData['name'][0]['@value'];
+            tdata['@id'] = decodeURIComponent(parking.substring(0, parking.indexOf('.jsonld')));
+            tdata['name'] = parkingData['name'] || '';
             tableData.push(tdata);
         }));
 
         return tableData;
     }
+}
+
+exports.saveParking = async (user, parking) => {
+    let park_obj = JSON.parse(parking);
+    await writeFile('./data/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
+}
+
+exports.getParking = async (user, parkingId) => {
+    return await readFile('./data/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
 }
 
 exports.getListOfTerms = async () => {

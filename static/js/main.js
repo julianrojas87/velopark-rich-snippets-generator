@@ -1,4 +1,4 @@
-const domainName = $('#domainName').text();
+const domainName = $('#domainName').text().trim();
 
 function getListOfTerms(done) {
     let domain = domainName != '' ? '/' + domainName : '';
@@ -56,14 +56,19 @@ function getFeatures(done) {
     });
 }
 
+function handleLoginFeatures() {
+    // Check if user is logged in
+    let userName = $('#user-email').text();
+    if (!userName || userName == '') {
+        // Hide JSON-LD view features
+        $('#save_button').remove();
+    }
+}
+
 (function ($) {
     "use strict";
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightBlock(block);
-        });
-    });
+    handleLoginFeatures();
 
     getListOfTerms(listOfTerms => {
         $('select[terms = "true"]').each(function () {
@@ -96,7 +101,6 @@ function getFeatures(done) {
             }
         });
     });
-
 
     $('.plus_button_input').on('click', function () {
         var parent = $(this).parent().clone(true);
@@ -186,13 +190,14 @@ function getFeatures(done) {
 
         newSection.find('.ol-point-map').each(function () {
             $(this).empty();
-            let newMap = $(this).attr('id') + '_';
+            let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
             $(this).attr('id', newMap);
-            let newClear = $(this).prev().attr('id') + '_';
+            let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
             $(this).prev().attr('id', newClear);
-            let newLat = $(this).next().find('input').attr('id') + '_';
+            $(this).prev().off('click');
+            let newLat = $(this).next().find('input').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
             $(this).next().find('input').attr('id', newLat);
-            let newLon = $(this).next().next().find('input').attr('id') + '_';
+            let newLon = $(this).next().next().find('input').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
             $(this).next().next().find('input').attr('id', newLon);
 
             initPointMap(newMap, newLat, newLon, newClear);
