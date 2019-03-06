@@ -120,16 +120,13 @@ function fillAutomaticData(jsonld) {
 }
 
 function cleanEmptyValues(obj) {
-
-    // DO NOT REMOVE AMENITY FEATURES WHEN THEY DON'T DEFINE OPENING HOURS!!!
-
     let keys = Object.keys(obj);
     for (let i in keys) {
         if (Array.isArray(obj[`${keys[i]}`])) {
             for (let j = obj[`${keys[i]}`].length - 1; j >= 0; j--) {
                 cleanEmptyValues(obj[`${keys[i]}`][j]);
                 let l = Object.keys(obj[`${keys[i]}`][j]);
-                if (l.length == 0 || (l.length == 1 && l[0] == '@type')) {
+                if ((l.length == 0 || (l.length == 1 && l[0] == '@type')) && keys[i] != 'amenityFeature') {
                     obj[`${keys[i]}`].splice(j, 1);
                 }
             }
