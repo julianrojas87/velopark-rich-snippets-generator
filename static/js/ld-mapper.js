@@ -15,7 +15,7 @@
             }
         }
 
-        if (check) {
+        if (!check) {
             // JSON-LD skeleton already containing the predefined @context and data structure
             loadAPSkeleton().then(jsonld => {
                 mapData(jsonld).then(() => {
@@ -72,7 +72,7 @@ function loadAPSkeleton() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: 'https://velopark.ilabt.imec.be/openvelopark/application-profile',
+            url: $('#vocabURI').text().trim() + '/openvelopark/application-profile',
             success: data => resolve(data),
             error: e => reject(e)
         });
@@ -108,14 +108,24 @@ async function processSections(jsonld, sections) {
 }
 
 function fillAutomaticData(jsonld) {
+    // Set dateModified
     jsonld['dateModified'] = (new Date()).toISOString();
+
+    // Set values for each parking section
     for (let i = 0; i < jsonld['@graph'].length; i++) {
+        // Calculate and set totalCapacity
         let tc = 0;
         for (let j = 0; j < jsonld['@graph'][i]['allows'].length; j++) {
             tc += jsonld['@graph'][i]['allows'][j]['bicyclesAmount'] != '' ? parseInt(jsonld['@graph'][i]['allows'][j]['bicyclesAmount']) : 0;
         }
-
         jsonld['@graph'][i]['totalCapacity'] = tc;
+
+        // Set amenityFeature names
+        for(let j = 0; j < jsonld['@graph'][i]['amenityFeature'].length; j++) {
+            let currObj = jsonld['@graph'][i]['amenityFeature'][j];
+            currObj['value'] = true;
+            currObj['name'] = $('option[value="' + currObj['@type'] + '"]')[0].innerHTML.trim();
+        }
     }
 }
 
@@ -126,18 +136,16 @@ function cleanEmptyValues(obj) {
             for (let j = obj[`${keys[i]}`].length - 1; j >= 0; j--) {
                 cleanEmptyValues(obj[`${keys[i]}`][j]);
                 let l = Object.keys(obj[`${keys[i]}`][j]);
-                if ((l.length == 0 || (l.length == 1 && l[0] == '@type')) && keys[i] != 'amenityFeature') {
+                if (l.length == 0 || (l.length == 1 && l[0] == '@type' && keys[i] != 'amenityFeature')) {
                     obj[`${keys[i]}`].splice(j, 1);
                 }
             }
             if (obj[`${keys[i]}`].length == 1) {
                 let l = Object.keys(obj[`${keys[i]}`][0]);
-                if (l.length == 0 || (l.length == 1 && l[0] == '@type')) {
+                if (l.length == 0 || (l.length == 1 && l[0] == '@type' && keys[i] != 'amenityFeature')) {
                     delete obj[`${keys[i]}`];
                 }
-            }
-
-            if (obj[`${keys[i]}`].length == 0) {
+            } else if (obj[`${keys[i]}`].length == 0) {
                 delete obj[`${keys[i]}`];
             }
         } else if (typeof obj[`${keys[i]}`] == 'object') {

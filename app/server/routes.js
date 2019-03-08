@@ -4,6 +4,7 @@ const EM = require('./modules/email-dispatcher');
 const Parkings = require('./modules/parkings-manager');
 
 const domainName = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['domain'] || '';
+const vocabURI = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['vocabulary'] || 'http://velopark.ilabt.imec.be';
 
 module.exports = app => {
 
@@ -15,7 +16,7 @@ module.exports = app => {
 	app.get('/', function (req, res) {
 		// check if the user has an auto login key saved in a cookie //
 		if (req.cookies.login == undefined) {
-			res.render('index.html', { domainName: domainName });
+			res.render('index.html', { domainName: domainName, vocabURI: vocabURI });
 		} else {
 			// attempt automatic login //
 			AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) {
@@ -26,7 +27,7 @@ module.exports = app => {
 						res.redirect(domain + '/home?username=' + o.email);
 					});
 				} else {
-					res.render('index.html', { domainName: domainName });
+					res.render('index.html', { domainName: domainName, vocabURI: vocabURI });
 				}
 			});
 		}
@@ -80,7 +81,7 @@ module.exports = app => {
 
 	app.get('/home', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null) {
+		if (req.session.user == null || req.cookies.login == undefined) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
@@ -90,6 +91,7 @@ module.exports = app => {
 			}
 			res.render('home.html', {
 				domainName: domainName,
+				vocabURI: vocabURI,
 				username: req.query.username,
 				loadedParking: parkingData
 			});
@@ -102,13 +104,14 @@ module.exports = app => {
 
 	app.get('/parkings', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null) {
+		if (req.session.user == null || req.cookies.login == undefined) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
 			let parkings = await Parkings.listParkings(req.query.username);
 			res.render('parkings.html', {
 				domainName: domainName,
+				vocabURI: vocabURI,
 				username: req.query.username,
 				parkings: parkings
 			});
@@ -117,7 +120,7 @@ module.exports = app => {
 
 	app.post('/save-parking', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null) {
+		if (req.session.user == null || req.cookies.login == undefined) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
@@ -132,7 +135,7 @@ module.exports = app => {
 
 	app.get('/get-parking', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null) {
+		if (req.session.user == null || req.cookies.login == undefined) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
@@ -215,7 +218,7 @@ module.exports = app => {
 	app.post('/reset-password', function (req, res) {
 		let newPass = req.body['pass'];
 		let passKey = req.session.passKey;
-		// destory the session immediately after retrieving the stored passkey //
+		// destroy the session immediately after retrieving the stored passkey //
 		req.session.destroy();
 		AM.updatePassword(passKey, newPass, function (e, o) {
 			if (o) {

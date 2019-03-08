@@ -106,7 +106,8 @@ exports.getFeatures = async () => {
 
 async function getTermsRDF() {
     return new Promise((resolve, reject) => {
-        request('http://velopark.ilabt.imec.be/openvelopark/terms', (err, res, body) => {
+        const vocabURI = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['vocabulary'] || 'http://velopark.ilabt.imec.be';
+        request(vocabURI + '/openvelopark/terms', (err, res, body) => {
             if (err) {
                 reject();
             } else {

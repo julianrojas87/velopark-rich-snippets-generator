@@ -1,58 +1,71 @@
 const domainName = $('#domainName').text().trim();
+var loadingPromises = [];
 
-function getListOfTerms(done) {
-    let domain = domainName != '' ? '/' + domainName : '';
-    $.ajax({
-        type: "GET",
-        url: domain + '/terms',
-        success: data => {
-            done(data);
-        },
-        error: e => {
-            alert('Error: ' + e.responseText);
-        }
+function getListOfTerms() {
+    return new Promise((resolve, reject) => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/terms',
+            success: data => {
+                resolve(data);
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                reject(e);
+            }
+        });
     });
 }
 
-function getParkingTypes(done) {
-    let domain = domainName != '' ? '/' + domainName : '';
-    $.ajax({
-        type: "GET",
-        url: domain + '/parkingTypes',
-        success: data => {
-            done(data);
-        },
-        error: e => {
-            alert('Error: ' + e.responseText);
-        }
+function getParkingTypes() {
+    return new Promise((resolve, reject) => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/parkingTypes',
+            success: data => {
+                resolve(data);
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                reject(e);
+            }
+        });
     });
 }
 
 function getBikeTypes(done) {
-    let domain = domainName != '' ? '/' + domainName : '';
-    $.ajax({
-        type: "GET",
-        url: domain + '/bikeTypes',
-        success: data => {
-            done(data);
-        },
-        error: e => {
-            alert('Error: ' + e.responseText);
-        }
+    return new Promise((resolve, reject) => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/bikeTypes',
+            success: data => {
+                resolve(data);
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                reject(e);
+            }
+        });
     });
 }
 
 function getFeatures(done) {
-    let domain = domainName != '' ? '/' + domainName : '';
-    $.ajax({
-        type: "GET",
-        url: domain + '/features',
-        success: data => {
-            done(data);
-        },
-        error: e => {
-            alert('Error: ' + e.responseText);
-        }
+    return new Promise((resolve, reject) => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/features',
+            success: data => {
+                resolve(data);
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                reject(e);
+            }
+        });
     });
 }
 
@@ -70,7 +83,17 @@ function handleLoginFeatures() {
 
     handleLoginFeatures();
 
-    getListOfTerms(listOfTerms => {
+    let terms = getListOfTerms();
+    let parkingTypes = getParkingTypes();
+    let bikeTypes = getBikeTypes();
+    let features = getFeatures();
+
+    loadingPromises.push(terms);
+    loadingPromises.push(parkingTypes);
+    loadingPromises.push(bikeTypes);
+    loadingPromises.push(features);
+
+    terms.then(listOfTerms => {
         $('select[terms = "true"]').each(function () {
             for (var i = 0; i < listOfTerms.length; i++) {
                 $(this).append('<option value="' + listOfTerms[i]['@id'] + '">' + listOfTerms[i]['label'] + '</option>');
@@ -78,7 +101,7 @@ function handleLoginFeatures() {
         });
     });
 
-    getParkingTypes(parkingTypes => {
+    parkingTypes.then(parkingTypes => {
         $('select[parking-types = "true"]').each(function () {
             for (var i = 0; i < parkingTypes.length; i++) {
                 $(this).append('<option value="' + parkingTypes[i]['@id'] + '">' + parkingTypes[i]['label'] + '</option>');
@@ -86,7 +109,7 @@ function handleLoginFeatures() {
         });
     });
 
-    getBikeTypes(bikeTypes => {
+    bikeTypes.then(bikeTypes => {
         $('select[bike-types = "true"]').each(function () {
             for (var i = 0; i < bikeTypes.length; i++) {
                 $(this).append('<option value="' + bikeTypes[i]['@id'] + '">' + bikeTypes[i]['label'] + '</option>');
@@ -94,7 +117,7 @@ function handleLoginFeatures() {
         });
     });
 
-    getFeatures(features => {
+    features.then(features => {
         $('select[feature-types = "true"]').each(function () {
             for (var i = 0; i < features.length; i++) {
                 $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
