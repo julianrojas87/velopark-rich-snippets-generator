@@ -63,21 +63,6 @@
 })(jQuery);
 
 var resultingObject = null;
-var context = null;
-loadAPSkeleton().then(jsonld => {
-    context = jsonld['@context'];
-});
-
-function loadAPSkeleton() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "GET",
-            url: $('#vocabURI').text().trim() + '/openvelopark/application-profile',
-            success: data => resolve(data),
-            error: e => reject(e)
-        });
-    });
-}
 
 async function mapData(jsonld) {
     let general = $('#general-information').find('[name]');
@@ -121,10 +106,12 @@ function fillAutomaticData(jsonld) {
         jsonld['@graph'][i]['totalCapacity'] = tc;
 
         // Set amenityFeature names
-        for(let j = 0; j < jsonld['@graph'][i]['amenityFeature'].length; j++) {
+        for (let j = 0; j < jsonld['@graph'][i]['amenityFeature'].length; j++) {
             let currObj = jsonld['@graph'][i]['amenityFeature'][j];
-            currObj['value'] = true;
-            currObj['name'] = $('option[value="' + currObj['@type'] + '"]')[0].innerHTML.trim();
+            if (currObj['@type']) {
+                currObj['value'] = true;
+                currObj['name'] = $('option[value="' + currObj['@type'] + '"]')[0].innerHTML.trim();
+            }
         }
     }
 }
@@ -179,7 +166,7 @@ function processElement(jsonld, element) {
                 } else if (dName[i - 1].startsWith('_')) {
                     // Check if it is an array (name starts with _)
                     let length = temp_obj.length - 1;
-                    if (!temp_obj[length][`${dName[i]}`] || temp_obj[length][`${dName[i]}`] == '' || element.is('div')) {
+                    if (temp_obj[length][`${dName[i]}`] === undefined || temp_obj[length][`${dName[i]}`] === '' || element.is('div')) {
                         temp_obj[length][`${dName[i]}`] = setElementValue(element, temp_obj[length][`${dName[i]}`] || [], dName[i]);
                     } else {
                         let newObj = {};
@@ -291,7 +278,7 @@ function formatValue(name, value) {
                     return 0.0;
                 }
             }
-            if (type == 'xsd:boolean' && value) {
+            if (type == 'xsd:boolean' && value !== '') {
                 if (value == 'true') {
                     return true;
                 } else {

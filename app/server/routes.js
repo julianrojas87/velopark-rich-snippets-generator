@@ -81,7 +81,7 @@ module.exports = app => {
 
 	app.get('/home', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null || req.cookies.login == undefined) {
+		if (req.session.user == null) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
@@ -104,7 +104,7 @@ module.exports = app => {
 
 	app.get('/parkings', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null || req.cookies.login == undefined) {
+		if (req.session.user == null) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
@@ -120,7 +120,7 @@ module.exports = app => {
 
 	app.post('/save-parking', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null || req.cookies.login == undefined) {
+		if (req.session.user == null) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {
@@ -135,7 +135,7 @@ module.exports = app => {
 
 	app.get('/get-parking', async function (req, res) {
 		// check if the user is logged in
-		if (req.session.user == null || req.cookies.login == undefined) {
+		if (req.session.user == null) {
 			let domain = domainName != '' ? '/' + domainName : '';
 			res.redirect(domain + '/');
 		} else {

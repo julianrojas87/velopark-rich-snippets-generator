@@ -1,5 +1,17 @@
 const domainName = $('#domainName').text().trim();
 var loadingPromises = [];
+var context = null;
+
+function loadAPSkeleton() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: $('#vocabURI').text().trim() + '/openvelopark/application-profile',
+            success: data => resolve(data),
+            error: e => reject(e)
+        });
+    });
+}
 
 function getListOfTerms() {
     return new Promise((resolve, reject) => {
@@ -80,18 +92,20 @@ function handleLoginFeatures() {
 
 (function ($) {
     "use strict";
-
+    
     handleLoginFeatures();
 
     let terms = getListOfTerms();
     let parkingTypes = getParkingTypes();
     let bikeTypes = getBikeTypes();
     let features = getFeatures();
+    let contextPromise = loadAPSkeleton();
 
     loadingPromises.push(terms);
     loadingPromises.push(parkingTypes);
     loadingPromises.push(bikeTypes);
     loadingPromises.push(features);
+    loadingPromises.push(contextPromise);
 
     terms.then(listOfTerms => {
         $('select[terms = "true"]').each(function () {
@@ -123,6 +137,10 @@ function handleLoginFeatures() {
                 $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
             }
         });
+    });
+
+    contextPromise.then(jsonld => {
+        context = jsonld['@context'];
     });
 
     $('.plus_button_input').on('click', function () {
@@ -197,6 +215,30 @@ function handleLoginFeatures() {
             newSpan.remove();
             $(this).remove();
             return false;
+        });
+
+        // Fix and remove extra sections
+        newSection.find('.minus_button').each(function() {
+            $(this).off('click');
+            $(this).on('click', function() {
+                $(this).next().remove();
+                $(this).prev().remove();
+                $(this).prev().remove();
+                $(this).remove();
+            });
+            $(this).click();
+        });
+
+        newSection.find('input').each(function() {
+            if($(this).attr('type') == 'checkbox') {
+                $(this).prop('checked', false);
+            } else {
+                $(this).val('');
+            }
+        });
+
+        newSection.find('textarea').each(function() {
+            $(this).val('');
         });
 
         section.after(newSection);

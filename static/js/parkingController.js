@@ -12,12 +12,11 @@ function loadParkingValues() {
     let parkingData = $('#loadedParking').text().trim();
     if (parkingData && parkingData != '') {
         let parking = JSON.parse(parkingData);
-        console.log(parking)
         processObject(parking);
     }
 }
 
-function processObject(obj, oldPath) {
+function processObject(obj, oldPath, input) {
     let path = [];
     if (oldPath) {
         path = oldPath;
@@ -28,61 +27,140 @@ function processObject(obj, oldPath) {
         if (keys[i] != '@context') {
             path.push(keys[i]);
             if (Array.isArray(obj[keys[i]])) {
-                if (keys[i] != '@graph') {
-                    processArray(path, obj[keys[i]]);
+                if (keys[i] === '@graph') {
+                    loadSections(obj[keys[i]]);
+                } else {
+                    processArray(path, obj[keys[i]], input);
                 }
-                path.pop();
             } else if (typeof obj[keys[i]] == 'object') {
                 processObject(obj[keys[i]], path);
-                path.pop();
             } else {
-                loadParkingValue(path, obj[keys[i]]);
-                path.pop();
+                loadParkingValue(path, obj[keys[i]], false, input);
             }
-        }
-    }
-}
-
-function processArray(path, arr) {
-    let lastPath = path[path.length - 1];
-    if (['OpeningHoursSpecification', 'hoursAvailable'].indexOf(lastPath) >= 0) {
-        loadParkingValue(path, arr);
-    } else if (['photos'].indexOf(lastPath) >= 0) {
-        path.push('_' + arr[0]['@type']);
-        for (let i = 0; i < arr.length; i++) {
-            let obj = arr[i];
-            let keys = Object.keys(obj);
-            if (i > 0) {
-                let inputs = $('[name^="' + lastPath + '"]');
-                let last = $(inputs[inputs.length - 1]);
-                if (last.closest('.wrap-contact100-subsection').prev().hasClass('minus_button')) {
-                    last.closest('.wrap-contact100-subsection').prev().prev().click();
-                } else {
-                    last.closest('.wrap-contact100-subsection').prev().click();
-                }
-            }
-            for (let j in keys) {
-                path.push(keys[j]);
-                loadParkingValue(path, obj[keys[j]], true);
-                path.pop();
-            }
-        }
-    } else {
-        for (let i = 0; i < arr.length; i++) {
-            let obj = arr[i];
-            path.push('_' + obj['@type']);
-            processObject(obj, path);
             path.pop();
         }
     }
 }
 
-function loadParkingValue(path, value, override) {
+function loadSections(graph) {
+    let section = $('[parking-section="true"]');
+    for (let i in graph) {
+        if(i > 0) {
+            if(section.prev().hasClass('minus_button')) {
+                section.prev().prev().click();
+            } else {
+                section.prev().click();
+            }
+
+            section = $($('[parking-section="true"]')[$('[parking-section="true"]').length - 1]);
+        }
+        let keys = Object.keys(graph[i]);
+        let path = [];
+        for (let j in keys) {
+            path.push(keys[j]);
+            let obj = graph[i][keys[j]];
+            let input = section.find('[name^="' + keys[j] + '"]');
+            if (Array.isArray(obj)) {
+                processArray(path, obj, input);
+                path.pop();
+            } else if (typeof obj !== 'object') {
+                loadParkingValue(path, obj, true, input);
+            } else {
+                processObject(obj, path, input);
+            }
+            path.pop();
+        }
+    }
+}
+
+function processArray(path, arr, input) {
+    let lastPath = path[path.length - 1];
+    // Handle div inputs
+    if (['openingHoursSpecification', 'hoursAvailable'].indexOf(lastPath) >= 0) {
+        loadParkingValue(path, arr, false, input);
+    } else if (['photos', 'allows', 'entrance', 'exit', 'amenityFeature', 'priceSpecification'].indexOf(lastPath) >= 0) {
+        // Handle arrays that map to UI sections with multiple inputs
+        if (lastPath == 'amenityFeature') {
+            path.push('_');
+        } else {
+            path.push('_' + arr[0]['@type']);
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+            let obj = arr[i];
+            let keys = Object.keys(obj);
+            if (i > 0) {
+                let inputs = input || $('[name^="' + lastPath + '"]');
+                let last = $(inputs[inputs.length - 1]);
+                if (last.is('div')) {
+                    if (last.parent().prev().hasClass('minus_button')) {
+                        last.parent().prev().prev().click();
+                    } else {
+                        last.parent().prev().click();
+                    }
+                } else {
+                    if (last.closest('.wrap-contact100-subsection').prev().hasClass('minus_button')) {
+                        last.closest('.wrap-contact100-subsection').prev().prev().click();
+                    } else {
+                        last.closest('.wrap-contact100-subsection').prev().click();
+                    }
+                }
+
+                input = $('[name^="' + lastPath + '"]');
+            }
+            for (let j in keys) {
+                let el = null;
+                path.push(keys[j]);
+                if (input) {
+                    for (let k = input.length - 1; k >= 0; k--) {
+                        if ($(input[k]).attr('name') == path.join('.')) {
+                            el = $(input[k]);
+                            break;
+                        }
+                    }
+                }
+                if (Array.isArray(obj[keys[j]])) {
+                    processArray(path, obj[keys[j]], input);
+                } else if (typeof obj[keys[j]] === 'object') {
+                    processObject(obj[keys[j]], path, input);
+                } else {
+                    loadParkingValue(path, obj[keys[j]], true, el);
+                }
+                path.pop();
+            }
+        }
+    } else {
+        // Normal object arrays that map to a single UI input (e.g closeTo or availableLanguages)
+        for (let i = 0; i < arr.length; i++) {
+            let obj = arr[i];
+            path.push('_' + obj['@type']);
+            processObject(obj, path, input);
+            path.pop();
+        }
+    }
+}
+
+function loadParkingValue(path, value, override, inpt) {
     let name = path.join('.');
-    let input = $('[name="' + name + '"]');
-    if (input.length > 0) {
+    let input = null;
+    if (inpt) {
+        for (let k = inpt.length - 1; k >= 0; k--) {
+            if ($(inpt[k]).attr('name') == name) {
+                input = $(inpt[k]);
+                break;
+            }
+        }
+    } else {
+        input = $('[name="' + name + '"]');
+    }
+
+    // Format values according to data type
+    value = reverseFormatValue(path[path.length - 1], value);
+
+    if (input && input.length > 0) {
         input = $(input[input.length - 1]);
-        if (input.is('select') && input.find('option[value="' + value + '"]').length > 0) { // PROBLEM IS HERE: OPTION SELECTED NOT PRESENT FOR SOME REASON(?)
+        // Handle select inputs and clone if necessary
+        if (input.is('select') && input.find('option[value="' + value + '"]').length > 0) {
             if (input.val() === '' || override) {
                 input.val(value).trigger('change');
             } else {
@@ -91,7 +169,8 @@ function loadParkingValue(path, value, override) {
                 let newInput = $(inputs[inputs.length - 1]);
                 newInput.val(value).trigger('change');
             }
-        } else if (input.is('input')) {
+        } else if (input.is('input') || input.is('textarea')) {
+            // Handle text inputs and clone if necessary
             if (input.val() === '' || override) {
                 input.val(value);
             } else {
@@ -101,9 +180,14 @@ function loadParkingValue(path, value, override) {
                 newInput.val(value);
             }
         } else if (input.is('div')) {
+            // Handle div inputs and clone if necessary
             let usedDays = new Set();
             let lastOpens = null;
             let lastCloses = null;
+
+            input.find('input[type="checkbox"]').each(function () {
+                $(this).prop('checked', false);
+            });
 
             for (let i in value) {
                 let currentDay = value[i];
@@ -133,6 +217,47 @@ function loadParkingValue(path, value, override) {
             }
         }
     }
+}
+
+function valueToString(value) {
+    switch (typeof value) {
+        case 'boolean':
+            value = new Boolean(value).toString();
+            break;
+        case 'number':
+            value = new Number(value).toString();
+            break;
+    }
+    return value;
+}
+
+function reverseFormatValue(name, value) {
+    if (context[`${name}`]) {
+        let type = context[`${name}`]['@type'];
+        if (type) {
+            if (type == 'xsd:dateTime') {
+                return moment(value).format('YYYY-MM-DD');
+            }
+            if (type == 'xsd:integer') {
+                return new Number(value).toString();
+            }
+            if (type == 'xsd:double') {
+                return new Number(value).toString();
+            }
+            if (type == 'xsd:boolean') {
+                return new Boolean(value).toString();
+            }
+            if (type = 'xsd:duration') {
+                if (name == 'maximumStorageTime') {
+                    return value.substring(1).slice(0, -1);
+                }
+                if (name == 'minimumStorageTime') {
+                    return value.substring(2).slice(0, -1);
+                }
+            }
+        }
+    }
+    return value;
 }
 
 function addClickListeners() {
