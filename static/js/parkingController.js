@@ -45,8 +45,8 @@ function processObject(obj, oldPath, input) {
 function loadSections(graph) {
     let section = $('[parking-section="true"]');
     for (let i in graph) {
-        if(i > 0) {
-            if(section.prev().hasClass('minus_button')) {
+        if (i > 0) {
+            if (section.prev().hasClass('minus_button')) {
                 section.prev().prev().click();
             } else {
                 section.prev().click();
@@ -283,9 +283,27 @@ function editClick() {
 }
 
 function deleteClick() {
+    let domain = domainName != '' ? '/' + domainName : '';
+    let parkingId = $(this).parent().parent().find('a').text();
+    let userName = $('#user-email').text().trim();
 
+    if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
+        $.ajax({
+            type: "DELETE",
+            url: domain + '/delete-parking?username=' + userName + '&parkingId=' + parkingId,
+            success: () => {
+                window.location.href = domain + '/parkings?username=' + userName;
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+            }
+        });
+    }
 }
 
 function downloadClick() {
-
+    let domain = domainName != '' ? '/' + domainName : '';
+    let parkingId = $(this).parent().parent().find('a').text();
+    let userName = $('#user-email').text().trim();
+    window.location.href = domain + '/download?username=' + userName + '&parkingId=' + parkingId;
 }

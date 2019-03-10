@@ -37,6 +37,15 @@ exports.getParking = async (user, parkingId) => {
     return await readFile('./data/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
 }
 
+exports.deleteParking = (user, parkingId) => {
+    fs.unlinkSync('./data/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
+}
+
+exports.downloadParking = (user, parkingId, res) => {
+    let root = __dirname.substring(0, __dirname.indexOf('app') - 1);
+    res.download(root + '/data/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
+}
+
 exports.getListOfTerms = async () => {
     let terms = [];
     let quads = await getTermsRDF();
@@ -59,7 +68,7 @@ exports.getParkingTypes = async () => {
 
     let filtered = quads.filter(quad => quad.object.value == 'http://schema.mobivoc.org/BicycleParkingStation');
 
-    for(let p in filtered) {
+    for (let p in filtered) {
         let tq = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
         types.push({
             '@id': filtered[p].subject.value,
@@ -76,7 +85,7 @@ exports.getBikeTypes = async () => {
 
     let filtered = quads.filter(quad => quad.object.value == 'https://velopark.ilabt.imec.be/openvelopark/vocabulary#Bicycle');
 
-    for(let p in filtered) {
+    for (let p in filtered) {
         let tq = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
         types.push({
             '@id': filtered[p].subject.value,
@@ -93,7 +102,7 @@ exports.getFeatures = async () => {
 
     let filtered = quads.filter(quad => quad.object.value == 'https://velopark.ilabt.imec.be/openvelopark/vocabulary#BikeParkingFeature');
 
-    for(let p in filtered) {
+    for (let p in filtered) {
         let tq = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
         types.push({
             '@id': filtered[p].subject.value,

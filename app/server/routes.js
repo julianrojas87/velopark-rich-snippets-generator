@@ -144,6 +144,27 @@ module.exports = app => {
 		}
 	});
 
+	app.delete('/delete-parking', function (req, res) {
+		// check if the user is logged in
+		if (req.session.user == null) {
+			let domain = domainName != '' ? '/' + domainName : '';
+			res.redirect(domain + '/');
+		} else {
+			Parkings.deleteParking(req.query.username, req.query.parkingId);
+			res.status(200).send('ok');
+		}
+	});
+
+	app.get('/download', function (req, res) {
+		// check if the user is logged in
+		if (req.session.user == null) {
+			let domain = domainName != '' ? '/' + domainName : '';
+			res.redirect(domain + '/');
+		} else {
+			Parkings.downloadParking(req.query.username, req.query.parkingId, res);
+		}
+	});
+
 	/*
 		list of terms
 	*/
