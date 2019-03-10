@@ -232,7 +232,7 @@ function handleLoginFeatures() {
         newSection.find('input').each(function() {
             if($(this).attr('type') == 'checkbox') {
                 $(this).prop('checked', false);
-            } else {
+            } else if(($(this).attr('type') != 'button')) {
                 $(this).val('');
             }
         });
@@ -270,11 +270,12 @@ function handleLoginFeatures() {
 
         newSection.find('.ol-polygon-map').each(function () {
             $(this).empty();
-            let newMap = $(this).attr('id') + '_';
+            let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
             $(this).attr('id', newMap);
-            let newClear = $(this).prev().attr('id') + '_';
+            let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
             $(this).prev().attr('id', newClear);
-            let newPoly = $(this).next().find('input').attr('id') + '_';
+            $(this).prev().off('click');
+            let newPoly = $(this).next().find('input').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
             $(this).next().find('input').attr('id', newPoly);
 
             initPolygonMap(newMap, newPoly, newClear);

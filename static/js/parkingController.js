@@ -173,6 +173,7 @@ function loadParkingValue(path, value, override, inpt) {
             // Handle text inputs and clone if necessary
             if (input.val() === '' || override) {
                 input.val(value);
+                input.change();
             } else {
                 input.next('.plus_button_input').click();
                 let inputs = $('[name="' + name + '"]');

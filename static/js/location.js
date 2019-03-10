@@ -9,6 +9,8 @@ var CircleStyle = ol.style.Circle;
 var Fill = ol.style.Fill;
 var Stroke = ol.style.Stroke;
 var Style = ol.style.Style;
+var Point = ol.geom.Point;
+var Polygon = ol.geom.Polygon;
 
 
 var raster = new TileLayer({
@@ -60,12 +62,48 @@ function initPointMap(target, latid, lonid, clear) {
         latInput.val(lat);
         lonInput.val(long);
 
-        if(latInput.parent().hasClass('validate-input')) {
+        if (latInput.parent().hasClass('validate-input')) {
             fullValidation(latInput);
         }
 
-        if(lonInput.parent().hasClass('validate-input')) {
+        if (lonInput.parent().hasClass('validate-input')) {
             fullValidation(lonInput);
+        }
+    });
+
+    $('#' + latid).on('change', function () {
+        let lat = $(this).val();
+        let lon = $('#' + lonid).val();
+
+        if (lon != '') {
+            if (pointSource.getFeatures().length == 0) {
+                let coordinates = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
+                let point = new Point(coordinates);
+                let featurePoint = new ol.Feature({
+                    geometry: point,
+                });
+                pointSource.addFeature(featurePoint);
+                pointMap.getView().setCenter(coordinates);
+                pointMap.getView().setZoom(14);
+            }
+        }
+    });
+
+    $('#' + lonid).on('change', function () {
+        let lon = $(this).val();
+        let lat = $('#' + latid).val();
+
+        if (lat != '') {
+            if (pointSource.getFeatures().length == 0) {
+                let coordinates = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
+                let point = new Point(coordinates);
+                let featurePoint = new ol.Feature({
+                    geometry: point,
+                });
+                pointSource.addFeature(featurePoint);
+                pointMap.getView().setCenter(coordinates);
+                pointMap.getView().setZoom(14);
+            }
         }
     });
 
@@ -129,6 +167,23 @@ function initPolygonMap(target, polyid, clear) {
         polygonString = polygonString.slice(0, -2) + '))';
 
         $('#' + polyid).val(polygonString);
+    });
+
+    $('#' + polyid).off('change');
+
+    $('#' + polyid).change(function () {
+        let polygonArr = $(this).val().substring(10, $(this).val().length - 3).split(',');
+        polygonArr = polygonArr.map(cs => {
+            let stArr = cs.trim().split(' ');
+            return ol.proj.fromLonLat([parseFloat(stArr[1]), parseFloat(stArr[0])]);
+        });
+
+        let polygon = new Polygon([polygonArr]);
+        let featurePolygon = new ol.Feature({
+            geometry: polygon,
+        });
+        polygonSource.addFeature(featurePolygon);
+        polygonMap.getView().fit(polygon);
     });
 
     $('#' + clear).click(() => {
