@@ -146,7 +146,7 @@ function handleLoginFeatures() {
     $('.plus_button_input').on('click', function () {
         var parent = $(this).parent().clone(true);
         if (parent.find('.minus_button').length <= 0) {
-            var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; bottom: 4px;">');
+            var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; bottom: 13px;">');
             minus.on('click', function () {
                 $(this).parent().remove();
                 return false;

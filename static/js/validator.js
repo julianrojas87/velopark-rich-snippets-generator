@@ -1,7 +1,7 @@
 ($ => {
 
     /*==================================================================
- [ Validate after type ]*/
+    [ Validate after type ]*/
     $('.validate-input .input100').each(function () {
         $(this).on('blur', function () {
             if (validate(this) == false) {
@@ -22,6 +22,25 @@
             hideValidate(this);
             $(this).parent().removeClass('true-validate');
         });
+    });
+
+    $('.info_button').click(function() {
+        let infobox = $(this).next();
+        infobox.find('h2').text($(this).prev().text());
+        infobox.toggle();
+        return false;
+    });
+
+    $('.info_button_div').click(function() {
+        let infobox = $(this).next();
+        infobox.find('h2').text($(this).parent().parent().prev().prev().text());
+        infobox.toggle();
+        return false;
+    });
+
+    $('.info_close_button').click(function() {
+        $(this).parent().toggle();
+        return false;
     });
 
 })(jQuery);
