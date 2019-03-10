@@ -15,7 +15,7 @@
             }
         }
 
-        if (!check) {
+        if (check) {
             // JSON-LD skeleton already containing the predefined @context and data structure
             loadAPSkeleton().then(jsonld => {
                 mapData(jsonld).then(() => {
