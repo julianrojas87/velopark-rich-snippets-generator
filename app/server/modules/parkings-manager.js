@@ -38,7 +38,7 @@ exports.listParkings = async username => {
 
 exports.saveParking = async (user, parking) => {
     let park_obj = JSON.parse(parking);
-    await writeFile(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'] + '_' + park_obj['identifier']) 
+    await writeFile(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'] + '_' + park_obj['identifier'])
         + '.jsonld', parking, 'utf8');
     await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
     await addParkingToCatalog(user, park_obj['@id']);
@@ -49,10 +49,13 @@ exports.getParking = async (user, parkingId) => {
 }
 
 exports.deleteParking = async (user, parkingId) => {
-    if(fs.existsSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld')) {
+    if (fs.existsSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld')) {
         let park_obj = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld'));
-        fs.unlinkSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'] + '_' + park_obj['identifier']) 
-            + '.jsonld');
+        if (fs.existsSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'] + '_' + park_obj['identifier'])
+            + '.jsonld')) {
+            fs.unlinkSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'] + '_' + park_obj['identifier'])
+                + '.jsonld');
+        }
         fs.unlinkSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
         await removeParkingFromCatalog(parkingId);
     }
@@ -324,11 +327,11 @@ async function getAccessURLsByUser(user, id) {
 }
 
 function getAccessURLs(p) {
-    if(p[0].indexOf('velopark.ilabt.imec.be/data') >= 0) {
+    if (p[0].indexOf('velopark.ilabt.imec.be/data') >= 0) {
         return p[0];
     } else {
         let localUrl = 'https://velopark.ilabt.imec.be/data/' + p[1];
-        return [p[0], localUrl]; 
+        return [p[0], localUrl];
     }
 }
 
