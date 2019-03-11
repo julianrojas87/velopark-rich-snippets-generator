@@ -3,8 +3,9 @@ const AM = require('./modules/account-manager');
 const EM = require('./modules/email-dispatcher');
 const Parkings = require('./modules/parkings-manager');
 
-const domainName = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['domain'] || '';
-const vocabURI = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['vocabulary'] || 'http://velopark.ilabt.imec.be';
+const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+const domainName = config['domain'] || '';
+const vocabURI = config['vocabulary'] || 'http://velopark.ilabt.imec.be';
 
 module.exports = app => {
 

@@ -6,19 +6,23 @@ const request = require('request');
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
+const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+const data = config['data'] || './data';
+
+
 exports.initUser = username => {
     fs.mkdirSync('./data/' + username);
 }
 
 
 exports.listParkings = async username => {
-    if (fs.existsSync('./data/' + username)) {
-        let parkings = fs.readdirSync('./data/' + username);
+    if (fs.existsSync(data + '/' + username)) {
+        let parkings = fs.readdirSync(data + '/' + username);
         let tableData = [];
 
         await Promise.all(parkings.map(async parking => {
             let tdata = {};
-            let parkingData = JSON.parse(await readFile('./data/' + username + '/' + parking, 'utf8'));
+            let parkingData = JSON.parse(await readFile(data + '/' + username + '/' + parking, 'utf8'));
             tdata['@id'] = decodeURIComponent(parking.substring(0, parking.indexOf('.jsonld')));
             tdata['name'] = parkingData['name'] || '';
             tableData.push(tdata);
@@ -30,20 +34,20 @@ exports.listParkings = async username => {
 
 exports.saveParking = async (user, parking) => {
     let park_obj = JSON.parse(parking);
-    await writeFile('./data/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
+    await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
 }
 
 exports.getParking = async (user, parkingId) => {
-    return await readFile('./data/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
+    return await readFile(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
 }
 
 exports.deleteParking = (user, parkingId) => {
-    fs.unlinkSync('./data/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
+    fs.unlinkSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
 }
 
 exports.downloadParking = (user, parkingId, res) => {
     let root = __dirname.substring(0, __dirname.indexOf('app') - 1);
-    res.download(root + '/data/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
+    res.download(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
 }
 
 exports.getListOfTerms = async () => {
