@@ -45,6 +45,19 @@
         let domain = domainName != '' ? '/' + domainName : '';
         let username = $('#user-email').text().trim();
 
+        if (originalId != null && originalId != resultingObject['@id']) {
+            $.ajax({
+                type: "DELETE",
+                url: domain + '/delete-parking?username=' + username + '&parkingId=' + originalId,
+                success: () => {
+                    originalId = null;
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
+                }
+            });
+        }
+
         $.ajax({
             type: "POST",
             url: domain + '/save-parking',
