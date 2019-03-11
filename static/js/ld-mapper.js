@@ -24,6 +24,8 @@
                     hljs.highlightBlock(document.querySelectorAll('pre code')[0]);
                     $('.overlay').toggle();
                     $('.jsonld').toggle();
+                }).catch(error => {
+                    console.log(error);
                 });
             });
         } else {
@@ -82,8 +84,11 @@ async function mapData(jsonld) {
     processGeneral(jsonld, general);
     let sections = $('div[parking-section="true"]');
     await processSections(jsonld, sections);
-    fillAutomaticData(jsonld);
-    cleanEmptyValues(jsonld);
+    if(fillAutomaticData(jsonld)) {
+        cleanEmptyValues(jsonld);
+    } else {
+        throw new Error('Malformed Parking URI');
+    }
 }
 
 function processGeneral(jsonld, general) {
@@ -106,6 +111,22 @@ async function processSections(jsonld, sections) {
 }
 
 function fillAutomaticData(jsonld) {
+    // Handle @id
+    if(jsonld['@id'] != '') {
+        let idInput = $('input[name="@id"]');
+        if(!fullValidation(idInput[0])) {
+            $('html, body').animate({
+                scrollTop: idInput.offset().top - 200
+            }, 500);
+
+            return false;
+        }
+    } else {
+        // Generate automatic @id
+        jsonld['@id'] = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(jsonld['dataOwner']['companyName']) 
+            + '_' + encodeURIComponent(jsonld['identifier']);
+    }
+
     // Set dateModified
     jsonld['dateModified'] = (new Date()).toISOString();
 
@@ -127,6 +148,8 @@ function fillAutomaticData(jsonld) {
             }
         }
     }
+
+    return true;
 }
 
 function cleanEmptyValues(obj) {
