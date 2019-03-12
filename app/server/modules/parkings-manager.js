@@ -38,7 +38,7 @@ exports.listParkings = async username => {
 
 exports.saveParking = async (user, parking) => {
     let park_obj = JSON.parse(parking);
-    await writeFile(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(' ', '-') + '_' + park_obj['identifier'].replace(' ', '-'))
+    await writeFile(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-') + '_' + park_obj['identifier'].replace(/\s/g, '-'))
         + '.jsonld', parking, 'utf8');
     await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
     await addParkingToCatalog(user, park_obj['@id']);
@@ -51,10 +51,10 @@ exports.getParking = async (user, parkingId) => {
 exports.deleteParking = async (user, parkingId) => {
     if (fs.existsSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld')) {
         let park_obj = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld'));
-        if (fs.existsSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(' ', '') 
-            + '_' + park_obj['identifier'].replace(' ', '')) + '.jsonld')) {
-            fs.unlinkSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(' ', '') 
-                + '_' + park_obj['identifier'].replace(' ', '')) + '.jsonld');
+        if (fs.existsSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-') 
+            + '_' + park_obj['identifier'].replace(/\s/g, '-')) + '.jsonld')) {
+            fs.unlinkSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-') 
+                + '_' + park_obj['identifier'].replace(/\s/g, '-')) + '.jsonld');
         }
         fs.unlinkSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
         await removeParkingFromCatalog(parkingId);
@@ -206,7 +206,7 @@ async function initCatalog() {
     await Promise.all((await readdir(data + '/public')).map(async p => {
         if (p.indexOf('catalog.jsonld') < 0) {
             let d = JSON.parse(await readFile(data + '/public/' + p));
-            let localId = encodeURIComponent(d['dataOwner']['companyName'].replace(' ', '-') + '_' + d['identifier'].replace(' ', ''));
+            let localId = encodeURIComponent(d['dataOwner']['companyName'].replace(/\s/g, '-') + '_' + d['identifier'].replace(/\s/g, '-'));
             parkings.set(d['@id'], localId);
         }
     }));
@@ -320,8 +320,8 @@ async function getAccessURLsByUser(user, id) {
         return id;
     } else {
         let park = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(id) + '.jsonld'));
-        let veloparkId = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(park['dataOwner']['companyName'].replace(' ', '-'))
-            + '_' + encodeURIComponent(park['identifier'].replace(' ', '-'));
+        let veloparkId = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(park['dataOwner']['companyName'].replace(/\s/g, '-'))
+            + '_' + encodeURIComponent(park['identifier'].replace(/\s/g, '-'));
         return [id, veloparkId];
     }
 }
