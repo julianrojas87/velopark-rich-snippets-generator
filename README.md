@@ -2,7 +2,7 @@
 HTML form for creating Linked Data descriptions of bike parking facilities
 
 ## Installation
-First make sure to have [Node](https://nodejs.org/en/) 8.x or superior installed. To install the server clone this repository and install its dependencies using NPM:
+First make sure to have [Node](https://nodejs.org/en/) 8.x or superior and [MongoDB](https://docs.mongodb.com/manual/administration/install-community/) installed. To install the server clone this repository and install its dependencies using NPM:
 ``` bash
 $ git clone https://github.com/julianrojas87/velopark-rich-snippets-generator.git
 $ cd velopark-rich-snippets-generator
