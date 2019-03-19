@@ -1,13 +1,13 @@
 function make_wizard(){
     var form = $("#form-velopark-data");
 
-    form.children("div").steps({
+    form.steps({
         headerTag: "h3",
         bodyTag: "fieldset",
         transitionEffect: "slide",
         stepsOrientation: "vertical",
         enableAllSteps: true,
-        titleTemplate: '<div class="title"><span class="step-number">#index#.&nbsp;</span><span class="step-text">#title#</span></div>',
+        /*titleTemplate: '<div class="title"><span class="step-number">#index#.&nbsp;</span><span class="step-text">#title#</span></div>',*/
         /*labels: {
             previous: 'Previous',
             next: 'Next',

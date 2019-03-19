@@ -199,7 +199,6 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   padding: 15px;
   background: #e6e6e6;
   margin-top: 100px;
@@ -229,7 +228,6 @@ iframe {
   border: 2px solid;
   border-radius: 10px;
   padding: 20px 20px 10px 25px;
-  /*float: left;*/
 }
 
 
@@ -838,10 +836,13 @@ textarea.input100 {
   width: 25%;
   background-color: #00a9a3;
   border-radius: 6px;
+  max-height: 75vh;
+  overflow: auto;
 }
 
 .wizard.vertical>.content {
   padding-left: 35%;
+  width: 100%;
 }
 
 .wizard.vertical>.actions {
@@ -854,7 +855,7 @@ textarea.input100 {
 
 .wizard.vertical>.actions li {
   display: inline-block;
-  padding: 15px;
+  padding: 10px;
   background-color: #374864;
 }
 
@@ -862,6 +863,7 @@ textarea.input100 {
   font-family: Montserrat-SemiBold, sans-serif;
   font-size: 16px;
   color: #fff;
+  padding: 15px;
 }
 
 .section-title {
@@ -913,4 +915,8 @@ li {
   width: 20px;
   height: 1px;
   display: inline-block;
+}
+
+h3.title:not(.current) {
+  display: none;
 }

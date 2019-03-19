@@ -162,7 +162,7 @@ function handleLoginFeatures() {
     $('.plus_button_select').on('click', function () {
         var parent = $(this).parent();
         parent.find('.js-select2').each(function () {
-            $(this).select2('destroy');
+            //$(this).select2('destroy');
         });
 
         var newSelect = $(this).prev().clone(true);
@@ -203,7 +203,7 @@ function handleLoginFeatures() {
 
         var parent = $(this).parent();
         parent.find('.js-select2').each(function () {
-            $(this).select2('destroy');
+            //$(this).select2('destroy');
         });
 
         var newSection = section.clone(true);
@@ -284,6 +284,29 @@ function handleLoginFeatures() {
         });
 
         return false;
+    });
+
+    $('#button-add-facility-section').on('click', function(){
+        $("#form-velopark-data").steps("insert", 8, {
+            title:"Facility section 5",
+            content: "Test 5"
+        });
+        $("#form-velopark-data").steps("insert", 8, {
+            title:"Facility section 4",
+            content: "Test 4"
+        });
+        $("#form-velopark-data").steps("insert", 8, {
+            title:"Facility section 3",
+            content: "Test 3"
+        });
+        $("#form-velopark-data").steps("insert", 8, {
+            title:"Facility section 2",
+            content: "Test 2"
+        });
+        $("#form-velopark-data").steps("insert", 8, {
+            title:"Facility section 1",
+            content: "Test 1"
+        });
     });
 
 })(jQuery);
