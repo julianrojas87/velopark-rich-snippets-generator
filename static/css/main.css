@@ -44,7 +44,7 @@ body, html {
 
 /*---------------------------------------------*/
 a {
-	font-family: Poppins-Regular;
+  font-family: Poppins-Regular, sans-serif;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
@@ -206,7 +206,7 @@ iframe {
 }
 
 .wrap-contact100 {
-  width: 950px;
+  width: 80vw;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
@@ -229,7 +229,7 @@ iframe {
   border: 2px solid;
   border-radius: 10px;
   padding: 20px 20px 10px 25px;
-  float: left;
+  /*float: left;*/
 }
 
 
@@ -311,19 +311,21 @@ iframe {
 }
 
 .rs1-wrap-input100 {
-  width: calc((100% - 30px) / 2); 
+  width: calc((100% - 40px) / 2);
 }
 
 .rs2-wrap-input100 {
   width: calc((100% - 30px) / 2);
-  float: left;
-  margin-right: 15px;
+  /*float: left;
+  margin-right: 15px;*/
+  display: inline-block;
 }
 
 .rs3-wrap-input100 {
   width: calc((100% - 60px) / 2);
-  float: left;
-  margin-right: 30px;
+  /*float: left;*/
+  margin-right: 20px;
+  display: inline-block;
 }
 
 .label-input100 {
@@ -826,4 +828,89 @@ textarea.input100 {
   .container-contact100 {
     margin-top: 150px;
   }
+}
+
+.wizard.vertical>.steps {
+/*  display: inline;
+  float: left;
+  width: 30%*/
+  position: fixed;
+  width: 25%;
+  background-color: #00a9a3;
+  border-radius: 6px;
+}
+
+.wizard.vertical>.content {
+  padding-left: 35%;
+}
+
+.wizard.vertical>.actions {
+   padding-left: 35%;
+}
+
+.wizard.vertical>.actions ul {
+  text-align: center;
+}
+
+.wizard.vertical>.actions li {
+  display: inline-block;
+  padding: 15px;
+  background-color: #374864;
+}
+
+.wizard.vertical>.actions li a {
+  font-family: Montserrat-SemiBold, sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+.section-title {
+  display: none;
+}
+
+.steps a {
+  font-family: Montserrat-SemiBold, sans-serif;
+  font-size: 16px;
+  color: #000a2b;
+  line-height: 1.2;
+}
+
+.steps a .title {
+  padding: 4px;
+}
+
+li[aria-selected="true"]{
+  background-color: #374864;
+}
+
+li {
+  margin: 5px;
+  border-radius: 4px;
+}
+
+.steps a span {
+  color: #fff;
+}
+
+.current-info {
+  display: none;
+}
+
+.wizard{
+  width: 100%;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+.step-number{
+  width: 25px;
+  display: inline-block;
+}
+
+.spacer {
+  width: 20px;
+  height: 1px;
+  display: inline-block;
 }

@@ -143,6 +143,8 @@ function handleLoginFeatures() {
         context = jsonld['@context'];
     });
 
+    make_wizard();
+
     $('.plus_button_input').on('click', function () {
         var parent = $(this).parent().clone(true);
         if (parent.find('.minus_button').length <= 0) {
