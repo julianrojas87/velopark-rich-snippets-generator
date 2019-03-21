@@ -7,7 +7,11 @@ function make_wizard(){
         transitionEffect: "slide",
         stepsOrientation: "vertical",
         enableAllSteps: true,
-        /*titleTemplate: '<div class="title"><span class="step-number">#index#.&nbsp;</span><span class="step-text">#title#</span></div>',*/
+        titleTemplate:
+            '<div class="title-step-#index#">' +
+                '<span class="step-number">#index#.&nbsp;</span>' +
+                '<span class="step-text">#title#</span>' +
+            '</div>',
         /*labels: {
             previous: 'Previous',
             next: 'Next',

@@ -1,6 +1,10 @@
 const domainName = $('#domainName').text().trim();
 var loadingPromises = [];
 var context = null;
+const startStepNumberFacilitySection = 3;
+const numStepsFacilitySection = 5;
+var currentNumFacilitySections = 1;
+//var currentStepNumberInsertPos = 8;
 
 function loadAPSkeleton() {
     return new Promise((resolve, reject) => {
@@ -107,6 +111,15 @@ function handleLoginFeatures() {
     loadingPromises.push(features);
     loadingPromises.push(contextPromise);
 
+    make_wizard();
+
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+    });
+
     terms.then(listOfTerms => {
         $('select[terms = "true"]').each(function () {
             for (var i = 0; i < listOfTerms.length; i++) {
@@ -119,6 +132,7 @@ function handleLoginFeatures() {
         $('select[parking-types = "true"]').each(function () {
             for (var i = 0; i < parkingTypes.length; i++) {
                 $(this).append('<option value="' + parkingTypes[i]['@id'] + '">' + parkingTypes[i]['label'] + '</option>');
+                //console.log($(this));
             }
         });
     });
@@ -143,7 +157,7 @@ function handleLoginFeatures() {
         context = jsonld['@context'];
     });
 
-    make_wizard();
+
 
     $('.plus_button_input').on('click', function () {
         var parent = $(this).parent().clone(true);
@@ -287,26 +301,51 @@ function handleLoginFeatures() {
     });
 
     $('#button-add-facility-section').on('click', function(){
-        $("#form-velopark-data").steps("insert", 8, {
-            title:"Facility section 5",
-            content: "Test 5"
-        });
-        $("#form-velopark-data").steps("insert", 8, {
-            title:"Facility section 4",
-            content: "Test 4"
-        });
-        $("#form-velopark-data").steps("insert", 8, {
-            title:"Facility section 3",
-            content: "Test 3"
-        });
-        $("#form-velopark-data").steps("insert", 8, {
-            title:"Facility section 2",
-            content: "Test 2"
-        });
-        $("#form-velopark-data").steps("insert", 8, {
-            title:"Facility section 1",
-            content: "Test 1"
-        });
+        currentNumFacilitySections++;
+        let currentStepNumberInsertPos = (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection);
+
+        for (let i = numStepsFacilitySection; i > 0; i--) {
+            var facilitySection = $('#step-facility-section-' + i);
+            //destroy select2
+            facilitySection.find('.js-select2').each(function () {
+                $(this).select2('destroy');
+            });
+
+            //clone the section & section title
+            var newFacilitySection = facilitySection.clone(true).attr("id", facilitySection.attr("id") + "-" + currentNumFacilitySections);
+            var newFacilitySection1Title = $('.step-facility-section-' + i + '-title').html();
+
+            $("#form-velopark-data").steps("insert", currentStepNumberInsertPos, {
+                title: newFacilitySection1Title,
+                content: newFacilitySection
+            });
+
+            //re-enable select2 (original section and cloned section)
+            facilitySection.find('.js-select2').each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2')
+                });
+            });
+            newFacilitySection.find('.js-select2').each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2')
+                });
+            });
+        }
+
+        $('#form-velopark-data-t-' + currentStepNumberInsertPos).get(0).click();
+
+
+
+        /*$(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        });*/
+
     });
 
 })(jQuery);

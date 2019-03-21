@@ -847,6 +847,7 @@ textarea.input100 {
 
 .wizard.vertical>.actions {
    padding-left: 35%;
+  width: 100%;
 }
 
 .wizard.vertical>.actions ul {
@@ -866,9 +867,9 @@ textarea.input100 {
   padding: 15px;
 }
 
-.section-title {
+/*.section-title {
   display: none;
-}
+}*/
 
 .steps a {
   font-family: Montserrat-SemiBold, sans-serif;
@@ -886,11 +887,16 @@ li[aria-selected="true"]{
 }
 
 li {
-  margin: 5px;
+  margin: 4px;
   border-radius: 4px;
 }
 
-.steps a span {
+.steps a {
+  padding: 4px;
+  display: list-item;
+}
+
+.steps a span, .steps a {
   color: #fff;
 }
 
@@ -917,6 +923,6 @@ li {
   display: inline-block;
 }
 
-h3.title:not(.current) {
+h3.title/*:not(.current)*/ {
   display: none;
 }
