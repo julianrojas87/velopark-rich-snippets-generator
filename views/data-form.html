@@ -5,7 +5,7 @@
             <fieldset>
                 <div id="step-general-info-1">
                     <h2>General Information - Parking Information</h2>
-                    <div id="general-information" class="wrap-contact100-section">
+                    <div id="general-information" class="wrap-contact100-section general-information">
                         <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">
                             <span class="label-input100">Parking Facility URI *</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png"
@@ -24,8 +24,7 @@
                                             style="font-family: Montserrat-SemiBold; font-size: 16px;"
                                             href="http://velopark.be">http://velopark.be</a>) if you need assistance for this.</span><br>
                             </div>
-                            <input class="input100" type="url" name="@id"
-                                   placeholder="For example: http://data.gent.be/parkings/fiets/35677">
+                            <input class="input100" type="url" name="@id" placeholder="For example: http://data.gent.be/parkings/fiets/35677">
                         </div>
 
                         <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
@@ -209,10 +208,8 @@
             <fieldset>
                 <div id="step-general-info-2">
                     <h2>General Information - Authority Information</h2>
-                    <div id="general-information-2" class="wrap-contact100-section">
-                        <span class="contact100-form-subsection">
-                    Data Owner
-                </span>
+                    <div id="general-information-2" class="wrap-contact100-section general-information">
+                        <span class="contact100-form-subsection">Data Owner</span>
                         <div class="wrap-contact100-subsection">
                             <div class="wrap-input100 bg1 rs3-wrap-input100">
                                 <span class="label-input100">Organization Website</span>
@@ -475,7 +472,7 @@
             <fieldset>
                 <div id="step-general-info-3">
                     <h2>General Information - Photos</h2>
-                    <div id="general-information-3" class="wrap-contact100-section">
+                    <div id="general-information-3" class="wrap-contact100-section general-information">
 
                         <span class="contact100-form-subsection">
                     Photos
@@ -544,10 +541,10 @@
                 <span class="contact100-form-subsection" style="width: 90%;">
                     Parking Section
                 </span>
-                        <input type="image" class="plus_button_section" src="static/images/icons/plus.png"
-                               style="float: left; width: 30px;">
+                        <!--<input type="image" class="plus_button_section" src="static/images/icons/plus.png"
+                               style="float: left; width: 30px;">-->
 
-                        <div parking-section="true" class="wrap-contact100-subsection">
+                        <div parking-section="0" class="wrap-contact100-subsection">
                             <div class="wrap-input100 input100-select bg1">
                                 <span class="label-input100">Parking Type</span>
                                 <input type="image" title="about" class="info_button"
@@ -765,7 +762,7 @@
                 <div id="step-facility-section-2">
                     <h2>Facility Section - Location</h2>
                     <div>
-                        <div>
+                        <div parking-section="0" >
                             <span class="contact100-form-subsection">
                         Location
                     </span>
@@ -984,7 +981,7 @@
                 <div id="step-facility-section-3">
                     <h2>Facility Section - Types of bicycles</h2>
                     <div>
-                        <div>
+                        <div parking-section="0" >
                             <span class="contact100-form-subsection">
                         Types of Bicycles Allowed
                     </span>
@@ -1068,7 +1065,7 @@
                 <div id="step-facility-section-4">
                     <h2>Facility Section - Features</h2>
                     <div>
-                        <div>
+                        <div parking-section="0" >
 
                             <span class="contact100-form-subsection">
                         Section Features
@@ -1168,7 +1165,7 @@
                 <div id="step-facility-section-5">
                     <h2>Facility Section - Cost Model</h2>
                     <div>
-                        <div>
+                        <div parking-section="0" >
                             <span class="contact100-form-subsection">
                         Cost Model
                     </span>

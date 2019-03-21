@@ -46,16 +46,17 @@ function processObject(obj, oldPath, input) {
 }
 
 function loadSections(graph) {
-    let section = $('[parking-section="true"]');
+    let section = $('[parking-section=0]');
     for (let i in graph) {
         if (i > 0) {
-            if (section.prev().hasClass('minus_button')) {
+            /*if (section.prev().hasClass('minus_button')) {
                 section.prev().prev().click();
             } else {
                 section.prev().click();
-            }
+            }*/
+            addFacilitySection();
 
-            section = $($('[parking-section="true"]')[$('[parking-section="true"]').length - 1]);
+            section = $('[parking-section=' + i + ']')[0];
         }
         let keys = Object.keys(graph[i]);
         let path = [];

@@ -176,7 +176,7 @@ function handleLoginFeatures() {
     $('.plus_button_select').on('click', function () {
         var parent = $(this).parent();
         parent.find('.js-select2').each(function () {
-            //$(this).select2('destroy');
+            $(this).select2('destroy');
         });
 
         var newSelect = $(this).prev().clone(true);
@@ -217,7 +217,7 @@ function handleLoginFeatures() {
 
         var parent = $(this).parent();
         parent.find('.js-select2').each(function () {
-            //$(this).select2('destroy');
+            $(this).select2('destroy');
         });
 
         var newSection = section.clone(true);
@@ -301,6 +301,10 @@ function handleLoginFeatures() {
     });
 
     $('#button-add-facility-section').on('click', function(){
+        addFacilitySection();
+        $('#form-velopark-data-t-' + (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection)).get(0).click();
+    });
+    /*function(){
         currentNumFacilitySections++;
         let currentStepNumberInsertPos = (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection);
 
@@ -333,11 +337,12 @@ function handleLoginFeatures() {
                     dropdownParent: $(this).next('.dropDownSelect2')
                 });
             });
+            newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections-1);
         }
 
         $('#form-velopark-data-t-' + currentStepNumberInsertPos).get(0).click();
 
-
+*/
 
         /*$(".js-select2").each(function () {
             $(this).select2({
@@ -346,6 +351,45 @@ function handleLoginFeatures() {
             });
         });*/
 
-    });
+    //});
 
 })(jQuery);
+
+
+function addFacilitySection(){
+    currentNumFacilitySections++;
+    let currentStepNumberInsertPos = (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection);
+
+    for (let i = numStepsFacilitySection; i > 0; i--) {
+        var facilitySection = $('#step-facility-section-' + i);
+        //destroy select2
+        facilitySection.find('.js-select2').each(function () {
+            $(this).select2('destroy');
+        });
+
+        //clone the section & section title
+        var newFacilitySection = facilitySection.clone(true).attr("id", facilitySection.attr("id") + "-" + currentNumFacilitySections);
+        var newFacilitySection1Title = $('.step-facility-section-' + i + '-title').html();
+
+        $("#form-velopark-data").steps("insert", currentStepNumberInsertPos, {
+            title: newFacilitySection1Title,
+            content: newFacilitySection
+        });
+
+        //re-enable select2 (original section and cloned section)
+        facilitySection.find('.js-select2').each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        });
+        newFacilitySection.find('.js-select2').each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        });
+        newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections-1);
+    }
+
+}
