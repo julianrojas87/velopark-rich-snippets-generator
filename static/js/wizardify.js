@@ -4,7 +4,7 @@ function make_wizard(){
     form.steps({
         headerTag: "h3",
         bodyTag: "fieldset",
-        transitionEffect: "slide",
+        transitionEffect: "fade",
         stepsOrientation: "vertical",
         enableAllSteps: true,
         titleTemplate:
@@ -43,10 +43,13 @@ function make_wizard(){
         },
         onFinished: function(event, currentIndex) {
             alert('Submited');
-        },
+        },*/
         onStepChanged: function(event, currentIndex, priorIndex) {
-
+            $('.ol-point-map, .ol-polygon-map').each(function(){
+                $(this).data('openlayers-map').updateSize();
+            });
+            //map.updateSize();
             return true;
-        }*/
+        }
     });
 }

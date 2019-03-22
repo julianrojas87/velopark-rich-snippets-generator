@@ -391,5 +391,33 @@ function addFacilitySection(){
         });
         newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections-1);
     }
+    let locationSection = $('#step-facility-section-2-' + currentNumFacilitySections);
+    locationSection.find('.ol-point-map').each(function () {
+        $(this).empty();
+        let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).attr('id', newMap);
+        let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).prev().attr('id', newClear);
+        $(this).prev().off('click');
+        let newLat = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).next().find('input.input100').attr('id', newLat);
+        let newLon = $(this).next().next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).next().next().find('input.input100').attr('id', newLon);
+
+        initPointMap(newMap, newLat, newLon, newClear);
+    });
+
+    locationSection.find('.ol-polygon-map').each(function () {
+        $(this).empty();
+        let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).attr('id', newMap);
+        let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).prev().attr('id', newClear);
+        $(this).prev().off('click');
+        let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).next().find('input.input100').attr('id', newPoly);
+
+        initPolygonMap(newMap, newPoly, newClear);
+    });
 
 }
