@@ -169,7 +169,10 @@ function handleLoginFeatures() {
             });
             parent.append(minus);
         }
+        parent.find("input").val("");
+        parent.hide();          //for animation
         $(this).parent().after(parent);
+        parent.show('slow');    //animate
         return false;
     });
 
@@ -257,6 +260,10 @@ function handleLoginFeatures() {
             $(this).val('');
         });
 
+        if(parkingDataLoaded) {
+            newSection.hide();      //for animation
+        }
+
         section.after(newSection);
         section.after(minus);
         section.after(newPlus);
@@ -269,34 +276,41 @@ function handleLoginFeatures() {
             });
         });
 
-        newSection.find('.ol-point-map').each(function () {
-            $(this).empty();
-            let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).attr('id', newMap);
-            let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).prev().attr('id', newClear);
-            $(this).prev().off('click');
-            let newLat = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).next().find('input.input100').attr('id', newLat);
-            let newLon = $(this).next().next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).next().next().find('input.input100').attr('id', newLon);
+        function showMaps(){
+            newSection.find('.ol-point-map').each(function () {
+                $(this).empty();
+                let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).attr('id', newMap);
+                let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).prev().attr('id', newClear);
+                $(this).prev().off('click');
+                let newLat = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).next().find('input.input100').attr('id', newLat);
+                let newLon = $(this).next().next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).next().next().find('input.input100').attr('id', newLon);
 
-            initPointMap(newMap, newLat, newLon, newClear);
-        });
+                initPointMap(newMap, newLat, newLon, newClear);
+            });
 
-        newSection.find('.ol-polygon-map').each(function () {
-            $(this).empty();
-            let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).attr('id', newMap);
-            let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).prev().attr('id', newClear);
-            $(this).prev().off('click');
-            let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).next().find('input.input100').attr('id', newPoly);
+            newSection.find('.ol-polygon-map').each(function () {
+                $(this).empty();
+                let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).attr('id', newMap);
+                let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).prev().attr('id', newClear);
+                $(this).prev().off('click');
+                let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).next().find('input.input100').attr('id', newPoly);
 
-            initPolygonMap(newMap, newPoly, newClear);
-        });
+                initPolygonMap(newMap, newPoly, newClear);
+            });
+        }
 
+        if(parkingDataLoaded) {
+            newSection.show("slow", showMaps);
+        } else {
+            //showMaps();
+        }
         return false;
     });
 
@@ -304,54 +318,6 @@ function handleLoginFeatures() {
         addFacilitySection();
         $('#form-velopark-data-t-' + (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection)).get(0).click();
     });
-    /*function(){
-        currentNumFacilitySections++;
-        let currentStepNumberInsertPos = (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection);
-
-        for (let i = numStepsFacilitySection; i > 0; i--) {
-            var facilitySection = $('#step-facility-section-' + i);
-            //destroy select2
-            facilitySection.find('.js-select2').each(function () {
-                $(this).select2('destroy');
-            });
-
-            //clone the section & section title
-            var newFacilitySection = facilitySection.clone(true).attr("id", facilitySection.attr("id") + "-" + currentNumFacilitySections);
-            var newFacilitySection1Title = $('.step-facility-section-' + i + '-title').html();
-
-            $("#form-velopark-data").steps("insert", currentStepNumberInsertPos, {
-                title: newFacilitySection1Title,
-                content: newFacilitySection
-            });
-
-            //re-enable select2 (original section and cloned section)
-            facilitySection.find('.js-select2').each(function () {
-                $(this).select2({
-                    minimumResultsForSearch: 20,
-                    dropdownParent: $(this).next('.dropDownSelect2')
-                });
-            });
-            newFacilitySection.find('.js-select2').each(function () {
-                $(this).select2({
-                    minimumResultsForSearch: 20,
-                    dropdownParent: $(this).next('.dropDownSelect2')
-                });
-            });
-            newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections-1);
-        }
-
-        $('#form-velopark-data-t-' + currentStepNumberInsertPos).get(0).click();
-
-*/
-
-        /*$(".js-select2").each(function () {
-            $(this).select2({
-                minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
-            });
-        });*/
-
-    //});
 
 })(jQuery);
 

@@ -1,9 +1,12 @@
+let parkingDataLoaded = false;
+
 ($ => {
 
     addClickListeners();
 
     Promise.all(loadingPromises).then(() => {
         loadParkingValues();
+        parkingDataLoaded = true;
     });
 
 })(jQuery);
@@ -46,7 +49,7 @@ function processObject(obj, oldPath, input) {
 }
 
 function loadSections(graph) {
-    let section = $('[parking-section=0]');
+    let section = $('div[parking-section=0]');
     for (let i in graph) {
         if (i > 0) {
             /*if (section.prev().hasClass('minus_button')) {
@@ -56,7 +59,7 @@ function loadSections(graph) {
             }*/
             addFacilitySection();
 
-            section = $('[parking-section=' + i + ']');
+            section = $('div[parking-section=' + i + ']');
         }
         let keys = Object.keys(graph[i]);
         let path = [];
