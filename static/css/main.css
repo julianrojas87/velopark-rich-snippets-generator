@@ -215,6 +215,7 @@ iframe {
 @media only screen and (max-width: 1000px) {
   .wrap-contact100 {
     width: 100vw;
+    padding: 62px 5px 90px 5px;
   }
 }
 
@@ -835,9 +836,6 @@ textarea.input100 {
 }
 
 .wizard.vertical>.steps {
-/*  display: inline;
-  float: left;
-  width: 30%*/
   position: fixed;
   width: 25%;
   background-color: #00a9a3;
@@ -846,10 +844,30 @@ textarea.input100 {
   overflow: auto;
 }
 
+@media screen and (max-width: 800px) {
+  .wizard.vertical > .steps {
+    position: relative;
+    width: 100%;
+    background-color: #00a9a3;
+    border-radius: 6px;
+    max-height: 75vh;
+    overflow: auto;
+    /*margin-top: 5vh;*/
+    margin: 5vh 10% 2vh 10%;
+  }
+}
+
 .wizard.vertical>.content {
   padding-left: 35%;
   width: 100%;
 }
+
+@media screen and (max-width: 800px) {
+  .wizard.vertical>.content {
+    padding-left: 0px;
+  }
+}
+
 
 .wizard.vertical>.actions {
    padding-left: 35%;
@@ -961,6 +979,10 @@ div.wrap-input100 .removable-input {
 div.wrap-input100 button.minus_button {
   width: 5%;
   text-align: end;
+}
+
+div.week-day-selector {
+  text-align: center;
 }
 
 div.week-day-selector .label-input100 {
