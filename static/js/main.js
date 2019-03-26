@@ -4,6 +4,7 @@ var context = null;
 const startStepNumberFacilitySection = 3;
 const numStepsFacilitySection = 5;
 var currentNumFacilitySections = 1;
+
 //var currentStepNumberInsertPos = 8;
 
 function loadAPSkeleton() {
@@ -96,7 +97,7 @@ function handleLoginFeatures() {
 
 (function ($) {
     "use strict";
-    
+
     handleLoginFeatures();
 
     let terms = getListOfTerms();
@@ -157,14 +158,25 @@ function handleLoginFeatures() {
         context = jsonld['@context'];
     });
 
-    $('.minus_button_input').on('click', function(){
+    $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
-        myParent.hide("slow", function(){
-            if(myParent.siblings("div").length > 1) {
+
+        $(this).siblings(".input100").val("");
+        myParent.find('.js-select2').each(function () {
+            $(this).select2('data', null);
+            //$(this).select2('destroy');
+            $(this).val('');
+        });
+
+        myParent.slideUp("slow", function () {
+            if (myParent.siblings("div").length > 0) {
                 myParent.remove();
-            } else {
+            } /*else {
                 $(this).siblings(".input100").val("");
-            }
+                myParent.find('.js-select2').each(function () {
+                    $(this).select2('val', '');
+                });
+            }*/
         });
     });
 
@@ -173,43 +185,37 @@ function handleLoginFeatures() {
         newCopy.find("input").val("");
         newCopy.hide();          //for animation
         $(this).before(newCopy);
-        newCopy.show('slow');    //animate
+        newCopy.slideDown('slow');    //animate
         return false;
     });
 
     $('.plus_button_select').on('click', function () {
-        var parent = $(this).parent();
-        parent.find('.js-select2').each(function () {
+        var originalInput = $(this).siblings('div:first');
+        originalInput.find('.js-select2').each(function () {
             $(this).select2('destroy');
         });
 
-        var newSelect = $(this).prev().clone(true);
-        var newPlus = $(this).clone(true);
-        var minus = $('<button class="minus_button"><i class="fas fa-trash-alt"></i></button>');
-        minus.on('click', function () {
-            newPlus.remove();
-            minus.remove();
-            newSelect.hide("slow", function(){
-                newSelect.remove();
+        var newSelect = originalInput.clone(true);
+
+        newSelect.find("input").val("");
+        newSelect.hide();          //for animation
+        $(this).before(newSelect);
+
+        newSelect.find('.js-select2').each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2',),
+                val: ''
             });
-            return false;
         });
-
-        if ($(this).next('.minus_button').length > 0) {
-            $(this).next().after(newSelect);
-        } else {
-            $(this).after(newSelect);
-        }
-
-        newSelect.after(newPlus);
-        newPlus.after(minus);
-
-        parent.find('.js-select2').each(function () {
+        originalInput.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
         });
+
+        newSelect.slideDown('slow');    //animate
 
         return false;
     });
@@ -235,16 +241,16 @@ function handleLoginFeatures() {
             newPlus.remove();
             newSpan.remove();
             $(this).remove();
-            newSection.hide("slow", function(){
+            newSection.hide("slow", function () {
                 newSection.remove();
             });
             return false;
         });
 
         // Fix and remove extra sections
-        newSection.find('.minus_button').each(function() {
+        newSection.find('.minus_button').each(function () {
             $(this).off('click');
-            $(this).on('click', function() {
+            $(this).on('click', function () {
                 $(this).next().remove();
                 $(this).prev().remove();
                 $(this).prev().remove();
@@ -253,19 +259,19 @@ function handleLoginFeatures() {
             $(this).click();
         });
 
-        newSection.find('input').each(function() {
-            if($(this).attr('type') == 'checkbox') {
+        newSection.find('input').each(function () {
+            if ($(this).attr('type') == 'checkbox') {
                 $(this).prop('checked', false);
-            } else if(($(this).attr('type') != 'button')) {
+            } else if (($(this).attr('type') != 'button')) {
                 $(this).val('');
             }
         });
 
-        newSection.find('textarea').each(function() {
+        newSection.find('textarea').each(function () {
             $(this).val('');
         });
 
-        if(parkingDataLoaded) {
+        if (parkingDataLoaded) {
             newSection.hide();      //for animation
         }
 
@@ -281,7 +287,7 @@ function handleLoginFeatures() {
             });
         });
 
-        function showMaps(){
+        function showMaps() {
             newSection.find('.ol-point-map').each(function () {
                 $(this).empty();
                 let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
@@ -311,7 +317,7 @@ function handleLoginFeatures() {
             });
         }
 
-        if(parkingDataLoaded) {
+        if (parkingDataLoaded) {
             newSection.show("slow", showMaps);
         } else {
             //showMaps();
@@ -319,7 +325,7 @@ function handleLoginFeatures() {
         return false;
     });
 
-    $('#button-add-facility-section').on('click', function(){
+    $('#button-add-facility-section').on('click', function () {
         addFacilitySection();
         $('#form-velopark-data-t-' + (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection)).get(0).click();
     });
@@ -327,7 +333,7 @@ function handleLoginFeatures() {
 })(jQuery);
 
 
-function addFacilitySection(){
+function addFacilitySection() {
     currentNumFacilitySections++;
     let currentStepNumberInsertPos = (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection);
 
@@ -348,9 +354,9 @@ function addFacilitySection(){
         });
 
         // Fix and remove extra sections
-        newFacilitySection.find('.minus_button').each(function() {
+        newFacilitySection.find('.minus_button').each(function () {
             $(this).off('click');
-            $(this).on('click', function() {
+            $(this).on('click', function () {
                 $(this).next().remove();
                 $(this).prev().remove();
                 $(this).prev().remove();
@@ -359,15 +365,15 @@ function addFacilitySection(){
             $(this).click();
         });
 
-        newFacilitySection.find('input').each(function() {
-            if($(this).attr('type') == 'checkbox') {
+        newFacilitySection.find('input').each(function () {
+            if ($(this).attr('type') == 'checkbox') {
                 $(this).prop('checked', false);
-            } else if(($(this).attr('type') != 'button')) {
+            } else if (($(this).attr('type') != 'button')) {
                 $(this).val('');
             }
         });
 
-        newFacilitySection.find('textarea').each(function() {
+        newFacilitySection.find('textarea').each(function () {
             $(this).val('');
         });
 
@@ -385,7 +391,7 @@ function addFacilitySection(){
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
         });
-        newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections-1);
+        newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections - 1);
     }
     let locationSection = $('#step-facility-section-2-' + currentNumFacilitySections);
     locationSection.find('.ol-point-map').each(function () {

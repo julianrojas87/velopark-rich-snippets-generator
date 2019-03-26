@@ -956,6 +956,12 @@ button.minus_button {
   font-size: 1.5em;
 }
 
+.input100-select .minus_button_input {
+  position: absolute;
+  right: -35px;
+  top: 20px;
+}
+
 button.plus_button_input, button.plus_button_section, button.plus_button_select {
   color: green;
 }
@@ -971,7 +977,7 @@ div.wrap-input100 .label-input100 {
   display: block;
 }
 
-div.wrap-input100 .removable-input {
+.removable-input {
   width: calc(95% - 22px);
   display: inline-block;
 }

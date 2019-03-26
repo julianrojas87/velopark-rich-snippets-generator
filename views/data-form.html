@@ -23,7 +23,8 @@
                                             style="font-family: Montserrat-SemiBold; font-size: 16px;"
                                             href="http://velopark.be">http://velopark.be</a>) if you need assistance for this.</span><br>
                             </div>
-                            <input class="input100" type="url" name="@id" placeholder="For example: http://data.gent.be/parkings/fiets/35677">
+                            <input class="input100" type="url" name="@id"
+                                   placeholder="For example: http://data.gent.be/parkings/fiets/35677">
                         </div>
 
                         <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
@@ -43,7 +44,8 @@
 
                         <div class="spacer"></div>
 
-                        <div class="wrap-input100 validate-input bg1 rs2-wrap-input100" data-validate="Enter the identifier">
+                        <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
+                             data-validate="Enter the identifier">
                             <span class="label-input100">Local Identifier *</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -184,9 +186,11 @@
                                     </div>
                                     <input class="input100 removable-input" type="text" name="closeTo._Place.name"
                                            placeholder="Enter the name of a nearby known place">
-                                    <button type="button" class="minus_button minus_button_input"><i class="fas fa-trash-alt"></i></button>
+                                    <button type="button" class="minus_button minus_button_input"><i
+                                            class="fas fa-trash-alt"></i></button>
                                 </div>
-                                <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark</button>
+                                <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -364,7 +368,7 @@
                         Available Languages
                     </span>
                             <div class="wrap-contact100-subsection">
-                                <div class="wrap-input100 input100-select bg1" style="width: 92%;">
+                                <div class="wrap-input100 input100-select bg1 removable-input" style="width: 92%;">
                                     <span class="label-input100">Language</span>
                                     <input type="image" title="about" class="info_button"
                                            src="static/images/icons/info.png">
@@ -388,14 +392,19 @@
                                         </select>
                                         <div class="dropDownSelect2"></div>
                                     </div>
+                                    <button type="button" class="minus_button minus_button_input"><i
+                                            class="fas fa-trash-alt"></i></button>
                                 </div>
-                                <button class="plus_button_select"><i class="fas fa-plus-square"></i>Add extra language</button>
+                                <button class="plus_button_select"><i class="fas fa-plus-square"></i>Add extra language
+                                </button>
                             </div>
+
 
                             <span class="contact100-form-subsection" style="width: 90%;">
                         Hours Available
                     </span>
-                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours</button>
+                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours
+                            </button>
 
                             <div name="contactPoint.hoursAvailable" class="wrap-contact100-subsection">
                                 <div class="wrap-input100 week-day-selector">
@@ -459,7 +468,8 @@
                     <span class="contact100-form-subsubsection" style="width: 90%;">
                         Photo
                     </span>
-                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra photo</button>
+                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra photo
+                            </button>
 
                             <div class="wrap-contact100-subsection">
                                 <div class="wrap-input100 bg1">
@@ -534,7 +544,9 @@
                                 </div>
                                 <div>
                                     <select name="@type" parking-types="true" class="js-select2">
-                                        <option value="http://schema.mobivoc.org/BicycleParkingStation">Bicycle Parking Station</option>
+                                        <option value="http://schema.mobivoc.org/BicycleParkingStation">Bicycle Parking
+                                            Station
+                                        </option>
                                     </select>
                                     <div class="dropDownSelect2"></div>
                                 </div>
@@ -669,7 +681,8 @@
                             <span class="contact100-form-subsection" style="width: 90%;">
                         Opening Hours
                     </span>
-                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours</button>
+                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours
+                            </button>
 
                             <div name="openingHoursSpecification" class="wrap-contact100-subsection">
                                 <div class="wrap-input100 week-day-selector">
@@ -726,7 +739,7 @@
                 <div id="step-facility-section-2">
                     <h2>Facility Section - Location</h2>
                     <div>
-                        <div parking-section="0" >
+                        <div parking-section="0">
                             <span class="contact100-form-subsection">
                         Location
                     </span>
@@ -803,7 +816,8 @@
                                 <span class="contact100-form-subsubsection" style="width: 89%;">
                             Entrance
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra entrance</button>
+                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra entrance
+                                </button>
 
 
                                 <div class="wrap-contact100-subsection">
@@ -866,7 +880,8 @@
                                 <span class="contact100-form-subsubsection" style="width: 89%;">
                             Exit
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra exit</button>
+                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra exit
+                                </button>
 
                                 <div class="wrap-contact100-subsection">
                             <span class="contact100-form-subsubsection"
@@ -935,7 +950,7 @@
                 <div id="step-facility-section-3">
                     <h2>Facility Section - Types of bicycles</h2>
                     <div>
-                        <div parking-section="0" >
+                        <div parking-section="0">
                             <span class="contact100-form-subsection">
                         Types of Bicycles Allowed
                     </span>
@@ -1017,7 +1032,7 @@
                 <div id="step-facility-section-4">
                     <h2>Facility Section - Features</h2>
                     <div>
-                        <div parking-section="0" >
+                        <div parking-section="0">
 
                             <span class="contact100-form-subsection">
                         Section Features
@@ -1026,7 +1041,8 @@
                         <span class="contact100-form-subsubsection" style="width: 89%;">
                             Feature
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra feature</button>
+                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra feature
+                                </button>
                                 <div class="wrap-contact100-subsection">
                                     <div class="wrap-input100 input100-select bg1">
                                         <span class="label-input100">Feature</span>
@@ -1051,7 +1067,9 @@
                                     <span class="contact100-form-subsubsection" style="width: 90%;">
                                 Hours Available
                             </span>
-                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours</button>
+                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
+                                        hours
+                                    </button>
 
                                     <div name="amenityFeature._.hoursAvailable" class="wrap-contact100-subsection">
                                         <div class="wrap-input100 week-day-selector">
@@ -1112,7 +1130,7 @@
                 <div id="step-facility-section-5">
                     <h2>Facility Section - Cost Model</h2>
                     <div>
-                        <div parking-section="0" >
+                        <div parking-section="0">
                             <span class="contact100-form-subsection">
                         Cost Model
                     </span>
@@ -1137,7 +1155,9 @@
                                 <span class="contact100-form-subsubsection" style="width: 89%;">
                             Price Specification
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra price specification</button>
+                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra price
+                                    specification
+                                </button>
 
                                 <div class="wrap-contact100-subsection">
                                     <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
