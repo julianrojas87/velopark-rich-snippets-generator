@@ -157,22 +157,23 @@ function handleLoginFeatures() {
         context = jsonld['@context'];
     });
 
-
+    $('.minus_button_input').on('click', function(){
+        let myParent = $(this).parent();
+        myParent.hide("slow", function(){
+            if(myParent.siblings("div").length > 1) {
+                myParent.remove();
+            } else {
+                $(this).siblings(".input100").val("");
+            }
+        });
+    });
 
     $('.plus_button_input').on('click', function () {
-        var parent = $(this).parent().clone(true);
-        if (parent.find('.minus_button').length <= 0) {
-            var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; bottom: 13px;">');
-            minus.on('click', function () {
-                $(this).parent().remove();
-                return false;
-            });
-            parent.append(minus);
-        }
-        parent.find("input").val("");
-        parent.hide();          //for animation
-        $(this).parent().after(parent);
-        parent.show('slow');    //animate
+        var newCopy = $(this).siblings('div:first').clone(true);
+        newCopy.find("input").val("");
+        newCopy.hide();          //for animation
+        $(this).before(newCopy);
+        newCopy.show('slow');    //animate
         return false;
     });
 
@@ -184,11 +185,13 @@ function handleLoginFeatures() {
 
         var newSelect = $(this).prev().clone(true);
         var newPlus = $(this).clone(true);
-        var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; left: 35px;">');
+        var minus = $('<button class="minus_button"><i class="fas fa-trash-alt"></i></button>');
         minus.on('click', function () {
-            newSelect.remove();
             newPlus.remove();
             minus.remove();
+            newSelect.hide("slow", function(){
+                newSelect.remove();
+            });
             return false;
         });
 
@@ -227,12 +230,14 @@ function handleLoginFeatures() {
         var newSpan = $(this).prev('span').clone(true);
         var newPlus = $(this).clone(true);
 
-        var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; bottom: 4px;">');
+        var minus = $('<button class="minus_button"><i class="fas fa-trash-alt"></i></button>');
         minus.on('click', function () {
-            newSection.remove();
             newPlus.remove();
             newSpan.remove();
             $(this).remove();
+            newSection.hide("slow", function(){
+                newSection.remove();
+            });
             return false;
         });
 

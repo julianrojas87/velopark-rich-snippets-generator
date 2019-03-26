@@ -48,7 +48,9 @@ function make_wizard(){
             $('.ol-point-map, .ol-polygon-map').each(function(){
                 $(this).data('openlayers-map').updateSize();
             });
-            //map.updateSize();
+
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+
             return true;
         }
     });

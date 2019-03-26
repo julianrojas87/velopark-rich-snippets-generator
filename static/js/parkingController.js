@@ -182,7 +182,7 @@ function loadParkingValue(path, value, override, inpt) {
                 input.val(value);
                 input.change();
             } else {
-                input.next('.plus_button_input').click();
+                input.parent().next('.plus_button_input').click();
                 let inputs = $('[name="' + name + '"]');
                 let newInput = $(inputs[inputs.length - 1]);
                 newInput.val(value);
