@@ -376,6 +376,31 @@ function addFacilitySection(){
             content: newFacilitySection
         });
 
+        // Fix and remove extra sections
+        newFacilitySection.find('.minus_button').each(function() {
+            $(this).off('click');
+            $(this).on('click', function() {
+                $(this).next().remove();
+                $(this).prev().remove();
+                $(this).prev().remove();
+                $(this).remove();
+            });
+            $(this).click();
+        });
+
+        newFacilitySection.find('input').each(function() {
+            if($(this).attr('type') == 'checkbox') {
+                $(this).prop('checked', false);
+            } else if(($(this).attr('type') != 'button')) {
+                $(this).val('');
+            }
+        });
+
+        newFacilitySection.find('textarea').each(function() {
+            $(this).val('');
+        });
+
+
         //re-enable select2 (original section and cloned section)
         facilitySection.find('.js-select2').each(function () {
             $(this).select2({

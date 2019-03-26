@@ -56,7 +56,7 @@ function loadSections(graph) {
             }*/
             addFacilitySection();
 
-            section = $('[parking-section=' + i + ']')[0];
+            section = $('[parking-section=' + i + ']');
         }
         let keys = Object.keys(graph[i]);
         let path = [];

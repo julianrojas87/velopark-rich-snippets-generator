@@ -82,11 +82,11 @@ var resultingObject = null;
 async function mapData(jsonld) {
     let general = $('.general-information [name]');
     processGeneral(jsonld, general);
-    let sections = $('div[parking-section=0]');
+    let sections = [];
+    sections[0] = $('div[parking-section=0]');
     for (let i = 1; i < currentNumFacilitySections; i++) {
         sections[i] = $('div[parking-section=' + i + ']');
     }
-    //let sections = $('div[parking-section]');
     await processSections(jsonld, sections);
     if(fillAutomaticData(jsonld)) {
         cleanEmptyValues(jsonld);
