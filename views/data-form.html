@@ -171,7 +171,7 @@
                                 <input class="input100" type="url" name="hasMap.url"
                                        placeholder="Enter the map URL">
                             </div>
-                            <div>
+                            <div class="wrap-contact100-subsection">
                                 <div class="wrap-input100 bg1">
                                     <span class="label-input100">Close To</span>
                                     <input type="image" title="about" class="info_button"
@@ -405,7 +405,8 @@
                     </span>
 
                             <div>
-                                <div name="contactPoint.hoursAvailable" class="wrap-contact100-subsection">
+                                <div name="contactPoint.hoursAvailable"
+                                     class="wrap-contact100-subsection dynamic-section">
                                     <button type="button" class="minus_button minus_button_input"><i
                                             class="fas fa-trash-alt"></i></button>
                                     <div class="wrap-input100 week-day-selector">
@@ -465,15 +466,8 @@
                 <div id="step-general-info-3">
                     <h2>General Information - Photos</h2>
                     <div id="general-information-3" class="wrap-contact100-section general-information">
-
-                        <span class="contact100-form-subsection">
-                    Photos
-                </span>
                         <div class="wrap-contact100-subsection">
-                    <span class="contact100-form-subsubsection" style="width: 90%;">
-                        Photo
-                    </span>
-                            <div class="wrap-contact100-subsection">
+                            <div class="wrap-contact100-subsection dynamic-section">
                                 <button type="button" class="minus_button minus_button_input"><i
                                         class="fas fa-trash-alt"></i></button>
                                 <div class="wrap-input100 bg1">
@@ -505,7 +499,8 @@
                                         <span style="display: inherit; padding-left: 15px;">Example: <i>Locker Service</i></span>
                                     </div>
                                     <div>
-                                        <select terms="true" name="photos._Photograph.about" class="js-select2" placeholder="Select the Photo's topic">
+                                        <select terms="true" name="photos._Photograph.about" class="js-select2"
+                                                placeholder="Select the Photo's topic">
                                             <option value=""></option>
                                             <option value="http://schema.mobivoc.org/BicycleParkingStation">Bicycle
                                                 Parking
@@ -529,12 +524,6 @@
                     <h2>Facility Section - General Section Information</h2>
 
                     <div class="wrap-contact100-section">
-                <span class="contact100-form-subsection" style="width: 90%;">
-                    Parking Section
-                </span>
-                        <!--<input type="image" class="plus_button_section" src="static/images/icons/plus.png"
-                               style="float: left; width: 30px;">-->
-
                         <div parking-section="0" class="wrap-contact100-subsection">
                             <div class="wrap-input100 input100-select bg1">
                                 <span class="label-input100">Parking Type</span>
@@ -549,7 +538,8 @@
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Bicycle parking station</i></span>
                                 </div>
                                 <div>
-                                    <select name="@type" parking-types="true" class="js-select2" placeholder="Select parking type">
+                                    <select name="@type" parking-types="true" class="js-select2"
+                                            placeholder="Select parking type">
                                         <option value=""></option>
                                         <option value="http://schema.mobivoc.org/BicycleParkingStation">Bicycle Parking
                                             Station
@@ -692,7 +682,8 @@
 
                             <div>
 
-                                <div name="openingHoursSpecification" class="wrap-contact100-subsection">
+                                <div name="openingHoursSpecification"
+                                     class="wrap-contact100-subsection dynamic-section">
                                     <button type="button" class="minus_button minus_button_input"><i
                                             class="fas fa-trash-alt"></i></button>
                                     <div class="wrap-input100 week-day-selector">
@@ -753,9 +744,6 @@
                     <h2>Facility Section - Location</h2>
                     <div>
                         <div parking-section="0">
-                            <span class="contact100-form-subsection">
-                        Location
-                    </span>
                             <div class="wrap-contact100-subsection">
                         <span class="contact100-form-subsubsection"
                               style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
@@ -831,7 +819,7 @@
                         </span>
 
                                 <div>
-                                    <div class="wrap-contact100-subsection">
+                                    <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <span class="contact100-form-subsubsection"
@@ -899,7 +887,7 @@
                         </span>
                                 <div>
 
-                                    <div class="wrap-contact100-subsection">
+                                    <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <span class="contact100-form-subsubsection"
@@ -974,12 +962,14 @@
                         <div parking-section="0">
 
                             <div class="wrap-contact100-subsection">
-                        <span class="contact100-form-subsubsection" style="width: 89%;">
-                            Bicycle Allowed
-                        </span>
-                                <p class="no-items-error">Please add at least one bicycle type that is allowed in this facility section.</p>
+                                <p class="info-text">
+                                    <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                                    Here you can enter the different types of bicycles someone can store in this facility section.
+                                </p>
+                                <p class="no-items-error">Please add at least one bicycle type that is allowed in this
+                                    facility section.</p>
                                 <div>
-                                    <div class="wrap-contact100-subsection">
+                                    <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <div class="wrap-input100 input100-select bg1">
@@ -1032,7 +1022,8 @@
                                                 <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
                                             </div>
                                             <div>
-                                                <select class="js-select2" name="allows._AllowedBicycle.countingSystem" placeholder="Yes/No">
+                                                <select class="js-select2" name="allows._AllowedBicycle.countingSystem"
+                                                        placeholder="Yes/No">
                                                     <option value=""></option>
                                                     <option value="true">Yes</option>
                                                     <option value="false">No</option>
@@ -1058,16 +1049,12 @@
                     <h2>Facility Section - Features</h2>
                     <div>
                         <div parking-section="0">
-
-                            <span class="contact100-form-subsection">
-                        Section Features
-                    </span>
                             <div class="wrap-contact100-subsection">
-                        <span class="contact100-form-subsubsection" style="width: 89%;">
-                            Feature
-                        </span>
+                                <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                                    Here you can add special features this facility section provides. Take a look at the available options.
+                                </p>
                                 <div>
-                                    <div class="wrap-contact100-subsection">
+                                    <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <div class="wrap-input100 input100-select bg1">
@@ -1096,7 +1083,7 @@
                                         <div>
 
                                             <div name="amenityFeature._.hoursAvailable"
-                                                 class="wrap-contact100-subsection">
+                                                 class="wrap-contact100-subsection dynamic-section">
                                                 <button type="button" class="minus_button minus_button_input"><i
                                                         class="fas fa-trash-alt"></i></button>
                                                 <div class="wrap-input100 week-day-selector">
@@ -1174,9 +1161,6 @@
                     <h2>Facility Section - Cost Model</h2>
                     <div>
                         <div parking-section="0">
-                            <span class="contact100-form-subsection">
-                        Cost Model
-                    </span>
                             <div class="wrap-contact100-subsection">
                                 <div class="wrap-input100 bg1">
                                     <span class="label-input100">Costs Description</span>
@@ -1200,167 +1184,173 @@
                         </span>
                                 <div>
 
-                                <div class="wrap-contact100-subsection">
-                                    <button type="button" class="minus_button minus_button_input"><i class="fas fa-trash-alt"></i></button>
-                                    <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Free of Charge</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Is this price specification free of charge?</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                    <div class="wrap-contact100-subsection dynamic-section">
+                                        <button type="button" class="minus_button minus_button_input"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                        <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Free of Charge</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Is this price specification free of charge?</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2"
+                                                        name="priceSpecification._PriceSpecification.freeOfCharge"
+                                                        placeholder="Yes/No">
+                                                    <option value=""></option>
+                                                    <option value="true">Yes</option>
+                                                    <option value="false">No</option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <select class="js-select2"
-                                                    name="priceSpecification._PriceSpecification.freeOfCharge" placeholder="Yes/No">
-                                                <option value=""></option>
-                                                <option value="true">Yes</option>
-                                                <option value="false">No</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
+                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Price</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate here the price (if any) for this price specification.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>10</i></span>
+                                            </div>
+                                            <input class="input100" type="number"
+                                                   name="priceSpecification._PriceSpecification.price"
+                                                   placeholder="Enter the price">
+                                        </div>
+                                        <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Currency</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the currency.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>EUR</i></span>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2"
+                                                        name="priceSpecification._PriceSpecification.currency"
+                                                        placeholder="Select currency">
+                                                    <option value=""></option>
+                                                    <option value="EUR">EUR</option>
+                                                    <option value="GBP">GBP</option>
+                                                    <option value="USD">USD</option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>
+                                        </div>
+                                        <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Overnight</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Does this price specification is valid from one day to the next?</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2"
+                                                        name="priceSpecification._PriceSpecification.dueForTime.overnight"
+                                                        placeholder="Yes/No">
+                                                    <option value=""></option>
+                                                    <option value="true">Yes</option>
+                                                    <option value="false">No</option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>
+                                        </div>
+                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Time Start Value</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the start time of this price specifciation.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>0</i></span>
+                                            </div>
+                                            <input class="input100" type="number"
+                                                   name="priceSpecification._PriceSpecification.dueForTime.timeStartValue"
+                                                   placeholder="Enter the start value">
+                                        </div>
+                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Time End Value</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the end time of this price specifciation.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>1</i></span>
+                                            </div>
+                                            <input class="input100" type="number"
+                                                   name="priceSpecification._PriceSpecification.dueForTime.timeEndValue"
+                                                   placeholder="Enter the end value">
+                                        </div>
+                                        <div class="wrap-input100 input100-select bg1">
+                                            <span class="label-input100">Time Unit</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Select the time unit (used by both start time and end time) for this price specification.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Hour</i></span>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2"
+                                                        name="priceSpecification._PriceSpecification.dueForTime.timeUnit"
+                                                        placeholder="Select time unit">
+                                                    <option value=""></option>
+                                                    <option value="hour">Hour</option>
+                                                    <option value="minute">Minute</option>
+                                                    <option value="second">Second</option>
+                                                    <option value="day">Day</option>
+                                                    <option value="week">Week</option>
+                                                    <option value="month">Month</option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>
+                                        </div>
+                                        <div class="wrap-input100 bg0">
+                                            <span class="label-input100">Description</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Describe how this price specification operates.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
+                                            </div>
+                                            <textarea class="input100"
+                                                      name="priceSpecification._PriceSpecification.description"
+                                                      placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
                                         </div>
                                     </div>
-                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Price</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate here the price (if any) for this price specification.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>10</i></span>
-                                        </div>
-                                        <input class="input100" type="number"
-                                               name="priceSpecification._PriceSpecification.price"
-                                               placeholder="Enter the price">
-                                    </div>
-                                    <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Currency</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the currency.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>EUR</i></span>
-                                        </div>
-                                        <div>
-                                            <select class="js-select2"
-                                                    name="priceSpecification._PriceSpecification.currency" placeholder="Select currency">
-                                                <option value=""></option>
-                                                <option value="EUR">EUR</option>
-                                                <option value="GBP">GBP</option>
-                                                <option value="USD">USD</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Overnight</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Does this price specification is valid from one day to the next?</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
-                                        </div>
-                                        <div>
-                                            <select class="js-select2"
-                                                    name="priceSpecification._PriceSpecification.dueForTime.overnight" placeholder="Yes/No">
-                                                <option value=""></option>
-                                                <option value="true">Yes</option>
-                                                <option value="false">No</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Time Start Value</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the start time of this price specifciation.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>0</i></span>
-                                        </div>
-                                        <input class="input100" type="number"
-                                               name="priceSpecification._PriceSpecification.dueForTime.timeStartValue"
-                                               placeholder="Enter the start value">
-                                    </div>
-                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Time End Value</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the end time of this price specifciation.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>1</i></span>
-                                        </div>
-                                        <input class="input100" type="number"
-                                               name="priceSpecification._PriceSpecification.dueForTime.timeEndValue"
-                                               placeholder="Enter the end value">
-                                    </div>
-                                    <div class="wrap-input100 input100-select bg1">
-                                        <span class="label-input100">Time Unit</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Select the time unit (used by both start time and end time) for this price specification.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Hour</i></span>
-                                        </div>
-                                        <div>
-                                            <select class="js-select2"
-                                                    name="priceSpecification._PriceSpecification.dueForTime.timeUnit" placeholder="Select time unit">
-                                                <option value=""></option>
-                                                <option value="hour">Hour</option>
-                                                <option value="minute">Minute</option>
-                                                <option value="second">Second</option>
-                                                <option value="day">Day</option>
-                                                <option value="week">Week</option>
-                                                <option value="month">Month</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="wrap-input100 bg0">
-                                        <span class="label-input100">Description</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Describe how this price specification operates.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
-                                        </div>
-                                        <textarea class="input100"
-                                                  name="priceSpecification._PriceSpecification.description"
-                                                  placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
-                                    </div>
-                                </div>
-                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra price
+                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
+                                        price
                                         specification
                                     </button>
                                 </div>

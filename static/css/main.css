@@ -223,8 +223,8 @@ iframe {
   width: 100%;
   margin-bottom: 40px;
   background: #fff;
-  border: 5px solid;
-  border-radius: 10px;
+  /*border: 5px solid;
+  border-radius: 10px;*/
   padding: 25px;
 }
 
@@ -232,8 +232,8 @@ iframe {
   width: 100%;
   margin-bottom: 40px;
   background: #fff;
-  border: 2px solid;
-  border-radius: 10px;
+  /*border: 2px solid;
+  border-radius: 10px;*/
   padding: 20px 20px 10px 25px;
 }
 
@@ -1034,4 +1034,20 @@ textarea::-webkit-scrollbar-thumb {
 .no-items-error {
     display: none;
     color: red;
+}
+
+.dynamic-section {
+  border: 0.5px solid #0a0a32;
+  border-radius: 10px;
+  background-color: rgba(0,67,255,0.02);
+}
+
+.info-text {
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #bee5eb;
+  border-radius: .25rem;
+  color: #0c5460;
+  background-color: #d1ecf1;
 }
