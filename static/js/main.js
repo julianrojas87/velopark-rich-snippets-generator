@@ -161,7 +161,13 @@ function handleLoginFeatures() {
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
 
-        $(this).siblings(".input100").val("");
+        myParent.find("input, textarea").each(function () {
+            if ($(this).attr('type') === 'checkbox') {
+                $(this).prop('checked', false);
+            } else if (($(this).attr('type') !== 'button')) {
+                $(this).val('');
+            }
+        });
         myParent.find('.js-select2').each(function () {
             $(this).select2('data', null);
             //$(this).select2('destroy');
@@ -171,12 +177,12 @@ function handleLoginFeatures() {
         myParent.slideUp("slow", function () {
             if (myParent.siblings("div").length > 0) {
                 myParent.remove();
-            } /*else {
+            } else {
                 $(this).siblings(".input100").val("");
                 myParent.find('.js-select2').each(function () {
                     $(this).select2('val', '');
                 });
-            }*/
+            }
         });
     });
 
@@ -221,66 +227,34 @@ function handleLoginFeatures() {
     });
 
     $('.plus_button_section').on('click', function () {
-        if ($(this).next().attr('class').indexOf('minus_button') >= 0) {
-            var section = $(this).next().next();
-        } else {
-            var section = $(this).next();
-        }
+        let section = $(this).siblings('div:first');
 
-        var parent = $(this).parent();
-        parent.find('.js-select2').each(function () {
+        section.find('.js-select2').each(function () {
             $(this).select2('destroy');
         });
 
         var newSection = section.clone(true);
-        var newSpan = $(this).prev('span').clone(true);
-        var newPlus = $(this).clone(true);
 
-        var minus = $('<button class="minus_button"><i class="fas fa-trash-alt"></i></button>');
-        minus.on('click', function () {
-            newPlus.remove();
-            newSpan.remove();
-            $(this).remove();
-            newSection.hide("slow", function () {
-                newSection.remove();
-            });
-            return false;
+        //Fix and remove extra sections
+        newSection.find("button.plus_button_section").each(function () {
+            $(this).siblings("div").slice(1).remove();
         });
 
-        // Fix and remove extra sections
-        newSection.find('.minus_button').each(function () {
-            $(this).off('click');
-            $(this).on('click', function () {
-                $(this).next().remove();
-                $(this).prev().remove();
-                $(this).prev().remove();
-                $(this).remove();
-            });
-            $(this).click();
-        });
-
-        newSection.find('input').each(function () {
-            if ($(this).attr('type') == 'checkbox') {
+        newSection.find('input, textarea').each(function () {
+            if ($(this).attr('type') === 'checkbox') {
                 $(this).prop('checked', false);
-            } else if (($(this).attr('type') != 'button')) {
+            } else if (($(this).attr('type') !== 'button')) {
                 $(this).val('');
             }
-        });
-
-        newSection.find('textarea').each(function () {
-            $(this).val('');
         });
 
         if (parkingDataLoaded) {
             newSection.hide();      //for animation
         }
 
-        section.after(newSection);
-        section.after(minus);
-        section.after(newPlus);
-        section.after(newSpan);
+        $(this).before(newSection);
 
-        parent.find('.js-select2').each(function () {
+        section.parent().find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2')
@@ -353,16 +327,9 @@ function addFacilitySection() {
             content: newFacilitySection
         });
 
-        // Fix and remove extra sections
-        newFacilitySection.find('.minus_button').each(function () {
-            $(this).off('click');
-            $(this).on('click', function () {
-                $(this).next().remove();
-                $(this).prev().remove();
-                $(this).prev().remove();
-                $(this).remove();
-            });
-            $(this).click();
+        //Fix and remove extra sections
+        newFacilitySection.find("button.plus_button_section").each(function () {
+            $(this).siblings("div").slice(1).remove();
         });
 
         newFacilitySection.find('input').each(function () {

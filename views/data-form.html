@@ -403,51 +403,56 @@
                             <span class="contact100-form-subsection" style="width: 90%;">
                         Hours Available
                     </span>
-                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours
-                            </button>
 
-                            <div name="contactPoint.hoursAvailable" class="wrap-contact100-subsection">
-                                <div class="wrap-input100 week-day-selector">
-                                    <span class="label-input100">Mon </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Monday">
-                                    <span class="label-input100">Tue </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Tuesday">
-                                    <span class="label-input100">Wed </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Wednesday">
-                                    <span class="label-input100">Thu </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Thursday">
-                                    <span class="label-input100">Fri </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Friday">
-                                    <span class="label-input100">Sat </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Saturday">
-                                    <span class="label-input100">Sun </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Sunday">
-                                    <input type="image" title="about" class="info_button_div"
-                                           src="static/images/icons/info.png">
-                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                        <h2 style="margin-bottom: 15px;"></h2>
-                                        <input type="image" title="close" class="info_close_button"
-                                               src="static/images/icons/close_white.png"
-                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Select here the days and hours on which customers can contact the operator.</span><br>
-                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00</i></span>
+                            <div>
+                                <div name="contactPoint.hoursAvailable" class="wrap-contact100-subsection">
+                                    <button type="button" class="minus_button minus_button_input"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                    <div class="wrap-input100 week-day-selector">
+                                        <span class="label-input100">Mon </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Monday">
+                                        <span class="label-input100">Tue </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Tuesday">
+                                        <span class="label-input100">Wed </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Wednesday">
+                                        <span class="label-input100">Thu </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Thursday">
+                                        <span class="label-input100">Fri </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Friday">
+                                        <span class="label-input100">Sat </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Saturday">
+                                        <span class="label-input100">Sun </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Sunday">
+                                        <input type="image" title="about" class="info_button_div"
+                                               src="static/images/icons/info.png">
+                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                            <h2 style="margin-bottom: 15px;"></h2>
+                                            <input type="image" title="close" class="info_close_button"
+                                                   src="static/images/icons/close_white.png"
+                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                            <span style="display: inherit; padding-left: 15px;">Select here the days and hours on which customers can contact the operator.</span><br>
+                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00</i></span>
+                                        </div>
+                                    </div>
+                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                        <span class="label-input100">Opening Time</span>
+                                        <input class="input100" type="time" placeholder="Enter the opening time">
+                                    </div>
+                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                        <span class="label-input100">Closing Time</span>
+                                        <input class="input100" type="time" placeholder="Enter the closing time">
                                     </div>
                                 </div>
-                                <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                    <span class="label-input100">Opening Time</span>
-                                    <input class="input100" type="time" placeholder="Enter the opening time">
-                                </div>
-                                <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                    <span class="label-input100">Closing Time</span>
-                                    <input class="input100" type="time" placeholder="Enter the closing time">
-                                </div>
+                                <button type="button" class="plus_button_section"><i class="fas fa-plus-square"></i>Add
+                                    extra hours
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -468,10 +473,9 @@
                     <span class="contact100-form-subsubsection" style="width: 90%;">
                         Photo
                     </span>
-                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra photo
-                            </button>
-
                             <div class="wrap-contact100-subsection">
+                                <button type="button" class="minus_button minus_button_input"><i
+                                        class="fas fa-trash-alt"></i></button>
                                 <div class="wrap-input100 bg1">
                                     <span class="label-input100">Photo URL</span>
                                     <input type="image" title="about" class="info_button"
@@ -512,6 +516,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra photo
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -681,53 +687,58 @@
                             <span class="contact100-form-subsection" style="width: 90%;">
                         Opening Hours
                     </span>
-                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours
-                            </button>
 
-                            <div name="openingHoursSpecification" class="wrap-contact100-subsection">
-                                <div class="wrap-input100 week-day-selector">
-                                    <span class="label-input100">Mon </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Monday">
-                                    <span class="label-input100">Tue </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Tuesday">
-                                    <span class="label-input100">Wed </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Wednesday">
-                                    <span class="label-input100">Thu </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Thursday">
-                                    <span class="label-input100">Fri </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Friday">
-                                    <span class="label-input100">Sat </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Saturday">
-                                    <span class="label-input100">Sun </span><input class="opening-checkbox"
-                                                                                   type="checkbox"
-                                                                                   value="http://schema.org/Sunday">
-                                    <input type="image" title="about" class="info_button_div"
-                                           src="static/images/icons/info.png">
-                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                        <h2 style="margin-bottom: 15px;"></h2>
-                                        <input type="image" title="close" class="info_close_button"
-                                               src="static/images/icons/close_white.png"
-                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.</span><br>
-                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i></span>
+                            <div>
+
+                                <div name="openingHoursSpecification" class="wrap-contact100-subsection">
+                                    <button type="button" class="minus_button minus_button_input"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                    <div class="wrap-input100 week-day-selector">
+                                        <span class="label-input100">Mon </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Monday">
+                                        <span class="label-input100">Tue </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Tuesday">
+                                        <span class="label-input100">Wed </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Wednesday">
+                                        <span class="label-input100">Thu </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Thursday">
+                                        <span class="label-input100">Fri </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Friday">
+                                        <span class="label-input100">Sat </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Saturday">
+                                        <span class="label-input100">Sun </span><input class="opening-checkbox"
+                                                                                       type="checkbox"
+                                                                                       value="http://schema.org/Sunday">
+                                        <input type="image" title="about" class="info_button_div"
+                                               src="static/images/icons/info.png">
+                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                            <h2 style="margin-bottom: 15px;"></h2>
+                                            <input type="image" title="close" class="info_close_button"
+                                                   src="static/images/icons/close_white.png"
+                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                            <span style="display: inherit; padding-left: 15px;">Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.</span><br>
+                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i></span>
+                                        </div>
+                                    </div>
+                                    <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
+                                         data-validate="Enter a valid opening time">
+                                        <span class="label-input100">Opening Time *</span>
+                                        <input class="input100" type="time" placeholder="Enter the opening time">
+                                    </div>
+                                    <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
+                                         data-validate="Enter a valid closing time">
+                                        <span class="label-input100">Closing Time *</span>
+                                        <input class="input100" type="time" placeholder="Enter the closing time">
                                     </div>
                                 </div>
-                                <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                     data-validate="Enter a valid opening time">
-                                    <span class="label-input100">Opening Time *</span>
-                                    <input class="input100" type="time" placeholder="Enter the opening time">
-                                </div>
-                                <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                     data-validate="Enter a valid closing time">
-                                    <span class="label-input100">Closing Time *</span>
-                                    <input class="input100" type="time" placeholder="Enter the closing time">
-                                </div>
+                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -813,131 +824,139 @@
                                            placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))">
                                 </div>
 
-                                <span class="contact100-form-subsubsection" style="width: 89%;">
+                                <span class="contact100-form-subsubsection">
                             Entrance
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra entrance
-                                </button>
 
-
-                                <div class="wrap-contact100-subsection">
-                            <span class="contact100-form-subsubsection"
-                                  style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
+                                <div>
+                                    <div class="wrap-contact100-subsection">
+                                        <button type="button" class="minus_button minus_button_input"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                        <span class="contact100-form-subsubsection"
+                                              style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
                                 Select the Entrance location in the map:
                             </span>
-                                    <input id="clear-entrance-point" type="button" value="clear"
-                                           style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+                                        <input id="clear-entrance-point" type="button" value="clear"
+                                               style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
 
-                                    <div id="entrance-point-map" class="ol-point-map"
-                                         style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Latitude</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
+                                        <div id="entrance-point-map" class="ol-point-map"
+                                             style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Latitude</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
+                                            </div>
+                                            <input id="entrance_lat" class="input100" type="text"
+                                                   name="entrance._Entrance.geo.latitude"
+                                                   placeholder="Enter the latitude">
                                         </div>
-                                        <input id="entrance_lat" class="input100" type="text"
-                                               name="entrance._Entrance.geo.latitude"
-                                               placeholder="Enter the latitude">
-                                    </div>
-                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Longitude</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
+                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Longitude</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
+                                            </div>
+                                            <input id="entrance_lon" class="input100" type="text"
+                                                   name="entrance._Entrance.geo.longitude"
+                                                   placeholder="Enter the longitude">
                                         </div>
-                                        <input id="entrance_lon" class="input100" type="text"
-                                               name="entrance._Entrance.geo.longitude"
-                                               placeholder="Enter the longitude">
-                                    </div>
-                                    <div class="wrap-input100 bg0">
-                                        <span class="label-input100">Description</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i></span>
+                                        <div class="wrap-input100 bg0">
+                                            <span class="label-input100">Description</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i></span>
+                                            </div>
+                                            <textarea class="input100" name="entrance._Entrance.description"
+                                                      placeholder="Describe how to get here"></textarea>
                                         </div>
-                                        <textarea class="input100" name="entrance._Entrance.description"
-                                                  placeholder="Describe how to get here"></textarea>
                                     </div>
+                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>
+                                        Add extra entrance
+                                    </button>
                                 </div>
 
-                                <span class="contact100-form-subsubsection" style="width: 89%;">
+                                <span class="contact100-form-subsubsection">
                             Exit
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra exit
-                                </button>
+                                <div>
 
-                                <div class="wrap-contact100-subsection">
-                            <span class="contact100-form-subsubsection"
-                                  style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
+                                    <div class="wrap-contact100-subsection">
+                                        <button type="button" class="minus_button minus_button_input"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                        <span class="contact100-form-subsubsection"
+                                              style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
                                 Select the Exit location in the map:
                             </span>
-                                    <input id="clear-exit-point" type="button" value="clear"
-                                           style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+                                        <input id="clear-exit-point" type="button" value="clear"
+                                               style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
 
-                                    <div id="exit-point-map" class="ol-point-map"
-                                         style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Latitude</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
+                                        <div id="exit-point-map" class="ol-point-map"
+                                             style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Latitude</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
+                                            </div>
+                                            <input id="exit_lat" class="input100" type="text"
+                                                   name="exit._Exit.geo.latitude"
+                                                   placeholder="Enter the latitude">
                                         </div>
-                                        <input id="exit_lat" class="input100" type="text"
-                                               name="exit._Exit.geo.latitude"
-                                               placeholder="Enter the latitude">
-                                    </div>
-                                    <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Longitude</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
+                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Longitude</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
+                                            </div>
+                                            <input id="exit_lon" class="input100" type="text"
+                                                   name="exit._Exit.geo.longitude"
+                                                   placeholder="Enter the longitude">
                                         </div>
-                                        <input id="exit_lon" class="input100" type="text"
-                                               name="exit._Exit.geo.longitude"
-                                               placeholder="Enter the longitude">
-                                    </div>
-                                    <div class="wrap-input100 bg0">
-                                        <span class="label-input100">Description</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>De uitgang bevindt zich aan beide zijden van het plein. Let op: verboden om in de garage te fietsen!</i></span>
+                                        <div class="wrap-input100 bg0">
+                                            <span class="label-input100">Description</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>De uitgang bevindt zich aan beide zijden van het plein. Let op: verboden om in de garage te fietsen!</i></span>
+                                            </div>
+                                            <textarea class="input100" name="exit._Exit.description"
+                                                      placeholder="Describe how to get here"></textarea>
                                         </div>
-                                        <textarea class="input100" name="exit._Exit.description"
-                                                  placeholder="Describe how to get here"></textarea>
                                     </div>
+                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra exit
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -958,67 +977,71 @@
                         <span class="contact100-form-subsubsection" style="width: 89%;">
                             Bicycle Allowed
                         </span>
-                                <button class="plus_button_section">
-                                    <i class="fas fa-plus-square"></i>Add extra bicycle type
-                                </button>
+                                <div>
 
-                                <div class="wrap-contact100-subsection">
-                                    <div class="wrap-input100 input100-select bg1">
-                                        <span class="label-input100">Bicycle Type</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Select here the types of bicycles allowed in this parking section.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i></span>
+                                    <div class="wrap-contact100-subsection">
+                                        <button type="button" class="minus_button minus_button_input"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                        <div class="wrap-input100 input100-select bg1">
+                                            <span class="label-input100">Bicycle Type</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Select here the types of bicycles allowed in this parking section.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i></span>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2" name="allows._AllowedBicycle.bicycleType"
+                                                        bike-types="true"></select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <select class="js-select2" name="allows._AllowedBicycle.bicycleType"
-                                                    bike-types="true"></select>
-                                            <div class="dropDownSelect2"></div>
+                                        <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
+                                             data-validate="Enter a value">
+                                            <span class="label-input100">Capacity *</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Indicate the maximum amount of bicycles of this type allowed in this section.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>250</i></span>
+                                            </div>
+                                            <input class="input100" type="number"
+                                                   name="allows._AllowedBicycle.bicyclesAmount"
+                                                   placeholder="Enter the allowed capacity">
+                                        </div>
+                                        <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+                                            <span class="label-input100">Counting System</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <span style="display: inherit; padding-left: 15px;">Does the parking have a system to count how many bicycles of this type are parked?.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2" name="allows._AllowedBicycle.countingSystem">
+                                                    <option value="">Select</option>
+                                                    <option value="true">Yes</option>
+                                                    <option value="false">No</option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                         data-validate="Enter a value">
-                                        <span class="label-input100">Capacity *</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate the maximum amount of bicycles of this type allowed in this section.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>250</i></span>
-                                        </div>
-                                        <input class="input100" type="number"
-                                               name="allows._AllowedBicycle.bicyclesAmount"
-                                               placeholder="Enter the allowed capacity">
-                                    </div>
-                                    <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                        <span class="label-input100">Counting System</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Does the parking have a system to count how many bicycles of this type are parked?.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
-                                        </div>
-                                        <div>
-                                            <select class="js-select2" name="allows._AllowedBicycle.countingSystem">
-                                                <option value="">Select</option>
-                                                <option value="true">Yes</option>
-                                                <option value="false">No</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
+                                    <button class="plus_button_section">
+                                        <i class="fas fa-plus-square"></i>Add extra bicycle type
+                                    </button>
                                 </div>
 
                             </div>
@@ -1041,82 +1064,100 @@
                         <span class="contact100-form-subsubsection" style="width: 89%;">
                             Feature
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra feature
-                                </button>
-                                <div class="wrap-contact100-subsection">
-                                    <div class="wrap-input100 input100-select bg1">
-                                        <span class="label-input100">Feature</span>
-                                        <input type="image" title="about" class="info_button"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
-                                        </div>
-                                        <div>
-                                            <select class="js-select2" name="amenityFeature._.@type"
-                                                    feature-types="true">
-                                                <option value="">Select a Feature</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                    <span class="contact100-form-subsubsection" style="width: 90%;">
-                                Hours Available
-                            </span>
-                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
-                                        hours
-                                    </button>
-
-                                    <div name="amenityFeature._.hoursAvailable" class="wrap-contact100-subsection">
-                                        <div class="wrap-input100 week-day-selector">
-                                            <span class="label-input100">Mon </span><input class="opening-checkbox"
-                                                                                           type="checkbox"
-                                                                                           value="http://schema.org/Monday">
-                                            <span class="label-input100">Tue </span><input class="opening-checkbox"
-                                                                                           type="checkbox"
-                                                                                           value="http://schema.org/Tuesday">
-                                            <span class="label-input100">Wed </span><input class="opening-checkbox"
-                                                                                           type="checkbox"
-                                                                                           value="http://schema.org/Wednesday">
-                                            <span class="label-input100">Thu </span><input class="opening-checkbox"
-                                                                                           type="checkbox"
-                                                                                           value="http://schema.org/Thursday">
-                                            <span class="label-input100">Fri </span><input class="opening-checkbox"
-                                                                                           type="checkbox"
-                                                                                           value="http://schema.org/Friday">
-                                            <span class="label-input100">Sat </span><input class="opening-checkbox"
-                                                                                           type="checkbox"
-                                                                                           value="http://schema.org/Saturday">
-                                            <span class="label-input100">Sun </span><input class="opening-checkbox"
-                                                                                           type="checkbox"
-                                                                                           value="http://schema.org/Sunday">
-                                            <input type="image" title="about" class="info_button_div"
+                                <div>
+                                    <div class="wrap-contact100-subsection">
+                                        <button type="button" class="minus_button minus_button_input"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                        <div class="wrap-input100 input100-select bg1">
+                                            <span class="label-input100">Feature</span>
+                                            <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
-                                            <div class="log-form"
-                                                 style="padding-bottom: 20px; word-wrap: break-word;">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                                 <h2 style="margin-bottom: 15px;"></h2>
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2" name="amenityFeature._.@type"
+                                                        feature-types="true">
+                                                    <option value="">Select a Feature</option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
                                             </div>
                                         </div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Opening Time</span>
-                                            <input class="input100" type="time"
-                                                   placeholder="Enter the opening time">
-                                        </div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Closing Time</span>
-                                            <input class="input100" type="time"
-                                                   placeholder="Enter the closing time">
+                                        <span class="contact100-form-subsubsection" style="width: 90%;">
+                                Hours Available
+                            </span>
+                                        <div>
+
+                                            <div name="amenityFeature._.hoursAvailable"
+                                                 class="wrap-contact100-subsection">
+                                                <button type="button" class="minus_button minus_button_input"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                                <div class="wrap-input100 week-day-selector">
+                                                    <span class="label-input100">Mon </span><input
+                                                        class="opening-checkbox"
+                                                        type="checkbox"
+                                                        value="http://schema.org/Monday">
+                                                    <span class="label-input100">Tue </span><input
+                                                        class="opening-checkbox"
+                                                        type="checkbox"
+                                                        value="http://schema.org/Tuesday">
+                                                    <span class="label-input100">Wed </span><input
+                                                        class="opening-checkbox"
+                                                        type="checkbox"
+                                                        value="http://schema.org/Wednesday">
+                                                    <span class="label-input100">Thu </span><input
+                                                        class="opening-checkbox"
+                                                        type="checkbox"
+                                                        value="http://schema.org/Thursday">
+                                                    <span class="label-input100">Fri </span><input
+                                                        class="opening-checkbox"
+                                                        type="checkbox"
+                                                        value="http://schema.org/Friday">
+                                                    <span class="label-input100">Sat </span><input
+                                                        class="opening-checkbox"
+                                                        type="checkbox"
+                                                        value="http://schema.org/Saturday">
+                                                    <span class="label-input100">Sun </span><input
+                                                        class="opening-checkbox"
+                                                        type="checkbox"
+                                                        value="http://schema.org/Sunday">
+                                                    <input type="image" title="about" class="info_button_div"
+                                                           src="static/images/icons/info.png">
+                                                    <div class="log-form"
+                                                         style="padding-bottom: 20px; word-wrap: break-word;">
+                                                        <h2 style="margin-bottom: 15px;"></h2>
+                                                        <input type="image" title="close" class="info_close_button"
+                                                               src="static/images/icons/close_white.png"
+                                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                        <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
+                                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                                    <span class="label-input100">Opening Time</span>
+                                                    <input class="input100" type="time"
+                                                           placeholder="Enter the opening time">
+                                                </div>
+                                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                                    <span class="label-input100">Closing Time</span>
+                                                    <input class="input100" type="time"
+                                                           placeholder="Enter the closing time">
+                                                </div>
+                                            </div>
+                                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add
+                                                extra
+                                                hours
+                                            </button>
                                         </div>
                                     </div>
+                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
+                                        feature
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1155,11 +1196,10 @@
                                 <span class="contact100-form-subsubsection" style="width: 89%;">
                             Price Specification
                         </span>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra price
-                                    specification
-                                </button>
+                                <div>
 
                                 <div class="wrap-contact100-subsection">
+                                    <button type="button" class="minus_button minus_button_input"><i class="fas fa-trash-alt"></i></button>
                                     <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
                                         <span class="label-input100">Free of Charge</span>
                                         <input type="image" title="about" class="info_button"
@@ -1317,6 +1357,10 @@
                                                   name="priceSpecification._PriceSpecification.description"
                                                   placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
                                     </div>
+                                </div>
+                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra price
+                                        specification
+                                    </button>
                                 </div>
                             </div>
                         </div>
