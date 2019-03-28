@@ -45,7 +45,7 @@
 
 })(jQuery);
 
-var input = $('.validate-input .input100');
+//var input = $('.validate-input .input100');
 
 function fullValidation(input) {
     if (validate(input) == false) {

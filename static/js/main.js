@@ -89,7 +89,7 @@ function getFeatures(done) {
 function handleLoginFeatures() {
     // Check if user is logged in
     let userName = $('#user-email').text();
-    if (!userName || userName == '') {
+    if (!userName || userName === '') {
         // Hide JSON-LD view features
         $('#save_button').remove();
     }
@@ -117,7 +117,8 @@ function handleLoginFeatures() {
     $(".js-select2").each(function () {
         $(this).select2({
             minimumResultsForSearch: 20,
-            dropdownParent: $(this).next('.dropDownSelect2')
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
         });
     });
 
@@ -169,8 +170,6 @@ function handleLoginFeatures() {
             }
         });
         myParent.find('.js-select2').each(function () {
-            $(this).select2('data', null);
-            //$(this).select2('destroy');
             $(this).val('');
         });
 
@@ -180,14 +179,21 @@ function handleLoginFeatures() {
             } else {
                 $(this).siblings(".input100").val("");
                 myParent.find('.js-select2').each(function () {
-                    $(this).select2('val', '');
+                    $(this).select2('destroy');
                 });
             }
         });
     });
 
     $('.plus_button_input').on('click', function () {
-        var newCopy = $(this).siblings('div:first').clone(true);
+        var newCopy;
+        var originalInput = $(this).siblings('div:first');
+
+        if (originalInput.css('display') === 'none') {
+            newCopy = originalInput;
+        } else {
+            newCopy = originalInput.clone(true);
+        }
         newCopy.find("input").val("");
         newCopy.hide();          //for animation
         $(this).before(newCopy);
@@ -197,30 +203,38 @@ function handleLoginFeatures() {
 
     $('.plus_button_select').on('click', function () {
         var originalInput = $(this).siblings('div:first');
-        originalInput.find('.js-select2').each(function () {
-            $(this).select2('destroy');
-        });
 
-        var newSelect = originalInput.clone(true);
+        var newSelect;
 
-        newSelect.find("input").val("");
-        newSelect.hide();          //for animation
-        $(this).before(newSelect);
+        if (originalInput.css('display') === 'none') {
+            newSelect = originalInput;
+        } else {
+            originalInput.find('.js-select2').each(function () {
+                $(this).select2('destroy');
+            });
 
+            newSelect = originalInput.clone(true);
+
+            newSelect.find("input").val("");
+            newSelect.hide();          //for animation
+            $(this).before(newSelect);
+
+            originalInput.find('.js-select2').each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2'),
+                    placeholder: $(this).attr('placeholder')
+                });
+            });
+        }
         newSelect.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2',),
-                val: ''
+                val: '',
+                placeholder: $(this).attr('placeholder')
             });
         });
-        originalInput.find('.js-select2').each(function () {
-            $(this).select2({
-                minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
-            });
-        });
-
         newSelect.slideDown('slow');    //animate
 
         return false;
@@ -229,35 +243,43 @@ function handleLoginFeatures() {
     $('.plus_button_section').on('click', function () {
         let section = $(this).siblings('div:first');
 
-        section.find('.js-select2').each(function () {
-            $(this).select2('destroy');
-        });
+        var newSection;
 
-        var newSection = section.clone(true);
+        if (section.css('display') === 'none') {
+            newSection = section;
+        } else {
 
-        //Fix and remove extra sections
-        newSection.find("button.plus_button_section").each(function () {
-            $(this).siblings("div").slice(1).remove();
-        });
+            section.find('.js-select2').each(function () {
+                $(this).select2('destroy');
+            });
 
-        newSection.find('input, textarea').each(function () {
-            if ($(this).attr('type') === 'checkbox') {
-                $(this).prop('checked', false);
-            } else if (($(this).attr('type') !== 'button')) {
-                $(this).val('');
+            newSection = section.clone(true);
+
+            //Fix and remove extra sections
+            newSection.find("button.plus_button_section").each(function () {
+                $(this).siblings("div").slice(1).remove();
+            });
+
+            newSection.find('input, textarea').each(function () {
+                if ($(this).attr('type') === 'checkbox') {
+                    $(this).prop('checked', false);
+                } else if (($(this).attr('type') !== 'button')) {
+                    $(this).val('');
+                }
+            });
+
+            if (parkingDataLoaded) {
+                newSection.hide();      //for animation
             }
-        });
 
-        if (parkingDataLoaded) {
-            newSection.hide();      //for animation
+            $(this).before(newSection);
         }
-
-        $(this).before(newSection);
 
         section.parent().find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
             });
         });
 
@@ -349,13 +371,15 @@ function addFacilitySection() {
         facilitySection.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
             });
         });
         newFacilitySection.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
             });
         });
         newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections - 1);
