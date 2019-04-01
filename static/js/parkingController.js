@@ -274,7 +274,7 @@ function editClick() {
 
 function deleteClick() {
     let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text();
+    let parkingId = $(this).parent().parent().find('a').text().trim();
     let userName = $('#user-email').text().trim();
 
     if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
@@ -293,7 +293,7 @@ function deleteClick() {
 
 function downloadClick() {
     let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text();
+    let parkingId = $(this).parent().parent().find('a').text().trim();
     let userName = $('#user-email').text().trim();
     window.location.href = domain + '/download?username=' + userName + '&parkingId=' + parkingId;
 }
