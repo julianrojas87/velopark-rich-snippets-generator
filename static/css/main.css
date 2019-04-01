@@ -848,17 +848,18 @@ textarea.input100 {
 .wizard.vertical>.steps {
   position: fixed;
   width: 25%;
-  background-color: #00a9a3;
+  background-color: #1072ba;
   border-radius: 6px;
   max-height: 75vh;
   overflow: auto;
+  margin-top: 2vh;
 }
 
 @media screen and (max-width: 800px) {
   .wizard.vertical > .steps {
     position: relative;
     width: 100%;
-    background-color: #00a9a3;
+    background-color: #1072ba;
     border-radius: 6px;
     max-height: 75vh;
     overflow: auto;
