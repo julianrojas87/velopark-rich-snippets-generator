@@ -134,7 +134,6 @@ function handleLoginFeatures() {
         $('select[parking-types = "true"]').each(function () {
             for (var i = 0; i < parkingTypes.length; i++) {
                 $(this).append('<option value="' + parkingTypes[i]['@id'] + '">' + parkingTypes[i]['label'] + '</option>');
-                //console.log($(this));
             }
         });
     });

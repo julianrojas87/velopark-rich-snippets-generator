@@ -7,6 +7,7 @@ function make_wizard(){
         transitionEffect: "fade",
         stepsOrientation: "vertical",
         enableAllSteps: true,
+        enableFinishButton: false,
         titleTemplate:
             '<div class="title-step-#index#">' +
                 '<span class="step-number">#index#.&nbsp;</span>' +
