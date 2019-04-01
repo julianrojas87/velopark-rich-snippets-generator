@@ -1,6 +1,11 @@
 const domainName = $('#domainName').text().trim();
 var loadingPromises = [];
 var context = null;
+const startStepNumberFacilitySection = 3;
+const numStepsFacilitySection = 5;
+var currentNumFacilitySections = 1;
+
+//var currentStepNumberInsertPos = 8;
 
 function loadAPSkeleton() {
     return new Promise((resolve, reject) => {
@@ -84,7 +89,7 @@ function getFeatures(done) {
 function handleLoginFeatures() {
     // Check if user is logged in
     let userName = $('#user-email').text();
-    if (!userName || userName == '') {
+    if (!userName || userName === '') {
         // Hide JSON-LD view features
         $('#save_button').remove();
     }
@@ -92,7 +97,7 @@ function handleLoginFeatures() {
 
 (function ($) {
     "use strict";
-    
+
     handleLoginFeatures();
 
     let terms = getListOfTerms();
@@ -106,6 +111,16 @@ function handleLoginFeatures() {
     loadingPromises.push(bikeTypes);
     loadingPromises.push(features);
     loadingPromises.push(contextPromise);
+
+    make_wizard();
+
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
+        });
+    });
 
     terms.then(listOfTerms => {
         $('select[terms = "true"]').each(function () {
@@ -143,145 +158,261 @@ function handleLoginFeatures() {
         context = jsonld['@context'];
     });
 
+    $('.minus_button_input').on('click', function () {
+        let myParent = $(this).parent();
+
+        myParent.find("input, textarea").each(function () {
+            if ($(this).attr('type') === 'checkbox') {
+                $(this).prop('checked', false);
+            } else if (($(this).attr('type') !== 'button')) {
+                $(this).val('');
+            }
+        });
+        myParent.find('.js-select2').each(function () {
+            $(this).val('');
+        });
+
+        myParent.slideUp("slow", function () {
+            if (myParent.siblings("div").length > 0) {
+                myParent.remove();
+            } else {
+                $(this).siblings(".input100").val("");
+                myParent.find('.js-select2').each(function () {
+                    $(this).select2('destroy');
+                });
+                myParent.parent().siblings('p.no-items-error').show();
+            }
+        });
+    });
+
     $('.plus_button_input').on('click', function () {
-        var parent = $(this).parent().clone(true);
-        if (parent.find('.minus_button').length <= 0) {
-            var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; bottom: 13px;">');
-            minus.on('click', function () {
-                $(this).parent().remove();
-                return false;
-            });
-            parent.append(minus);
+        var newCopy;
+        var originalInput = $(this).siblings('div:first');
+
+        if (originalInput.css('display') === 'none') {
+            newCopy = originalInput;
+            originalInput.parent().siblings('p.no-items-error').hide();
+        } else {
+            newCopy = originalInput.clone(true);
         }
-        $(this).parent().after(parent);
+        newCopy.find("input").val("");
+        newCopy.hide();          //for animation
+        $(this).before(newCopy);
+        newCopy.slideDown('slow');    //animate
         return false;
     });
 
     $('.plus_button_select').on('click', function () {
-        var parent = $(this).parent();
-        parent.find('.js-select2').each(function () {
-            $(this).select2('destroy');
-        });
+        var originalInput = $(this).siblings('div:first');
 
-        var newSelect = $(this).prev().clone(true);
-        var newPlus = $(this).clone(true);
-        var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; left: 35px;">');
-        minus.on('click', function () {
-            newSelect.remove();
-            newPlus.remove();
-            minus.remove();
-            return false;
-        });
+        var newSelect;
 
-        if ($(this).next('.minus_button').length > 0) {
-            $(this).next().after(newSelect);
+        if (originalInput.css('display') === 'none') {
+            newSelect = originalInput;
+            originalInput.parent().siblings('p.no-items-error').hide();
         } else {
-            $(this).after(newSelect);
+            originalInput.find('.js-select2').each(function () {
+                $(this).select2('destroy');
+            });
+
+            newSelect = originalInput.clone(true);
+
+            newSelect.find("input").val("");
+            newSelect.hide();          //for animation
+            $(this).before(newSelect);
+
+            originalInput.find('.js-select2').each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2'),
+                    placeholder: $(this).attr('placeholder')
+                });
+            });
         }
-
-        newSelect.after(newPlus);
-        newPlus.after(minus);
-
-        parent.find('.js-select2').each(function () {
+        newSelect.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
+                dropdownParent: $(this).next('.dropDownSelect2',),
+                val: '',
+                placeholder: $(this).attr('placeholder')
             });
         });
-
+        newSelect.slideDown('slow');    //animate
         return false;
     });
 
     $('.plus_button_section').on('click', function () {
-        if ($(this).next().attr('class').indexOf('minus_button') >= 0) {
-            var section = $(this).next().next();
+        let section = $(this).siblings('div:first');
+
+        var newSection;
+
+        if (section.css('display') === 'none') {
+            newSection = section;
+            section.parent().siblings('p.no-items-error').hide();
         } else {
-            var section = $(this).next();
+
+            section.find('.js-select2').each(function () {
+                $(this).select2('destroy');
+            });
+
+            newSection = section.clone(true);
+
+            //Fix and remove extra sections
+            newSection.find("button.plus_button_section").each(function () {
+                $(this).siblings("div").slice(1).remove();
+            });
+
+            newSection.find('input, textarea').each(function () {
+                if ($(this).attr('type') === 'checkbox') {
+                    $(this).prop('checked', false);
+                } else if (($(this).attr('type') !== 'button')) {
+                    $(this).val('');
+                }
+            });
+
+            if (parkingDataLoaded) {
+                newSection.hide();      //for animation
+            }
+
+            $(this).before(newSection);
         }
 
-        var parent = $(this).parent();
-        parent.find('.js-select2').each(function () {
+        section.parent().find('.js-select2').each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
+            });
+        });
+
+        function showMaps() {
+            newSection.find('.ol-point-map').each(function () {
+                $(this).empty();
+                let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).attr('id', newMap);
+                let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).prev().attr('id', newClear);
+                $(this).prev().off('click');
+                let newLat = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).next().find('input.input100').attr('id', newLat);
+                let newLon = $(this).next().next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).next().next().find('input.input100').attr('id', newLon);
+
+                initPointMap(newMap, newLat, newLon, newClear);
+            });
+
+            newSection.find('.ol-polygon-map').each(function () {
+                $(this).empty();
+                let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).attr('id', newMap);
+                let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).prev().attr('id', newClear);
+                $(this).prev().off('click');
+                let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).next().find('input.input100').attr('id', newPoly);
+
+                initPolygonMap(newMap, newPoly, newClear);
+            });
+        }
+
+        if (parkingDataLoaded) {
+            newSection.show("slow", showMaps);
+        } else {
+            //showMaps();
+        }
+        return false;
+    });
+
+    $('#button-add-facility-section').on('click', function () {
+        addFacilitySection();
+        $('#form-velopark-data-t-' + (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection)).get(0).click();
+    });
+
+})(jQuery);
+
+
+function addFacilitySection() {
+    currentNumFacilitySections++;
+    let currentStepNumberInsertPos = (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection);
+
+    for (let i = numStepsFacilitySection; i > 0; i--) {
+        var facilitySection = $('#step-facility-section-' + i);
+        //destroy select2
+        facilitySection.find('.js-select2').each(function () {
             $(this).select2('destroy');
         });
 
-        var newSection = section.clone(true);
-        var newSpan = $(this).prev('span').clone(true);
-        var newPlus = $(this).clone(true);
+        //clone the section & section title
+        var newFacilitySection = facilitySection.clone(true).attr("id", facilitySection.attr("id") + "-" + currentNumFacilitySections);
+        var newFacilitySection1Title = $('.step-facility-section-' + i + '-title').html();
 
-        var minus = $('<input type="image" class="minus_button" src="static/images/icons/minus.png" style="float: left; width: 40px; position: relative; bottom: 4px;">');
-        minus.on('click', function () {
-            newSection.remove();
-            newPlus.remove();
-            newSpan.remove();
-            $(this).remove();
-            return false;
+        $("#form-velopark-data").steps("insert", currentStepNumberInsertPos, {
+            title: newFacilitySection1Title,
+            content: newFacilitySection
         });
 
-        // Fix and remove extra sections
-        newSection.find('.minus_button').each(function() {
-            $(this).off('click');
-            $(this).on('click', function() {
-                $(this).next().remove();
-                $(this).prev().remove();
-                $(this).prev().remove();
-                $(this).remove();
-            });
-            $(this).click();
+        //Fix and remove extra sections
+        newFacilitySection.find("button.plus_button_section").each(function () {
+            $(this).siblings("div").slice(1).remove();
         });
 
-        newSection.find('input').each(function() {
-            if($(this).attr('type') == 'checkbox') {
+        newFacilitySection.find('input').each(function () {
+            if ($(this).attr('type') == 'checkbox') {
                 $(this).prop('checked', false);
-            } else if(($(this).attr('type') != 'button')) {
+            } else if (($(this).attr('type') != 'button')) {
                 $(this).val('');
             }
         });
 
-        newSection.find('textarea').each(function() {
+        newFacilitySection.find('textarea').each(function () {
             $(this).val('');
         });
 
-        section.after(newSection);
-        section.after(minus);
-        section.after(newPlus);
-        section.after(newSpan);
 
-        parent.find('.js-select2').each(function () {
+        //re-enable select2 (original section and cloned section)
+        facilitySection.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
             });
         });
-
-        newSection.find('.ol-point-map').each(function () {
-            $(this).empty();
-            let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).attr('id', newMap);
-            let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).prev().attr('id', newClear);
-            $(this).prev().off('click');
-            let newLat = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).next().find('input.input100').attr('id', newLat);
-            let newLon = $(this).next().next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).next().next().find('input.input100').attr('id', newLon);
-
-            initPointMap(newMap, newLat, newLon, newClear);
+        newFacilitySection.find('.js-select2').each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
+            });
         });
+        newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections - 1);
+    }
+    let locationSection = $('#step-facility-section-2-' + currentNumFacilitySections);
+    locationSection.find('.ol-point-map').each(function () {
+        $(this).empty();
+        let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).attr('id', newMap);
+        let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).prev().attr('id', newClear);
+        $(this).prev().off('click');
+        let newLat = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).next().find('input.input100').attr('id', newLat);
+        let newLon = $(this).next().next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).next().next().find('input.input100').attr('id', newLon);
 
-        newSection.find('.ol-polygon-map').each(function () {
-            $(this).empty();
-            let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).attr('id', newMap);
-            let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).prev().attr('id', newClear);
-            $(this).prev().off('click');
-            let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-            $(this).next().find('input.input100').attr('id', newPoly);
-
-            initPolygonMap(newMap, newPoly, newClear);
-        });
-
-        return false;
+        initPointMap(newMap, newLat, newLon, newClear);
     });
 
-})(jQuery);
+    locationSection.find('.ol-polygon-map').each(function () {
+        $(this).empty();
+        let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).attr('id', newMap);
+        let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).prev().attr('id', newClear);
+        $(this).prev().off('click');
+        let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).next().find('input.input100').attr('id', newPoly);
+
+        initPolygonMap(newMap, newPoly, newClear);
+    });
+
+}

@@ -5,6 +5,7 @@
     $('#ld_generate').on('click', () => {
         var check = true;
         let wrongInput = null;
+        let input = $('.validate-input .input100');
 
         for (var i = 0; i < input.length; i++) {
             if (validate(input[i]) == false) {
@@ -80,9 +81,13 @@
 var resultingObject = null;
 
 async function mapData(jsonld) {
-    let general = $('#general-information').find('[name]');
+    let general = $('.general-information [name]');
     processGeneral(jsonld, general);
-    let sections = $('div[parking-section="true"]');
+    let sections = [];
+    sections[0] = $('div[parking-section=0]');
+    for (let i = 1; i < currentNumFacilitySections; i++) {
+        sections[i] = $('div[parking-section=' + i + ']');
+    }
     await processSections(jsonld, sections);
     if(fillAutomaticData(jsonld)) {
         cleanEmptyValues(jsonld);

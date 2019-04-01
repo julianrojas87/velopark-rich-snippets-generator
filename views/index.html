@@ -6,9 +6,13 @@
 
 <body>
 	<!-- Domain name to deal with reverse proxies -->
-	<p id="domainName" style="display: none;"><%= domainName %></p>
+	<p id="domainName" style="display: none;">
+		<%= domainName %>
+	</p>
 	<!-- URI to vocabulary -->
-	<p id="vocabURI" style="display: none;"><%= vocabURI %></p>
+	<p id="vocabURI" style="display: none;">
+		<%= vocabURI %>
+	</p>
 
 	<!-- Login/Sign up form -->
 	<div id="login-form" class="log-form" style="display: none">
@@ -35,9 +39,12 @@
 
 	<!-- Navigation Bar -->
 	<div id="navbar" class="sticky">
+		<div style="position:relative; top: 23px; float: left;">
+			<img style="width: 140px;" src="static/images/icons/velopark.png">
+		</div>
 		<a id="signin">Sign In</a>
 		<a id="login">Log In</a>
-		<span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 24%; cursor: pointer;">
+		<span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
 			Velopark Rich Snippets Generator
 		</span>
 	</div>

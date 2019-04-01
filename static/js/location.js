@@ -43,6 +43,8 @@ function initPointMap(target, latid, lonid, clear) {
         })
     });
 
+    $('#' + target).data('openlayers-map', pointMap);
+
     var point = new Draw({
         source: pointSource,
         type: 'Point'
@@ -140,6 +142,8 @@ function initPolygonMap(target, polyid, clear) {
             zoom: 8
         })
     });
+
+    $('#' + target).data('openlayers-map', polygonMap);
 
     var polygon = new Draw({
         source: polygonSource,
