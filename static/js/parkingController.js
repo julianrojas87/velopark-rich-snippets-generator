@@ -267,7 +267,7 @@ function addClickListeners() {
 
 function editClick() {
     let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text();
+    let parkingId = $(this).parent().parent().find('a').text().trim();
     let userName = $('#user-email').text().trim();
     window.location.href = domain + '/home?username=' + userName + '&parkingId=' + parkingId;
 }
