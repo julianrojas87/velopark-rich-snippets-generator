@@ -5,7 +5,19 @@ const startStepNumberFacilitySection = 3;
 const numStepsFacilitySection = 5;
 var currentNumFacilitySections = 1;
 
-//var currentStepNumberInsertPos = 8;
+const stepOverviewFacilityTitleFormat = '<div class="steps-overview-facility-title" facilitynum="{0}"><h4 >Facility Section {0}</h4><button type="button" class="minus_button steps-overview-remove-facility-button" facilitynum="{0}"><i class="fas fa-trash-alt"></i></button></div>';
+
+if (!String.format) {
+    String.format = function(format) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return format.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
+        });
+    };
+}
 
 function loadAPSkeleton() {
     return new Promise((resolve, reject) => {
@@ -114,6 +126,8 @@ function handleLoginFeatures() {
 
     make_wizard();
 
+    $('#form-velopark-data-t-' + startStepNumberFacilitySection).parent().before(String.format(stepOverviewFacilityTitleFormat, 1)); //'<h4 class="steps-overview-facility-title" facilitynum="1">Facility Section 1</h4>');
+
     $(".js-select2").each(function () {
         $(this).select2({
             minimumResultsForSearch: 20,
@@ -186,36 +200,20 @@ function handleLoginFeatures() {
     });
 
     $('.minus-button-facility').on('click', function() {
-        if(currentNumFacilitySections > 1) {
-            let stepId = $(this).parent().attr('id');
-            const regExp = /step-facility-section-(\d)(?:-(\d))?/g;
-            let myArray = regExp.exec(stepId);
-            let facilityNum = parseInt(myArray[2]);
-            let startstep = startStepNumberFacilitySection + (facilityNum - 1) * numStepsFacilitySection;
-            let endstep = startstep + numStepsFacilitySection - 1;
+        let stepId = $(this).parent().attr('id');
+        const regExp = /step-facility-section-(\d)(?:-(\d))?/g;
+        let myArray = regExp.exec(stepId);
+        let facilityNum = parseInt(myArray[2]);
 
-            $('#form-velopark-data-t-' + (endstep + 1)).get(0).click();
-            setTimeout(function () {
-                let formVeloparkData = $("#form-velopark-data");
-                for (let removestep = endstep; removestep >= startstep; removestep--) {
-                    formVeloparkData.steps("remove", removestep);
-                }
-
-                //rename following steps to keep the correct order
-                for(let itFacilityNum = facilityNum+1; itFacilityNum <= currentNumFacilitySections; itFacilityNum++){
-                    console.log("it: " + itFacilityNum);
-                    for(let stepnum=1; stepnum <= numStepsFacilitySection; stepnum++){
-                        console.log("renamed " + 'step-facility-section-'+ stepnum + '-' + itFacilityNum);
-                        $('#step-facility-section-'+ stepnum + '-' + itFacilityNum).attr('id', 'step-facility-section-'+ stepnum + '-' + (itFacilityNum-1));
-                    }
-                }
-                currentNumFacilitySections--;
-            }, 400);
-
-        } else {
-            alert("Your bicycle parking needs at least one facility. You can not remove this one.");
-        }
+        removeFacilitySection(facilityNum);
     });
+
+    $('.steps-overview-remove-facility-button').on('click', function(){
+       let facilitynum = parseInt($(this).attr('facilitynum'));
+       removeFacilitySection(facilitynum);
+    });
+
+
 
     $('.plus_button_input').on('click', function () {
         var newCopy;
@@ -419,6 +417,16 @@ function addFacilitySection() {
         });
         newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections - 1);
     }
+
+    //insert group title in step overview
+    let lastNewStepTitle = $('#form-velopark-data-t-' + currentStepNumberInsertPos).parent();
+    lastNewStepTitle.before(String.format(stepOverviewFacilityTitleFormat, currentNumFacilitySections));
+    lastNewStepTitle.prev('.steps-overview-facility-title').find('.steps-overview-remove-facility-button').on('click', function(){
+        let facilitynum = parseInt($(this).attr('facilitynum'));
+        removeFacilitySection(facilitynum);
+    });
+
+    //fix maps
     let locationSection = $('#step-facility-section-2-' + currentNumFacilitySections);
     locationSection.find('.ol-point-map').each(function () {
         $(this).empty();
@@ -448,4 +456,39 @@ function addFacilitySection() {
         initPolygonMap(newMap, newPoly, newClear);
     });
 
+}
+
+function removeFacilitySection(facilityNum){
+    if(currentNumFacilitySections > 1) {
+        let startstep = startStepNumberFacilitySection + (facilityNum - 1) * numStepsFacilitySection;
+        let endstep = startstep + numStepsFacilitySection - 1;
+
+        $('#form-velopark-data-t-' + (endstep + 1)).get(0).click();
+        setTimeout(function () {
+            let formVeloparkData = $("#form-velopark-data");
+            for (let removestep = endstep; removestep >= startstep; removestep--) {
+                formVeloparkData.steps("remove", removestep);
+            }
+
+            $('.steps-overview-facility-title[facilitynum=' + facilityNum + ']').remove();
+
+            //rename following steps to keep the correct order
+            for (let itFacilityNum = facilityNum + 1; itFacilityNum <= currentNumFacilitySections; itFacilityNum++) {
+                console.log("it: " + itFacilityNum);
+                for (let stepnum = 1; stepnum <= numStepsFacilitySection; stepnum++) {
+                    console.log("renamed " + 'step-facility-section-' + stepnum + '-' + itFacilityNum);
+                    $('#step-facility-section-' + stepnum + '-' + itFacilityNum).attr('id', 'step-facility-section-' + stepnum + '-' + (itFacilityNum - 1));
+                }
+                $('.steps-overview-facility-title[facilitynum=' + itFacilityNum + ']').replaceWith(String.format(stepOverviewFacilityTitleFormat, itFacilityNum - 1));
+                $('.steps-overview-facility-title[facilitynum=' + (itFacilityNum-1) + ']').find('.steps-overview-remove-facility-button').on('click', function(){
+                    let facilitynum = parseInt($(this).attr('facilitynum'));
+                    removeFacilitySection(facilitynum);
+                });
+            }
+
+            currentNumFacilitySections--;
+        }, 400);
+    } else {
+        alert("Your bicycle parking needs at least one facility. You can not remove this one.");
+    }
 }

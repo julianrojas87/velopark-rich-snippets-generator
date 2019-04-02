@@ -1099,3 +1099,38 @@ textarea::-webkit-scrollbar-thumb {
   height: 60%;
   display: block;
 }
+
+.steps-overview-facility-title {
+  margin-top: 8px;
+}
+
+.steps-overview-facility-title h4 {
+  display: inline-block;
+}
+
+button.steps-overview-remove-facility-button {
+  position: absolute;
+  right: 10px;
+}
+
+button.steps-overview-remove-facility-button i {
+  background-color: transparent;
+}
+
+.steps h4 {
+  color: #fff;
+  margin-left: 4px;
+}
+
+.steps>ul>li {
+  margin-left: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-left: 5px solid white;
+  border-radius: 0;
+}
+
+.steps>ul>li:nth-of-type(1), .steps>ul>li:nth-of-type(2), .steps>ul>li:nth-of-type(3), .steps>ul>li:nth-last-of-type(1), .steps>ul>li:nth-last-of-type(2) {
+  margin: 4px;
+  border-left: none;
+}
