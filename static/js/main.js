@@ -185,6 +185,38 @@ function handleLoginFeatures() {
         });
     });
 
+    $('.minus-button-facility').on('click', function() {
+        if(currentNumFacilitySections > 1) {
+            let stepId = $(this).parent().attr('id');
+            const regExp = /step-facility-section-(\d)(?:-(\d))?/g;
+            let myArray = regExp.exec(stepId);
+            let facilityNum = parseInt(myArray[2]);
+            let startstep = startStepNumberFacilitySection + (facilityNum - 1) * numStepsFacilitySection;
+            let endstep = startstep + numStepsFacilitySection - 1;
+
+            $('#form-velopark-data-t-' + (endstep + 1)).get(0).click();
+            setTimeout(function () {
+                let formVeloparkData = $("#form-velopark-data");
+                for (let removestep = endstep; removestep >= startstep; removestep--) {
+                    formVeloparkData.steps("remove", removestep);
+                }
+
+                //rename following steps to keep the correct order
+                for(let itFacilityNum = facilityNum+1; itFacilityNum <= currentNumFacilitySections; itFacilityNum++){
+                    console.log("it: " + itFacilityNum);
+                    for(let stepnum=1; stepnum <= numStepsFacilitySection; stepnum++){
+                        console.log("renamed " + 'step-facility-section-'+ stepnum + '-' + itFacilityNum);
+                        $('#step-facility-section-'+ stepnum + '-' + itFacilityNum).attr('id', 'step-facility-section-'+ stepnum + '-' + (itFacilityNum-1));
+                    }
+                }
+                currentNumFacilitySections--;
+            }, 400);
+
+        } else {
+            alert("Your bicycle parking needs at least one facility. You can not remove this one.");
+        }
+    });
+
     $('.plus_button_input').on('click', function () {
         var newCopy;
         var originalInput = $(this).siblings('div:first');
@@ -336,15 +368,16 @@ function addFacilitySection() {
     let currentStepNumberInsertPos = (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection);
 
     for (let i = numStepsFacilitySection; i > 0; i--) {
-        var facilitySection = $('#step-facility-section-' + i);
+        var facilitySection = $('#step-facility-section-' + i + "-1");
         //destroy select2
         facilitySection.find('.js-select2').each(function () {
             $(this).select2('destroy');
         });
 
         //clone the section & section title
-        var newFacilitySection = facilitySection.clone(true).attr("id", facilitySection.attr("id") + "-" + currentNumFacilitySections);
-        var newFacilitySection1Title = $('.step-facility-section-' + i + '-title').html();
+        let facilitySectionId = facilitySection.attr("id");
+        var newFacilitySection = facilitySection.clone(true).attr("id", facilitySectionId.substr(0, facilitySectionId.lastIndexOf("-") + 1) + currentNumFacilitySections);
+        var newFacilitySection1Title = facilitySection.parent().prev('h3').html();
 
         $("#form-velopark-data").steps("insert", currentStepNumberInsertPos, {
             title: newFacilitySection1Title,
