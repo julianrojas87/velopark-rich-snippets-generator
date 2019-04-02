@@ -230,7 +230,7 @@ iframe {
 
 .wrap-contact100-subsection {
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   background: #fff;
   /*border: 2px solid;
   border-radius: 10px;*/
@@ -297,7 +297,6 @@ iframe {
   color: #333333;
   line-height: 1.2;
   text-align: left;
-  padding-bottom: 15px;
 }
 
 /*------------------------------------------------------------------
@@ -1057,7 +1056,7 @@ textarea::-webkit-scrollbar-thumb {
   border-radius: .25rem;
   color: #0c5460;
   background-color: #d1ecf1;
-  font-family: Montserrat-SemiBold;
+  font-family: Montserrat-SemiBold, sans-serif;
   font-size: 16px;
   font-weight: 400;
   text-rendering: optimizeLegibility;
@@ -1069,4 +1068,79 @@ textarea::-webkit-scrollbar-thumb {
     padding-bottom: 10px;
     margin-bottom: 15px;
   }
+}
+
+.form-button {
+  display: block;
+  width: 100%;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  font-family: Montserrat-SemiBold, sans-serif;
+  font-size: 25px;
+}
+
+.big-text-no-title {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+#page-logo-helper {
+  position: absolute;
+  left: 20px;
+  padding-top: 23px;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+}
+
+#page-logo-helper img {
+  height: 60%;
+  display: block;
+}
+
+.steps-overview-facility-title {
+  margin-top: 8px;
+}
+
+.steps-overview-facility-title h4 {
+  display: inline-block;
+}
+
+button.steps-overview-remove-facility-button {
+  position: absolute;
+  right: 10px;
+}
+
+button.steps-overview-remove-facility-button i {
+  background-color: transparent;
+}
+
+.minus-button-facility {
+  color: red;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.steps h4 {
+  color: #fff;
+  margin-left: 4px;
+}
+
+.steps>ul>li {
+  margin-left: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-left: 5px solid white;
+  border-radius: 0;
+}
+
+.steps>ul>li:nth-of-type(1), .steps>ul>li:nth-of-type(2), .steps>ul>li:nth-of-type(3), .steps>ul>li:nth-last-of-type(1), .steps>ul>li:nth-last-of-type(2) {
+  margin: 4px;
+  border-left: none;
+}
+
+fieldset>div {
+  position: relative;
 }

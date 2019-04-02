@@ -1,7 +1,7 @@
 <div class="container-contact100">
     <div class="wrap-contact100">
         <form id="form-velopark-data" class="contact100-form validate-form" novalidate>
-            <h3 class="section-title">General - Parking Information</h3>
+            <h3 class="section-title">Parking Information</h3>
             <fieldset>
                 <div id="step-general-info-1">
                     <h2>General - Parking Information</h2>
@@ -171,34 +171,30 @@
                                 <input class="input100" type="url" name="hasMap.url"
                                        placeholder="Enter the map URL">
                             </div>
-                            <div class="wrap-contact100-subsection">
-                                <div class="wrap-input100 bg1">
-                                    <span class="label-input100">Close To</span>
-                                    <input type="image" title="about" class="info_button"
-                                           src="static/images/icons/info.png">
-                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                        <h2 style="margin-bottom: 15px;"></h2>
-                                        <input type="image" title="close" class="info_close_button"
-                                               src="static/images/icons/close_white.png"
-                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Put here the names of landmarks or well known places that users can use to orientate.</span><br>
-                                        <span style="display: inherit; padding-left: 15px;">Example: <i>“Standbeeld Fonske”, “Museum M”</i></span>
-                                    </div>
-                                    <input class="input100 removable-input" type="text" name="closeTo._Place.name"
-                                           placeholder="Enter the name of a nearby known place">
-                                    <button type="button" class="minus_button minus_button_input"><i
-                                            class="fas fa-trash-alt"></i></button>
+                            <div class="wrap-input100 bg1">
+                                <span class="label-input100">Close To</span>
+                                <input type="image" title="about" class="info_button"
+                                        src="static/images/icons/info.png">
+                                <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                    <h2 style="margin-bottom: 15px;"></h2>
+                                    <input type="image" title="close" class="info_close_button"
+                                            src="static/images/icons/close_white.png"
+                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                    <span style="display: inherit; padding-left: 15px;">Put here the names of landmarks or well known places that users can use to orientate.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>“Standbeeld Fonske”, “Museum M”</i></span>
                                 </div>
-                                <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark
-                                </button>
+                                <input class="input100 removable-input" type="text" name="closeTo._Place.name"
+                                        placeholder="Enter the name of a nearby known place">
+                                <button style="display: none;" type="button" class="minus_button minus_button_input"><i class="fas fa-trash-alt"></i></button>
                             </div>
+                            <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark</button>
                         </div>
                     </div>
                 </div>
             </fieldset>
 
 
-            <h3 class="section-title">General - Authority Information</h3>
+            <h3 class="section-title">Authority Information</h3>
             <fieldset>
                 <div id="step-general-info-2">
                     <h2>General - Authority Information</h2>
@@ -461,7 +457,7 @@
             </fieldset>
 
 
-            <h3 class="section-title">General - Photos</h3>
+            <h3 class="section-title">Photos</h3>
             <fieldset>
                 <div id="step-general-info-3">
                     <h2>General - Photos</h2>
@@ -518,10 +514,11 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-1-title">Facility Section - Operation Information</h3>
+            <h3 class="section-title step-facility-section-1-title">Operation Information</h3>
             <fieldset>
-                <div id="step-facility-section-1">
+                <div id="step-facility-section-1-1">
                     <h2>Facility Section - Operation Information</h2>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
 
                     <div class="wrap-contact100-section">
                         <div parking-section="0" class="wrap-contact100-subsection">
@@ -738,10 +735,12 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-2-title">Facility Section - Location</h3>
+            <h3 class="section-title step-facility-section-2-title">Location</h3>
             <fieldset>
-                <div id="step-facility-section-2">
+                <div id="step-facility-section-2-1">
                     <h2>Facility Section - Location</h2>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
@@ -954,10 +953,12 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-3-title">Facility Section - Allowed Bicycles</h3>
+            <h3 class="section-title step-facility-section-3-title">Allowed Bicycles</h3>
             <fieldset>
-                <div id="step-facility-section-3">
+                <div id="step-facility-section-3-1">
                     <h2>Facility Section - Allowed Bicycles</h2>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+
                     <div>
                         <div parking-section="0">
 
@@ -1043,10 +1044,12 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-4-title">Facility Section - Features</h3>
+            <h3 class="section-title step-facility-section-4-title">Features</h3>
             <fieldset>
-                <div id="step-facility-section-4">
+                <div id="step-facility-section-4-1">
                     <h2>Facility Section - Features</h2>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
@@ -1155,10 +1158,12 @@
             </fieldset>
 
 
-            <h3 class="section-title step-facility-section-5-title">Facility Section - Cost Model</h3>
+            <h3 class="section-title step-facility-section-5-title">Cost Model</h3>
             <fieldset>
-                <div id="step-facility-section-5">
+                <div id="step-facility-section-5-1">
                     <h2>Facility Section - Cost Model</h2>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
@@ -1360,15 +1365,12 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-6-title">Facility Section - Add Extra Section</h3>
+            <h3 class="section-title step-facility-section-6-title">Add Extra Section</h3>
             <fieldset>
-                <div id="step-facility-section-6">
-                    <h2 style="margin-bottom: 10px;">Facility Section - Add Extra Section</h2>
-                    <span style="font-size: 20px;">Would you like to add another section to this bicycle parking?</span>
-                    <div style="display: flex; justify-content: center; margin-top: 35px; margin-bottom: 20px;">
-                        <button class="btn btn-primary" type='button' id="button-add-facility-section" 
-                            style="width: 100%; font-size: 25px;">Add Section</button>
-                    </div>
+                <div id="step-facility-section-6-1">
+                    <h2>Facility Section - Add Extra Section</h2>
+                    <div class="big-text-no-title">Would you like to add another section to this bicycle parking?</div>
+                    <button class="btn btn-primary form-button" type='button' id="button-add-facility-section">Add Section</button>
                 </div>
             </fieldset>
 
@@ -1376,14 +1378,7 @@
             <fieldset>
                 <div id="step-generate-data-1">
                     <h2>Generate Structured Data</h2>
-                    <div style="height: 100px;" class="container-contact100-form-btn">
-                        <button style="height: 100%;" id="ld_generate" class="contact100-form-btn">
-                    <span style="font-size: 25px; font-family: Montserrat-SemiBold">
-                        Generate Linked Data
-                        <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-                    </span>
-                        </button>
-                    </div>
+                    <button id="ld_generate" class="btn btn-primary form-button">Generate Linked Data</button>
                 </div>
             </fieldset>
         </form>

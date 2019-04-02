@@ -26,14 +26,14 @@
 
     $('.info_button').click(function() {
         let infobox = $(this).next();
-        infobox.find('h2').text($(this).prev().text());
+        infobox.find('h2').text($(this).prev().text().trim());
         infobox.toggle();
         return false;
     });
 
     $('.info_button_div').click(function() {
         let infobox = $(this).next();
-        infobox.find('h2').text($(this).parent().parent().prev().prev().text());
+        infobox.find('h2').text($(this).parent().parent().parent().siblings('span:last').text().trim());
         infobox.toggle();
         return false;
     });
