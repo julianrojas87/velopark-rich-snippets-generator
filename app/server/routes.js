@@ -5,7 +5,7 @@ const Parkings = require('./modules/parkings-manager');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
-const vocabURI = config['vocabulary'] || 'http://velopark.ilabt.imec.be';
+const vocabURI = config['vocabulary'] || 'https://velopark.ilabt.imec.be';
 
 module.exports = app => {
 

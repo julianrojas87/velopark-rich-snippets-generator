@@ -1,9 +1,12 @@
+let parkingDataLoaded = false;
+
 ($ => {
 
     addClickListeners();
 
     Promise.all(loadingPromises).then(() => {
         loadParkingValues();
+        parkingDataLoaded = true;
     });
 
 })(jQuery);
@@ -27,7 +30,7 @@ function processObject(obj, oldPath, input) {
 
     let keys = Object.keys(obj);
     for (let i in keys) {
-        if (keys[i] != '@context') {
+        if (keys[i] !== '@context') {
             path.push(keys[i]);
             if (Array.isArray(obj[keys[i]])) {
                 if (keys[i] === '@graph') {
@@ -46,16 +49,12 @@ function processObject(obj, oldPath, input) {
 }
 
 function loadSections(graph) {
-    let section = $('[parking-section="true"]');
+    let section = $('div[parking-section=0]');
     for (let i in graph) {
         if (i > 0) {
-            if (section.prev().hasClass('minus_button')) {
-                section.prev().prev().click();
-            } else {
-                section.prev().click();
-            }
+            addFacilitySection();
 
-            section = $($('[parking-section="true"]')[$('[parking-section="true"]').length - 1]);
+            section = $('div[parking-section=' + i + ']');
         }
         let keys = Object.keys(graph[i]);
         let path = [];
@@ -83,7 +82,7 @@ function processArray(path, arr, input) {
         loadParkingValue(path, arr, false, input);
     } else if (['photos', 'allows', 'entrance', 'exit', 'amenityFeature', 'priceSpecification'].indexOf(lastPath) >= 0) {
         // Handle arrays that map to UI sections with multiple inputs
-        if (lastPath == 'amenityFeature') {
+        if (lastPath === 'amenityFeature') {
             path.push('_');
         } else {
             path.push('_' + arr[0]['@type']);
@@ -96,17 +95,9 @@ function processArray(path, arr, input) {
                 let inputs = input || $('[name^="' + lastPath + '"]');
                 let last = $(inputs[inputs.length - 1]);
                 if (last.is('div')) {
-                    if (last.parent().prev().hasClass('minus_button')) {
-                        last.parent().prev().prev().click();
-                    } else {
-                        last.parent().prev().click();
-                    }
+                    last.parent().parent().next("button").click();
                 } else {
-                    if (last.closest('.wrap-contact100-subsection').prev().hasClass('minus_button')) {
-                        last.closest('.wrap-contact100-subsection').prev().prev().click();
-                    } else {
-                        last.closest('.wrap-contact100-subsection').prev().click();
-                    }
+                    last.closest('.wrap-contact100-subsection').next("button").click();
                 }
 
                 input = $('[name^="' + lastPath + '"]');
@@ -148,7 +139,7 @@ function loadParkingValue(path, value, override, inpt) {
     let input = null;
     if (inpt) {
         for (let k = inpt.length - 1; k >= 0; k--) {
-            if ($(inpt[k]).attr('name') == name) {
+            if ($(inpt[k]).attr('name') === name) {
                 input = $(inpt[k]);
                 break;
             }
@@ -178,7 +169,7 @@ function loadParkingValue(path, value, override, inpt) {
                 input.val(value);
                 input.change();
             } else {
-                input.next('.plus_button_input').click();
+                input.parent().next('.plus_button_input').click();
                 let inputs = $('[name="' + name + '"]');
                 let newInput = $(inputs[inputs.length - 1]);
                 newInput.val(value);
@@ -195,14 +186,10 @@ function loadParkingValue(path, value, override, inpt) {
 
             for (let i in value) {
                 let currentDay = value[i];
-                if (usedDays.has(currentDay['dayOfWeek']) || (lastOpens && currentDay['opens'] != lastOpens)
-                    || (lastCloses && currentDay['closes'] != lastCloses)) {
+                if (usedDays.has(currentDay['dayOfWeek']) || (lastOpens && currentDay['opens'] !== lastOpens)
+                    || (lastCloses && currentDay['closes'] !== lastCloses)) {
                     usedDays.clear();
-                    if (input.prev().hasClass('minus_button')) {
-                        input.prev().prev().click();
-                    } else {
-                        input.prev().click();
-                    }
+                    input.next().click();
                     let inputs = $('[name="' + name + '"]');
                     input = $(inputs[inputs.length - 1]);
                     input.find('input[type="checkbox"]').each(function () {
@@ -226,10 +213,10 @@ function loadParkingValue(path, value, override, inpt) {
 function valueToString(value) {
     switch (typeof value) {
         case 'boolean':
-            value = new Boolean(value).toString();
+            value = Boolean(value).toString();
             break;
         case 'number':
-            value = new Number(value).toString();
+            value = Number(value).toString();
             break;
     }
     return value;
@@ -239,23 +226,23 @@ function reverseFormatValue(name, value) {
     if (context[`${name}`]) {
         let type = context[`${name}`]['@type'];
         if (type) {
-            if (type == 'xsd:dateTime') {
+            if (type === 'xsd:dateTime') {
                 return moment(value).format('YYYY-MM-DD');
             }
-            if (type == 'xsd:integer') {
-                return new Number(value).toString();
+            if (type === 'xsd:integer') {
+                return Number(value).toString();
             }
-            if (type == 'xsd:double') {
-                return new Number(value).toString();
+            if (type === 'xsd:double') {
+                return Number(value).toString();
             }
-            if (type == 'xsd:boolean') {
-                return new Boolean(value).toString();
+            if (type === 'xsd:boolean') {
+                return Boolean(value).toString();
             }
-            if (type = 'xsd:duration') {
-                if (name == 'maximumStorageTime') {
+            if (type === 'xsd:duration') {
+                if (name === 'maximumStorageTime') {
                     return value.substring(1).slice(0, -1);
                 }
-                if (name == 'minimumStorageTime') {
+                if (name === 'minimumStorageTime') {
                     return value.substring(2).slice(0, -1);
                 }
             }
@@ -279,15 +266,15 @@ function addClickListeners() {
 }
 
 function editClick() {
-    let domain = domainName != '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text();
+    let domain = domainName !== '' ? '/' + domainName : '';
+    let parkingId = $(this).parent().parent().find('a').text().trim();
     let userName = $('#user-email').text().trim();
     window.location.href = domain + '/home?username=' + userName + '&parkingId=' + parkingId;
 }
 
 function deleteClick() {
-    let domain = domainName != '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text();
+    let domain = domainName !== '' ? '/' + domainName : '';
+    let parkingId = $(this).parent().parent().find('a').text().trim();
     let userName = $('#user-email').text().trim();
 
     if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
@@ -305,8 +292,8 @@ function deleteClick() {
 }
 
 function downloadClick() {
-    let domain = domainName != '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text();
+    let domain = domainName !== '' ? '/' + domainName : '';
+    let parkingId = $(this).parent().parent().find('a').text().trim();
     let userName = $('#user-email').text().trim();
     window.location.href = domain + '/download?username=' + userName + '&parkingId=' + parkingId;
 }

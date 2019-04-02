@@ -11,7 +11,7 @@
                 $(this).parent().addClass('true-validate');
             }
         })
-    })
+    });
 
 
     /*==================================================================
@@ -26,14 +26,14 @@
 
     $('.info_button').click(function() {
         let infobox = $(this).next();
-        infobox.find('h2').text($(this).prev().text());
+        infobox.find('h2').text($(this).prev().text().trim());
         infobox.toggle();
         return false;
     });
 
     $('.info_button_div').click(function() {
         let infobox = $(this).next();
-        infobox.find('h2').text($(this).parent().parent().prev().prev().text());
+        infobox.find('h2').text($(this).parent().parent().parent().siblings('span:last').text().trim());
         infobox.toggle();
         return false;
     });
@@ -45,7 +45,7 @@
 
 })(jQuery);
 
-var input = $('.validate-input .input100');
+//var input = $('.validate-input .input100');
 
 function fullValidation(input) {
     if (validate(input) == false) {
@@ -89,6 +89,13 @@ function showValidate(input) {
             hideValidate(this);
         });
     });
+
+    //jump to the correct wizard page
+    $('#' + $(thisAlert).closest('fieldset').attr('id').replace("-p-", "-t-")).get(0).click();
+    //scroll the validation warning into view
+    setTimeout(function(){
+        $(thisAlert)[0].scrollIntoViewIfNeeded();
+    }, 800);
 }
 
 function hideValidate(input) {
