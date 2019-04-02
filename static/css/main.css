@@ -1057,7 +1057,7 @@ textarea::-webkit-scrollbar-thumb {
   border-radius: .25rem;
   color: #0c5460;
   background-color: #d1ecf1;
-  font-family: Montserrat-SemiBold;
+  font-family: Montserrat-SemiBold, sans-serif;
   font-size: 16px;
   font-weight: 400;
   text-rendering: optimizeLegibility;
@@ -1069,4 +1069,33 @@ textarea::-webkit-scrollbar-thumb {
     padding-bottom: 10px;
     margin-bottom: 15px;
   }
+}
+
+.form-button {
+  display: block;
+  width: 100%;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  font-family: Montserrat-SemiBold, sans-serif;
+  font-size: 25px;
+}
+
+.big-text-no-title {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+#page-logo-helper {
+  position: absolute;
+  left: 20px;
+  padding-top: 23px;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+}
+
+#page-logo-helper img {
+  height: 60%;
+  display: block;
 }
