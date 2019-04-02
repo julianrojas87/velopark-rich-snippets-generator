@@ -1117,6 +1117,13 @@ button.steps-overview-remove-facility-button i {
   background-color: transparent;
 }
 
+.minus-button-facility {
+  color: red;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 .steps h4 {
   color: #fff;
   margin-left: 4px;
@@ -1133,4 +1140,8 @@ button.steps-overview-remove-facility-button i {
 .steps>ul>li:nth-of-type(1), .steps>ul>li:nth-of-type(2), .steps>ul>li:nth-of-type(3), .steps>ul>li:nth-last-of-type(1), .steps>ul>li:nth-last-of-type(2) {
   margin: 4px;
   border-left: none;
+}
+
+fieldset>div {
+  position: relative;
 }
