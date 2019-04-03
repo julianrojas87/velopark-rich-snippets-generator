@@ -165,7 +165,7 @@ function initPolygonMap(target, polyid, clear) {
             let lat = coord[1];
             let long = coord[0];
 
-            polygonString += lat + ' ' + long + ', ';
+            polygonString += long + ' ' + lat + ', ';
         }
 
         polygonString = polygonString.slice(0, -2) + '))';
@@ -179,7 +179,7 @@ function initPolygonMap(target, polyid, clear) {
         let polygonArr = $(this).val().substring(10, $(this).val().length - 3).split(',');
         polygonArr = polygonArr.map(cs => {
             let stArr = cs.trim().split(' ');
-            return ol.proj.fromLonLat([parseFloat(stArr[1]), parseFloat(stArr[0])]);
+            return ol.proj.fromLonLat([parseFloat(stArr[0]), parseFloat(stArr[1])]);
         });
 
         let polygon = new Polygon([polygonArr]);
