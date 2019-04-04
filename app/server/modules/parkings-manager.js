@@ -15,40 +15,38 @@ initFolders();
 initCatalog();
 
 
-exports.initUser = username => {
+/*exports.initUser = username => {
     fs.mkdirSync(data + '/' + username);
-}
+};*/
 
 
-exports.listParkings = async username => {
+exports.listParkings = async (username, callback) => {
     dbAdapter.findParkingsByEmail(username, function(error, res){
-        /*if(error != null) {
-            console.log("error: " + error);
+        if(error != null) {
+            console.error("Error: " + error);
+            return {};
+        } else {
+            console.log(res);
+            let tableData = [];
+            res.forEach(function(parking){
+                let tdata = {};
+                let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
+                tdata['@id'] = decodeURIComponent(parking.parkingID);
+                tdata['name'] = parkingData['name'] || '';
+                tableData.push(tdata);
+            });
+            console.log(tableData);
+            callback(tableData);
         }
-        console.log(res);*/
     });
-    if (fs.existsSync(data + '/' + username)) {
-        let parkings = fs.readdirSync(data + '/' + username);
-        let tableData = [];
-
-        await Promise.all(parkings.map(async parking => {
-            let tdata = {};
-            let parkingData = JSON.parse(await readFile(data + '/' + username + '/' + parking, 'utf8'));
-            tdata['@id'] = decodeURIComponent(parking.substring(0, parking.indexOf('.jsonld')));
-            tdata['name'] = parkingData['name'] || '';
-            tableData.push(tdata);
-        }));
-
-        return tableData;
-    }
-}
+};
 
 exports.saveParking = async (user, parking) => {
     let park_obj = JSON.parse(parking);
     let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
         + '_' + park_obj['identifier'].replace(/\s/g, '-'));
     await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
-    await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
+    //await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
     await addParkingToCatalog(user, park_obj['@id']);
     dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, user, function(e, res){
         if(e != null) {
@@ -59,25 +57,33 @@ exports.saveParking = async (user, parking) => {
 };
 
 exports.getParking = async (user, parkingId) => {
-    return await readFile(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
-}
+    return await readFile(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+};
 
-exports.deleteParking = async (user, parkingId) => {
-    if (fs.existsSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld')) {
-        let park_obj = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld'));
-        if (fs.existsSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
-            + '_' + park_obj['identifier'].replace(/\s/g, '-')) + '.jsonld')) {
-            fs.unlinkSync(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
-                + '_' + park_obj['identifier'].replace(/\s/g, '-')) + '.jsonld');
-        }
-        fs.unlinkSync(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
-        await removeParkingFromCatalog(parkingId);
+exports.deleteParking = async (user, parkingId, callback) => {
+    let removed = false;
+    dbAdapter.findParkingsByEmail(user, function(error, parkings){
+        parkings.forEach(function(parking){
+            if(parking.parkingID === parkingId){
+                //parking is managed by user, deletion is permitted
+                if (fs.existsSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld')) {
+                    fs.unlinkSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+                    removeParkingFromCatalog(parkingId);
+                    //TODO: remove parking from database (accounts/companies & parkings)
+                    removed = true;
+                    callback();
+                }
+            }
+        })
+    });
+    if(!removed){
+        callback("Could not delete this parking.");
     }
-}
+};
 
 exports.downloadParking = (user, parkingId, res) => {
-    res.download(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
-}
+    res.download(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+};
 
 exports.getListOfTerms = async () => {
     let terms = [];
@@ -335,7 +341,7 @@ async function getAccessURLsByUser(user, id) {
     if (id.indexOf('velopark.ilabt.imec.be/data') >= 0) {
         return id;
     } else {
-        let park = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(id) + '.jsonld'));
+        let park = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(id) + '.jsonld'));    //TODO: use database
         let veloparkId = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(park['dataOwner']['companyName'].replace(/\s/g, '-'))
             + '_' + encodeURIComponent(park['identifier'].replace(/\s/g, '-'));
         return [id, veloparkId];
