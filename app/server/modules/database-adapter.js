@@ -30,6 +30,9 @@ let getObjectId = function (id) {
         * delete
     - Parkings
         * lookup
+        * save
+    - Companies
+        * update
 =======================
 */
 
@@ -110,6 +113,23 @@ exports.updateAccount = function (data, callback) {
     accounts.findOneAndUpdate({_id: getObjectId(data.id)}, {$set: o}, {returnOriginal: false}, callback);
 };
 
+exports.updateAccountParkingIDs = function(email, parkingID, callback){
+    accounts.findOneAndUpdate(
+        {
+            email: email
+        },
+        {
+            $addToSet: {
+                parkingIDs: parkingID
+            }
+        },
+        {
+            returnOriginal: false
+        },
+        callback
+    );
+};
+
 /*
     Accounts: insert
 */
@@ -143,13 +163,10 @@ exports.findParkingByID = function (id, callback) {
 };
 
 exports.findParkingsByEmail = function (email, callback) {
-    console.log("finding " + email);
     accounts.findOne({email: email}, function (e, o) {
         if (o != null) {
-            console.log(o);
             if (o.companyName != null) {
                 //User is part of a company, the parkings of this company are to be returned
-                console.log("User is part of a company.");
                 companies.aggregate(
                     [
                         {
@@ -175,20 +192,24 @@ exports.findParkingsByEmail = function (email, callback) {
                         if (e) {
                             callback(e);
                         } else {
-                            o.next(function (error, res) {
-                                if (error != null) {
-                                    callback(error);
-                                } else {
-                                    callback(null, res.parking);
-                                }
-                            });
-                            o.hasNext(function(error, res){
-                                if(res) {
-                                    console.error("More than one company was found with the same name. using only the first one.");
-                                }
-                            });
-
-
+                            let processNextParking = function(parkings, o){
+                                o.next(function (error, res) {
+                                    if (error != null) {
+                                        callback(error);
+                                    } else {
+                                        parkings.push(res.parking);
+                                        o.hasNext(function(error, res){
+                                            if(res) {
+                                                processNextParking(parkings, o);
+                                            } else {
+                                                callback(null, [].concat.apply([],parkings));
+                                            }
+                                        });
+                                        //callback(null, res ? res.parking : {});
+                                    }
+                                });
+                            };
+                            processNextParking([], o);
                         }
                     }
                 )
@@ -196,7 +217,6 @@ exports.findParkingsByEmail = function (email, callback) {
             } else {
                 //User does no belong to a company, he lists his own parkings
                 if (o.parkingIDs != null) {
-                    console.log(o.parkingIDs);
                     parkings.find(
                         {
                             parkingID: {
@@ -224,56 +244,91 @@ exports.findParkingsByEmail = function (email, callback) {
     Parkings: save
 */
 
+let updateOrCreateParking = function(id, filename, approvedStatus, callback){
+    parkings.findOneAndUpdate(
+        {
+            parkingID: id
+        },
+        {
+            $set: {
+                filename: filename,
+                approvedstatus: approvedStatus
+            },
+        },
+        {
+            returnOriginal: false,
+            upsert: true
+        },
+        function (e, o) {
+            if (o.value != null) {
+                callback(null, o.value);
+            } else {
+                callback(e);
+            }
+        });
+};
+
 exports.saveParking = function (id, filename, approvedStatus, email, callback) {
-    accounts.findOneAndUpdate(
+    accounts.findOne(
         {
             email: email
         },
+        { maxTimeMS: 10000 },
+        function (e, res) {
+            if (e != null) {
+                callback(e);
+            } else {
+                if(res.companyName != null && res.companyName !== '') {
+                    //User is part of a company, parking will be linked to this company instead of this user
+                    exports.updateCompanyParkingIDs(res.companyName, id, function(error, result){
+                        if(error != null){
+                            callback(error);
+                        } else {
+                            updateOrCreateParking(id, filename, approvedStatus, callback);
+                        }
+                    });
+
+                } else {
+                    //User is not part of a company, he manages his own parkings
+                    exports.updateAccountParkingIDs(email, id, function(error, result){
+                        if(error != null){
+                            callback(error);
+                        } else {
+                            updateOrCreateParking(id, filename, approvedStatus, callback);
+                        }
+                    })
+                }
+            }
+        }
+    );
+};
+
+
+
+/*
+    ==== Companies ====
+*/
+
+/*
+    Companies: update
+*/
+
+exports.updateCompanyParkingIDs = function(companyName, parkingID, callback){
+    companies.findOneAndUpdate(
+        {
+            name: companyName
+        },
         {
             $addToSet: {
-                parkingIDs: id
+                parkingIDs: parkingID
             }
         },
         {
             returnOriginal: false
         },
-        function (e, res) {
-            if (e != null) {
-                //parkingID added successfully to the user
-                parkings.findOneAndUpdate(
-                    {
-                        parkingID: id
-                    },
-                    {
-                        $set: {
-                            filename: filename,
-                            approvedstatus: approvedStatus
-                        },
-                    },
-                    {
-                        returnOriginal: false,
-                        upsert: true
-                    },
-                    function (e, o) {
-                        if (o.value != null) {
-                            callback(null, o.value);
-                        } else {
-                            callback(e);
-                        }
-                    });
-            } else {
-                callback(e);
-            }
-        }
-    )
+        callback
+    );
 };
-
-
-
-
-
-
-
 
 
 

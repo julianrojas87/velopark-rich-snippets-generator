@@ -22,8 +22,10 @@ exports.initUser = username => {
 
 exports.listParkings = async username => {
     dbAdapter.findParkingsByEmail(username, function(error, res){
-        console.log("error (should be null): " + error);
-        console.log(res);
+        /*if(error != null) {
+            console.log("error: " + error);
+        }
+        console.log(res);*/
     });
     if (fs.existsSync(data + '/' + username)) {
         let parkings = fs.readdirSync(data + '/' + username);
