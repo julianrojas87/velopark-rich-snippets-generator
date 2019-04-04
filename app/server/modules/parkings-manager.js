@@ -9,6 +9,7 @@ const readdir = util.promisify(fs.readdir);
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const data = config['data'] || './data';
+const dbAdapter = require('./database-adapter');
 
 initFolders();
 initCatalog();
@@ -20,6 +21,10 @@ exports.initUser = username => {
 
 
 exports.listParkings = async username => {
+    dbAdapter.findParkingsByEmail(username, function(error, res){
+        console.log("error (should be null): " + error);
+        console.log(res);
+    });
     if (fs.existsSync(data + '/' + username)) {
         let parkings = fs.readdirSync(data + '/' + username);
         let tableData = [];
@@ -38,11 +43,18 @@ exports.listParkings = async username => {
 
 exports.saveParking = async (user, parking) => {
     let park_obj = JSON.parse(parking);
-    await writeFile(data + '/public/' + encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
-        + '_' + park_obj['identifier'].replace(/\s/g, '-')) + '.jsonld', parking, 'utf8');
+    let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
+        + '_' + park_obj['identifier'].replace(/\s/g, '-'));
+    await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
     await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
     await addParkingToCatalog(user, park_obj['@id']);
-}
+    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, user, function(e, res){
+        if(e != null) {
+            console.log("Error saving parking in database:");
+            console.log(e);
+        }
+    });
+};
 
 exports.getParking = async (user, parkingId) => {
     return await readFile(data + '/' + user + '/' + encodeURIComponent(parkingId) + '.jsonld');
