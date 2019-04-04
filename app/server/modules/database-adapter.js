@@ -149,23 +149,50 @@ exports.findParkingsByEmail = function (email, callback) {
             console.log(o);
             if (o.companyName != null) {
                 //User is part of a company, the parkings of this company are to be returned
+                console.log("User is part of a company.");
                 companies.aggregate(
-                    {
-                        $match: {name: o.value.companyName},
-                        $lookup:
-                            {
-                                from: parkings,
-                                localField: parkingIDs,
-                                foreignField: parkingID,
-                                as: parking
+                    [
+                        {
+                            $match: {
+                                name: o.companyName
                             }
-                    }, {}, function (e, o) {
+                        },
+                        {
+                            $unwind: "$parkingIDs"
+                        },
+                        {
+                            $lookup:
+                                {
+                                    from: "parkings",
+                                    localField: "parkingIDs",
+                                    foreignField: "parkingID",
+                                    as: "parking"
+                                }
+                        }
+                    ],
+                    {},
+                    function (e, o) {
                         if (e) {
                             callback(e);
                         } else {
-                            callback(null, o);
+                            o.next(function (error, res) {
+                                if (error != null) {
+                                    callback(error);
+                                } else {
+                                    callback(null, res.parking);
+                                }
+                            });
+                            o.hasNext(function(error, res){
+                                if(res) {
+                                    console.error("More than one company was found with the same name. using only the first one.");
+                                }
+                            });
+
+
                         }
-                    });
+                    }
+                )
+                ;
             } else {
                 //User does no belong to a company, he lists his own parkings
                 if (o.parkingIDs != null) {
