@@ -11,6 +11,17 @@ MongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function (e, cl
         companies = db.collection('companies');
         cities = db.collection('geocities');
 
+        cities.estimatedDocumentCount({}, function(error, result){
+            if(result < 5){
+                const dookie = require('dookie');
+                const fs = require('fs');
+                const data = JSON.parse(fs.readFileSync('./geocities.json', 'utf8'));
+                dookie.push('mongodb://localhost:27017/node-login', data).then(function() {
+                    console.log('Importing geocities done!');
+                });
+            }
+        });
+
         accounts.createIndex({ location: "2dsphere" });
         cities.createIndex({ geometry: "2dsphere" });
         // index fields 'user' & 'email' for faster new account validation //
@@ -487,7 +498,7 @@ exports.updateCompanyParkingIDs = function (companyName, parkingID, callback) {
 
 //TODO: fix this function, as it does not appear to be working
 exports.findParkingsByCityName = function (cityName, callback) {
-    cities.findOne({'properties.NAAM': cityName}, {}, function (error, city) {
+    cities.findOne({'properties.cityname': cityName}, {}, function (error, city) {
         if (error != null) {
             callback(error);
         } else {
