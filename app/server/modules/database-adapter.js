@@ -47,6 +47,8 @@ let getObjectId = function (id) {
         * save
     - Companies
         * update
+    - Cities
+        * lookup
 =======================
 */
 
@@ -497,7 +499,6 @@ exports.updateCompanyParkingIDs = function (companyName, parkingID, callback) {
     Cities: lookup
 */
 
-//TODO: fix this function, as it does not appear to be working
 exports.findParkingsByCityName = function (cityName, callback) {
     cities.findOne({'properties.cityname': cityName}, {}, function (error, city) {
         if (error != null) {
