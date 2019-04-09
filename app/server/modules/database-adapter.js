@@ -45,7 +45,7 @@ let getObjectId = function (id) {
 */
 
 exports.findAccountByEmail = function (email, callback) {
-    accounts.findOne({email: email}, callback(e, o));
+    accounts.findOne({email: email}, callback);
 };
 
 exports.findAccountByCookie = function (cookie, callback) {
@@ -215,13 +215,94 @@ exports.findParkingsByEmail = function (email, callback) {
                 )
                 ;
             } else {
-                //User does no belong to a company, he lists his own parkings
+                //User does not belong to a company, he lists his own parkings
                 if (o.parkingIDs != null) {
                     parkings.find(
                         {
                             parkingID: {
                                 $in: o.parkingIDs
                             }
+                        }
+                    ).toArray(function (e, res) {
+                        if (e) {
+                            callback(e);
+                        } else {
+                            callback(null, res);
+                        }
+                    });
+                } else {
+                    callback("User has no parkings defined.", {});
+                }
+            }
+        } else {
+            callback(e || "could not find user with this email address");
+        }
+    });
+};
+
+exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
+    accounts.findOne({email: email}, function (e, o) {
+        if (o != null) {
+            if (o.companyName != null) {
+                //User is part of a company, the parkings of this company are to be returned
+                companies.aggregate(
+                    [
+                        {
+                            $match: {
+                                name: o.companyName
+                            }
+                        },
+                        {
+                            $unwind: "$parkingIDs"
+                        },
+                        {
+                            $lookup:
+                                {
+                                    from: "parkings",
+                                    localField: "parkingIDs",
+                                    foreignField: "parkingID",
+                                    as: "parking"
+                                }
+                        },
+                        {
+                            $match: {
+                                'parking.parkingID': parkingId
+                            }
+                        }
+                    ],
+                    {},
+                    function (e, o) {
+                        if (e) {
+                            callback(e);
+                        } else {
+                            let processNextParking = function (parkings, o) {
+                                o.next(function (error, res) {
+                                    if (error != null) {
+                                        callback(error);
+                                    } else {
+                                        parkings.push(res.parking);
+                                        o.hasNext(function (error, res) {
+                                            if (res) {
+                                                processNextParking(parkings, o);
+                                            } else {
+                                                callback(null, [].concat.apply([], parkings));
+                                            }
+                                        });
+                                        //callback(null, res ? res.parking : {});
+                                    }
+                                });
+                            };
+                            processNextParking([], o);
+                        }
+                    }
+                )
+                ;
+            } else {
+                //User does not belong to a company, he lists his own parkings
+                if (o.parkingIDs != null) {
+                    parkings.find(
+                        {
+                            parkingID: parkingId
                         }
                     ).toArray(function (e, res) {
                         if (e) {
@@ -327,7 +408,7 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                 callback(error);
             } else {
                 if (res.value) {
-                    console.log(res.value);
+                    //One document has been updated. The user was managing this parking by himself (not trough a company)
                     deleteParkingById(parkingId, function(error, res){
                         if(error != null){
                             callback(error);
@@ -335,7 +416,6 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                             callback(null, "success");
                         }
                     });
-
                 } else {
                     //did not find a user with this parkingId, looking for a company now
                     companies.findOneAndUpdate({

@@ -130,10 +130,15 @@ module.exports = app => {
             res.redirect(domain + '/');
         } else {
             if (req.body['jsonld'] && req.body['user']) {
-                await Parkings.saveParking(req.body['user'], req.body['jsonld']);
-                res.status(200).send('ok');
+                Parkings.saveParking(req.body['user'], req.body['jsonld'], function(error, res){
+                    if(error != null){
+                        res.status(500).send('Database error');
+                    } else {
+                        res.status(200).send('ok');
+                    }
+                });
             } else {
-                res.status(400);
+                res.status(400).send('Oops! We can\'t understand your request.');
             }
         }
     });
@@ -143,9 +148,16 @@ module.exports = app => {
         if (req.session.user == null) {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
+        } else if(req.query.parkingId == null) {
+            res.status(400).send('No parkingId found.');
         } else {
-            let parking = await Parkings.getParking(req.query.username, req.query.parkingId);
-            res.json(JSON.parse(parking));
+            Parkings.getParking(req.query.username, req.query.parkingId, function(error, result){
+                if(error != null){
+                    console.error(error);
+                } else {
+                    res.json(JSON.parse(result));
+                }
+            });
         }
     });
 

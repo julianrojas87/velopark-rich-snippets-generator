@@ -21,21 +21,19 @@ initCatalog();
 
 
 exports.listParkings = async (username, callback) => {
-    dbAdapter.findParkingsByEmail(username, function(error, res){
-        if(error != null) {
+    dbAdapter.findParkingsByEmail(username, function (error, res) {
+        if (error != null) {
             console.error("Error: " + error);
             return {};
         } else {
-            console.log(res);
             let tableData = [];
-            res.forEach(function(parking){
+            res.forEach(function (parking) {
                 let tdata = {};
                 let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
                 tdata['@id'] = decodeURIComponent(parking.parkingID);
                 tdata['name'] = parkingData['name'] || '';
                 tableData.push(tdata);
             });
-            console.log(tableData);
             callback(tableData);
         }
     });
@@ -48,22 +46,35 @@ exports.saveParking = async (user, parking) => {
     await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
     //await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
     await addParkingToCatalog(user, park_obj['@id']);
-    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, user, function(e, res){
-        if(e != null) {
+    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, user, function (e, res) {
+        if (e != null) {
             console.log("Error saving parking in database:");
             console.log(e);
+            //TODO: remove file?
         }
     });
 };
 
-exports.getParking = async (user, parkingId) => {
-    return await readFile(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+exports.getParking = async (user, parkingId, callback) => {
+    dbAdapter.findParkingByEmailAndParkingId(user, parkingId, function (error, res) {
+        if (error != null) {
+            callback(error);
+        } else {
+            if (res.length === 1) {
+                //parking belongs to user, load data from disk
+                let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+                callback(null, result);
+            } else {
+                callback("This parking does not belong to you.");
+            }
+        }
+    });
 };
 
 exports.deleteParking = async (user, parkingId, callback) => {
     if (fs.existsSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld')) {
-        dbAdapter.deleteParkingByIdAndEmail(parkingId, user, function(error, res){
-            if(error != null){
+        dbAdapter.deleteParkingByIdAndEmail(parkingId, user, function (error, res) {
+            if (error != null) {
                 callback(error);
             } else {
                 console.log("delete successfull " + res);
