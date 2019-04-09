@@ -103,6 +103,13 @@ module.exports = app => {
                         });
                     }
                 });
+            } else {
+                res.render('home.html', {
+                    domainName: domainName,
+                    vocabURI: vocabURI,
+                    username: req.query.username,
+                    loadedParking: {}
+                });
             }
         }
     });
@@ -123,7 +130,7 @@ module.exports = app => {
                     domainName: domainName,
                     vocabURI: vocabURI,
                     username: req.query.username,
-                    parkings: parkings
+                    parkings: parkings ? parkings : {}
                 });
             });
         }
@@ -136,7 +143,7 @@ module.exports = app => {
             res.redirect(domain + '/');
         } else {
             if (req.body['jsonld'] && req.body['user']) {
-                Parkings.saveParking(req.body['user'], req.body['jsonld'], function(error, res){
+                Parkings.saveParking(req.body['user'], req.body['jsonld'], function(error, result){
                     if(error != null){
                         res.status(500).send('Database error');
                     } else {

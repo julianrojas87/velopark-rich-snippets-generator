@@ -24,16 +24,18 @@ exports.listParkings = async (username, callback) => {
     dbAdapter.findParkingsByEmail(username, function (error, res) {
         if (error != null) {
             console.error("Error: " + error);
-            return {};
+            callback(error);
         } else {
             let tableData = [];
-            res.forEach(function (parking) {
-                let tdata = {};
-                let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
-                tdata['@id'] = decodeURIComponent(parking.parkingID);
-                tdata['name'] = parkingData['name'] || '';
-                tableData.push(tdata);
-            });
+            if(res != null) {
+                res.forEach(function (parking) {
+                    let tdata = {};
+                    let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
+                    tdata['@id'] = decodeURIComponent(parking.parkingID);
+                    tdata['name'] = parkingData['name'] || '';
+                    tableData.push(tdata);
+                });
+            }
             callback(tableData);
         }
     });
@@ -43,18 +45,20 @@ exports.listParkingsInCity = function(cityName, callback){
     dbAdapter.findParkingsByCityName(cityName, callback);
 };
 
-exports.saveParking = async (user, parking) => {
+exports.saveParking = async (user, parking, callback) => {
     let park_obj = JSON.parse(parking);
     let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
         + '_' + park_obj['identifier'].replace(/\s/g, '-'));
     await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
-    //await writeFile(data + '/' + user + '/' + encodeURIComponent(park_obj['@id']) + '.jsonld', parking, 'utf8');
     await addParkingToCatalog(user, park_obj['@id']);
     dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, user, function (e, res) {
         if (e != null) {
             console.log("Error saving parking in database:");
             console.log(e);
             //TODO: remove file?
+            callback(error);
+        } else {
+            callback(null, res);
         }
     });
 };

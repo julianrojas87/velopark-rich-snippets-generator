@@ -234,7 +234,7 @@ exports.findParkingsByEmail = function (email, callback) {
                         }
                     });
                 } else {
-                    callback("User has no parkings defined.", {});
+                    callback(null);
                 }
             }
         } else {
@@ -298,8 +298,7 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
                             processNextParking([], o);
                         }
                     }
-                )
-                ;
+                );
             } else {
                 //User does not belong to a company, he lists his own parkings
                 if (o.parkingIDs != null) {
