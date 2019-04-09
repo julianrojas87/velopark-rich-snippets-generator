@@ -90,14 +90,20 @@ module.exports = app => {
         } else {
             let parkingData = null;
             if (req.query.parkingId) {
-                parkingData = await Parkings.getParking(req.query.username, req.query.parkingId);
+                Parkings.getParking(req.query.username, req.query.parkingId, function(error, result){
+                    if(error != null){
+                        res.status(500).send();
+                    } else {
+                        parkingData = result;
+                        res.render('home.html', {
+                            domainName: domainName,
+                            vocabURI: vocabURI,
+                            username: req.query.username,
+                            loadedParking: parkingData
+                        });
+                    }
+                });
             }
-            res.render('home.html', {
-                domainName: domainName,
-                vocabURI: vocabURI,
-                username: req.query.username,
-                loadedParking: parkingData
-            });
         }
     });
 
