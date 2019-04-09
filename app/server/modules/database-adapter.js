@@ -338,7 +338,7 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
     Parkings: save
 */
 
-let updateOrCreateParking = function (id, filename, approvedStatus, callback) {
+let updateOrCreateParking = function (id, filename, approvedStatus, location, callback) {
     parkings.findOneAndUpdate(
         {
             parkingID: id
@@ -346,7 +346,8 @@ let updateOrCreateParking = function (id, filename, approvedStatus, callback) {
         {
             $set: {
                 filename: filename,
-                approvedstatus: approvedStatus
+                approvedstatus: approvedStatus,
+                location: location
             },
         },
         {
@@ -362,7 +363,7 @@ let updateOrCreateParking = function (id, filename, approvedStatus, callback) {
         });
 };
 
-exports.saveParking = function (id, filename, approvedStatus, email, callback) {
+exports.saveParking = function (id, filename, approvedStatus, location, email, callback) {
     accounts.findOne(
         {
             email: email
@@ -378,7 +379,7 @@ exports.saveParking = function (id, filename, approvedStatus, email, callback) {
                         if (error != null) {
                             callback(error);
                         } else {
-                            updateOrCreateParking(id, filename, approvedStatus, callback);
+                            updateOrCreateParking(id, filename, approvedStatus, location, callback);
                         }
                     });
 
@@ -388,7 +389,7 @@ exports.saveParking = function (id, filename, approvedStatus, email, callback) {
                         if (error != null) {
                             callback(error);
                         } else {
-                            updateOrCreateParking(id, filename, approvedStatus, callback);
+                            updateOrCreateParking(id, filename, approvedStatus, location, callback);
                         }
                     })
                 }

@@ -51,7 +51,16 @@ exports.saveParking = async (user, parking, callback) => {
         + '_' + park_obj['identifier'].replace(/\s/g, '-'));
     await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
     await addParkingToCatalog(user, park_obj['@id']);
-    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, user, function (e, res) {
+    let location;
+    try {
+        location = {
+            type: "Point",
+            coordinates: extractLocationFromJsonld(park_obj)
+        };
+    } catch (e) {
+        console.error("Could not extract location from parking." + e);
+    }
+    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, location,  user, function (e, res) {
         if (e != null) {
             console.log("Error saving parking in database:");
             console.log(e);
@@ -61,6 +70,18 @@ exports.saveParking = async (user, parking, callback) => {
             callback(null, res);
         }
     });
+};
+
+let extractLocationFromJsonld = function(jsonld){
+    let geo = jsonld['@graph'][0]["geo"];
+    let lonlat = [];
+    for(let i = 0; i < geo.length; i++){
+        if(geo[i]["@type"] === "GeoCoordinates"){
+            lonlat[0] = geo[i]["longitude"];
+            lonlat[1] = geo[i]["latitude"];
+        }
+    }
+    return lonlat;
 };
 
 exports.getParking = async (user, parkingId, callback) => {
