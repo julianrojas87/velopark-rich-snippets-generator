@@ -491,23 +491,20 @@ exports.findParkingsByCityName = function (cityName, callback) {
         if (error != null) {
             callback(error);
         } else {
-            console.log(city.geometry);
             parkings.find({
-                location: {
-                    $geoWithin: {
-                        $geometry: city.geometry
+                'location': {
+                    '$geoWithin': {
+                        '$geometry': city.geometry
                     }
                 }
             }).toArray(function (error, result) {
                 if (error != null) {
                     callback(error);
                 } else {
-                    console.log(result);
                     callback(null, result);
                 }
             });
         }
-
     });
 };
 
