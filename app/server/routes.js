@@ -157,6 +157,7 @@ module.exports = app => {
         } else {
             await Parkings.deleteParking(req.query.username, req.query.parkingId, function (error) {
                 if (error != null) {
+                    console.error(error);
                     res.status(500).send('fail');
                 } else {
                     res.status(200).send('ok');

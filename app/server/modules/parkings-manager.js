@@ -61,23 +61,17 @@ exports.getParking = async (user, parkingId) => {
 };
 
 exports.deleteParking = async (user, parkingId, callback) => {
-    let removed = false;
-    dbAdapter.findParkingsByEmail(user, function(error, parkings){
-        parkings.forEach(function(parking){
-            if(parking.parkingID === parkingId){
-                //parking is managed by user, deletion is permitted
-                if (fs.existsSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld')) {
-                    fs.unlinkSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
-                    removeParkingFromCatalog(parkingId);
-                    //TODO: remove parking from database (accounts/companies & parkings)
-                    removed = true;
-                    callback();
-                }
+    if (fs.existsSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld')) {
+        dbAdapter.deleteParkingByIdAndEmail(parkingId, user, function(error, res){
+            if(error != null){
+                callback(error);
+            } else {
+                console.log("delete successfull " + res);
+                fs.unlinkSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+                removeParkingFromCatalog(parkingId);
+                callback();
             }
-        })
-    });
-    if(!removed){
-        callback("Could not delete this parking.");
+        });
     }
 };
 
