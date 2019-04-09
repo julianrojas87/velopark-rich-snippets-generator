@@ -9,7 +9,10 @@ MongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function (e, cl
         accounts = db.collection('accounts');
         parkings = db.collection('parkings');
         companies = db.collection('companies');
-        cities = db.collection('cities');
+        cities = db.collection('geocities');
+
+        accounts.createIndex({ location: "2dsphere" });
+        cities.createIndex({ geometry: "2dsphere" });
         // index fields 'user' & 'email' for faster new account validation //
         accounts.createIndex({user: 1, email: 1});
         console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
@@ -388,7 +391,7 @@ exports.saveParking = function (id, filename, approvedStatus, email, callback) {
     Parkings: Delete
 */
 
-let deleteParkingById = function(id, callback){
+let deleteParkingById = function (id, callback) {
     parkings.deleteOne({parkingID: id}, {}, callback);
 };
 
@@ -409,8 +412,8 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
             } else {
                 if (res.value) {
                     //One document has been updated. The user was managing this parking by himself (not trough a company)
-                    deleteParkingById(parkingId, function(error, res){
-                        if(error != null){
+                    deleteParkingById(parkingId, function (error, res) {
+                        if (error != null) {
                             callback(error);
                         } else {
                             callback(null, "success");
@@ -431,8 +434,8 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                             } else {
                                 if (res.value) {
                                     //console.log(res.value);
-                                    deleteParkingById(parkingId, function(error, res){
-                                        if(error != null){
+                                    deleteParkingById(parkingId, function (error, res) {
+                                        if (error != null) {
                                             callback(error);
                                         } else {
                                             callback(null, "success");
@@ -475,8 +478,39 @@ exports.updateCompanyParkingIDs = function (companyName, parkingID, callback) {
     );
 };
 
+/*
+    ==== Cities ====
+*/
 
+/*
+    Cities: lookup
+*/
 
+//TODO: fix this function, as it does not appear to be working
+exports.findParkingsByCityName = function (cityName, callback) {
+    cities.findOne({'properties.NAAM': cityName}, {}, function (error, city) {
+        if (error != null) {
+            callback(error);
+        } else {
+            console.log(city.geometry);
+            parkings.find({
+                location: {
+                    $geoWithin: {
+                        $geometry: city.geometry
+                    }
+                }
+            }).toArray(function (error, result) {
+                if (error != null) {
+                    callback(error);
+                } else {
+                    console.log(result);
+                    callback(null, result);
+                }
+            });
+        }
+
+    });
+};
 
 
 

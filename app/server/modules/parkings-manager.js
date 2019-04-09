@@ -39,6 +39,10 @@ exports.listParkings = async (username, callback) => {
     });
 };
 
+exports.listParkingsInCity = function(cityName, callback){
+    dbAdapter.findParkingsByCityName(cityName, callback);
+};
+
 exports.saveParking = async (user, parking) => {
     let park_obj = JSON.parse(parking);
     let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
