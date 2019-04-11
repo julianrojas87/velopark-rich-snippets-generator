@@ -17,4 +17,10 @@
         window.location.href = domain + '/admin?username=' + username;
     });
 
+    $('#adminParkings').click(() => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        let username = $('#user-email').text().trim();
+        window.location.href = domain + '/admin-parkings?username=' + username;
+    });
+
 })(jQuery);

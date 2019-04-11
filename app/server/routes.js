@@ -100,8 +100,8 @@ module.exports = app => {
         } else {
             let parkingData = null;
             if (req.query.parkingId) {
-                Parkings.getParking(req.query.username, req.query.parkingId, function(error, result, accountEmail, companyName){
-                    if(error != null){
+                Parkings.getParking(req.query.username, req.query.parkingId, function (error, result, accountEmail, companyName) {
+                    if (error != null) {
                         res.status(500).send();
                     } else {
                         parkingData = result;
@@ -130,10 +130,6 @@ module.exports = app => {
         }
     });
 
-    /*
-        secured parkings
-    */
-
     app.get('/admin', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
@@ -141,26 +137,59 @@ module.exports = app => {
             res.status(401).redirect(domain + '/');
         } else {
             //check if user is superadmin
-            AM.isUserSuperAdmin(req.session.user.email, function(error, value){
-               if(error != null){
-                   console.error(error);
-                   res.redirect(domain + '/home?username=' + req.query.username);
-               } else {
-                   if(value === true){
-                       Parkings.listAllParkings(function (parkings) {
-                           res.render('admin-parkings.html', {
-                               domainName: domainName,
-                               vocabURI: vocabURI,
-                               username: req.query.username,
-                               parkings: parkings ? parkings : {},
-                               superAdmin: req.session.user.superAdmin
-                           });
-                       });
-                   } else {
-                       let domain = domainName != '' ? '/' + domainName : '';
-                       res.redirect(domain + '/home?username=' + req.query.username);
-                   }
-               }
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.redirect(domain + '/home?username=' + req.query.username);
+                } else {
+                    if (value === true) {
+                        res.render('admin-home.html', {
+                            domainName: domainName,
+                            vocabURI: vocabURI,
+                            username: req.query.username,
+                            superAdmin: req.session.user.superAdmin
+                        });
+                    } else {
+                        let domain = domainName != '' ? '/' + domainName : '';
+                        res.redirect(domain + '/home?username=' + req.query.username);
+                    }
+                }
+            });
+
+        }
+    });
+
+    /*
+        secured parkings
+    */
+
+    app.get('/admin-parkings', async function (req, res) {
+        // check if the user is logged in
+        if (req.session.user == null) {
+            let domain = domainName != '' ? '/' + domainName : '';
+            res.status(401).redirect(domain + '/');
+        } else {
+            //check if user is superadmin
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.redirect(domain + '/home?username=' + req.query.username);
+                } else {
+                    if (value === true) {
+                        Parkings.listAllParkings(function (parkings) {
+                            res.render('admin-parkings.html', {
+                                domainName: domainName,
+                                vocabURI: vocabURI,
+                                username: req.query.username,
+                                parkings: parkings ? parkings : {},
+                                superAdmin: req.session.user.superAdmin
+                            });
+                        });
+                    } else {
+                        let domain = domainName != '' ? '/' + domainName : '';
+                        res.redirect(domain + '/home?username=' + req.query.username);
+                    }
+                }
             });
 
         }
@@ -191,9 +220,9 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            if(req.session.user.email !== req.body['user']){
-                AM.isUserSuperAdmin(req.session.user.email, function(error, value){
-                    if(value) {
+            if (req.session.user.email !== req.body['user']) {
+                AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                    if (value) {
                         if (req.body['jsonld']) {
                             if (req.body['user']) {
                                 Parkings.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
@@ -242,11 +271,11 @@ module.exports = app => {
         if (req.session.user == null) {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
-        } else if(req.query.parkingId == null) {
+        } else if (req.query.parkingId == null) {
             res.status(400).send('No parkingId found.');
         } else {
-            Parkings.getParking(req.query.username, req.query.parkingId, function(error, result){
-                if(error != null){
+            Parkings.getParking(req.query.username, req.query.parkingId, function (error, result) {
+                if (error != null) {
                     console.error(error);
                 } else {
                     res.json(JSON.parse(result));
