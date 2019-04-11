@@ -15,21 +15,7 @@
     </p>
 
     <!-- Navigation Bar -->
-    <div id="navbar" class="sticky">
-        <div id="page-logo-helper">
-            <img src="static/images/icons/velopark.png">
-        </div>
-        <a id="logout">Log out</a>
-        <a id="user-email">
-            <%= username %></a>
-        <span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
-            Velopark Rich Snippets Generator
-        </span>
-    </div>
-
-    <div id="drop-menu" class="dropdown-content">
-        <a id="myParkings" href="#">My Parking Facilities</a>
-    </div>
+    <% include navbar.html %>
 
     <div class="container-contact100">
         <div class="wrap-contact100" style="width: 100%;">

@@ -33,13 +33,17 @@ div.table-title {
   background: white;
   border-radius:3px;
   border-collapse: collapse;
-  height: 320px;
   margin: auto;
   max-width: 100%;
   padding:5px;
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
+}
+
+.table-parkings-scroll-helper {
+  max-height: 80vh;
+  overflow-y: auto;
 }
  
 th {

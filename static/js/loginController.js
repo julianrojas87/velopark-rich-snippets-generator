@@ -1,4 +1,21 @@
 ($ => {
+    console.log(user);
+
+    if(user && user.name && user.name !== ''){
+        $('#signin').hide();
+        $('#login').hide();
+        $('#logout').show();
+        $('#user-email').text(user.name).show();
+    } else {
+        $('#logout').hide();
+        $('#user-email').hide();
+        $('#signin').show();
+        $('#login').show();
+    }
+
+    if(!user || user.superAdmin !== "true"){
+        $('#myAdminOverview').remove();
+    }
 
     $('#signin').on('click', () => {
         $('#signin-form').show();

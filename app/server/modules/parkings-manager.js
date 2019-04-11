@@ -10,38 +10,50 @@ const readdir = util.promisify(fs.readdir);
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const data = config['data'] || './data';
 const dbAdapter = require('./database-adapter');
+const AM = require('./account-manager');
 
 initFolders();
 initCatalog();
 
 
-/*exports.initUser = username => {
-    fs.mkdirSync(data + '/' + username);
-};*/
-
-
-exports.listParkings = async (username, callback) => {
-    dbAdapter.findParkingsByEmail(username, function (error, res) {
-        if (error != null) {
-            console.error("Error: " + error);
-            callback(error);
-        } else {
-            let tableData = [];
-            if(res != null) {
-                res.forEach(function (parking) {
-                    let tdata = {};
-                    let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
-                    tdata['@id'] = decodeURIComponent(parking.parkingID);
-                    tdata['name'] = parkingData['name'] || '';
-                    tableData.push(tdata);
-                });
-            }
-            callback(tableData);
+let returnTableData = function (error, parkings, callback) {
+    if (error != null) {
+        console.error("Error: " + error);
+        callback(error);
+    } else {
+        let tableData = [];
+        if (parkings != null) {
+            parkings.forEach(function (parking) {
+                let tdata = {};
+                let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
+                tdata['@id'] = decodeURIComponent(parking.parkingID);
+                tdata['name'] = parkingData['name'] || '';
+                if(parking.account && parking.account.length > 0){
+                    tdata['account-company'] = "U: " + parking.account[0].email;
+                }
+                if(parking.company && parking.company.length > 0){
+                    tdata['account-company'] = "C: " + parking.company[0].name;
+                }
+                tableData.push(tdata);
+            });
         }
+        callback(tableData);
+    }
+};
+
+exports.listAllParkings = async (callback) => {
+    dbAdapter.findParkingsWithAccountsAndCompanies(function (error, res) {
+        returnTableData(error, res, callback);
     });
 };
 
-exports.listParkingsInCity = function(cityName, callback){
+exports.listParkingsByEmail = async (username, callback) => {
+    dbAdapter.findParkingsByEmail(username, function (error, res) {
+        returnTableData(error, res, callback);
+    });
+};
+
+exports.listParkingsInCity = function (cityName, callback) {
     dbAdapter.findParkingsByCityName(cityName, callback);
 };
 
@@ -60,7 +72,7 @@ exports.saveParking = async (user, parking, callback) => {
     } catch (e) {
         console.error("Could not extract location from parking." + e);
     }
-    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, location,  user, function (e, res) {
+    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, location, user, function (e, res) {
         if (e != null) {
             console.log("Error saving parking in database:");
             console.log(e);
@@ -72,11 +84,11 @@ exports.saveParking = async (user, parking, callback) => {
     });
 };
 
-let extractLocationFromJsonld = function(jsonld){
+let extractLocationFromJsonld = function (jsonld) {
     let geo = jsonld['@graph'][0]["geo"];
     let lonlat = [];
-    for(let i = 0; i < geo.length; i++){
-        if(geo[i]["@type"] === "GeoCoordinates"){
+    for (let i = 0; i < geo.length; i++) {
+        if (geo[i]["@type"] === "GeoCoordinates") {
             lonlat[0] = geo[i]["longitude"];
             lonlat[1] = geo[i]["latitude"];
         }
@@ -94,7 +106,20 @@ exports.getParking = async (user, parkingId, callback) => {
                 let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
                 callback(null, result);
             } else {
-                callback("This parking does not belong to you.");
+                //Maybe you are admin?
+                AM.isUserSuperAdmin(user, function (error, value) {
+                    if (error != null) {
+                        callback(error);
+                    } else {
+                        if (value === true) {
+                            //user is admin, load data from disk
+                            let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+                            callback(null, result);
+                        } else {
+                            callback("This parking does not belong to you.");
+                        }
+                    }
+                });
             }
         }
     });
@@ -106,10 +131,38 @@ exports.deleteParking = async (user, parkingId, callback) => {
             if (error != null) {
                 callback(error);
             } else {
-                console.log("delete successfull " + res);
-                fs.unlinkSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
-                removeParkingFromCatalog(parkingId);
-                callback();
+                if (res === true) {
+                    console.log("delete successfull " + res);
+                    fs.unlinkSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+                    removeParkingFromCatalog(parkingId);
+                    callback();
+                } else {
+                    //no error, but nothing found to delete. Are you admin?
+                    AM.isUserSuperAdmin(user, function(error, res){
+                        if(error != null){
+                            calback(error);
+                        } else {
+                            if(res === true){
+                                dbAdapter.deleteParkingById(parkingId, function (error, res) {
+                                    if (error != null) {
+                                        callback(error);
+                                    } else {
+                                        if (res === true) {
+                                            console.log("delete successfull " + res);
+                                            fs.unlinkSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+                                            removeParkingFromCatalog(parkingId);
+                                            callback();
+                                        } else {
+                                            callback("No parking found to be deleted.");
+                                        }
+                                    }
+                                });
+                            } else {
+                                callback("No parking found to be deleted.");
+                            }
+                        }
+                    });
+                }
             }
         });
     }

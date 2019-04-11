@@ -17,7 +17,12 @@ module.exports = app => {
     app.get('/', function (req, res) {
         // check if the user has an auto login key saved in a cookie //
         if (req.cookies.login == undefined) {
-            res.render('index.html', {domainName: domainName, vocabURI: vocabURI});
+            res.render('index.html', {
+                domainName: domainName,
+                vocabURI: vocabURI,
+                username: null,
+                superAdmin: false
+            });
         } else {
             // attempt automatic login //
             AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) {
@@ -28,7 +33,12 @@ module.exports = app => {
                         res.redirect(domain + '/home?username=' + o.email);
                     });
                 } else {
-                    res.render('index.html', {domainName: domainName, vocabURI: vocabURI});
+                    res.render('index.html', {
+                        domainName: domainName,
+                        vocabURI: vocabURI,
+                        username: null,
+                        superAdmin: false
+                    });
                 }
             });
         }
@@ -99,7 +109,8 @@ module.exports = app => {
                             domainName: domainName,
                             vocabURI: vocabURI,
                             username: req.query.username,
-                            loadedParking: parkingData
+                            loadedParking: parkingData,
+                            superAdmin: req.session.user.superAdmin
                         });
                     }
                 });
@@ -108,7 +119,8 @@ module.exports = app => {
                     domainName: domainName,
                     vocabURI: vocabURI,
                     username: req.query.username,
-                    loadedParking: {}
+                    loadedParking: {},
+                    superAdmin: req.session.user.superAdmin
                 });
             }
         }
@@ -118,6 +130,38 @@ module.exports = app => {
         secured parkings
     */
 
+    app.get('/admin', async function (req, res) {
+        // check if the user is logged in
+        if (req.session.user == null) {
+            let domain = domainName != '' ? '/' + domainName : '';
+            res.status(401).redirect(domain + '/');
+        } else {
+            //check if user is superadmin
+            AM.isUserSuperAdmin(req.session.user.email, function(error, value){
+               if(error != null){
+                   console.error(error);
+                   res.redirect(domain + '/home?username=' + req.query.username);
+               } else {
+                   if(value === true){
+                       Parkings.listAllParkings(function (parkings) {
+                           res.render('admin-parkings.html', {
+                               domainName: domainName,
+                               vocabURI: vocabURI,
+                               username: req.query.username,
+                               parkings: parkings ? parkings : {},
+                               superAdmin: req.session.user.superAdmin
+                           });
+                       });
+                   } else {
+                       let domain = domainName != '' ? '/' + domainName : '';
+                       res.redirect(domain + '/home?username=' + req.query.username);
+                   }
+               }
+            });
+
+        }
+    });
+
     app.get('/parkings', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
@@ -125,12 +169,13 @@ module.exports = app => {
             res.redirect(domain + '/');
         } else {
             //let parkings = await
-            Parkings.listParkings(req.query.username, function (parkings) {
+            Parkings.listParkingsByEmail(req.query.username, function (parkings) {
                 res.render('parkings.html', {
                     domainName: domainName,
                     vocabURI: vocabURI,
                     username: req.query.username,
-                    parkings: parkings ? parkings : {}
+                    parkings: parkings ? parkings : {},
+                    superAdmin: req.session.user.superAdmin
                 });
             });
         }

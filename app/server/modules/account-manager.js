@@ -54,6 +54,20 @@ exports.validatePasswordKey = function (passKey, ipAddress, callback) {
 	dbAdapter.findAccountByPasskey(passKey, ipAddress, callback);
 };
 
+exports.isUserSuperAdmin = function(email, callback){
+	dbAdapter.findAccountByEmail(email, function(error, res){
+		if(error != null){
+			callback(error);
+		} else {
+			if(res.superAdmin){
+				callback(null, true);
+			} else {
+				callback(null, false);
+			}
+		}
+	});
+};
+
 /*
 	record insertion, update & deletion methods
 */

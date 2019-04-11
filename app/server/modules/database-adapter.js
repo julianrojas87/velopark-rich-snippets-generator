@@ -49,6 +49,8 @@ let getObjectId = function (id) {
         * update
     - Cities
         * lookup
+    - Mixed
+        * lookup
 =======================
 */
 
@@ -173,6 +175,53 @@ exports.deleteAccounts = function (callback) {
 /*
     Parkings: lookup
 */
+
+exports.findParkingsWithAccountsAndCompanies = function(callback){
+    parkings.aggregate(
+        [
+            {
+                $lookup:
+                    {
+                        from: "accounts",
+                        localField: "parkingID",
+                        foreignField: "parkingIDs",
+                        as: "account"
+                    }
+            },
+            {
+                $lookup:
+                    {
+                        from: "companies",
+                        localField: "parkingID",
+                        foreignField: "parkingIDs",
+                        as: "company"
+                    }
+            }
+        ],
+        {},
+        function(error, res){
+            if(error != null){
+                callback(error);
+            } else {
+                if(res != null){
+                    res.toArray(function(error, documents){
+                        if(error != null){
+                            callback(error);
+                        } else {
+                            callback(null, documents);
+                        }
+                    })
+                } else {
+                    callback();
+                }
+            }
+        }
+    )
+};
+
+exports.findParkings = function(callback){
+    parkings.find().toArray(callback);
+};
 
 exports.findParkingByID = function (id, callback) {
     parkings.findOne({parkingID: id}, callback);
@@ -404,13 +453,11 @@ exports.saveParking = function (id, filename, approvedStatus, location, email, c
     Parkings: Delete
 */
 
-let deleteParkingById = function (id, callback) {
+let deleteParkingFromParkingsTable = function (id, callback) {
     parkings.deleteOne({parkingID: id}, {}, callback);
 };
 
 exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
-    console.log("email: " + email);
-    console.log("parkingId: " + parkingId);
     accounts.findOneAndUpdate({
             email: email,
             parkingIDs: parkingId
@@ -419,17 +466,16 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
         },
         {},
         function (error, res) {
-            console.log(res);
             if (error != null) {
                 callback(error);
             } else {
                 if (res.value) {
                     //One document has been updated. The user was managing this parking by himself (not trough a company)
-                    deleteParkingById(parkingId, function (error, res) {
+                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
                         if (error != null) {
                             callback(error);
                         } else {
-                            callback(null, "success");
+                            callback(null, true);
                         }
                     });
                 } else {
@@ -446,17 +492,67 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                                 callback(error);
                             } else {
                                 if (res.value) {
-                                    //console.log(res.value);
-                                    deleteParkingById(parkingId, function (error, res) {
+                                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
                                         if (error != null) {
                                             callback(error);
                                         } else {
-                                            callback(null, "success");
+                                            callback(null, true);
                                         }
                                     });
                                 } else {
-                                    //did not find a company with this parkingId, that's an error
-                                    callback("Could not find an entity that owns this parking.");
+                                    //did not find a company or user with this parkingId, using this email adress (the parking could exist under another user, e.g. if this method is called by an admin)
+                                    callback(null, false);
+                                }
+                            }
+                        });
+                }
+            }
+        });
+};
+
+exports.deleteParkingById = function (parkingId, callback) {
+    accounts.findOneAndUpdate({
+            parkingIDs: parkingId
+        }, {
+            $pull: {parkingIDs: parkingId}
+        },
+        {},
+        function (error, res) {
+            if (error != null) {
+                callback(error);
+            } else {
+                if (res.value) {
+                    //One document has been updated. The user was managing this parking by himself (not trough a company)
+                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
+                        if (error != null) {
+                            callback(error);
+                        } else {
+                            callback(null, true);
+                        }
+                    });
+                } else {
+                    //did not find a user with this parkingId, looking for a company now
+                    companies.findOneAndUpdate({
+                            parkingIDs: parkingId
+                        }, {
+                            $pull: {parkingIDs: parkingId}
+                        },
+                        {},
+                        function (error, res) {
+                            if (error != null) {
+                                callback(error);
+                            } else {
+                                if (res.value) {
+                                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
+                                        if (error != null) {
+                                            callback(error);
+                                        } else {
+                                            callback(null, true);
+                                        }
+                                    });
+                                } else {
+                                    //did not find a company or user with this parkingId
+                                    callback(null, false);
                                 }
                             }
                         });
@@ -522,8 +618,47 @@ exports.findParkingsByCityName = function (cityName, callback) {
 };
 
 
+/*
+    ==== Mixed ====
+*/
 
+/*
+    Mixed: lookup
+*/
 
+exports.findAccountOrCompanyByParkingId = function(parkingId, callback){
+    //try to find an account first
+    accounts.findOne(
+        { parkingIDs: parkingId },
+        {},
+        function(error, res){
+            if(error != null){
+                callback(error);
+            } else {
+                if(res != null){
+                    callback(null, res);
+                } else {
+                    //No user found with this parking, find a company now
+                    companies.findOne(
+                        { parkingIDs: parkingId },
+                        {},
+                        function(error, res) {
+                            if (error != null) {
+                                callback(error);
+                            } else {
+                                if (res != null) {
+                                    callback(null, null, res);
+                                } else {
+                                    callback();
+                                }
+                            }
+                        }
+                    );
+                }
+            }
+        }
+    )
+};
 
 
 

@@ -30,6 +30,10 @@
         e.stopPropagation();
     });
 
+    $('#myAdminOverview').click(e => {
+        e.stopPropagation();
+    });
+
     $('body,html').click(e => {
         $('#drop-menu').hide();
     });
