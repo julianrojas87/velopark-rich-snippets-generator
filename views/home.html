@@ -12,6 +12,10 @@
 
 	<!-- Loaded data for editing -->
 	<p id="loadedParking" style="display: none;"><%= loadedParking %></p>
+	<script>let parkingOwner = {
+		email: "<%= emailParkingOwner %>",
+		company: "<%= nameCompanyParkingOwner %>"
+	}</script>
 
 	<!-- Resulting JSON-LD -->
 	<% include json-ld.html %>

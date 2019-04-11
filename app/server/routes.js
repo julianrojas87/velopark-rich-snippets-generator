@@ -100,7 +100,7 @@ module.exports = app => {
         } else {
             let parkingData = null;
             if (req.query.parkingId) {
-                Parkings.getParking(req.query.username, req.query.parkingId, function(error, result){
+                Parkings.getParking(req.query.username, req.query.parkingId, function(error, result, accountEmail, companyName){
                     if(error != null){
                         res.status(500).send();
                     } else {
@@ -110,7 +110,9 @@ module.exports = app => {
                             vocabURI: vocabURI,
                             username: req.query.username,
                             loadedParking: parkingData,
-                            superAdmin: req.session.user.superAdmin
+                            superAdmin: req.session.user.superAdmin,
+                            emailParkingOwner: accountEmail,
+                            nameCompanyParkingOwner: companyName
                         });
                     }
                 });
@@ -120,7 +122,9 @@ module.exports = app => {
                     vocabURI: vocabURI,
                     username: req.query.username,
                     loadedParking: {},
-                    superAdmin: req.session.user.superAdmin
+                    superAdmin: req.session.user.superAdmin,
+                    emailParkingOwner: null,
+                    nameCompanyParkingOwner: null
                 });
             }
         }
@@ -187,16 +191,48 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            if (req.body['jsonld'] && req.body['user']) {
-                Parkings.saveParking(req.body['user'], req.body['jsonld'], function(error, result){
-                    if(error != null){
-                        res.status(500).send('Database error');
+            if(req.session.user.email !== req.body['user']){
+                AM.isUserSuperAdmin(req.session.user.email, function(error, value){
+                    if(value) {
+                        if (req.body['jsonld']) {
+                            if (req.body['user']) {
+                                Parkings.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
+                                    if (error != null) {
+                                        res.status(500).send('Database error');
+                                    } else {
+                                        res.status(200).send('ok');
+                                    }
+                                });
+                            } else if (req.body['company']) {
+                                Parkings.saveParking(null, req.body['company'], req.body['jsonld'], function (error, result) {
+                                    if (error != null) {
+                                        res.status(500).send('Database error');
+                                    } else {
+                                        res.status(200).send('ok');
+                                    }
+                                });
+                            } else {
+                                res.status(400).send('Oops! We can\'t understand your request.');
+                            }
+                        } else {
+                            res.status(400).send('Oops! We can\'t understand your request.');
+                        }
                     } else {
-                        res.status(200).send('ok');
+                        res.status(401).send('You are not allowed to save this to another user account.');
                     }
                 });
             } else {
-                res.status(400).send('Oops! We can\'t understand your request.');
+                if (req.body['jsonld'] && req.body['user']) {
+                    Parkings.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
+                        if (error != null) {
+                            res.status(500).send('Database error');
+                        } else {
+                            res.status(200).send('ok');
+                        }
+                    });
+                } else {
+                    res.status(400).send('Oops! We can\'t understand your request.');
+                }
             }
         }
     });

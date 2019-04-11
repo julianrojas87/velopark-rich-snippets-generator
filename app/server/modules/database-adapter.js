@@ -11,19 +11,19 @@ MongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function (e, cl
         companies = db.collection('companies');
         cities = db.collection('geocities');
 
-        cities.estimatedDocumentCount({}, function(error, result){
-            if(result < 5){
+        cities.estimatedDocumentCount({}, function (error, result) {
+            if (result < 5) {
                 const dookie = require('dookie');
                 const fs = require('fs');
                 const data = JSON.parse(fs.readFileSync('./geocities.json', 'utf8'));
-                dookie.push('mongodb://localhost:27017/node-login', data).then(function() {
+                dookie.push('mongodb://localhost:27017/node-login', data).then(function () {
                     console.log('Importing geocities done!');
                 });
             }
         });
 
-        accounts.createIndex({ location: "2dsphere" });
-        cities.createIndex({ geometry: "2dsphere" });
+        accounts.createIndex({location: "2dsphere"});
+        cities.createIndex({geometry: "2dsphere"});
         // index fields 'user' & 'email' for faster new account validation //
         accounts.createIndex({user: 1, email: 1});
         console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
@@ -176,7 +176,7 @@ exports.deleteAccounts = function (callback) {
     Parkings: lookup
 */
 
-exports.findParkingsWithAccountsAndCompanies = function(callback){
+exports.findParkingsWithAccountsAndCompanies = function (callback) {
     parkings.aggregate(
         [
             {
@@ -199,13 +199,13 @@ exports.findParkingsWithAccountsAndCompanies = function(callback){
             }
         ],
         {},
-        function(error, res){
-            if(error != null){
+        function (error, res) {
+            if (error != null) {
                 callback(error);
             } else {
-                if(res != null){
-                    res.toArray(function(error, documents){
-                        if(error != null){
+                if (res != null) {
+                    res.toArray(function (error, documents) {
+                        if (error != null) {
                             callback(error);
                         } else {
                             callback(null, documents);
@@ -219,7 +219,7 @@ exports.findParkingsWithAccountsAndCompanies = function(callback){
     )
 };
 
-exports.findParkings = function(callback){
+exports.findParkings = function (callback) {
     parkings.find().toArray(callback);
 };
 
@@ -340,24 +340,34 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
                         if (e) {
                             callback(e);
                         } else {
-                            let processNextParking = function (parkings, o) {
-                                o.next(function (error, res) {
-                                    if (error != null) {
-                                        callback(error);
+                            if (o) {
+                                let processNextParking = function (parkings, o) {
+                                    o.next(function (error, res) {
+                                        if (error != null) {
+                                            callback(error);
+                                        } else {
+                                            parkings.push(res.parking);
+                                            o.hasNext(function (error, res) {
+                                                if (res) {
+                                                    processNextParking(parkings, o);
+                                                } else {
+                                                    callback(null, [].concat.apply([], parkings));
+                                                }
+                                            });
+                                            //callback(null, res ? res.parking : {});
+                                        }
+                                    });
+                                };
+                                o.hasNext(function (error, res) {
+                                    if (res) {
+                                        processNextParking([], o);
                                     } else {
-                                        parkings.push(res.parking);
-                                        o.hasNext(function (error, res) {
-                                            if (res) {
-                                                processNextParking(parkings, o);
-                                            } else {
-                                                callback(null, [].concat.apply([], parkings));
-                                            }
-                                        });
-                                        //callback(null, res ? res.parking : {});
+                                        callback(null, []);
                                     }
                                 });
-                            };
-                            processNextParking([], o);
+                            } else {
+                                callback(null, []);
+                            }
                         }
                     }
                 );
@@ -376,7 +386,7 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
                         }
                     });
                 } else {
-                    callback("User has no parkings defined.", {});
+                    callback(null, []);
                 }
             }
         } else {
@@ -447,6 +457,17 @@ exports.saveParking = function (id, filename, approvedStatus, location, email, c
             }
         }
     );
+};
+
+exports.saveParkingToCompany = function (id, filename, approvedStatus, location, companyName, callback) {
+    //User is part of a company, parking will be linked to this company instead of user
+    exports.updateCompanyParkingIDs(companyName, id, function (error, result) {
+        if (error != null) {
+            callback(error);
+        } else {
+            updateOrCreateParking(id, filename, approvedStatus, location, callback);
+        }
+    });
 };
 
 /*
@@ -626,23 +647,23 @@ exports.findParkingsByCityName = function (cityName, callback) {
     Mixed: lookup
 */
 
-exports.findAccountOrCompanyByParkingId = function(parkingId, callback){
+exports.findAccountOrCompanyByParkingId = function (parkingId, callback) {
     //try to find an account first
     accounts.findOne(
-        { parkingIDs: parkingId },
+        {parkingIDs: parkingId},
         {},
-        function(error, res){
-            if(error != null){
+        function (error, res) {
+            if (error != null) {
                 callback(error);
             } else {
-                if(res != null){
+                if (res != null) {
                     callback(null, res);
                 } else {
                     //No user found with this parking, find a company now
                     companies.findOne(
-                        { parkingIDs: parkingId },
+                        {parkingIDs: parkingId},
                         {},
-                        function(error, res) {
+                        function (error, res) {
                             if (error != null) {
                                 callback(error);
                             } else {

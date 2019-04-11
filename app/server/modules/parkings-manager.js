@@ -57,12 +57,15 @@ exports.listParkingsInCity = function (cityName, callback) {
     dbAdapter.findParkingsByCityName(cityName, callback);
 };
 
-exports.saveParking = async (user, parking, callback) => {
+exports.saveParking = async (user, companyName, parking, callback) => {
+    if(user == null && companyName == null){
+        callback("[parkings-manager]\tNo user or company given to save this parking.");
+    }
     let park_obj = JSON.parse(parking);
     let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
         + '_' + park_obj['identifier'].replace(/\s/g, '-'));
     await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
-    await addParkingToCatalog(user, park_obj['@id']);
+    await addParkingToCatalog(park_obj, park_obj['@id']);
     let location;
     try {
         location = {
@@ -72,16 +75,29 @@ exports.saveParking = async (user, parking, callback) => {
     } catch (e) {
         console.error("Could not extract location from parking." + e);
     }
-    dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, location, user, function (e, res) {
-        if (e != null) {
-            console.log("Error saving parking in database:");
-            console.log(e);
-            //TODO: remove file?
-            callback(error);
-        } else {
-            callback(null, res);
-        }
-    });
+    if(user != null) {
+        dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, location, user, function (e, res) {
+            if (e != null) {
+                console.log("Error saving parking in database:");
+                console.log(e);
+                //TODO: remove file?
+                callback(e);
+            } else {
+                callback(null, res);
+            }
+        });
+    } else {
+        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', true, location, companyName, function (e, res) {
+            if (e != null) {
+                console.log("Error saving parking in database:");
+                console.log(e);
+                //TODO: remove file?
+                callback(e);
+            } else {
+                callback(null, res);
+            }
+        });
+    }
 };
 
 let extractLocationFromJsonld = function (jsonld) {
@@ -114,7 +130,13 @@ exports.getParking = async (user, parkingId, callback) => {
                         if (value === true) {
                             //user is admin, load data from disk
                             let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
-                            callback(null, result);
+                            dbAdapter.findAccountOrCompanyByParkingId(parkingId, function(error, account, company){
+                                if(account){
+                                    callback(null, result, account.email);
+                                } else {
+                                    callback(null, result, null, company.name);
+                                }
+                            });
                         } else {
                             callback("This parking does not belong to you.");
                         }
@@ -253,7 +275,7 @@ async function getTermsRDF() {
     });
 }
 
-async function addParkingToCatalog(user, id) {
+async function addParkingToCatalog(parking, id) {
     let catalog = JSON.parse(await readFile(data + '/public/catalog.jsonld', 'utf8'));
     let dists = catalog['dcat:dataset']['dcat:distribution'];
     let found = false;
@@ -270,7 +292,7 @@ async function addParkingToCatalog(user, id) {
         dists.push({
             "@id": id,
             "@type": "dcat:Distribution",
-            "dcat:accessURL": await getAccessURLsByUser(user, id),
+            "dcat:accessURL": await getAccessURLsByUser(parking, id),
             "dct:license": "http://creativecommons.org/publicdomain/zero/1.0/",
             "dcat:mediaType": "application/ld+json",
             "dct:issued": new Date().toISOString(),
@@ -424,11 +446,11 @@ async function initCatalog() {
     }
 }
 
-async function getAccessURLsByUser(user, id) {
+async function getAccessURLsByUser(park, id) {
     if (id.indexOf('velopark.ilabt.imec.be/data') >= 0) {
         return id;
     } else {
-        let park = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(id) + '.jsonld'));    //TODO: use database
+        //let park = JSON.parse(await readFile(data + '/' + user + '/' + encodeURIComponent(id) + '.jsonld'));    //TODO: use database
         let veloparkId = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(park['dataOwner']['companyName'].replace(/\s/g, '-'))
             + '_' + encodeURIComponent(park['identifier'].replace(/\s/g, '-'));
         return [id, veloparkId];
