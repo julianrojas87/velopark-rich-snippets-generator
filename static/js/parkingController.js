@@ -64,7 +64,6 @@ function loadSections(graph) {
             let input = section.find('[name^="' + keys[j] + '"]');
             if (Array.isArray(obj)) {
                 processArray(path, obj, input);
-                path.pop();
             } else if (typeof obj !== 'object') {
                 loadParkingValue(path, obj, true, input);
             } else {
@@ -123,6 +122,9 @@ function processArray(path, arr, input) {
                 path.pop();
             }
         }
+
+        path.pop();
+
     } else {
         // Normal object arrays that map to a single UI input (e.g closeTo or availableLanguages)
         for (let i = 0; i < arr.length; i++) {
