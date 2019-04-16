@@ -705,6 +705,15 @@ exports.addAccountToCompany = function (email, companyName, callback) {
     Cities: lookup
 */
 
+exports.findAllCityNames = function(callback){
+    let citynames = [];
+    cities.find().project({'properties.cityname': 1, _id: 0}).forEach(function(res){
+        citynames.push(res.properties.cityname);
+    }, function (error) {
+        callback(error, citynames);
+    });
+};
+
 exports.findParkingsByCityName = function (cityName, callback) {
     cities.findOne({'properties.cityname': cityName}, {}, function (error, city) {
         if (error != null) {

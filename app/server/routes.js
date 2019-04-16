@@ -1,7 +1,8 @@
 const fs = require('fs');
 const AM = require('./modules/account-manager');
 const EM = require('./modules/email-dispatcher');
-const CM = require('./modules/company-manager');
+const CoM = require('./modules/company-manager');
+const CiM = require('./modules/cities-manager');
 const PM = require('./modules/parkings-manager');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
@@ -50,10 +51,12 @@ module.exports = app => {
     */
 
     app.post('/signup', function (req, res) {
+        console.log(req.body['cities']);
         AM.addNewAccount({
             email: req.body['email'],
             pass: req.body['pass'],
-            companyName: req.body['company']
+            companyName: req.body['company'],
+            cityNames: req.body['cities']
         }, function (e) {
             if (e) {
                 res.status(400).send(e);
@@ -425,7 +428,17 @@ module.exports = app => {
     });
 
     app.get('/companynames', async function (req, res) {
-        CM.listAllCompanies(function(error, result){
+        CoM.listAllCompanies(function(error, result){
+            if(error != null){
+                res.status(500).send('failed');
+            } else {
+                res.status(200).json(result);
+            }
+        });
+    });
+
+    app.get('/citynames', async function (req, res) {
+        CiM.listAllCities(function(error, result){
             if(error != null){
                 res.status(500).send('failed');
             } else {

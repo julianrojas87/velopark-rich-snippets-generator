@@ -35,6 +35,21 @@
                 reject(e);
             }
         });
+        $.ajax({
+            type: "GET",
+            url: domain + '/citynames',
+            success: data => {
+                $('select[city-names="true"]').each(function () {
+                    for (let i in data) {
+                        $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                    }
+                });
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                reject(e);
+            }
+        });
     });
 
     $('#signin_close_button').on('click', () => {
@@ -66,12 +81,15 @@
         let email = $('#signin-email').val();
         let pass = $('#signin-pass').val();
         let company = $('#signin-company').val();
-        console.log(company);
+        let cities = [];
+        $('.signin-city').each(function(){
+            cities.push($(this).val());
+        });
 
         $.ajax({
             type: "POST",
             url: domain + '/signup',
-            data: {'email': email, 'pass': pass, 'company': company},
+            data: {'email': email, 'pass': pass, 'company': company, 'cities': cities},
             success: () => {
                 $.ajax({
                     type: "POST",
@@ -111,3 +129,5 @@
         return false;
     });
 })(jQuery);
+
+

@@ -80,6 +80,12 @@ exports.addNewAccount = function (newData, callback) {
 	let pass = newData.pass;
 	let email = newData.email;
 	let companyName = newData.companyName;
+	let cityNames = [];
+	for(let city in newData.cityNames){
+		cityNames.push({ name: newData.cityNames[city], enabled: false });
+	}
+
+	//TODO: validate city names
 
 	if(!email.includes("@")){
 		callback("Invalid email adress.");
@@ -100,6 +106,7 @@ exports.addNewAccount = function (newData, callback) {
 						pass: pass,
 						date: date,
 						companyName: companyName,
+						cityNames: cityNames,
 						superAdmin: false
 					};
 					dbAdapter.insertAccount(insertData, callback);
