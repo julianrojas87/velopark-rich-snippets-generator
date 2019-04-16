@@ -29,6 +29,20 @@
         window.location.href = domain + '/admin-users?username=' + username;
     });
 
+    $('#myCityOverview').click(() => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        let username = $('#user-email').text().trim();
+        window.location.href = domain + '/cityrep?username=' + username;
+    });
+
+    $('.cityrep-parkings-button').on('click', function(){
+        let domain = domainName != '' ? '/' + domainName : '';
+        let username = $('#user-email').text().trim();
+        let cityName = $(this).attr('cityname');
+        console.log(cityName);
+        window.location.href = domain + '/cityrep-parkings?cityname=' + cityName + '&username=' + username;
+    });
+
     $('.checkbox-companyUserEnabled').change(function(){
         $(this).hide();
         $(this).siblings('.loading-icon').show();

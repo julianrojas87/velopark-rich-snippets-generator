@@ -17,6 +17,10 @@
         $('#myAdminOverview').remove();
     }
 
+    if (!user || !user.cityrep) {
+        $('#myCityOverview').remove();
+    }
+
     $('#signin').on('click', () => {
         $('#signin-form').show();
         let domain = domainName != '' ? '/' + domainName : '';

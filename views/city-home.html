@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- head tag -->
+<% include head.html %>
+
+<body>
+<!-- Domain name to deal with reverse proxies -->
+<p id="domainName" style="display: none;">
+    <%= domainName %>
+</p>
+<!-- URI to vocabulary -->
+<p id="vocabURI" style="display: none;">
+    <%= vocabURI %>
+</p>
+
+<!-- Navigation Bar -->
+<% include navbar.html %>
+
+<div class="container-contact100">
+    <div class="wrap-contact100" style="width: 100%;">
+        <h2>Region Hub</h2>
+        <% for (var i = 0; i < cityNames.length; i++) { %>
+        <h4><%= cityNames[i].name %></h4>
+            <a class="btn btn-info cityrep-parkings-button" href="#" cityname="<%= cityNames[i].name %>">Manage parkings</a>
+        <% } %>
+    </div>
+</div>
+
+<!-- JS scripts-->
+<% include scripts.html %>
+
+</body>
+
+</html>

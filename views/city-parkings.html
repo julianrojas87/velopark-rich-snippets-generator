@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- head tag -->
+<% include head.html %>
+
+<body>
+<!-- Domain name to deal with reverse proxies -->
+<p id="domainName" style="display: none;">
+    <%= domainName %>
+</p>
+<!-- URI to vocabulary -->
+<p id="vocabURI" style="display: none;">
+    <%= vocabURI %>
+</p>
+
+<!-- Navigation Bar -->
+<% include navbar.html %>
+
+<div class="container-contact100">
+    <div class="wrap-contact100 table-parkings-scroll-helper" style="width: 100%;">
+        <table id="parking-list" class="table-fill">
+            <thead>
+            <tr>
+                <th class="text-left">Parking Facility URI</th>
+                <th class="text-left">Parking Name</th>
+                <th class="text-left">Approved</th>
+                <th class="text-left">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            <% for (var i = 0; i < parkings.length; i++) { %>
+            <tr>
+                <td class="text-left">
+                    <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold;" href="<%= parkings[i]['@id'] %>">
+                        <%= parkings[i]['parkingID'] %></a>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <%= parkings[i]['parkingID'] %>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <%= parkings[i]['approvedstatus'] %>
+                </td>
+                <td class="text-left">
+                    <input title="Edit" type="image" src="static/images/icons/edit.png" style="float: left; width: 40px;">
+                    <!--<input title="Delete" type="image" src="static/images/icons/delete.png" style="position: relative; left: 10px; bottom: 2px; float: left; width: 40px;">-->
+                    <input title="Download" type="image" src="static/images/icons/download.png" style="position: relative; left: 16px; bottom: 2px; float: left; width: 40px;">
+                </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JS scripts-->
+<% include scripts.html %>
+
+</body>
+
+</html>

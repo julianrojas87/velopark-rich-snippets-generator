@@ -68,6 +68,43 @@ exports.isUserSuperAdmin = function(email, callback){
 	});
 };
 
+exports.getAccountCityNamesByEmail = function(email, callback){
+	dbAdapter.findAccountByEmail(email, function(error, res){
+		if(error != null){
+			callback(error);
+		} else {
+			callback(null, res.cityNames);
+		}
+	});
+};
+
+exports.isUserCityRep = function(email, cityName, callback){
+	dbAdapter.findAccountByEmail(email, function(error, res){
+		if(error != null){
+			callback(error);
+		} else {
+
+			if(cityName === ''){
+				callback(null, res.cityNames.length > 0);
+			} else {
+				let found = false;
+				let i = 0;
+				while (!found && i < res.cityNames.length) {
+					if (res.cityNames[i].name === cityName && res.cityNames[i].enabled === true) {
+						found = true;
+					}
+					i++;
+				}
+				if (found) {
+					callback(null, true);
+				} else {
+					callback(null, false);
+				}
+			}
+		}
+	});
+};
+
 exports.getAllEmails = function(callback){
 	dbAdapter.findAllEmails(callback);
 };

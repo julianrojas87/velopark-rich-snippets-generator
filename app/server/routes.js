@@ -23,7 +23,8 @@ module.exports = app => {
                 domainName: domainName,
                 vocabURI: vocabURI,
                 username: null,
-                superAdmin: false
+                superAdmin: false,
+                cityrep: false
             });
         } else {
             // attempt automatic login //
@@ -39,7 +40,8 @@ module.exports = app => {
                         domainName: domainName,
                         vocabURI: vocabURI,
                         username: null,
-                        superAdmin: false
+                        superAdmin: false,
+                        cityrep: false
                     });
                 }
             });
@@ -116,6 +118,7 @@ module.exports = app => {
                             username: req.query.username,
                             loadedParking: parkingData,
                             superAdmin: req.session.user.superAdmin,
+                            cityrep: req.session.user.cityNames.length > 0,
                             emailParkingOwner: accountEmail,
                             nameCompanyParkingOwner: companyName
                         });
@@ -128,6 +131,7 @@ module.exports = app => {
                     username: req.query.username,
                     loadedParking: {},
                     superAdmin: req.session.user.superAdmin,
+                    cityrep: req.session.user.cityNames.length > 0,
                     emailParkingOwner: null,
                     nameCompanyParkingOwner: null
                 });
@@ -152,7 +156,8 @@ module.exports = app => {
                             domainName: domainName,
                             vocabURI: vocabURI,
                             username: req.query.username,
-                            superAdmin: req.session.user.superAdmin
+                            superAdmin: req.session.user.superAdmin,
+                            cityrep: req.session.user.cityNames.length > 0
                         });
                     } else {
                         let domain = domainName != '' ? '/' + domainName : '';
@@ -187,7 +192,8 @@ module.exports = app => {
                                 vocabURI: vocabURI,
                                 username: req.query.username,
                                 parkings: parkings ? parkings : {},
-                                superAdmin: req.session.user.superAdmin
+                                superAdmin: req.session.user.superAdmin,
+                                cityrep: req.session.user.cityNames.length > 0
                             });
                         });
                     } else {
@@ -222,7 +228,8 @@ module.exports = app => {
                                     vocabURI: vocabURI,
                                     username: req.query.username,
                                     users: users ? users : {},
-                                    superAdmin: req.session.user.superAdmin
+                                    superAdmin: req.session.user.superAdmin,
+                                    cityrep: req.session.user.cityNames.length > 0
                                 });
                             }
                         });
@@ -287,6 +294,76 @@ module.exports = app => {
         }
     });
 
+    /*
+        City representatives
+    */
+    app.get('/cityrep', async function (req, res) {
+        // check if the user is logged in
+        let domain = domainName != '' ? '/' + domainName : '';
+        if (req.session.user == null) {
+            res.status(401).redirect(domain + '/');
+        } else {
+            //check if user is cityrep
+            AM.getAccountCityNamesByEmail(req.session.user.email, function(error, result){
+                if(result.length > 0){
+                    res.render('city-home.html', {
+                        domainName: domainName,
+                        vocabURI: vocabURI,
+                        username: req.query.username,
+                        cityNames: result,
+                        superAdmin: req.session.user.superAdmin,
+                        cityrep: req.session.user.cityNames.length > 0,
+                    });
+                } else {
+                    let domain = domainName != '' ? '/' + domainName : '';
+                    res.redirect(domain + '/home?username=' + req.query.username);
+                }
+            });
+
+        }
+    });
+
+    app.get('/cityrep-parkings', async function (req, res) {
+        // check if the user is logged in
+        let domain = domainName != '' ? '/' + domainName : '';
+        let cityname = req.query.cityname;
+        if(cityname == null){
+            res.status(412).redirect(domain + '/');
+        }
+        if (req.session.user == null) {
+            res.status(401).redirect(domain + '/');
+        } else {
+            //check if user is cityrep for this city
+            AM.isUserCityRep(req.session.user.email, cityname, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.redirect(domain + '/home?username=' + req.query.username);
+                } else {
+                    if (value === true) {
+                        PM.listParkingsInCity(cityname, function (error, parkings) {
+                            if(error != null){
+                                console.error(error);
+                                res.status(500).send('failed');
+                            } else {
+                                res.render('city-parkings.html', {
+                                    domainName: domainName,
+                                    vocabURI: vocabURI,
+                                    username: req.query.username,
+                                    parkings: parkings ? parkings : {},
+                                    superAdmin: req.session.user.superAdmin,
+                                    cityrep: req.session.user.cityNames.length > 0
+                                });
+                            }
+                        });
+                    } else {
+                        res.redirect(domain + '/home?username=' + req.query.username);
+                    }
+                }
+            });
+
+        }
+    });
+
     app.get('/get-all-emails', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
@@ -324,7 +401,8 @@ module.exports = app => {
                     vocabURI: vocabURI,
                     username: req.query.username,
                     parkings: parkings ? parkings : {},
-                    superAdmin: req.session.user.superAdmin
+                    superAdmin: req.session.user.superAdmin,
+                    cityrep: req.session.user.cityNames.length > 0
                 });
             });
         }
