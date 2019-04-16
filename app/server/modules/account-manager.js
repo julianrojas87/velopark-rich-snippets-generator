@@ -68,6 +68,10 @@ exports.isUserSuperAdmin = function(email, callback){
 	});
 };
 
+exports.getAllEmails = function(callback){
+	dbAdapter.findAllEmails(callback);
+};
+
 /*
 	record insertion, update & deletion methods
 */
@@ -120,6 +124,14 @@ exports.deleteAccount = function (id, callback) {
 
 exports.deleteAllAccounts = function (callback) {
 	dbAdapter.deleteAccounts(callback);
+};
+
+exports.toggleCompanyEnabled = function(email, enabled, callback){
+	dbAdapter.updateAccountEnableCompany(email, enabled, callback);
+};
+
+exports.toggleCityEnabled = function(email, cityName, enabled, callback){
+	dbAdapter.updateAccountEnableCity(email, cityName, enabled, callback);
 };
 
 /*

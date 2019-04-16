@@ -84,6 +84,15 @@ exports.findAccounts = function (callback) {
     });
 };
 
+exports.findAllEmails = function (callback){
+    let emails = [];
+    accounts.find().project({email: 1, _id: 0}).forEach(function(res){
+        emails.push(res.email);
+    }, function (error) {
+        callback(error, emails);
+    });
+};
+
 /*
     Accounts: update
 */
@@ -139,6 +148,40 @@ exports.updateAccountParkingIDs = function (email, parkingID, callback) {
         {
             $addToSet: {
                 parkingIDs: parkingID
+            }
+        },
+        {
+            returnOriginal: false
+        },
+        callback
+    );
+};
+
+exports.updateAccountEnableCompany = function(email, enabled, callback){
+    accounts.findOneAndUpdate(
+        {
+            email: email,
+            companyName: { $not : { $type : 10 }, $exists: true }
+        },
+        {
+            $set:{ companyEnabled: enabled }
+        },
+        {
+            returnOriginal: false
+        },
+        callback
+    );
+};
+
+exports.updateAccountEnableCity = function(email, cityName, enabled, callback){
+    accounts.findOneAndUpdate(
+        {
+            email: email,
+            'cityNames.name' : cityName
+        },
+        {
+            $set:{
+                'cityNames.$.enabled': enabled
             }
         },
         {
@@ -606,6 +649,39 @@ exports.updateCompanyParkingIDs = function (companyName, parkingID, callback) {
         },
         callback
     );
+};
+
+/*
+    Add the account with the given email to the given company.
+    Existing parkings owned by this user will be transferred to this company.
+*/
+exports.addAccountToCompany = function (email, companyName, callback) {
+    accounts.findOneAndUpdate({email: email}, {
+        $set: {
+            companyName: companyName,
+        }
+    }, {returnOriginal: true}, function (e, o) {
+        if (e != null) {
+            callback(e);
+        } else {
+            //add user to company email and add parkingIDs to the company's parkingIDs
+            companies.findOneAndUpdate(
+                {
+                    name: companyName
+                },
+                {
+                    $addToSet: {
+                        parkingIDs: o.parkingIDs
+                    },
+                    $addToSet: {
+                        email: email
+                    }
+                },
+                { returnOriginal: false },
+                callback
+            )
+        }
+    })
 };
 
 /*

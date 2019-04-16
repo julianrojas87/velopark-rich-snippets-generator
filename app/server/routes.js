@@ -165,8 +165,8 @@ module.exports = app => {
 
     app.get('/admin-parkings', async function (req, res) {
         // check if the user is logged in
+        let domain = domainName != '' ? '/' + domainName : '';
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
             res.status(401).redirect(domain + '/');
         } else {
             //check if user is superadmin
@@ -186,12 +186,123 @@ module.exports = app => {
                             });
                         });
                     } else {
-                        let domain = domainName != '' ? '/' + domainName : '';
                         res.redirect(domain + '/home?username=' + req.query.username);
                     }
                 }
             });
 
+        }
+    });
+
+    app.get('/admin-users', async function (req, res) {
+        let domain = domainName != '' ? '/' + domainName : '';
+        // check if the user is logged in
+        if (req.session.user == null) {
+            res.status(401).redirect(domain + '/');
+        } else {
+            //check if user is superadmin
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.redirect(domain + '/home?username=' + req.query.username);
+                } else {
+                    if (value === true) {
+                        AM.getAllRecords(function (error, users) {
+                            if (error != null) {
+                                console.error(error);
+                                res.redirect(domain + '/home?username=' + req.query.username);
+                            } else {
+                                res.render('admin-users.html', {
+                                    domainName: domainName,
+                                    vocabURI: vocabURI,
+                                    username: req.query.username,
+                                    users: users ? users : {},
+                                    superAdmin: req.session.user.superAdmin
+                                });
+                            }
+                        });
+                    } else {
+                        res.redirect(domain + '/home?username=' + req.query.username);
+                    }
+                }
+            });
+
+        }
+    });
+
+    app.post('/admin-users/toggle-company-state/:useremail', function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send();
+        } else {
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.status(500).send();
+                } else {
+                    AM.toggleCompanyEnabled(req.params.useremail, req.body['companyEnabled'] === "true", function (error, result) {
+                        if (error != null) {
+                            console.error(error);
+                            res.status(500).send();
+                        } else {
+                            if(result.value != null) {
+                                res.status(200).json(result);
+                            } else {
+                                res.status(409).send('Could not enable/disable company because this user does not have a company.');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    app.post('/admin-users/toggle-city-state/:useremail', function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send();
+        } else {
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.status(500).send();
+                } else {
+                    AM.toggleCityEnabled(req.params.useremail, req.body['cityName'], req.body['cityEnabled'] === "true", function (error, result) {
+                        if (error != null) {
+                            console.error(error);
+                            res.status(500).send();
+                        } else {
+                            if(result.value != null) {
+                                res.status(200).json(result);
+                            } else {
+                                res.status(409).send('Could not enable/disable city, probably because this user does not have this city in it\'s list.');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    app.get('/get-all-emails', async function (req, res) {
+        // check if the user is logged in
+        if (req.session.user == null) {
+            let domain = domainName != '' ? '/' + domainName : '';
+            res.status(401).redirect(domain + '/');
+        } else {
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.redirect(domain + '/home?username=' + req.query.username);
+                } else {
+                    AM.getAllEmails(function (error, result) {
+                        if (error != null) {
+                            console.error(error);
+                            res.status(500).send();
+                        } else {
+                            res.status(200).json(result);
+                        }
+                    });
+                }
+            });
         }
     });
 
