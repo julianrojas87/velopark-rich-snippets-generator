@@ -77,19 +77,36 @@ exports.getAllEmails = function(callback){
 */
 
 exports.addNewAccount = function (newData, callback) {
-	dbAdapter.findAccountByEmail(newData.email, function (e, o) {
-		if (o) {
-			callback('There is already an account with this email address');
-		} else {
-			saltAndHash(newData.pass, function (hash) {
-				newData.pass = hash;
-				// append date stamp when record was created //
-				newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-				newData.superAdmin = false;
-				dbAdapter.insertAccount(newData, callback);
-			});
-		}
-	});
+	let pass = newData.pass;
+	let email = newData.email;
+	let companyName = newData.companyName;
+
+	if(!email.includes("@")){
+		callback("Invalid email adress.");
+	} else if(companyName == null || companyName === ''){
+		callback("No valid company given.")
+	} else {
+		dbAdapter.findAccountByEmail(email, function (e, o) {
+			if (o) {
+				callback('There is already an account with this email address');
+			} else {
+				saltAndHash(pass, function (hash) {
+					pass = hash;
+					// append date stamp when record was created //
+					let date = moment().format('MMMM Do YYYY, h:mm:ss a');
+					//copy data to prevent unwanted data fields in database in case of misuse.
+					let insertData = {
+						email: email,
+						pass: pass,
+						date: date,
+						companyName: companyName,
+						superAdmin: false
+					};
+					dbAdapter.insertAccount(insertData, callback);
+				});
+			}
+		});
+	}
 };
 
 exports.updateAccount = function (newData, callback) {

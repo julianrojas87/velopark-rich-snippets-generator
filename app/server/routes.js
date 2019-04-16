@@ -1,7 +1,8 @@
 const fs = require('fs');
 const AM = require('./modules/account-manager');
 const EM = require('./modules/email-dispatcher');
-const Parkings = require('./modules/parkings-manager');
+const CM = require('./modules/company-manager');
+const PM = require('./modules/parkings-manager');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
@@ -51,7 +52,8 @@ module.exports = app => {
     app.post('/signup', function (req, res) {
         AM.addNewAccount({
             email: req.body['email'],
-            pass: req.body['pass']
+            pass: req.body['pass'],
+            companyName: req.body['company']
         }, function (e) {
             if (e) {
                 res.status(400).send(e);
@@ -100,7 +102,7 @@ module.exports = app => {
         } else {
             let parkingData = null;
             if (req.query.parkingId) {
-                Parkings.getParking(req.query.username, req.query.parkingId, function (error, result, accountEmail, companyName) {
+                PM.getParking(req.query.username, req.query.parkingId, function (error, result, accountEmail, companyName) {
                     if (error != null) {
                         res.status(500).send();
                     } else {
@@ -176,7 +178,7 @@ module.exports = app => {
                     res.redirect(domain + '/home?username=' + req.query.username);
                 } else {
                     if (value === true) {
-                        Parkings.listAllParkings(function (parkings) {
+                        PM.listAllParkings(function (parkings) {
                             res.render('admin-parkings.html', {
                                 domainName: domainName,
                                 vocabURI: vocabURI,
@@ -313,7 +315,7 @@ module.exports = app => {
             res.redirect(domain + '/');
         } else {
             //let parkings = await
-            Parkings.listParkingsByEmail(req.query.username, function (parkings) {
+            PM.listParkingsByEmail(req.query.username, function (parkings) {
                 res.render('parkings.html', {
                     domainName: domainName,
                     vocabURI: vocabURI,
@@ -336,7 +338,7 @@ module.exports = app => {
                     if (value) {
                         if (req.body['jsonld']) {
                             if (req.body['user']) {
-                                Parkings.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
+                                PM.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
                                     if (error != null) {
                                         res.status(500).send('Database error');
                                     } else {
@@ -344,7 +346,7 @@ module.exports = app => {
                                     }
                                 });
                             } else if (req.body['company']) {
-                                Parkings.saveParking(null, req.body['company'], req.body['jsonld'], function (error, result) {
+                                PM.saveParking(null, req.body['company'], req.body['jsonld'], function (error, result) {
                                     if (error != null) {
                                         res.status(500).send('Database error');
                                     } else {
@@ -363,7 +365,7 @@ module.exports = app => {
                 });
             } else {
                 if (req.body['jsonld'] && req.body['user']) {
-                    Parkings.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
+                    PM.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
                         if (error != null) {
                             res.status(500).send('Database error');
                         } else {
@@ -385,7 +387,7 @@ module.exports = app => {
         } else if (req.query.parkingId == null) {
             res.status(400).send('No parkingId found.');
         } else {
-            Parkings.getParking(req.query.username, req.query.parkingId, function (error, result) {
+            PM.getParking(req.query.username, req.query.parkingId, function (error, result) {
                 if (error != null) {
                     console.error(error);
                 } else {
@@ -401,7 +403,7 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            await Parkings.deleteParking(req.query.username, req.query.parkingId, function (error) {
+            await PM.deleteParking(req.query.username, req.query.parkingId, function (error) {
                 if (error != null) {
                     console.error(error);
                     res.status(500).send('fail');
@@ -418,8 +420,18 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            Parkings.downloadParking(req.query.username, req.query.parkingId, res);
+            PM.downloadParking(req.query.username, req.query.parkingId, res);
         }
+    });
+
+    app.get('/companynames', async function (req, res) {
+        CM.listAllCompanies(function(error, result){
+            if(error != null){
+                res.status(500).send('failed');
+            } else {
+                res.status(200).json(result);
+            }
+        });
     });
 
     /*
@@ -427,7 +439,7 @@ module.exports = app => {
     */
 
     app.get('/terms', async function (req, res) {
-        let list = await Parkings.getListOfTerms();
+        let list = await PM.getListOfTerms();
         res.status(200).json(list);
     });
 
@@ -436,7 +448,7 @@ module.exports = app => {
     */
 
     app.get('/parkingTypes', async function (req, res) {
-        let list = await Parkings.getParkingTypes();
+        let list = await PM.getParkingTypes();
         res.status(200).json(list);
     });
 
@@ -445,7 +457,7 @@ module.exports = app => {
     */
 
     app.get('/bikeTypes', async function (req, res) {
-        let list = await Parkings.getBikeTypes();
+        let list = await PM.getBikeTypes();
         res.status(200).json(list);
     });
 
@@ -454,7 +466,7 @@ module.exports = app => {
     */
 
     app.get('/features', async function (req, res) {
-        let list = await Parkings.getFeatures();
+        let list = await PM.getFeatures();
         res.status(200).json(list);
     });
 

@@ -631,6 +631,19 @@ exports.deleteParkingById = function (parkingId, callback) {
 */
 
 /*
+    Companies: lookup
+*/
+
+exports.findAllCompanyNames = function(callback){
+    companieNames = [];
+    companies.find().project({name: 1, _id: 0}).forEach(function(res){
+        companieNames.push(res.name);
+    }, function (error) {
+        callback(error, companieNames);
+    });
+};
+
+/*
     Companies: update
 */
 
