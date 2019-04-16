@@ -2,8 +2,6 @@ let parkingDataLoaded = false;
 
 ($ => {
 
-    addClickListeners();
-
     Promise.all(loadingPromises).then(() => {
         loadParkingValues();
         parkingDataLoaded = true;
@@ -251,51 +249,4 @@ function reverseFormatValue(name, value) {
         }
     }
     return value;
-}
-
-function addClickListeners() {
-    $('#parking-list input[title=Edit]').each(function () {
-        $(this).on('click', editClick);
-    });
-
-    $('#parking-list input[title=Delete]').each(function () {
-        $(this).on('click', deleteClick);
-    });
-
-    $('#parking-list input[title=Download]').each(function () {
-        $(this).on('click', downloadClick);
-    });
-}
-
-function editClick() {
-    let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text().trim();
-    let userName = $('#user-email').text().trim();
-    window.location.href = domain + '/home?username=' + userName + '&parkingId=' + parkingId;
-}
-
-function deleteClick() {
-    let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text().trim();
-    let userName = $('#user-email').text().trim();
-
-    if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
-        $.ajax({
-            type: "DELETE",
-            url: domain + '/delete-parking?username=' + userName + '&parkingId=' + parkingId,
-            success: () => {
-                window.location.href = domain + '/parkings?username=' + userName;
-            },
-            error: e => {
-                alert('Error: ' + e.responseText);
-            }
-        });
-    }
-}
-
-function downloadClick() {
-    let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text().trim();
-    let userName = $('#user-email').text().trim();
-    window.location.href = domain + '/download?username=' + userName + '&parkingId=' + parkingId;
 }

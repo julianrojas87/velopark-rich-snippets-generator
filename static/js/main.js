@@ -1,4 +1,3 @@
-const domainName = $('#domainName').text().trim();
 var loadingPromises = [];
 var context = null;
 const startStepNumberFacilitySection = 3;
@@ -23,7 +22,7 @@ function loadAPSkeleton() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: $('#vocabURI').text().trim() + '/openvelopark/application-profile',
+            url: vocabURI + '/openvelopark/application-profile',
             success: data => resolve(data),
             error: e => reject(e)
         });
@@ -110,6 +109,8 @@ function handleLoginFeatures() {
 (function ($) {
     "use strict";
 
+    make_wizard();
+
     handleLoginFeatures();
 
     let terms = getListOfTerms();
@@ -123,18 +124,6 @@ function handleLoginFeatures() {
     loadingPromises.push(bikeTypes);
     loadingPromises.push(features);
     loadingPromises.push(contextPromise);
-
-    make_wizard();
-
-    $('#form-velopark-data-t-' + startStepNumberFacilitySection).parent().before(String.format(stepOverviewFacilityTitleFormat, 1)); //'<h4 class="steps-overview-facility-title" facilitynum="1">Facility Section 1</h4>');
-
-    $(".js-select2").each(function () {
-        $(this).select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $(this).next('.dropDownSelect2'),
-            placeholder: $(this).attr('placeholder')
-        });
-    });
 
     terms.then(listOfTerms => {
         $('select[terms = "true"]').each(function () {
@@ -170,6 +159,16 @@ function handleLoginFeatures() {
 
     contextPromise.then(jsonld => {
         context = jsonld['@context'];
+    });
+
+    $('#form-velopark-data-t-' + startStepNumberFacilitySection).parent().before(String.format(stepOverviewFacilityTitleFormat, 1));
+
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
+        });
     });
 
     $('.minus_button_input').on('click', function () {

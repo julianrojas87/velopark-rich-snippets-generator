@@ -5,15 +5,6 @@
 <% include head.html %>
 
 <body>
-	<!-- Domain name to deal with reverse proxies -->
-	<p id="domainName" style="display: none;">
-		<%= domainName %>
-	</p>
-	<!-- URI to vocabulary -->
-	<p id="vocabURI" style="display: none;">
-		<%= vocabURI %>
-	</p>
-
 	<!-- Resulting JSON-LD -->
 	<% include json-ld.html %>
 
@@ -25,6 +16,7 @@
 
 	<!-- JS scripts-->
 	<% include scripts.html %>
+	<% include data-form-scripts.html %>
 
 </body>
 
