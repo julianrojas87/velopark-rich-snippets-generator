@@ -131,7 +131,7 @@ exports.addNewAccount = function (newData, callback) {
 	if(!email.includes("@")){
 		callback("Invalid email adress.");
 	} else if(companyName == null || companyName === ''){
-		callback("No valid company given.")
+		callback("No valid company given.");	//TODO: Does a city rep / super admin need a company? Does he/she get to save parkings?
 	} else {
 		dbAdapter.findAccountByEmail(email, function (e, o) {
 			if (o) {

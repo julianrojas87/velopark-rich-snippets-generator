@@ -29,6 +29,12 @@
         window.location.href = domain + '/admin-users?username=' + username;
     });
 
+    $('#adminCompanies').click(() => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        let username = $('#user-email').text().trim();
+        window.location.href = domain + '/admin-companies?username=' + username;
+    });
+
     $('#myCityOverview').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
         let username = $('#user-email').text().trim();
@@ -146,6 +152,29 @@
             let parkingId = $(this).parent().parent().find('a').text().trim();
             let userName = $('#user-email').text().trim();
             window.location.href = domain + '/download?username=' + userName + '&parkingId=' + parkingId;
+        });
+    });
+
+    $('#button-create-new-company').on('click', function(){
+        $(this).hide();
+        $(this).siblings('.loading-icon').show();
+        let domain = domainName !== '' ? '/' + domainName : '';
+        let companyName = $('#new-company-name').val();
+        $.ajax({
+            type: "POST",
+            url: domain + '/admin-companies/new-company/' + companyName,
+            success: () => {
+                $(this).show();
+                $(this).siblings('.loading-icon').hide();
+                let username = $('#user-email').text().trim();
+                window.location.href = domain + '/admin-companies?username=' + username;
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                $(this).prop("checked", !$(this).prop("checked"));
+                $(this).show();
+                $(this).siblings('.loading-icon').hide();
+            }
         });
     });
 

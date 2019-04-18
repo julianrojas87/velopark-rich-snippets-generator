@@ -298,6 +298,77 @@ module.exports = app => {
         }
     });
 
+    app.get('/admin-companies', async function (req, res) {
+        let domain = domainName != '' ? '/' + domainName : '';
+        // check if the user is logged in
+        if (req.session.user == null) {
+            res.status(401).redirect(domain + '/');
+        } else {
+            //check if user is superadmin
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.redirect(domain + '/home?username=' + req.query.username);
+                } else {
+                    if (value === true) {
+                        CoM.listAllCompaniesWithUsers(function (error, companies) {
+                            if (error != null) {
+                                console.error(error);
+                                res.redirect(domain + '/home?username=' + req.query.username);
+                            } else {
+                                res.render('admin-companies.html', {
+                                    domainName: domainName,
+                                    vocabURI: vocabURI,
+                                    username: req.query.username,
+                                    companies: companies ? companies : [],
+                                    superAdmin: req.session.user.superAdmin,
+                                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
+                                });
+                            }
+                        });
+                    } else {
+                        res.redirect(domain + '/home?username=' + req.query.username);
+                    }
+                }
+            });
+
+        }
+    });
+
+
+    app.post('/admin-companies/new-company/:newcompanyname', function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send();
+        } else {
+            //Check for admin:
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.status(500).send();
+                } else {
+                    if(value === true){
+                        //User is admin, create company
+                        CoM.createNewCompany(req.params.newcompanyname, function (error, result) {
+                            if (error != null) {
+                                console.error(error);
+                                res.status(500).send(error);
+                            } else {
+                                if(result != null) {
+                                    res.status(200).json(result);
+                                } else {
+                                    res.status(409).send('Could not create company.');
+                                }
+                            }
+                        });
+                    } else {
+                        res.status(401).send();
+                    }
+
+                }
+            });
+        }
+    });
+
     /*
         City representatives
     */
@@ -562,7 +633,7 @@ module.exports = app => {
     });
 
     app.get('/companynames', async function (req, res) {
-        CoM.listAllCompanies(function(error, result){
+        CoM.listAllCompanyNames(function(error, result){
             if(error != null){
                 res.status(500).send('failed');
             } else {

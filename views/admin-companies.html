@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- head tag -->
+<% include head.html %>
+
+<body>
+<!-- Domain name to deal with reverse proxies -->
+<p id="domainName" style="display: none;">
+    <%= domainName %>
+</p>
+<!-- URI to vocabulary -->
+<p id="vocabURI" style="display: none;">
+    <%= vocabURI %>
+</p>
+
+<!-- Navigation Bar -->
+<% include navbar.html %>
+
+<div class="container-contact100">
+    <div class="wrap-contact100 table-parkings-scroll-helper" style="width: 100%;">
+        <table id="users-list" class="table-fill">
+            <thead>
+            <tr>
+                <th class="text-left">Company Name</th>
+                <th class="text-left">Users</th>
+                <th class="text-left">Parkings</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            <% for (var i = 0; i < companies.length; i++) { %>
+            <tr>
+                <td class="text-left">
+                    <%= companies[i]['name'] %>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <% for (var j = 0; j < companies[i]['users'].length; j++) { %>
+                        <div><%= companies[i]['users'][j]['email'] %></div>
+                    <% } %>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <% if(companies[i]['parkingIDs'] == null) companies[i]['parkingIDs'] = [];
+                    for (var parkingIDnum in companies[i]['parkingIDs']) { let parkingID = companies[i]['parkingIDs'][parkingIDnum];%>
+                    <div><%= parkingID %></div>
+                    <% } %>
+                </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+        <h3>Create new company</h3>
+        <input type="text" id="new-company-name" />
+        <svg class="loading-icon" width="15px" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring"><circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}" fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(244.478 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
+        <button class="btn btn-primary" id="button-create-new-company">Save</button>
+    </div>
+</div>
+
+<!-- JS scripts-->
+<% include scripts.html %>
+
+</body>
+
+</html>

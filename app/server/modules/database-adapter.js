@@ -542,54 +542,40 @@ let deleteParkingFromParkingsTable = function (id, callback) {
 };
 
 exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
-    accounts.findOneAndUpdate({
-            email: email,
-            parkingIDs: parkingId
-        }, {
-            $pull: {parkingIDs: parkingId}
-        },
-        {},
+    exports.findAccountByEmail(email,
         function (error, res) {
             if (error != null) {
                 callback(error);
+            } else if(res == null) {
+                callback("user not found");
             } else {
-                if (res.value) {
-                    //One document has been updated. The user was managing this parking by himself (not trough a company)
-                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
+                //looking for a company now
+                companies.findOneAndUpdate({
+                        parkingIDs: parkingId,
+                        name: res.value.companyName
+                    }, {
+                        $pull: { parkingIDs: parkingId }
+                    },
+                    {},
+                    function (error, res) {
                         if (error != null) {
                             callback(error);
                         } else {
-                            callback(null, true);
+                            if (res.value) {
+                            deleteParkingFromParkingsTable(parkingId, function (error, res) {
+                                if (error != null) {
+                                    callback(error);
+                                } else {
+                                    callback(null, true);
+                                }
+                            });
+                            } else {
+                                //did not find a company with this parkingId (the parking could exist under another company, e.g. if this method is called by an admin)
+                                callback(null, false);
+                            }
                         }
                     });
-                } else {
-                    //did not find a user with this parkingId, looking for a company now
-                    companies.findOneAndUpdate({
-                            parkingIDs: parkingId,
-                            email: email
-                        }, {
-                            $pull: {parkingIDs: parkingId}
-                        },
-                        {},
-                        function (error, res) {
-                            if (error != null) {
-                                callback(error);
-                            } else {
-                                if (res.value) {
-                                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
-                                        if (error != null) {
-                                            callback(error);
-                                        } else {
-                                            callback(null, true);
-                                        }
-                                    });
-                                } else {
-                                    //did not find a company or user with this parkingId, using this email adress (the parking could exist under another user, e.g. if this method is called by an admin)
-                                    callback(null, false);
-                                }
-                            }
-                        });
-                }
+                //}
             }
         });
 };
@@ -653,6 +639,30 @@ exports.deleteParkingById = function (parkingId, callback) {
 /*
     Companies: lookup
 */
+exports.findAllCompanies = function (callback) {
+    companies.find().toArray(callback);
+};
+
+exports.findAllCompaniesWithUsers = function (callback) {
+    companies.aggregate([
+        {
+            $lookup: {
+                from: "accounts",
+                localField: "name",
+                foreignField: "companyName",
+                as: "users"
+            }
+        }
+    ],
+        {},
+        function(error, cursor){
+            if(error != null){
+                callback(error);
+            } else {
+                cursor.toArray(callback);
+            }
+        });
+};
 
 exports.findAllCompanyNames = function (callback) {
     companieNames = [];
@@ -706,15 +716,39 @@ exports.addAccountToCompany = function (email, companyName, callback) {
                     $addToSet: {
                         parkingIDs: o.parkingIDs
                     },
-                    $addToSet: {
+                    /*$addToSet: {
                         email: email
-                    }
+                    }*/
                 },
                 {returnOriginal: false},
                 callback
             )
         }
     })
+};
+
+/*
+    Companies: Insert
+*/
+
+exports.insertCompany = function(companyName, callback){
+    companies.findOneAndUpdate(
+        { name: companyName },
+        {
+            $set: {
+                name: companyName
+            }
+        },
+        { upsert: true },
+        function(error, result){
+            if(error != null){
+                callback(error);
+            } else if( result.value == null){
+                callback(null, true);
+            } else {
+                callback("Company existed already.");
+            }
+        });
 };
 
 /*
@@ -825,7 +859,7 @@ exports.isAccountCityRepForParkingID = function (email, parkingID, callback) {
                     let callbackcalled = false;
                     let numtolook = accountcities.length;
                     for (let i = 0; i < accountcities.length; i++) {
-                        if(accountcities[i].city && accountcities[i].city.length > 0) {
+                        if (accountcities[i].city && accountcities[i].city.length > 0) {
                             exports.findParkingsByCityName(accountcities[i].city[0].properties.cityname, function (error, parkings) {
                                 if (error != null) {
                                     callback(error);
