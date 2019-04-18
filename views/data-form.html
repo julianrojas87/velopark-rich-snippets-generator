@@ -1,5 +1,11 @@
 <div class="container-contact100">
     <div class="wrap-contact100">
+        <% if(!username){ %>
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+            You are not logged in. You can still use this tool to generate a .jsonld file, but you will not be able to save it to our catalog.
+        </div>
+        <% } %>
         <form id="form-velopark-data" class="contact100-form validate-form" novalidate>
             <h3 class="section-title">Parking Information</h3>
             <fieldset>
