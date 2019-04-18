@@ -478,7 +478,6 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            //let parkings = await
             PM.listParkingsByEmail(req.session.user.email, function (error, parkings) {
                 if(error != null){
                     res.status(500).send("Could not get parkings for this user.");
@@ -589,7 +588,6 @@ module.exports = app => {
                 });
             } else {
                 if (req.body['jsonld'] && req.body['user']) {
-                    //TODO: check if company is enabled for this user
                     PM.saveParking(req.session.user.email, null, req.body['jsonld'], function (error, result) {
                         if (error != null) {
                             res.status(500).send('Database error');

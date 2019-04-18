@@ -323,24 +323,6 @@ exports.findParkingsByEmail = function (email, callback) {
                     }
                 );
             } else {
-                //User does not belong to a company, he lists his own parkings => deprecated
-                /*if (o.parkingIDs != null) {
-                    parkings.find(
-                        {
-                            parkingID: {
-                                $in: o.parkingIDs
-                            }
-                        }
-                    ).toArray(function (e, res) {
-                        if (e) {
-                            callback(e);
-                        } else {
-                            callback(null, res);
-                        }
-                    });
-                } else {
-                    callback(null);
-                }*/
                 callback("User does not belong to a company.");
             }
         } else {
@@ -350,7 +332,7 @@ exports.findParkingsByEmail = function (email, callback) {
 };
 
 exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
-    accounts.findOne({email: email}, function (e, o) {
+    accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
         if (o != null) {
             if (o.companyName != null) {
                 //User is part of a company, the parkings of this company are to be returned
@@ -398,7 +380,6 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
                                                     callback(null, [].concat.apply([], parkings));
                                                 }
                                             });
-                                            //callback(null, res ? res.parking : {});
                                         }
                                     });
                                 };
@@ -416,25 +397,10 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
                     }
                 );
             } else {
-                //User does not belong to a company, he lists his own parkings
-                if (o.parkingIDs != null) {
-                    parkings.find(
-                        {
-                            parkingID: parkingId
-                        }
-                    ).toArray(function (e, res) {
-                        if (e) {
-                            callback(e);
-                        } else {
-                            callback(null, res);
-                        }
-                    });
-                } else {
-                    callback(null, []);
-                }
+                callback("No valid company found for this user.");
             }
         } else {
-            callback(e || "could not find user with this email address");
+            callback(e || "User does not exist, or he is not a member of a company.");
         }
     });
 };
@@ -471,7 +437,8 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
 exports.saveParking = function (id, filename, approvedStatus, location, email, callback) {
     accounts.findOne(
         {
-            email: email
+            email: email,
+            companyEnabled: true
         },
         {maxTimeMS: 10000},
         function (e, res) {
@@ -498,7 +465,7 @@ exports.saveParking = function (id, filename, approvedStatus, location, email, c
                     })*/
 
                     //If a user has no companyName, he cannot store parkings.
-                    callback("User is not part of a company. Could not store parking.");
+                    callback("User is not part of a company (or membership is not approved yet). Could not store parking.");
                 }
             }
         }
@@ -506,7 +473,6 @@ exports.saveParking = function (id, filename, approvedStatus, location, email, c
 };
 
 exports.saveParkingToCompany = function (id, filename, approvedStatus, location, companyName, callback) {
-    //User is part of a company, parking will be linked to this company instead of user
     exports.updateCompanyParkingIDs(companyName, id, function (error, result) {
         if (error != null) {
             callback(error);
@@ -550,6 +516,8 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                 callback(error);
             } else if (res == null) {
                 callback("user not found");
+            } else if(!res.value.companyEnabled){
+                callback("The company membership has not been approved yet. Operation not allowed.");
             } else {
                 //looking for a company now
                 companies.findOneAndUpdate({

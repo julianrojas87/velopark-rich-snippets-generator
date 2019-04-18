@@ -62,6 +62,9 @@ exports.toggleParkingEnabled = function(parkingid, enabled, callback){
     dbAdapter.updateParkingApproved(parkingid, enabled, callback);
 };
 
+/*
+    If a username is given, it will be checked whether his company membership had been approved. If only a company is given, no check is performed.
+*/
 exports.saveParking = async (user, companyName, parking, callback) => {
     if (user == null && companyName == null) {
         callback("[parkings-manager]\tNo user or company given to save this parking.");
