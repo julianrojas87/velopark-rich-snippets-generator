@@ -105,6 +105,10 @@ exports.isUserCityRep = function(email, cityName, callback){
 	});
 };
 
+exports.isAccountCityRepForParkingID = function(email, parkingID, callback){
+	dbAdapter.isAccountCityRepForParkingID(email, parkingID, callback);
+};
+
 exports.getAllEmails = function(callback){
 	dbAdapter.findAllEmails(callback);
 };

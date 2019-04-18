@@ -45,6 +45,7 @@ let getObjectId = function (id) {
     - Parkings
         * lookup
         * save
+        * update
     - Companies
         * update
     - Cities
@@ -84,9 +85,9 @@ exports.findAccounts = function (callback) {
     });
 };
 
-exports.findAllEmails = function (callback){
+exports.findAllEmails = function (callback) {
     let emails = [];
-    accounts.find().project({email: 1, _id: 0}).forEach(function(res){
+    accounts.find().project({email: 1, _id: 0}).forEach(function (res) {
         emails.push(res.email);
     }, function (error) {
         callback(error, emails);
@@ -157,14 +158,14 @@ exports.updateAccountParkingIDs = function (email, parkingID, callback) {
     );
 };
 
-exports.updateAccountEnableCompany = function(email, enabled, callback){
+exports.updateAccountEnableCompany = function (email, enabled, callback) {
     accounts.findOneAndUpdate(
         {
             email: email,
-            companyName: { $not : { $type : 10 }, $exists: true }
+            companyName: {$not: {$type: 10}, $exists: true}
         },
         {
-            $set:{ companyEnabled: enabled }
+            $set: {companyEnabled: enabled}
         },
         {
             returnOriginal: false
@@ -173,14 +174,14 @@ exports.updateAccountEnableCompany = function(email, enabled, callback){
     );
 };
 
-exports.updateAccountEnableCity = function(email, cityName, enabled, callback){
+exports.updateAccountEnableCity = function (email, cityName, enabled, callback) {
     accounts.findOneAndUpdate(
         {
             email: email,
-            'cityNames.name' : cityName
+            'cityNames.name': cityName
         },
         {
-            $set:{
+            $set: {
                 'cityNames.$.enabled': enabled
             }
         },
@@ -514,6 +515,25 @@ exports.saveParkingToCompany = function (id, filename, approvedStatus, location,
 };
 
 /*
+    Parkings: Update
+*/
+
+exports.updateParkingApproved = function (parkingid, enabled, callback) {
+    parkings.findOneAndUpdate(
+        {
+            parkingID: parkingid,
+        },
+        {
+            $set: {approvedstatus: enabled}
+        },
+        {
+            returnOriginal: false
+        },
+        callback
+    );
+};
+
+/*
     Parkings: Delete
 */
 
@@ -634,9 +654,9 @@ exports.deleteParkingById = function (parkingId, callback) {
     Companies: lookup
 */
 
-exports.findAllCompanyNames = function(callback){
+exports.findAllCompanyNames = function (callback) {
     companieNames = [];
-    companies.find().project({name: 1, _id: 0}).forEach(function(res){
+    companies.find().project({name: 1, _id: 0}).forEach(function (res) {
         companieNames.push(res.name);
     }, function (error) {
         callback(error, companieNames);
@@ -690,7 +710,7 @@ exports.addAccountToCompany = function (email, companyName, callback) {
                         email: email
                     }
                 },
-                { returnOriginal: false },
+                {returnOriginal: false},
                 callback
             )
         }
@@ -705,9 +725,9 @@ exports.addAccountToCompany = function (email, companyName, callback) {
     Cities: lookup
 */
 
-exports.findAllCityNames = function(callback){
+exports.findAllCityNames = function (callback) {
     let citynames = [];
-    cities.find().project({'properties.cityname': 1, _id: 0}).forEach(function(res){
+    cities.find().project({'properties.cityname': 1, _id: 0}).forEach(function (res) {
         citynames.push(res.properties.cityname);
     }, function (error) {
         callback(error, citynames);
@@ -777,6 +797,66 @@ exports.findAccountOrCompanyByParkingId = function (parkingId, callback) {
             }
         }
     )
+};
+
+exports.isAccountCityRepForParkingID = function (email, parkingID, callback) {
+    accounts.aggregate([
+            {
+                $match: {email: email}
+            },
+            {
+                $unwind: "$cityNames"
+            },
+            {
+                $lookup: {
+                    from: "geocities",
+                    localField: "cityNames.name",
+                    foreignField: "properties.cityname",
+                    as: "city"
+                }
+            }
+        ],
+        {},
+        function (error, cursor) {
+            cursor.toArray(function (error, accountcities) {
+                if (error != null) {
+                    callback(error);
+                } else {
+                    let callbackcalled = false;
+                    let numtolook = accountcities.length;
+                    for (let i = 0; i < accountcities.length; i++) {
+                        if(accountcities[i].city && accountcities[i].city.length > 0) {
+                            exports.findParkingsByCityName(accountcities[i].city[0].properties.cityname, function (error, parkings) {
+                                if (error != null) {
+                                    callback(error);
+                                } else {
+                                    numtolook += parkings.length;
+                                    for (let j = 0; j < parkings.length; j++) {
+                                        if (parkings[j].parkingID === parkingID && !callbackcalled) {
+                                            callbackcalled = true;
+                                            callback(null, true);
+                                        }
+                                        numtolook--;
+                                        if (numtolook === 0 && !callbackcalled) {
+                                            callback(null, false);
+                                        }
+                                    }
+                                    numtolook--;
+                                    if (numtolook === 0 && !callbackcalled) {
+                                        callback(null, false);
+                                    }
+                                }
+                            });
+                        } else {
+                            numtolook--;
+                            if (numtolook === 0 && !callbackcalled) {
+                                callback(null, false);
+                            }
+                        }
+                    }
+                }
+            });
+        });
 };
 
 

@@ -88,6 +88,28 @@
         });
     });
 
+    $('.checkbox-parkingEnabled').change(function(){
+        $(this).hide();
+        $(this).siblings('.loading-icon').show();
+        let domain = domainName != '' ? '/' + domainName : '';
+        let parkingid = $(this).attr('parkingid');
+        $.ajax({
+            type: "POST",
+            url: domain + '/parkings/toggle-parking-enabled/' + parkingid,
+            data: { 'parkingEnabled': this.checked },
+            success: () => {
+                $(this).show();
+                $(this).siblings('.loading-icon').hide();
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                $(this).prop("checked", !$(this).prop("checked"));
+                $(this).show();
+                $(this).siblings('.loading-icon').hide();
+            }
+        });
+    });
+
     $('#parking-list input[title=Edit]').each(function () {
         $(this).on('click', function(){
             let domain = domainName !== '' ? '/' + domainName : '';

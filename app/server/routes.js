@@ -118,7 +118,7 @@ module.exports = app => {
                             username: req.query.username,
                             loadedParking: parkingData,
                             superAdmin: req.session.user.superAdmin,
-                            cityrep: req.session.user.cityNames.length > 0,
+                            cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             emailParkingOwner: accountEmail,
                             nameCompanyParkingOwner: companyName
                         });
@@ -131,7 +131,7 @@ module.exports = app => {
                     username: req.query.username,
                     loadedParking: {},
                     superAdmin: req.session.user.superAdmin,
-                    cityrep: req.session.user.cityNames.length > 0,
+                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     emailParkingOwner: null,
                     nameCompanyParkingOwner: null
                 });
@@ -157,7 +157,7 @@ module.exports = app => {
                             vocabURI: vocabURI,
                             username: req.query.username,
                             superAdmin: req.session.user.superAdmin,
-                            cityrep: req.session.user.cityNames.length > 0
+                            cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                         });
                     } else {
                         let domain = domainName != '' ? '/' + domainName : '';
@@ -193,7 +193,7 @@ module.exports = app => {
                                 username: req.query.username,
                                 parkings: parkings ? parkings : {},
                                 superAdmin: req.session.user.superAdmin,
-                                cityrep: req.session.user.cityNames.length > 0
+                                cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             });
                         });
                     } else {
@@ -229,7 +229,7 @@ module.exports = app => {
                                     username: req.query.username,
                                     users: users ? users : {},
                                     superAdmin: req.session.user.superAdmin,
-                                    cityrep: req.session.user.cityNames.length > 0
+                                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
                         });
@@ -277,18 +277,22 @@ module.exports = app => {
                     console.error(error);
                     res.status(500).send();
                 } else {
-                    AM.toggleCityEnabled(req.params.useremail, req.body['cityName'], req.body['cityEnabled'] === "true", function (error, result) {
-                        if (error != null) {
-                            console.error(error);
-                            res.status(500).send();
-                        } else {
-                            if(result.value != null) {
-                                res.status(200).json(result);
+                    if(value === true) {
+                        AM.toggleCityEnabled(req.params.useremail, req.body['cityName'], req.body['cityEnabled'] === "true", function (error, result) {
+                            if (error != null) {
+                                console.error(error);
+                                res.status(500).send();
                             } else {
-                                res.status(409).send('Could not enable/disable city, probably because this user does not have this city in it\'s list.');
+                                if (result.value != null) {
+                                    res.status(200).json(result);
+                                } else {
+                                    res.status(409).send('Could not enable/disable city, probably because this user does not have this city in it\'s list.');
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        res.status(401).send('You are not allowed to do this.');
+                    }
                 }
             });
         }
@@ -312,7 +316,7 @@ module.exports = app => {
                         username: req.query.username,
                         cityNames: result,
                         superAdmin: req.session.user.superAdmin,
-                        cityrep: req.session.user.cityNames.length > 0,
+                        cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 } else {
                     let domain = domainName != '' ? '/' + domainName : '';
@@ -351,7 +355,7 @@ module.exports = app => {
                                     username: req.query.username,
                                     parkings: parkings ? parkings : {},
                                     superAdmin: req.session.user.superAdmin,
-                                    cityrep: req.session.user.cityNames.length > 0
+                                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
                         });
@@ -402,8 +406,60 @@ module.exports = app => {
                     username: req.query.username,
                     parkings: parkings ? parkings : {},
                     superAdmin: req.session.user.superAdmin,
-                    cityrep: req.session.user.cityNames.length > 0
+                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                 });
+            });
+        }
+    });
+
+
+    app.post('/parkings/toggle-parking-enabled/:parkingid', function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send();
+        } else {
+            //2 valid possibilities: user is superadmin / user is cityrep for a region that contains this parking
+            //First check for admin:
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.status(500).send();
+                } else {
+                    if(value === true){
+                        PM.toggleParkingEnabled(req.params.parkingid, req.body['parkingEnabled'] === "true", function (error, result) {
+                            if (error != null) {
+                                console.error(error);
+                                res.status(500).send();
+                            } else {
+                                if(result.value != null) {
+                                    res.status(200).json(result);
+                                } else {
+                                    res.status(409).send('Could not enable/disable parking.');
+                                }
+                            }
+                        });
+                    } else {
+                        //User is not superAdmin, maybe he is cityrep for the region of this parking?
+                        AM.isAccountCityRepForParkingID(req.session.user.email, req.params.parkingid, function(error, value){
+                            if(value === true){
+                                PM.toggleParkingEnabled(req.params.parkingid, req.body['parkingEnabled'] === "true", function (error, result) {
+                                    if (error != null) {
+                                        console.error(error);
+                                        res.status(500).send();
+                                    } else {
+                                        if(result.value != null) {
+                                            res.status(200).json(result);
+                                        } else {
+                                            res.status(409).send('Could not enable/disable parking.');
+                                        }
+                                    }
+                                });
+                            } else {
+                                res.status(401).send('You are not authorized to do that.');
+                            }
+                        });
+                    }
+
+                }
             });
         }
     });

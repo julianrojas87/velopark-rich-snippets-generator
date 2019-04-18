@@ -24,6 +24,7 @@
                     <tr>
                         <th class="text-left">Parking Facility URI</th>
                         <th class="text-left">Parking Name</th>
+                        <th class="text-left">Approved</th>
                         <th class="text-left">Actions</th>
                     </tr>
                 </thead>
@@ -36,6 +37,9 @@
                         </td>
                         <td class="text-left" style="font-size: 20px;">
                             <%= parkings[i]['name'] %>
+                        </td>
+                        <td class="text-left" style="font-size: 20px;">
+                            <%= parkings[i]['approvedstatus'] %>
                         </td>
                         <td class="text-left">
                             <input title="Edit" type="image" src="static/images/icons/edit.png" style="float: left; width: 40px;">

@@ -28,10 +28,11 @@ let returnTableData = function (error, parkings, callback) {
                 let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
                 tdata['@id'] = decodeURIComponent(parking.parkingID);
                 tdata['name'] = parkingData['name'] || '';
-                if(parking.account && parking.account.length > 0){
+                tdata['approvedstatus'] = parking.approvedstatus;
+                if (parking.account && parking.account.length > 0) {
                     tdata['account-company'] = "U: " + parking.account[0].email;
                 }
-                if(parking.company && parking.company.length > 0){
+                if (parking.company && parking.company.length > 0) {
                     tdata['account-company'] = "C: " + parking.company[0].name;
                 }
                 tableData.push(tdata);
@@ -57,8 +58,12 @@ exports.listParkingsInCity = function (cityName, callback) {
     dbAdapter.findParkingsByCityName(cityName, callback);
 };
 
+exports.toggleParkingEnabled = function(parkingid, enabled, callback){
+    dbAdapter.updateParkingApproved(parkingid, enabled, callback);
+};
+
 exports.saveParking = async (user, companyName, parking, callback) => {
-    if(user == null && companyName == null){
+    if (user == null && companyName == null) {
         callback("[parkings-manager]\tNo user or company given to save this parking.");
     }
     let park_obj = JSON.parse(parking);
@@ -75,8 +80,8 @@ exports.saveParking = async (user, companyName, parking, callback) => {
     } catch (e) {
         console.error("Could not extract location from parking." + e);
     }
-    if(user != null) {
-        dbAdapter.saveParking(parkingID, parkingID + '.jsonld', true, location, user, function (e, res) {
+    if (user != null) {
+        dbAdapter.saveParking(parkingID, parkingID + '.jsonld', false, location, user, function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -87,7 +92,7 @@ exports.saveParking = async (user, companyName, parking, callback) => {
             }
         });
     } else {
-        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', true, location, companyName, function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', false, location, companyName, function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -130,8 +135,8 @@ exports.getParking = async (user, parkingId, callback) => {
                         if (value === true) {
                             //user is admin, load data from disk
                             let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
-                            dbAdapter.findAccountOrCompanyByParkingId(parkingId, function(error, account, company){
-                                if(account){
+                            dbAdapter.findAccountOrCompanyByParkingId(parkingId, function (error, account, company) {
+                                if (account) {
                                     callback(null, result, account.email);
                                 } else {
                                     callback(null, result, null, company.name);
@@ -160,11 +165,11 @@ exports.deleteParking = async (user, parkingId, callback) => {
                     callback();
                 } else {
                     //no error, but nothing found to delete. Are you admin?
-                    AM.isUserSuperAdmin(user, function(error, res){
-                        if(error != null){
+                    AM.isUserSuperAdmin(user, function (error, res) {
+                        if (error != null) {
                             calback(error);
                         } else {
-                            if(res === true){
+                            if (res === true) {
                                 dbAdapter.deleteParkingById(parkingId, function (error, res) {
                                     if (error != null) {
                                         callback(error);
@@ -208,7 +213,7 @@ exports.getListOfTerms = async () => {
     }
     return terms;
 
-}
+};
 
 exports.getParkingTypes = async () => {
     let types = [];
@@ -225,7 +230,7 @@ exports.getParkingTypes = async () => {
     }
 
     return types;
-}
+};
 
 exports.getBikeTypes = async () => {
     let types = [];
@@ -242,7 +247,7 @@ exports.getBikeTypes = async () => {
     }
 
     return types;
-}
+};
 
 exports.getFeatures = async () => {
     let types = [];
@@ -259,19 +264,31 @@ exports.getFeatures = async () => {
     }
 
     return types;
-}
+};
 
 async function getTermsRDF() {
     return new Promise((resolve, reject) => {
-        const vocabURI = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['vocabulary'] || 'http://velopark.ilabt.imec.be';
-        request(vocabURI + '/openvelopark/terms', (err, res, body) => {
-            if (err) {
-                reject();
-            } else {
-                const parser = new N3.Parser();
-                resolve(parser.parse(body));
-            }
-        });
+        try {
+            const vocabURI = JSON.parse(fs.readFileSync('./config.json', 'utf-8'))['vocabulary'] || 'http://velopark.ilabt.imec.be';
+            request(vocabURI + '/openvelopark/terms', (err, res, body) => {
+                try {
+                    if (err) {
+                        reject();
+                    } else {
+                        const parser = new N3.Parser();
+                        resolve(parser.parse(body));
+                    }
+                } catch (e) {
+                    console.error("Could not load terms.");
+                    console.error(e);
+                    resolve([]);
+                }
+            });
+        } catch (e) {
+            console.error("Could not load terms.");
+            console.error(e);
+            resolve([]);
+        }
     });
 }
 
