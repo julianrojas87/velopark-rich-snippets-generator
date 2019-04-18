@@ -38,7 +38,6 @@
 }
 
 body, html {
-	height: 100%;
 	font-family: Poppins-Regular, sans-serif;
 }
 
@@ -191,7 +190,7 @@ iframe {
 
 .container-contact100 {
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -835,12 +834,14 @@ textarea.input100 {
 @media screen and (max-width: 1370px) {
   .container-contact100 {
     margin-top: 150px;
+    min-height: calc(100vh - 150px);
   }
 }
 
 @media screen and (max-width: 800px) {
   .container-contact100 {
     margin-top: 75px;
+    min-height: calc(100vh - 75px);
   }
 }
 
