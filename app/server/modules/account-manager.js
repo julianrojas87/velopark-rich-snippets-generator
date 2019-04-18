@@ -84,9 +84,9 @@ exports.isUserCityRep = function(email, cityName, callback){
 			callback(error);
 		} else {
 
-			if(cityName === ''){
+			if(cityName === ''){	//if city is not specified, return whether or not there are cities linked to this account
 				callback(null, res.cityNames.length > 0);
-			} else {
+			} else {	//if city is specified, return whether this city is managed by this user
 				let found = false;
 				let i = 0;
 				while (!found && i < res.cityNames.length) {
@@ -130,9 +130,12 @@ exports.addNewAccount = function (newData, callback) {
 
 	if(!email.includes("@")){
 		callback("Invalid email adress.");
-	} else if(companyName == null || companyName === ''){
-		callback("No valid company given.");	//TODO: Does a city rep / super admin need a company? Does he/she get to save parkings?
+	} else if((companyName == null || companyName === '') && cityNames.length === 0){
+		callback("No valid company or region given.");	//TODO: Does a city rep / super admin need a company? Does he/she get to save parkings?
 	} else {
+		if(companyName === ''){
+			companyName = null;
+		}
 		dbAdapter.findAccountByEmail(email, function (e, o) {
 			if (o) {
 				callback('There is already an account with this email address');

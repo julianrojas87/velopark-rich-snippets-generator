@@ -21,6 +21,10 @@
         $('#myCityOverview').remove();
     }
 
+    if(!user.company.name || !user.company.enabled){
+        $('#myParkings').remove();
+    }
+
     $('#signin').on('click', () => {
         $('#signin-form').show();
         let domain = domainName != '' ? '/' + domainName : '';

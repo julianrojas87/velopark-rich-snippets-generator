@@ -24,6 +24,7 @@ module.exports = app => {
                 vocabURI: vocabURI,
                 username: null,
                 superAdmin: false,
+                company: {name: null, enabled: false},
                 cityrep: false
             });
         } else {
@@ -41,6 +42,7 @@ module.exports = app => {
                         vocabURI: vocabURI,
                         username: null,
                         superAdmin: false,
+                        company: {name: null, enabled: false},
                         cityrep: false
                     });
                 }
@@ -53,7 +55,6 @@ module.exports = app => {
     */
 
     app.post('/signup', function (req, res) {
-        console.log(req.body['cities']);
         AM.addNewAccount({
             email: req.body['email'],
             pass: req.body['pass'],
@@ -118,6 +119,7 @@ module.exports = app => {
                             username: req.session.user.email,
                             loadedParking: parkingData,
                             superAdmin: req.session.user.superAdmin,
+                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             emailParkingOwner: accountEmail,
                             nameCompanyParkingOwner: companyName
@@ -131,6 +133,7 @@ module.exports = app => {
                     username: req.session.user.email,
                     loadedParking: {},
                     superAdmin: req.session.user.superAdmin,
+                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     emailParkingOwner: null,
                     nameCompanyParkingOwner: null
@@ -157,6 +160,7 @@ module.exports = app => {
                             vocabURI: vocabURI,
                             username: req.session.user.email,
                             superAdmin: req.session.user.superAdmin,
+                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                         });
                     } else {
@@ -193,6 +197,7 @@ module.exports = app => {
                                 username: req.session.user.email,
                                 parkings: parkings ? parkings : {},
                                 superAdmin: req.session.user.superAdmin,
+                                company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                                 cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             });
                         });
@@ -229,6 +234,7 @@ module.exports = app => {
                                     username: req.session.user.email,
                                     users: users ? users : {},
                                     superAdmin: req.session.user.superAdmin,
+                                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -256,7 +262,7 @@ module.exports = app => {
                             console.error(error);
                             res.status(500).send();
                         } else {
-                            if(result.value != null) {
+                            if (result.value != null) {
                                 res.status(200).json(result);
                             } else {
                                 res.status(409).send('Could not enable/disable company because this user does not have a company.');
@@ -277,7 +283,7 @@ module.exports = app => {
                     console.error(error);
                     res.status(500).send();
                 } else {
-                    if(value === true) {
+                    if (value === true) {
                         AM.toggleCityEnabled(req.params.useremail, req.body['cityName'], req.body['cityEnabled'] === "true", function (error, result) {
                             if (error != null) {
                                 console.error(error);
@@ -322,6 +328,7 @@ module.exports = app => {
                                     username: req.session.user.email,
                                     companies: companies ? companies : [],
                                     superAdmin: req.session.user.superAdmin,
+                                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -346,14 +353,14 @@ module.exports = app => {
                     console.error(error);
                     res.status(500).send();
                 } else {
-                    if(value === true){
+                    if (value === true) {
                         //User is admin, create company
                         CoM.createNewCompany(req.params.newcompanyname, function (error, result) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send(error);
                             } else {
-                                if(result != null) {
+                                if (result != null) {
                                     res.status(200).json(result);
                                 } else {
                                     res.status(409).send('Could not create company.');
@@ -379,14 +386,15 @@ module.exports = app => {
             res.status(401).redirect(domain + '/');
         } else {
             //check if user is cityrep
-            AM.getAccountCityNamesByEmail(req.session.user.email, function(error, result){
-                if(result.length > 0){
+            AM.getAccountCityNamesByEmail(req.session.user.email, function (error, result) {
+                if (result.length > 0) {
                     res.render('city-home.html', {
                         domainName: domainName,
                         vocabURI: vocabURI,
                         username: req.session.user.email,
                         cityNames: result,
                         superAdmin: req.session.user.superAdmin,
+                        company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 } else {
@@ -402,7 +410,7 @@ module.exports = app => {
         // check if the user is logged in
         let domain = domainName != '' ? '/' + domainName : '';
         let cityname = req.query.cityname;
-        if(cityname == null){
+        if (cityname == null) {
             res.status(412).redirect(domain + '/');
         }
         if (req.session.user == null) {
@@ -416,7 +424,7 @@ module.exports = app => {
                 } else {
                     if (value === true) {
                         PM.listParkingsInCity(cityname, function (error, parkings) {
-                            if(error != null){
+                            if (error != null) {
                                 console.error(error);
                                 res.status(500).send('failed');
                             } else {
@@ -426,6 +434,7 @@ module.exports = app => {
                                     username: req.session.user.email,
                                     parkings: parkings ? parkings : {},
                                     superAdmin: req.session.user.superAdmin,
+                                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -470,15 +479,20 @@ module.exports = app => {
             res.redirect(domain + '/');
         } else {
             //let parkings = await
-            PM.listParkingsByEmail(req.session.user.email, function (parkings) {
-                res.render('parkings.html', {
-                    domainName: domainName,
-                    vocabURI: vocabURI,
-                    username: req.session.user.email,
-                    parkings: parkings ? parkings : {},
-                    superAdmin: req.session.user.superAdmin,
-                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
-                });
+            PM.listParkingsByEmail(req.session.user.email, function (error, parkings) {
+                if(error != null){
+                    res.status(500).send("Could not get parkings for this user.");
+                } else {
+                    res.render('parkings.html', {
+                        domainName: domainName,
+                        vocabURI: vocabURI,
+                        username: req.session.user.email,
+                        parkings: parkings ? parkings : {},
+                        superAdmin: req.session.user.superAdmin,
+                        company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                        cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
+                    });
+                }
             });
         }
     });
@@ -495,13 +509,13 @@ module.exports = app => {
                     console.error(error);
                     res.status(500).send();
                 } else {
-                    if(value === true){
+                    if (value === true) {
                         PM.toggleParkingEnabled(req.params.parkingid, req.body['parkingEnabled'] === "true", function (error, result) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send();
                             } else {
-                                if(result.value != null) {
+                                if (result.value != null) {
                                     res.status(200).json(result);
                                 } else {
                                     res.status(409).send('Could not enable/disable parking.');
@@ -510,14 +524,14 @@ module.exports = app => {
                         });
                     } else {
                         //User is not superAdmin, maybe he is cityrep for the region of this parking?
-                        AM.isAccountCityRepForParkingID(req.session.user.email, req.params.parkingid, function(error, value){
-                            if(value === true){
+                        AM.isAccountCityRepForParkingID(req.session.user.email, req.params.parkingid, function (error, value) {
+                            if (value === true) {
                                 PM.toggleParkingEnabled(req.params.parkingid, req.body['parkingEnabled'] === "true", function (error, result) {
                                     if (error != null) {
                                         console.error(error);
                                         res.status(500).send();
                                     } else {
-                                        if(result.value != null) {
+                                        if (result.value != null) {
                                             res.status(200).json(result);
                                         } else {
                                             res.status(409).send('Could not enable/disable parking.');
@@ -545,16 +559,18 @@ module.exports = app => {
                 AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
                     if (value) {
                         if (req.body['jsonld']) {
-                            if (req.body['user']) {
-                                PM.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
+                            if (req.body['company']) {
+                                //save straight to company
+                                PM.saveParking(null, req.body['company'], req.body['jsonld'], function (error, result) {
                                     if (error != null) {
                                         res.status(500).send('Database error');
                                     } else {
                                         res.status(200).send('ok');
                                     }
                                 });
-                            } else if (req.body['company']) {
-                                PM.saveParking(null, req.body['company'], req.body['jsonld'], function (error, result) {
+                            } else if (req.body['user']) {
+                                //we don't know the company, we should be able to get the company via the username
+                                PM.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
                                     if (error != null) {
                                         res.status(500).send('Database error');
                                     } else {
@@ -568,12 +584,13 @@ module.exports = app => {
                             res.status(400).send('Oops! We can\'t understand your request.');
                         }
                     } else {
-                        res.status(401).send('You are not allowed to save this to another user account.');
+                        res.status(401).send('You are not allowed to save this to another company.');
                     }
                 });
             } else {
                 if (req.body['jsonld'] && req.body['user']) {
-                    PM.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
+                    //TODO: check if company is enabled for this user
+                    PM.saveParking(req.session.user.email, null, req.body['jsonld'], function (error, result) {
                         if (error != null) {
                             res.status(500).send('Database error');
                         } else {
@@ -599,7 +616,7 @@ module.exports = app => {
                 if (error != null) {
                     console.error(error);
                 } else {
-                    if(result != null) {
+                    if (result != null) {
                         res.json(JSON.parse(result));
                     } else {
                         res.status(400).send("could not find this parking in your account.");
@@ -637,8 +654,8 @@ module.exports = app => {
     });
 
     app.get('/companynames', async function (req, res) {
-        CoM.listAllCompanyNames(function(error, result){
-            if(error != null){
+        CoM.listAllCompanyNames(function (error, result) {
+            if (error != null) {
                 res.status(500).send('failed');
             } else {
                 res.status(200).json(result);
@@ -647,8 +664,8 @@ module.exports = app => {
     });
 
     app.get('/citynames', async function (req, res) {
-        CiM.listAllCities(function(error, result){
-            if(error != null){
+        CiM.listAllCities(function (error, result) {
+            if (error != null) {
                 res.status(500).send('failed');
             } else {
                 res.status(200).json(result);

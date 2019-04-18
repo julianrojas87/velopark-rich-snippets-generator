@@ -38,7 +38,7 @@ let returnTableData = function (error, parkings, callback) {
                 tableData.push(tdata);
             });
         }
-        callback(tableData);
+        callback(null, tableData);
     }
 };
 
@@ -65,43 +65,44 @@ exports.toggleParkingEnabled = function(parkingid, enabled, callback){
 exports.saveParking = async (user, companyName, parking, callback) => {
     if (user == null && companyName == null) {
         callback("[parkings-manager]\tNo user or company given to save this parking.");
-    }
-    let park_obj = JSON.parse(parking);
-    let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
-        + '_' + park_obj['identifier'].replace(/\s/g, '-'));
-    await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
-    await addParkingToCatalog(park_obj, park_obj['@id']);
-    let location;
-    try {
-        location = {
-            type: "Point",
-            coordinates: extractLocationFromJsonld(park_obj)
-        };
-    } catch (e) {
-        console.error("Could not extract location from parking." + e);
-    }
-    if (user != null) {
-        dbAdapter.saveParking(parkingID, parkingID + '.jsonld', false, location, user, function (e, res) {
-            if (e != null) {
-                console.log("Error saving parking in database:");
-                console.log(e);
-                //TODO: remove file?
-                callback(e);
-            } else {
-                callback(null, res);
-            }
-        });
     } else {
-        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', false, location, companyName, function (e, res) {
-            if (e != null) {
-                console.log("Error saving parking in database:");
-                console.log(e);
-                //TODO: remove file?
-                callback(e);
-            } else {
-                callback(null, res);
-            }
-        });
+        let park_obj = JSON.parse(parking);
+        let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
+            + '_' + park_obj['identifier'].replace(/\s/g, '-'));
+        await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
+        await addParkingToCatalog(park_obj, park_obj['@id']);
+        let location;
+        try {
+            location = {
+                type: "Point",
+                coordinates: extractLocationFromJsonld(park_obj)
+            };
+        } catch (e) {
+            console.error("Could not extract location from parking." + e);
+        }
+        if (companyName == null) {
+            dbAdapter.saveParking(parkingID, parkingID + '.jsonld', false, location, user, function (e, res) {
+                if (e != null) {
+                    console.log("Error saving parking in database:");
+                    console.log(e);
+                    //TODO: remove file?
+                    callback(e);
+                } else {
+                    callback(null, res);
+                }
+            });
+        } else {
+            dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', false, location, companyName, function (e, res) {
+                if (e != null) {
+                    console.log("Error saving parking in database:");
+                    console.log(e);
+                    //TODO: remove file?
+                    callback(e);
+                } else {
+                    callback(null, res);
+                }
+            });
+        }
     }
 };
 
@@ -135,7 +136,7 @@ exports.getParking = async (user, parkingId, callback) => {
                         if (value === true) {
                             //user is admin, load data from disk
                             let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
-                            dbAdapter.findAccountOrCompanyByParkingId(parkingId, function (error, account, company) {
+                            dbAdapter.findCompanyByParkingId(parkingId, function (error, account, company) {
                                 if (account) {
                                     callback(null, result, account.email);
                                 } else {
