@@ -7,46 +7,39 @@
 
     $('#myParkings').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
-        window.location.href = domain + '/parkings?username=' + username;
+        window.location.href = domain + '/parkings';
     });
 
     $('#myAdminOverview').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
-        window.location.href = domain + '/admin?username=' + username;
+        window.location.href = domain + '/admin';
     });
 
     $('#adminParkings').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
-        window.location.href = domain + '/admin-parkings?username=' + username;
+        window.location.href = domain + '/admin-parkings';
     });
 
     $('#adminUsers').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
-        window.location.href = domain + '/admin-users?username=' + username;
+        window.location.href = domain + '/admin-users';
     });
 
     $('#adminCompanies').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
-        window.location.href = domain + '/admin-companies?username=' + username;
+        window.location.href = domain + '/admin-companies';
     });
 
     $('#myCityOverview').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
-        window.location.href = domain + '/cityrep?username=' + username;
+        window.location.href = domain + '/cityrep';
     });
 
     $('.cityrep-parkings-button').on('click', function(){
         let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
         let cityName = $(this).attr('cityname');
         console.log(cityName);
-        window.location.href = domain + '/cityrep-parkings?cityname=' + cityName + '&username=' + username;
+        window.location.href = domain + '/cityrep-parkings?cityname=' + cityName;
     });
 
     $('.checkbox-companyUserEnabled').change(function(){
@@ -120,8 +113,7 @@
         $(this).on('click', function(){
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = $(this).parent().parent().find('a').text().trim();
-            let userName = $('#user-email').text().trim();
-            window.location.href = domain + '/home?username=' + userName + '&parkingId=' + parkingId;
+            window.location.href = domain + '/home?parkingId=' + parkingId;
         });
     });
 
@@ -129,14 +121,13 @@
         $(this).on('click', function(){
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = $(this).parent().parent().find('a').text().trim();
-            let userName = $('#user-email').text().trim();
 
             if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
                 $.ajax({
                     type: "DELETE",
-                    url: domain + '/delete-parking?username=' + userName + '&parkingId=' + parkingId,
+                    url: domain + '/delete-parking?parkingId=' + parkingId,
                     success: () => {
-                        window.location.href = domain + '/parkings?username=' + userName;
+                        window.location.href = domain + '/parkings';
                     },
                     error: e => {
                         alert('Error: ' + e.responseText);
@@ -150,8 +141,7 @@
         $(this).on('click', function(){
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = $(this).parent().parent().find('a').text().trim();
-            let userName = $('#user-email').text().trim();
-            window.location.href = domain + '/download?username=' + userName + '&parkingId=' + parkingId;
+            window.location.href = domain + '/download?parkingId=' + parkingId;
         });
     });
 
@@ -166,8 +156,7 @@
             success: () => {
                 $(this).show();
                 $(this).siblings('.loading-icon').hide();
-                let username = $('#user-email').text().trim();
-                window.location.href = domain + '/admin-companies?username=' + username;
+                window.location.href = domain + '/admin-companies';
             },
             error: e => {
                 alert('Error: ' + e.responseText);

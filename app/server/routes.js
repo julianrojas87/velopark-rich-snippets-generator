@@ -33,7 +33,7 @@ module.exports = app => {
                     AM.autoLogin(o.email, o.pass, function (o) {
                         let domain = domainName != '' ? '/' + domainName : '';
                         req.session.user = o;
-                        res.redirect(domain + '/home?username=' + o.email);
+                        res.redirect(domain + '/home');
                     });
                 } else {
                     res.render('index.html', {
@@ -107,7 +107,7 @@ module.exports = app => {
         } else {
             let parkingData = null;
             if (req.query.parkingId) {
-                PM.getParking(req.query.username, req.query.parkingId, function (error, result, accountEmail, companyName) {
+                PM.getParking(req.session.user.email, req.query.parkingId, function (error, result, accountEmail, companyName) {
                     if (error != null) {
                         res.status(500).send();
                     } else {
@@ -115,7 +115,7 @@ module.exports = app => {
                         res.render('home.html', {
                             domainName: domainName,
                             vocabURI: vocabURI,
-                            username: req.query.username,
+                            username: req.session.user.email,
                             loadedParking: parkingData,
                             superAdmin: req.session.user.superAdmin,
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
@@ -128,7 +128,7 @@ module.exports = app => {
                 res.render('home.html', {
                     domainName: domainName,
                     vocabURI: vocabURI,
-                    username: req.query.username,
+                    username: req.session.user.email,
                     loadedParking: {},
                     superAdmin: req.session.user.superAdmin,
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
@@ -149,19 +149,19 @@ module.exports = app => {
             AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
                 if (error != null) {
                     console.error(error);
-                    res.redirect(domain + '/home?username=' + req.query.username);
+                    res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
                         res.render('admin-home.html', {
                             domainName: domainName,
                             vocabURI: vocabURI,
-                            username: req.query.username,
+                            username: req.session.user.email,
                             superAdmin: req.session.user.superAdmin,
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                         });
                     } else {
                         let domain = domainName != '' ? '/' + domainName : '';
-                        res.redirect(domain + '/home?username=' + req.query.username);
+                        res.redirect(domain + '/home');
                     }
                 }
             });
@@ -183,21 +183,21 @@ module.exports = app => {
             AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
                 if (error != null) {
                     console.error(error);
-                    res.redirect(domain + '/home?username=' + req.query.username);
+                    res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
                         PM.listAllParkings(function (parkings) {
                             res.render('admin-parkings.html', {
                                 domainName: domainName,
                                 vocabURI: vocabURI,
-                                username: req.query.username,
+                                username: req.session.user.email,
                                 parkings: parkings ? parkings : {},
                                 superAdmin: req.session.user.superAdmin,
                                 cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             });
                         });
                     } else {
-                        res.redirect(domain + '/home?username=' + req.query.username);
+                        res.redirect(domain + '/home');
                     }
                 }
             });
@@ -215,18 +215,18 @@ module.exports = app => {
             AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
                 if (error != null) {
                     console.error(error);
-                    res.redirect(domain + '/home?username=' + req.query.username);
+                    res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
                         AM.getAllRecords(function (error, users) {
                             if (error != null) {
                                 console.error(error);
-                                res.redirect(domain + '/home?username=' + req.query.username);
+                                res.redirect(domain + '/home');
                             } else {
                                 res.render('admin-users.html', {
                                     domainName: domainName,
                                     vocabURI: vocabURI,
-                                    username: req.query.username,
+                                    username: req.session.user.email,
                                     users: users ? users : {},
                                     superAdmin: req.session.user.superAdmin,
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
@@ -234,7 +234,7 @@ module.exports = app => {
                             }
                         });
                     } else {
-                        res.redirect(domain + '/home?username=' + req.query.username);
+                        res.redirect(domain + '/home');
                     }
                 }
             });
@@ -308,18 +308,18 @@ module.exports = app => {
             AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
                 if (error != null) {
                     console.error(error);
-                    res.redirect(domain + '/home?username=' + req.query.username);
+                    res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
                         CoM.listAllCompaniesWithUsers(function (error, companies) {
                             if (error != null) {
                                 console.error(error);
-                                res.redirect(domain + '/home?username=' + req.query.username);
+                                res.redirect(domain + '/home');
                             } else {
                                 res.render('admin-companies.html', {
                                     domainName: domainName,
                                     vocabURI: vocabURI,
-                                    username: req.query.username,
+                                    username: req.session.user.email,
                                     companies: companies ? companies : [],
                                     superAdmin: req.session.user.superAdmin,
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
@@ -327,7 +327,7 @@ module.exports = app => {
                             }
                         });
                     } else {
-                        res.redirect(domain + '/home?username=' + req.query.username);
+                        res.redirect(domain + '/home');
                     }
                 }
             });
@@ -384,14 +384,14 @@ module.exports = app => {
                     res.render('city-home.html', {
                         domainName: domainName,
                         vocabURI: vocabURI,
-                        username: req.query.username,
+                        username: req.session.user.email,
                         cityNames: result,
                         superAdmin: req.session.user.superAdmin,
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 } else {
                     let domain = domainName != '' ? '/' + domainName : '';
-                    res.redirect(domain + '/home?username=' + req.query.username);
+                    res.redirect(domain + '/home');
                 }
             });
 
@@ -412,7 +412,7 @@ module.exports = app => {
             AM.isUserCityRep(req.session.user.email, cityname, function (error, value) {
                 if (error != null) {
                     console.error(error);
-                    res.redirect(domain + '/home?username=' + req.query.username);
+                    res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
                         PM.listParkingsInCity(cityname, function (error, parkings) {
@@ -423,7 +423,7 @@ module.exports = app => {
                                 res.render('city-parkings.html', {
                                     domainName: domainName,
                                     vocabURI: vocabURI,
-                                    username: req.query.username,
+                                    username: req.session.user.email,
                                     parkings: parkings ? parkings : {},
                                     superAdmin: req.session.user.superAdmin,
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
@@ -431,7 +431,7 @@ module.exports = app => {
                             }
                         });
                     } else {
-                        res.redirect(domain + '/home?username=' + req.query.username);
+                        res.redirect(domain + '/home');
                     }
                 }
             });
@@ -448,7 +448,7 @@ module.exports = app => {
             AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
                 if (error != null) {
                     console.error(error);
-                    res.redirect(domain + '/home?username=' + req.query.username);
+                    res.redirect(domain + '/home');
                 } else {
                     AM.getAllEmails(function (error, result) {
                         if (error != null) {
@@ -470,11 +470,11 @@ module.exports = app => {
             res.redirect(domain + '/');
         } else {
             //let parkings = await
-            PM.listParkingsByEmail(req.query.username, function (parkings) {
+            PM.listParkingsByEmail(req.session.user.email, function (parkings) {
                 res.render('parkings.html', {
                     domainName: domainName,
                     vocabURI: vocabURI,
-                    username: req.query.username,
+                    username: req.session.user.email,
                     parkings: parkings ? parkings : {},
                     superAdmin: req.session.user.superAdmin,
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
@@ -595,11 +595,15 @@ module.exports = app => {
         } else if (req.query.parkingId == null) {
             res.status(400).send('No parkingId found.');
         } else {
-            PM.getParking(req.query.username, req.query.parkingId, function (error, result) {
+            PM.getParking(req.session.user.email, req.query.parkingId, function (error, result) {
                 if (error != null) {
                     console.error(error);
                 } else {
-                    res.json(JSON.parse(result));
+                    if(result != null) {
+                        res.json(JSON.parse(result));
+                    } else {
+                        res.status(400).send("could not find this parking in your account.");
+                    }
                 }
             });
         }
@@ -611,7 +615,7 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            await PM.deleteParking(req.query.username, req.query.parkingId, function (error) {
+            await PM.deleteParking(req.session.user.email, req.query.parkingId, function (error) {
                 if (error != null) {
                     console.error(error);
                     res.status(500).send('fail');
@@ -628,7 +632,7 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            PM.downloadParking(req.query.username, req.query.parkingId, res);
+            PM.downloadParking(req.session.user.email, req.query.parkingId, res);
         }
     });
 

@@ -100,7 +100,7 @@
                     url: domain + '/login',
                     data: {'email': email, 'pass': pass },
                     success: () => {
-                        window.location.href = domain + '/home?username=' + email;
+                        window.location.href = domain + '/home';
                     },
                     error: e => {
                         alert('Error: ' + e.responseText);
@@ -124,7 +124,7 @@
             url: domain + '/login',
             data: {'email': email, 'pass': pass},
             success: () => {
-                window.location.href = domain + '/home?username=' + email;
+                window.location.href = domain + '/home';
             },
             error: e => {
                 alert('Error: ' + e.responseText);
