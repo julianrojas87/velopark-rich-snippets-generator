@@ -1157,3 +1157,7 @@ fieldset>div {
 #new-company-name:focus {
   border-color: grey !important;
 }
+
+.region-title {
+  margin-top: 1em;
+}
