@@ -17,7 +17,7 @@
         $('#myAdminOverview').remove();
     }
 
-    if (!user || !user.cityrep) {
+    if (!user || !user.cityrep || user.cityrep!=="true") {
         $('#myCityOverview').remove();
     }
 
@@ -91,7 +91,10 @@
         let company = $('#signin-company').val();
         let cities = [];
         $('.signin-city').each(function(){
-            cities.push($(this).val());
+            let city = $(this).val();
+            if(city != "") {
+                cities.push(city);
+            }
         });
 
         $.ajax({
