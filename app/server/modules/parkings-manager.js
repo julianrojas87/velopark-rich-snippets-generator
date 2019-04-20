@@ -147,7 +147,22 @@ exports.getParking = async (user, parkingId, callback) => {
                                 }
                             });
                         } else {
-                            callback("This parking does not belong to you.");
+                            //Maybe user is city-rep for this parking
+                            AM.isAccountCityRepForParkingID(user, parkingId, function(error, value){
+                                if (value === true) {
+                                    //user is city-rep, load data from disk
+                                    let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');
+                                    dbAdapter.findCompanyByParkingId(parkingId, function (error, account, company) {
+                                        if (account) {
+                                            callback(null, result, account.email);
+                                        } else {
+                                            callback(null, result, null, company.name);
+                                        }
+                                    });
+                                } else {
+                                    callback("This parking does not belong to you.");
+                                }
+                            });
                         }
                     }
                 });
