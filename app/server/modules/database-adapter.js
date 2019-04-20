@@ -318,7 +318,15 @@ exports.findParkingsByEmail = function (email, callback) {
                                     }
                                 });
                             };
-                            processNextParking([], o);
+                            o.hasNext(function (error, res) {
+                                if (error != null) {
+                                    callback(error);
+                                } else if (res) {
+                                    processNextParking([], o);
+                                } else {
+                                    callback(null, []);
+                                }
+                            });
                         }
                     }
                 );
