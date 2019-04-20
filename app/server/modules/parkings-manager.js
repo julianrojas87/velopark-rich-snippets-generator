@@ -33,7 +33,7 @@ let returnTableData = function (error, parkings, callback) {
                     tdata['account-company'] = "U: " + parking.account[0].email;
                 }
                 if (parking.company && parking.company.length > 0) {
-                    tdata['account-company'] = "C: " + parking.company[0].name;
+                    tdata['account-company'] = parking.company[0].name;
                 }
                 tableData.push(tdata);
             });
