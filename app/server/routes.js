@@ -441,6 +441,7 @@ module.exports = app => {
                                     domainName: domainName,
                                     vocabURI: vocabURI,
                                     username: req.session.user.email,
+                                    cityName: cityname,
                                     parkings: parkings ? parkings : {},
                                     superAdmin: req.session.user.superAdmin,
                                     company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
