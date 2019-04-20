@@ -341,7 +341,9 @@ exports.findParkingsByEmail = function (email, callback) {
 
 exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
     accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
-        if (o != null) {
+        if(e != null){
+            callback(e);
+        } else if (o != null) {
             if (o.companyName != null) {
                 //User is part of a company, the parkings of this company are to be returned
                 companies.aggregate(
@@ -405,10 +407,11 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
                     }
                 );
             } else {
-                callback("No valid company found for this user.");
+                callback("No valid company found for this user."); //Company is enabled but none is given
             }
         } else {
-            callback(e || "User does not exist, or he is not a member of a company.");
+            // User does not exist, or he is not a member of a company.
+            callback(null, []);
         }
     });
 };
