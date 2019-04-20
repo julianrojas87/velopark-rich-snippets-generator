@@ -110,6 +110,7 @@ module.exports = app => {
             if (req.query.parkingId) {
                 PM.getParking(req.session.user.email, req.query.parkingId, function (error, result, accountEmail, companyName) {
                     if (error != null) {
+                        console.error(error);
                         res.status(500).send();
                     } else {
                         parkingData = result;
@@ -190,16 +191,24 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
-                        PM.listAllParkings(function (parkings) {
-                            res.render('admin-parkings.html', {
-                                domainName: domainName,
-                                vocabURI: vocabURI,
-                                username: req.session.user.email,
-                                parkings: parkings ? parkings : {},
-                                superAdmin: req.session.user.superAdmin,
-                                company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
-                                cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
-                            });
+                        PM.listAllParkings(function (error, parkings) {
+                            if(error != null){
+                                console.error(error);
+                                res.status(500).send();
+                            } else {
+                                res.render('admin-parkings.html', {
+                                    domainName: domainName,
+                                    vocabURI: vocabURI,
+                                    username: req.session.user.email,
+                                    parkings: parkings ? parkings : {},
+                                    superAdmin: req.session.user.superAdmin,
+                                    company: {
+                                        name: req.session.user.companyName,
+                                        enabled: req.session.user.companyEnabled
+                                    },
+                                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
+                                });
+                            }
                         });
                     } else {
                         res.redirect(domain + '/home');
