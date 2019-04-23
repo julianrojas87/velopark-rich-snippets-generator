@@ -58,7 +58,7 @@ exports.listParkingsInCity = function (cityName, callback) {
     dbAdapter.findParkingsByCityName(cityName, callback);
 };
 
-exports.toggleParkingEnabled = function(parkingid, enabled, callback){
+exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
     dbAdapter.updateParkingApproved(parkingid, enabled, callback);
 };
 
@@ -109,6 +109,49 @@ exports.saveParking = async (user, companyName, parking, callback) => {
     }
 };
 
+exports.saveParkingAsCityRep = async (companyName, parking, callback) => {
+    if (companyName == null) {
+        callback("[parkings-manager]\tNo company given to save this parking.");
+    } else {
+        let park_obj = JSON.parse(parking);
+        let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
+            + '_' + park_obj['identifier'].replace(/\s/g, '-'));
+        await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
+        await addParkingToCatalog(park_obj, park_obj['@id']);
+        let location;
+        try {
+            location = {
+                type: "Point",
+                coordinates: extractLocationFromJsonld(park_obj)
+            };
+        } catch (e) {
+            console.error("Could not extract location from parking." + e);
+        }
+        getCitiesOfParking(park_obj, function (error, res) {
+            if (error != null) {
+                callback(error);
+            } else {
+                dbAdapter.updateParkingAsCityRep(companyName, parkingID, parkingID + '.jsonld', location, res, function (e, result) {
+                    if (e != null) {
+                        console.log("Error saving parking in database:");
+                        console.log(e);
+                        //TODO: remove file?
+                        callback(e);
+                    } else {
+                        callback(null, result);
+                    }
+                });
+            }
+        });
+
+    }
+};
+
+let getCitiesOfParking = function(parking, callback) {
+    lnglat = extractLocationFromJsonld(parking);
+    dbAdapter.findCitiesByLocation(lnglat[1], lnglat[0], callback);
+};
+
 let extractLocationFromJsonld = function (jsonld) {
     let geo = jsonld['@graph'][0]["geo"];
     let lonlat = [];
@@ -148,7 +191,7 @@ exports.getParking = async (user, parkingId, callback) => {
                             });
                         } else {
                             //Maybe user is city-rep for this parking
-                            AM.isAccountCityRepForParkingID(user, parkingId, function(error, value){
+                            AM.isAccountCityRepForParkingID(user, parkingId, function (error, value) {
                                 if (value === true) {
                                     //user is city-rep, load data from disk
                                     let result = fs.readFileSync(data + '/public/' + encodeURIComponent(parkingId) + '.jsonld');

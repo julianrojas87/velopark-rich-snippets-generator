@@ -38,7 +38,6 @@
     $('.cityrep-parkings-button').on('click', function(){
         let domain = domainName != '' ? '/' + domainName : '';
         let cityName = $(this).attr('cityname');
-        console.log(cityName);
         window.location.href = domain + '/cityrep-parkings?cityname=' + cityName;
     });
 

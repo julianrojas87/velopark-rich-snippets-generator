@@ -9,11 +9,17 @@
             <div class="alert alert-warning" role="alert">
                 <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
                 You are logged in, but you are not a member of a company. You can still use this tool to generate a .jsonld file, but you will not be able to save it to our catalog.
+                <% if(cityrep){ %>
+                    Because you are a regional representative, you are be able to edit existing parkings for your approved regions. You will be able to save these.
+                <% } %>
             </div>
         <% } else if(!company.enabled){ %>
             <div class="alert alert-warning" role="alert">
                 <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
                 You are logged in, but your membership of your company <%= company.name %> has not been approved by the system administrator yet. You can still use this tool to generate a .jsonld file, but you will not be able to save it to our catalog.
+                <% if(cityrep){ %>
+                    Because you are a regional representative, you are be able to edit existing parkings for your approved regions. You will be able to save these.
+                <% } %>
             </div>
         <% } %>
         <form id="form-velopark-data" class="contact100-form validate-form" novalidate>

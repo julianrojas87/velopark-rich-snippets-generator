@@ -1,5 +1,4 @@
 ($ => {
-    console.log(user);
 
     if (user && user.name && user.name !== '') {
         $('#signin').hide();

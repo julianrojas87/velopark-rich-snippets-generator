@@ -445,6 +445,56 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
         });
 };
 
+exports.updateParkingAsCityRep = function (companyName, id, filename, location, parkingCityNames, callback) {
+    //1. find account of city rep
+    //2. make sure the city rep is responsible for this parking location
+    //3. update the parking itself, leaving the owning company as is
+    accounts.findOne(
+        {
+            companyName: companyName,
+            cityNames: {
+                $elemMatch: {
+                    name: {
+                        $in: parkingCityNames
+                    }
+                }
+            }
+        },
+        {},
+        function (e, res) {
+            if (e != null) {
+                callback(e);
+            } else {
+                if(res != null) {
+                    //User is city rep for this parking. He can update this parking.
+                    parkings.findOneAndUpdate(
+                        {
+                            parkingID: id
+                        },
+                        {
+                            $set: {
+                                filename: filename,
+                                location: location
+                            },
+                        },
+                        {
+                            returnOriginal: false
+                        },
+                        function (e, o) {
+                            if (o.value != null) {
+                                callback(null, o.value);
+                            } else {
+                                callback(e);
+                            }
+                        });
+                } else {
+                    callback("You are not representative for this region.");
+                }
+            }
+        }
+    );
+};
+
 exports.saveParking = function (id, filename, approvedStatus, location, email, callback) {
     accounts.findOne(
         {
@@ -466,17 +516,8 @@ exports.saveParking = function (id, filename, approvedStatus, location, email, c
                         }
                     });
                 } else {
-                    /*//User is not part of a company, he manages his own parkings
-                    exports.updateAccountParkingIDs(email, id, function (error, result) {
-                        if (error != null) {
-                            callback(error);
-                        } else {
-                            updateOrCreateParking(id, filename, approvedStatus, location, callback);
-                        }
-                    })*/
-
-                    //If a user has no companyName, he cannot store parkings.
-                    callback("User is not part of a company (or membership is not approved yet). Could not store parking.");
+                    //callback("User is not part of a company (or membership is not approved yet). Could not store parking.");
+                    callback(null, null);
                 }
             }
         }
@@ -488,7 +529,12 @@ exports.saveParkingToCompany = function (id, filename, approvedStatus, location,
         if (error != null) {
             callback(error);
         } else {
-            updateOrCreateParking(id, filename, approvedStatus, location, callback);
+            if(result != null) {
+                updateOrCreateParking(id, filename, approvedStatus, location, callback);
+            } else {
+                //Company not found
+                callback("This company does not exist");
+            }
         }
     });
 };
@@ -786,6 +832,24 @@ exports.findParkingsByCityName = function (cityName, callback) {
                 }
             });
         }
+    });
+};
+
+exports.findCitiesByLocation = function(lat, lng, callback){
+    let cityNames = [];
+    cities.find({
+        'geometry': {
+            '$geoIntersects': {
+                '$geometry': {
+                    type: "Point",
+                    coordinates: [ lng , lat ]
+                }
+            }
+        }
+    }, { projection: { "properties.cityname":1 }}).forEach(function (res) {
+        cityNames.push(res.properties.cityname);
+    }, function (error) {
+        callback(error, cityNames);
     });
 };
 
