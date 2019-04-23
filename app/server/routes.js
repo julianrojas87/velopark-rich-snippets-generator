@@ -132,7 +132,7 @@ module.exports = app => {
                     domainName: domainName,
                     vocabURI: vocabURI,
                     username: req.session.user.email,
-                    loadedParking: {},
+                    loadedParking: '',
                     superAdmin: req.session.user.superAdmin,
                     company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,

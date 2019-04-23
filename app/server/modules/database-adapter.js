@@ -782,7 +782,6 @@ exports.transferParkingToCompany = function (newCompany, parkingID, callback) {
                             }
                         });
                     } else {
-                        console.log(res);
                         callback("Could not find company to update.");
                     }
                 }

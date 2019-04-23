@@ -13,7 +13,7 @@ var originalId = null;
 
 function loadParkingValues() {
     let parkingData = $('#loadedParking').text().trim();
-    if (parkingData && parkingData != '') {
+    if (parkingData && parkingData !== '') {
         let parking = JSON.parse(parkingData);
         originalId = parking['@id'];
         processObject(parking);

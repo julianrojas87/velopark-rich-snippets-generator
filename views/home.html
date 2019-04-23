@@ -11,7 +11,7 @@
 	<p id="vocabURI" style="display: none;"><%= vocabURI %></p>
 
 	<!-- Loaded data for editing -->
-	<p id="loadedParking" style="display: none;"><%= loadedParking %></p>
+	<p id="loadedParking" style="display: none;"><%= loadedParking ? loadedParking : '' %></p>
 	<script>let parkingOwner = {
 		email: "<%= emailParkingOwner %>",
 		company: "<%= nameCompanyParkingOwner %>"
