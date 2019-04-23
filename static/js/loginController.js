@@ -1,3 +1,6 @@
+let signinformcompaniesloaded = false;
+let signinformcitiesloaded = false;
+
 ($ => {
 
     if (user && user.name && user.name !== '') {
@@ -27,36 +30,42 @@
     $('#signin').on('click', () => {
         $('#signin-form').show();
         let domain = domainName != '' ? '/' + domainName : '';
-        $.ajax({
-            type: "GET",
-            url: domain + '/companynames',
-            success: data => {
-                $('select[company-names="true"]').each(function () {
-                    for (let i in data) {
-                        $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
-                    }
-                });
-            },
-            error: e => {
-                alert('Error: ' + e.responseText);
-                reject(e);
-            }
-        });
-        $.ajax({
-            type: "GET",
-            url: domain + '/citynames',
-            success: data => {
-                $('select[city-names="true"]').each(function () {
-                    for (let i in data) {
-                        $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
-                    }
-                });
-            },
-            error: e => {
-                alert('Error: ' + e.responseText);
-                reject(e);
-            }
-        });
+        if(!signinformcompaniesloaded) {
+            $.ajax({
+                type: "GET",
+                url: domain + '/companynames',
+                success: data => {
+                    signinformcompaniesloaded = true;
+                    $('select[company-names="true"]').each(function () {
+                        for (let i in data) {
+                            $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                        }
+                    });
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
+                    reject(e);
+                }
+            });
+        }
+        if(!signinformcitiesloaded) {
+            $.ajax({
+                type: "GET",
+                url: domain + '/citynames',
+                success: data => {
+                    signinformcitiesloaded = true;
+                    $('select[city-names="true"]').each(function () {
+                        for (let i in data) {
+                            $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                        }
+                    });
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
+                    reject(e);
+                }
+            });
+        }
     });
 
     $('#signin_close_button').on('click', () => {
