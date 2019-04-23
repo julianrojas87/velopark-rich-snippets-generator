@@ -588,7 +588,6 @@ module.exports = app => {
     });
 
     let saveParkingAsAdminOrCityRep = function(req, res){
-        console.log("save as admin or city rep");
         AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
             if (value) {
                 if (req.body['jsonld']) {

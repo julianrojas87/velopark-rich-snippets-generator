@@ -60,6 +60,7 @@ exports.listParkingsInCity = function (cityName, callback) {
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
     dbAdapter.updateParkingApproved(parkingid, enabled, callback);
+    //TODO: add/remove from catalog. Anything else?
 };
 
 /*
@@ -72,8 +73,8 @@ exports.saveParking = async (user, companyName, parking, callback) => {
         let park_obj = JSON.parse(parking);
         let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
             + '_' + park_obj['identifier'].replace(/\s/g, '-'));
-        await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
-        await addParkingToCatalog(park_obj, park_obj['@id']);
+        //await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
+        //await addParkingToCatalog(park_obj, park_obj['@id']);
         let location;
         try {
             location = {
@@ -88,9 +89,10 @@ exports.saveParking = async (user, companyName, parking, callback) => {
                 if (e != null) {
                     console.log("Error saving parking in database:");
                     console.log(e);
-                    //TODO: remove file?
                     callback(e);
                 } else {
+                    writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
+                    addParkingToCatalog(park_obj, park_obj['@id']);
                     callback(null, res);
                 }
             });
@@ -99,9 +101,10 @@ exports.saveParking = async (user, companyName, parking, callback) => {
                 if (e != null) {
                     console.log("Error saving parking in database:");
                     console.log(e);
-                    //TODO: remove file?
                     callback(e);
                 } else {
+                    writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
+                    addParkingToCatalog(park_obj, park_obj['@id']);
                     callback(null, res);
                 }
             });
@@ -116,8 +119,8 @@ exports.saveParkingAsCityRep = async (companyName, parking, callback) => {
         let park_obj = JSON.parse(parking);
         let parkingID = encodeURIComponent(park_obj['dataOwner']['companyName'].replace(/\s/g, '-')
             + '_' + park_obj['identifier'].replace(/\s/g, '-'));
-        await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
-        await addParkingToCatalog(park_obj, park_obj['@id']);
+        //await writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
+        //await addParkingToCatalog(park_obj, park_obj['@id']);
         let location;
         try {
             location = {
@@ -135,9 +138,10 @@ exports.saveParkingAsCityRep = async (companyName, parking, callback) => {
                     if (e != null) {
                         console.log("Error saving parking in database:");
                         console.log(e);
-                        //TODO: remove file?
                         callback(e);
                     } else {
+                        writeFile(data + '/public/' + parkingID + '.jsonld', parking, 'utf8');
+                        addParkingToCatalog(park_obj, park_obj['@id']);
                         callback(null, result);
                     }
                 });
