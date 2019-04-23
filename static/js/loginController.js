@@ -21,7 +21,7 @@
         $('#myCityOverview').remove();
     }
 
-    if(!user.company.name || !user.company.enabled){
+    if(!user.company.name || user.company.enabled!=="true"){
         $('#myParkings').remove();
     }
 

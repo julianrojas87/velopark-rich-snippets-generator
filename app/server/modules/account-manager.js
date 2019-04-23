@@ -131,7 +131,7 @@ exports.addNewAccount = function (newData, callback) {
 	if(!email.includes("@")){
 		callback("Invalid email adress.");
 	} else if((companyName == null || companyName === '') && cityNames.length === 0){
-		callback("No valid company or region given.");	//TODO: Does a city rep / super admin need a company? Does he/she get to save parkings?
+		callback("No valid company or region given.");
 	} else {
 		if(companyName === ''){
 			companyName = null;

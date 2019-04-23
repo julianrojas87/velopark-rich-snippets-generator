@@ -66,7 +66,7 @@
 
     $('.checkbox-cityUserEnabled').change(function(){
         $(this).hide();
-        $(this).siblings('.loading-icon').show();
+        $(this).prev('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
         let userEmail = $(this).attr('useremail');
         let cityName = $(this).attr('cityName');
@@ -76,20 +76,20 @@
             data: { 'cityEnabled': this.checked, 'cityName': cityName },
             success: () => {
                 $(this).show();
-                $(this).siblings('.loading-icon').hide();
+                $(this).prev('.loading-icon').hide();
             },
             error: e => {
                 alert('Error: ' + e.responseText);
                 $(this).prop("checked", !$(this).prop("checked"));
                 $(this).show();
-                $(this).siblings('.loading-icon').hide();
+                $(this).prev('.loading-icon').hide();
             }
         });
     });
 
     $('.checkbox-parkingEnabled').change(function(){
         $(this).hide();
-        $(this).siblings('.loading-icon').show();
+        $(this).prev('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
         let parkingid = $(this).attr('parkingid');
         $.ajax({
@@ -98,13 +98,13 @@
             data: { 'parkingEnabled': this.checked },
             success: () => {
                 $(this).show();
-                $(this).siblings('.loading-icon').hide();
+                $(this).prev('.loading-icon').hide();
             },
             error: e => {
                 alert('Error: ' + e.responseText);
                 $(this).prop("checked", !$(this).prop("checked"));
                 $(this).show();
-                $(this).siblings('.loading-icon').hide();
+                $(this).prev('.loading-icon').hide();
             }
         });
     });
@@ -147,7 +147,7 @@
 
     $('#button-create-new-company').on('click', function(){
         $(this).hide();
-        $(this).siblings('.loading-icon').show();
+        $(this).prev('.loading-icon').show();
         let domain = domainName !== '' ? '/' + domainName : '';
         let companyName = $('#new-company-name').val();
         $.ajax({
@@ -155,14 +155,14 @@
             url: domain + '/admin-companies/new-company/' + companyName,
             success: () => {
                 $(this).show();
-                $(this).siblings('.loading-icon').hide();
+                $(this).prev('.loading-icon').hide();
                 window.location.href = domain + '/admin-companies';
             },
             error: e => {
                 alert('Error: ' + e.responseText);
                 $(this).prop("checked", !$(this).prop("checked"));
                 $(this).show();
-                $(this).siblings('.loading-icon').hide();
+                $(this).prev('.loading-icon').hide();
             }
         });
     });

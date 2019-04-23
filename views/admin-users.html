@@ -18,7 +18,7 @@
 <% include navbar.html %>
 
 <div class="container-contact100">
-    <div class="wrap-contact100 table-parkings-scroll-helper" style="width: 100%;">
+    <div class="wrap-contact100 table-parkings" style="width: 100%;">
         <table id="users-list" class="table-fill">
             <thead>
             <tr>
@@ -48,7 +48,9 @@
                     <% } %>
                 </td>
                 <td class="text-left">
-                    <%= users[i]['superAdmin'] %>
+                    <% if(users[i]['superAdmin']){ %>
+                        <i class="far fa-check-circle"></i>
+                    <% } %>
                 </td>
             </tr>
             <% } %>

@@ -40,11 +40,6 @@ div.table-title {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
-
-.table-parkings-scroll-helper {
-  max-height: 80vh;
-  overflow-y: auto;
-}
  
 th {
   color:#FFFFFF;
@@ -133,4 +128,8 @@ td.text-center {
 
 td.text-right {
   text-align: right;
+}
+
+.table-parkings i.far {
+  font-size: 25px;
 }
