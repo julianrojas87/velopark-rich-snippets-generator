@@ -15,3 +15,7 @@ exports.listAllCompanyNames = function(callback){
 exports.createNewCompany = function(companyName, callback){
     dbAdapter.insertCompany(companyName, callback);
 };
+
+exports.transferParking = function(newCompany, parkingID, callback){
+    dbAdapter.transferParkingToCompany(newCompany, parkingID, callback);
+};

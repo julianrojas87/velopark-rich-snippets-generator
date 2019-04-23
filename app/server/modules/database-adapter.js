@@ -272,7 +272,7 @@ exports.findParkingByID = function (id, callback) {
 };
 
 exports.findParkingsByEmail = function (email, callback) {
-    accounts.findOne({email: email, companyEnabled: true }, function (e, o) {
+    accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
         if (o != null) {
             if (o.companyName != null) {
                 //User is part of a company, the parkings of this company are to be returned
@@ -341,7 +341,7 @@ exports.findParkingsByEmail = function (email, callback) {
 
 exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
     accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
-        if(e != null){
+        if (e != null) {
             callback(e);
         } else if (o != null) {
             if (o.companyName != null) {
@@ -465,7 +465,7 @@ exports.updateParkingAsCityRep = function (companyName, id, filename, location, 
             if (e != null) {
                 callback(e);
             } else {
-                if(res != null) {
+                if (res != null) {
                     //User is city rep for this parking. He can update this parking.
                     parkings.findOneAndUpdate(
                         {
@@ -529,7 +529,7 @@ exports.saveParkingToCompany = function (id, filename, approvedStatus, location,
         if (error != null) {
             callback(error);
         } else {
-            if(result != null) {
+            if (result != null) {
                 updateOrCreateParking(id, filename, approvedStatus, location, callback);
             } else {
                 //Company not found
@@ -573,7 +573,7 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                 callback(error);
             } else if (res == null) {
                 callback("user not found");
-            } else if(!res.value.companyEnabled){
+            } else if (!res.value.companyEnabled) {
                 callback("The company membership has not been approved yet. Operation not allowed.");
             } else {
                 //looking for a company now
@@ -739,6 +739,57 @@ exports.updateCompanyParkingIDs = function (companyName, parkingID, callback) {
     );
 };
 
+exports.transferParkingToCompany = function (newCompany, parkingID, callback) {
+    if(!newCompany){
+        callback("Company to transfer to not given.");
+    } else {
+        companies.findOneAndUpdate({
+                parkingIDs: parkingID
+            },
+            {
+                $pull: {parkingIDs: {$in: [parkingID,]}}
+            },
+            {
+                returnOriginal: false
+            }, function (error, res) {
+                if (error != null) {
+                    callback(error);
+                } else {
+                    if (res.value != null) {
+                        exports.updateCompanyParkingIDs(newCompany, parkingID, function (error, result) {
+                            if (error != null) {
+                                //revert
+                                exports.updateCompanyParkingIDs(res.value.name, parkingID, function (error2, result) {
+                                    if (error2 != null) {
+                                        callback(error2);
+                                    } else {
+                                        callback(error + " \nreverted successfully.");
+                                    }
+                                });
+                            } else {
+                                if (result.value == null) {
+                                    //revert
+                                    exports.updateCompanyParkingIDs(res.value.name, parkingID, function (error2, result) {
+                                        if (error2 != null) {
+                                            callback(error2);
+                                        } else {
+                                            callback(error + " \nreverted successfully.");
+                                        }
+                                    });
+                                } else {
+                                    callback(error, result);
+                                }
+                            }
+                        });
+                    } else {
+                        console.log(res);
+                        callback("Could not find company to update.");
+                    }
+                }
+            });
+    }
+};
+
 /*
     Add the account with the given email to the given company.
     Existing parkings owned by this user will be transferred to this company.
@@ -835,18 +886,18 @@ exports.findParkingsByCityName = function (cityName, callback) {
     });
 };
 
-exports.findCitiesByLocation = function(lat, lng, callback){
+exports.findCitiesByLocation = function (lat, lng, callback) {
     let cityNames = [];
     cities.find({
         'geometry': {
             '$geoIntersects': {
                 '$geometry': {
                     type: "Point",
-                    coordinates: [ lng , lat ]
+                    coordinates: [lng, lat]
                 }
             }
         }
-    }, { projection: { "properties.cityname":1 }}).forEach(function (res) {
+    }, {projection: {"properties.cityname": 1}}).forEach(function (res) {
         cityNames.push(res.properties.cityname);
     }, function (error) {
         callback(error, cityNames);
@@ -865,13 +916,13 @@ exports.findCitiesByLocation = function(lat, lng, callback){
 exports.isAccountCityRepForParkingID = function (email, parkingID, callback) {
     accounts.aggregate([
             {
-                $match: { email: email }
+                $match: {email: email}
             },
             {
                 $unwind: "$cityNames"
             },
             {
-                $match: { "cityNames.enabled": true }
+                $match: {"cityNames.enabled": true}
             },
             {
                 $lookup: {

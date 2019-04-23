@@ -385,6 +385,41 @@ module.exports = app => {
         }
     });
 
+    app.post('/admin-companies/transfer-parking', function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send();
+        } else {
+            //Check for admin:
+            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+                if (error != null) {
+                    console.error(error);
+                    res.status(500).send();
+                } else {
+                    if (value === true) {
+                        //User is admin
+                        let newCompany = req.body['newcompany'];
+                        let parkingID = req.body['parkingid'];
+                        CoM.transferParking(newCompany, parkingID, function (error, result) {
+                            if (error != null) {
+                                console.error(error);
+                                res.status(500).send(error);
+                            } else {
+                                if (result != null) {
+                                    res.status(200).send('Ok');
+                                } else {
+                                    res.status(409).send('Could not create company.');
+                                }
+                            }
+                        });
+                    } else {
+                        res.status(401).send();
+                    }
+
+                }
+            });
+        }
+    });
+
     /*
         City representatives
     */

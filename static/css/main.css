@@ -1161,3 +1161,11 @@ fieldset>div {
 .region-title {
   margin-top: 1em;
 }
+
+button.transfer-parking i {
+  margin: 0;
+}
+
+button.transfer-parking {
+  margin-left: 1em;
+}

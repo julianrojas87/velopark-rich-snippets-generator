@@ -35,13 +35,13 @@
         window.location.href = domain + '/cityrep';
     });
 
-    $('.cityrep-parkings-button').on('click', function(){
+    $('.cityrep-parkings-button').on('click', function () {
         let domain = domainName != '' ? '/' + domainName : '';
         let cityName = $(this).attr('cityname');
         window.location.href = domain + '/cityrep-parkings?cityname=' + cityName;
     });
 
-    $('.checkbox-companyUserEnabled').change(function(){
+    $('.checkbox-companyUserEnabled').change(function () {
         $(this).hide();
         $(this).siblings('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
@@ -49,7 +49,7 @@
         $.ajax({
             type: "POST",
             url: domain + '/admin-users/toggle-company-state/' + userEmail,
-            data: { 'companyEnabled': this.checked },
+            data: {'companyEnabled': this.checked},
             success: () => {
                 $(this).show();
                 $(this).siblings('.loading-icon').hide();
@@ -63,7 +63,7 @@
         });
     });
 
-    $('.checkbox-cityUserEnabled').change(function(){
+    $('.checkbox-cityUserEnabled').change(function () {
         $(this).hide();
         $(this).prev('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
@@ -72,7 +72,7 @@
         $.ajax({
             type: "POST",
             url: domain + '/admin-users/toggle-city-state/' + userEmail,
-            data: { 'cityEnabled': this.checked, 'cityName': cityName },
+            data: {'cityEnabled': this.checked, 'cityName': cityName},
             success: () => {
                 $(this).show();
                 $(this).prev('.loading-icon').hide();
@@ -86,7 +86,7 @@
         });
     });
 
-    $('.checkbox-parkingEnabled').change(function(){
+    $('.checkbox-parkingEnabled').change(function () {
         $(this).hide();
         $(this).prev('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
@@ -94,7 +94,7 @@
         $.ajax({
             type: "POST",
             url: domain + '/parkings/toggle-parking-enabled/' + parkingid,
-            data: { 'parkingEnabled': this.checked },
+            data: {'parkingEnabled': this.checked},
             success: () => {
                 $(this).show();
                 $(this).prev('.loading-icon').hide();
@@ -109,7 +109,7 @@
     });
 
     $('#parking-list input[title=Edit]').each(function () {
-        $(this).on('click', function(){
+        $(this).on('click', function () {
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = $(this).parent().parent().find('a').text().trim();
             window.location.href = domain + '/home?parkingId=' + parkingId;
@@ -117,7 +117,7 @@
     });
 
     $('#parking-list input[title=Delete]').each(function () {
-        $(this).on('click', function(){
+        $(this).on('click', function () {
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = $(this).parent().parent().find('a').text().trim();
 
@@ -137,14 +137,14 @@
     });
 
     $('#parking-list input[title=Download]').each(function () {
-        $(this).on('click', function(){
+        $(this).on('click', function () {
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = $(this).parent().parent().find('a').text().trim();
             window.location.href = domain + '/download?parkingId=' + parkingId;
         });
     });
 
-    $('#button-create-new-company').on('click', function(){
+    $('#button-create-new-company').on('click', function () {
         $(this).hide();
         $(this).prev('.loading-icon').show();
         let domain = domainName !== '' ? '/' + domainName : '';
@@ -164,6 +164,55 @@
                 $(this).prev('.loading-icon').hide();
             }
         });
+    });
+
+    let selectedParkingToTransfer = null;
+
+    $('.transfer-parking').on('click', function() {
+        selectedParkingToTransfer = $(this).attr('parkingid');
+        console.log(selectedParkingToTransfer);
+        $('#transfer-parking-form').show();
+        let domain = domainName != '' ? '/' + domainName : '';
+        if (!signinformcompaniesloaded) {
+            $.ajax({
+                type: "GET",
+                url: domain + '/companynames',
+                success: data => {
+                    signinformcompaniesloaded = true;
+                    $('select[company-names="true"]').each(function () {
+                        for (let i in data) {
+                            $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                        }
+                    });
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
+                    reject(e);
+                }
+            });
+        }
+    });
+
+    $('#transfer-company-button').on('click', function () {
+        let domain = domainName != '' ? '/' + domainName : '';
+        let company = $('#transfer-parking-company').val();
+
+        $.ajax({
+            type: "POST",
+            url: domain + '/admin-companies/transfer-parking',
+            data: {'newcompany': company, 'parkingid': selectedParkingToTransfer},
+            success: () => {
+                window.location.href = domain + '/admin-parkings';
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+            }
+        });
+        return false;
+    });
+
+    $('#transfer-parking_close_button').on('click', () => {
+        $('#transfer-parking-form').toggle();
     });
 
 })(jQuery);
