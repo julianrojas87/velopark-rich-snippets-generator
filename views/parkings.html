@@ -39,7 +39,11 @@
                             <%= parkings[i]['name'] %>
                         </td>
                         <td class="text-left" style="font-size: 20px;">
-                            <%= parkings[i]['approvedstatus'] %>
+                            <% if(parkings[i]['approvedstatus']){ %>
+                                <i class="far fa-check-circle" style="color:#00b417"></i>
+                            <% } else { %>
+                                <i class="fas fa-times" style="color:red"></i>
+                            <% } %>
                         </td>
                         <td class="text-left">
                             <input title="Edit" type="image" src="static/images/icons/edit.png" style="float: left; width: 40px;">
