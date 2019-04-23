@@ -850,7 +850,7 @@ textarea.input100 {
   width: 25%;
   background-color: #1072ba;
   border-radius: 6px;
-  max-height: 75vh;
+  max-height: 65vh;
   overflow: auto;
   margin-top: 2vh;
 }
