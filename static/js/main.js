@@ -171,6 +171,18 @@ function handleLoginFeatures() {
         });
     });
 
+    $('.js-select2[name="priceSpecification._PriceSpecification.freeOfCharge"]').change(function(){
+        let priceField = $(this).parent().parent().next().find('input[name="priceSpecification._PriceSpecification.price"]');
+        let free = $(this).val() === "true";
+        priceField.prop('disabled', free);
+        if(free){
+            priceField.val('');
+            priceField.attr('placeholder', 'This parking section is free');
+        } else {
+            priceField.attr('placeholder', 'Enter the price');
+        }
+    });
+
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
 
@@ -297,6 +309,10 @@ function handleLoginFeatures() {
                     $(this).prop('checked', false);
                 } else if (($(this).attr('type') !== 'button')) {
                     $(this).val('');
+                    $(this).prop('disabled', false);
+                    if($(this).attr('name') === "priceSpecification._PriceSpecification.price"){
+                        $(this).attr('placeholder', 'Enter the price');
+                    }
                 }
             });
 
@@ -388,10 +404,14 @@ function addFacilitySection() {
         });
 
         newFacilitySection.find('input').each(function () {
-            if ($(this).attr('type') == 'checkbox') {
+            if ($(this).attr('type') === 'checkbox') {
                 $(this).prop('checked', false);
-            } else if (($(this).attr('type') != 'button')) {
+            } else if (($(this).attr('type') !== 'button')) {
                 $(this).val('');
+                $(this).prop('disabled', false);
+                if($(this).attr('name') === "priceSpecification._PriceSpecification.price"){
+                    $(this).attr('placeholder', 'Enter the price');
+                }
             }
         });
 
