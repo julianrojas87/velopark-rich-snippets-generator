@@ -1,28 +1,58 @@
 <div class="container-contact100">
     <div class="wrap-contact100">
         <% if(!username){ %>
-            <div class="alert alert-warning" role="alert">
-                <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                You are not logged in. You can still use this tool to generate a .jsonld file, but you will not be able to save it to our catalog.
-            </div>
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+            You are not logged in. You can still use this tool to generate a .jsonld file, but you will not be able to
+            save it to our catalog.
+        </div>
         <% } else if(!company.name){ %>
-            <div class="alert alert-warning" role="alert">
-                <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                You are logged in, but you are not a member of a company. You can still use this tool to generate a .jsonld file, but you will not be able to save it to our catalog.
-                <% if(cityrep){ %>
-                    Because you are a regional representative, you are be able to edit existing parkings for your approved regions. You will be able to save these.
-                <% } %>
-            </div>
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+            You are logged in, but you are not a member of a company. You can still use this tool to generate a .jsonld
+            file, but you will not be able to save it to our catalog.
+            <% if(cityrep){ %>
+            Because you are a regional representative, you are be able to edit existing parkings for your approved
+            regions. You will be able to save these.
+            <% } %>
+        </div>
         <% } else if(!company.enabled){ %>
-            <div class="alert alert-warning" role="alert">
-                <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                You are logged in, but your membership of your company <%= company.name %> has not been approved by the system administrator yet. You can still use this tool to generate a .jsonld file, but you will not be able to save it to our catalog.
-                <% if(cityrep){ %>
-                    Because you are a regional representative, you are be able to edit existing parkings for your approved regions. You will be able to save these.
-                <% } %>
-            </div>
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+            You are logged in, but your membership of your company <%= company.name %> has not been approved by the
+            system administrator yet. You can still use this tool to generate a .jsonld file, but you will not be able
+            to save it to our catalog.
+            <% if(cityrep){ %>
+            Because you are a regional representative, you are be able to edit existing parkings for your approved
+            regions. You will be able to save these.
+            <% } %>
+        </div>
         <% } %>
         <form id="form-velopark-data" class="contact100-form validate-form" novalidate>
+            <h3 class="section-title">Languages</h3>
+            <fieldset>
+                <div id="step-pre-info-1">
+                    <h2>Data Languages</h2>
+                    <div class="wrap-contact100-section pre-information">
+                        <p class="info-text">
+                            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                            Please select all the languages you want to provide this data in.
+                            This means that the free text fields such as location descriptions and removal conditions
+                            of bikes in your parking will need to have a translation for each of the selected languages.
+                        </p>
+                        <div id="language-selection-container" class="wrap-contact100-subsection">
+                            <input type="checkbox" id="dutch" name="lang" value="nl"><label for="dutch">Dutch</label>
+                            <input type="checkbox" id="french" name="lang" value="fr"><label for="french">French</label>
+                            <input type="checkbox" id="german" name="lang" value="de"><label for="german">German</label>
+                            <input type="checkbox" id="english" name="lang" value="en"><label
+                                for="english">English</label>
+                            <input type="checkbox" id="spanish" name="lang" value="es"><label
+                                for="spanish">Spanish</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
             <h3 class="section-title">Parking Information</h3>
             <fieldset>
                 <div id="step-general-info-1">
@@ -154,8 +184,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Description of how users can reach the bicycle parking.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i></span>
                                 </div>
-                                <textarea class="input100" name="address.description"
-                                          placeholder="Describe how to arrive here"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="address.description"
+                                                  placeholder="Describe how to arrive here"></textarea>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="wrap-input100 bg1">
@@ -176,20 +211,22 @@
                             <div class="wrap-input100 bg1">
                                 <span class="label-input100">Close To</span>
                                 <input type="image" title="about" class="info_button"
-                                        src="static/images/icons/info.png">
+                                       src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                     <h2 style="margin-bottom: 15px;"></h2>
                                     <input type="image" title="close" class="info_close_button"
-                                            src="static/images/icons/close_white.png"
-                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                           src="static/images/icons/close_white.png"
+                                           style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
                                     <span style="display: inherit; padding-left: 15px;">Put here the names of landmarks or well known places that users can use to orientate.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>“Standbeeld Fonske”, “Museum M”</i></span>
                                 </div>
                                 <input class="input100 removable-input" type="text" name="closeTo._Place.name"
-                                        placeholder="Enter the name of a nearby known place">
-                                <button style="display: none;" type="button" class="minus_button minus_button_input"><i class="fas fa-trash-alt"></i></button>
+                                       placeholder="Enter the name of a nearby known place">
+                                <button style="display: none;" type="button" class="minus_button minus_button_input"><i
+                                        class="fas fa-trash-alt"></i></button>
                             </div>
-                            <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark</button>
+                            <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -520,7 +557,8 @@
             <fieldset>
                 <div id="step-facility-section-1-1">
                     <h2>Facility Section - Operation Information</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility
+                    </button>
 
                     <div class="wrap-contact100-section">
                         <div parking-section="0" class="wrap-contact100-subsection">
@@ -626,8 +664,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe who can park their bike here.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Brede publiek</i></span>
                                 </div>
-                                <input class="input100" type="text" name="intendedAudience"
-                                       placeholder="Enter the intended audience (e.g. general public, neighborhood residents)">
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <input class="input100" type="text" name="intendedAudience"
+                                               placeholder="Enter the intended audience (e.g. general public, neighborhood residents)">
+                                    </div>
+                                </div>
                             </div>
                             <div class="wrap-input100 bg0">
                                 <span class="label-input100">Restrictions</span>
@@ -641,8 +684,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe the restrictions of use of this parking garage.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Geen bromfietsen</i></span>
                                 </div>
-                                <textarea class="input100" name="restrictions"
-                                          placeholder="Enter the restrictions (e.g. maximum 2 bikes per resident)"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="restrictions"
+                                                  placeholder="Enter the restrictions (e.g. maximum 2 bikes per resident)"></textarea>
+                                    </div>
+                                </div>
                             </div>
                             <div class="wrap-input100 bg0">
                                 <span class="label-input100">Removal Conditions</span>
@@ -656,8 +704,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe on what conditions / when a bike will be removed from the bicycle parking.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i></span>
                                 </div>
-                                <textarea class="input100" name="removalConditions"
-                                          placeholder="Describe the conditions to be met for removing a bike (e.g. exceed maximum storage time)"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="removalConditions"
+                                                  placeholder="Describe the conditions to be met for removing a bike (e.g. exceed maximum storage time)"></textarea>
+                                    </div>
+                                </div>
                             </div>
                             <div class="wrap-input100 bg0">
                                 <span class="label-input100">Post Removal Action</span>
@@ -671,8 +724,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe how, when and how cyclists can recover a bike that was removed.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Verwijderde fiertsen kunnen gedurende drie maanden opgehaald worden bij het centraal depot. Daarna worden ze verkocht of vernietigd. (zie contactgegevens voor mail / telefoon).</i></span>
                                 </div>
-                                <textarea class="input100" name="postRemovalAction"
-                                          placeholder="Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="postRemovalAction"
+                                                  placeholder="Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"></textarea>
+                                    </div>
+                                </div>
                             </div>
 
                             <span class="contact100-form-subsubsection" style="width: 90%;">
@@ -741,7 +799,8 @@
             <fieldset>
                 <div id="step-facility-section-2-1">
                     <h2>Facility Section - Location</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility
+                    </button>
 
                     <div>
                         <div parking-section="0">
@@ -874,8 +933,13 @@
                                                 <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
                                                 <span style="display: inherit; padding-left: 15px;">Example: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i></span>
                                             </div>
-                                            <textarea class="input100" name="entrance._Entrance.description"
-                                                      placeholder="Describe how to get here"></textarea>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100" name="entrance._Entrance.description"
+                                                              placeholder="Describe how to get here"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>
@@ -942,8 +1006,13 @@
                                                 <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
                                                 <span style="display: inherit; padding-left: 15px;">Example: <i>De uitgang bevindt zich aan beide zijden van het plein. Let op: verboden om in de garage te fietsen!</i></span>
                                             </div>
-                                            <textarea class="input100" name="exit._Exit.description"
-                                                      placeholder="Describe how to get here"></textarea>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100" name="exit._Exit.description"
+                                                              placeholder="Describe how to get here"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra exit
@@ -959,7 +1028,8 @@
             <fieldset>
                 <div id="step-facility-section-3-1">
                     <h2>Facility Section - Allowed Bicycles</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility
+                    </button>
 
                     <div>
                         <div parking-section="0">
@@ -967,7 +1037,8 @@
                             <div class="wrap-contact100-subsection">
                                 <p class="info-text">
                                     <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                                    Here you can enter the different types of bicycles someone can store in this facility section.
+                                    Here you can enter the different types of bicycles someone can store in this
+                                    facility section.
                                 </p>
                                 <p class="no-items-error">Please add at least one bicycle type that is allowed in this
                                     facility section.</p>
@@ -1050,13 +1121,15 @@
             <fieldset>
                 <div id="step-facility-section-4-1">
                     <h2>Facility Section - Features</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility
+                    </button>
 
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
                                 <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                                    Here you can add special features this facility section provides. Take a look at the available options.
+                                    Here you can add special features this facility section provides. Take a look at the
+                                    available options.
                                 </p>
                                 <div>
                                     <div class="wrap-contact100-subsection dynamic-section">
@@ -1164,7 +1237,8 @@
             <fieldset>
                 <div id="step-facility-section-5-1">
                     <h2>Facility Section - Cost Model</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
+                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility
+                    </button>
 
                     <div>
                         <div parking-section="0">
@@ -1351,9 +1425,14 @@
                                                 <span style="display: inherit; padding-left: 15px;">Describe how this price specification operates.</span><br>
                                                 <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
                                             </div>
-                                            <textarea class="input100"
-                                                      name="priceSpecification._PriceSpecification.description"
-                                                      placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100"
+                                                              name="priceSpecification._PriceSpecification.description"
+                                                              placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
@@ -1372,7 +1451,9 @@
                 <div id="step-facility-section-6-1">
                     <h2>Facility Section - Add Extra Section</h2>
                     <div class="big-text-no-title">Would you like to add another section to this bicycle parking?</div>
-                    <button class="btn btn-primary form-button" type='button' id="button-add-facility-section">Add Section</button>
+                    <button class="btn btn-primary form-button" type='button' id="button-add-facility-section">Add
+                        Section
+                    </button>
                 </div>
             </fieldset>
 
@@ -1382,19 +1463,25 @@
                     <h2>General - URI</h2>
                     <div class="wrap-contact100-section general-information">
                         <p>
-                            In this step you can provide the link/URL where the data about this bicycle parking will be published.
+                            In this step you can provide the link/URL where the data about this bicycle parking will be
+                            published.
                         </p>
                         <p>
                             For example: https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein
                         </p>
                         <p>
-                            In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you. You should leave this field empty if that is what you want.
+                            In case you don't have one we will provide it based on the Data Owner and Local Identifier,
+                            and publish the data for you. You should leave this field empty if that is what you want.
                         </p>
                         <p>
-                            The URI will look something like this for example: https://velopark.ilabt.imec.be/data/APCOA/APCOA_018
+                            The URI will look something like this for example:
+                            https://velopark.ilabt.imec.be/data/APCOA/APCOA_018
                         </p>
                         <p>
-                            Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely. We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (http://velopark.be) if you need assistance for this.
+                            Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it
+                            will remain online indefinitely. We recommend that you publish the data generated with this
+                            tool on your own website and link it to your CMS system so it updates automatically. Contact
+                            us (http://velopark.be) if you need assistance for this.
                         </p>
                         <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">
                             <span class="label-input100">Parking Facility URI *</span>

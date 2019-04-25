@@ -198,7 +198,14 @@ function cleanEmptyValues(obj) {
 function processElement(jsonld, element) {
     let dName = element.attr('name').split('.');
     if (dName.length < 2) {
-        jsonld[`${dName[0]}`] = setElementValue(element, jsonld[`${dName[0]}`], dName[0]);
+        if(element.attr('lang')) {
+            if (jsonld[`${dName[0]}`] === undefined || jsonld[`${dName[0]}`] === '') {
+                jsonld[`${dName[0]}`] = [];
+            }
+            jsonld[`${dName[0]}`].push(setElementWithLanguageValue(element, jsonld[`${dName[0]}`]));
+        } else {
+            jsonld[`${dName[0]}`] = setElementValue(element, jsonld[`${dName[0]}`], dName[0]);
+        }
     } else {
         let temp_obj = jsonld;
 
@@ -218,6 +225,16 @@ function processElement(jsonld, element) {
                         newObj['@type'] = dName[i - 1].substring(1);
                         newObj[`${dName[i]}`] = setElementValue(element, newObj[`${dName[i]}`], dName[i]);
                         temp_obj.push(newObj);
+                    }
+                } else if(element.attr('lang')) {
+                    //element exists in different languages and will therefore also generate an array
+                    if (temp_obj[`${dName[i]}`] === undefined || temp_obj[`${dName[i]}`] === '') {
+                        temp_obj[`${dName[i]}`] = [];
+                        temp_obj[`${dName[i]}`][0] = setElementWithLanguageValue(element, temp_obj[`${dName[i]}`] || []);
+                    } else {
+                        let newObj = {};
+                        newObj = setElementWithLanguageValue(element, newObj[`${dName[i]}`]);
+                        temp_obj[`${dName[i]}`].push(newObj);
                     }
                 } else {
                     //Is not an array. Add value to referenced object
@@ -300,6 +317,18 @@ function setElementValue(el, jsonEl, name) {
 
         return jsonEl;
     }
+}
+
+function setElementWithLanguageValue(el, jsonEl){
+    if(el.val()) {
+        jsonEl = {
+            "@value": el.val(),
+            "@language": el.attr('lang')
+        };
+    } else {
+        jsonEl = {};
+    }
+    return jsonEl;
 }
 
 function formatValue(name, value) {
