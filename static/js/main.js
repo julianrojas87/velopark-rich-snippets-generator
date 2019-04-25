@@ -216,7 +216,7 @@ function handleLoginFeatures() {
 
     $('.plus_button_input').on('click', function () {
         var newCopy;
-        var originalInput = $(this).siblings('div:last');
+        var originalInput = $(this).siblings('div:first');
 
         if (originalInput.css('display') === 'none') {
             newCopy = originalInput;
@@ -227,7 +227,6 @@ function handleLoginFeatures() {
         newCopy.find("input").val("");
         newCopy.hide();          //for animation
         $(this).before(newCopy);
-        newCopy.find('.minus_button_input').show();
         newCopy.slideDown('slow');    //animate
         return false;
     });

@@ -193,23 +193,27 @@
                                 <input class="input100" type="url" name="hasMap.url"
                                        placeholder="Enter the map URL">
                             </div>
-                            <div class="wrap-input100 bg1">
-                                <span class="label-input100">Close To</span>
-                                <input type="image" title="about" class="info_button"
-                                        src="static/images/icons/info.png">
-                                <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                    <h2 style="margin-bottom: 15px;"></h2>
-                                    <input type="image" title="close" class="info_close_button"
-                                            src="static/images/icons/close_white.png"
-                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here the names of landmarks or well known places that users can use to orientate.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>“Standbeeld Fonske”, “Museum M”</i></span>
+                            <div class="dynamic-input-group">
+                                <div class="wrap-input100 bg1">
+                                    <span class="label-input100">Close To</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <span style="display: inherit; padding-left: 15px;">Put here the names of landmarks or well known places that users can use to orientate.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>“Standbeeld Fonske”, “Museum M”</i></span>
+                                    </div>
+                                    <input class="input100 removable-input" type="text" name="closeTo._Place.name"
+                                           placeholder="Enter the name of a nearby known place">
+                                    <button type="button" class="minus_button minus_button_input"><i
+                                            class="fas fa-trash-alt"></i></button>
                                 </div>
-                                <input class="input100 removable-input" type="text" name="closeTo._Place.name"
-                                        placeholder="Enter the name of a nearby known place">
-                                <button style="display: none;" type="button" class="minus_button minus_button_input"><i class="fas fa-trash-alt"></i></button>
+                                <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark
+                                </button>
                             </div>
-                            <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark</button>
                         </div>
                     </div>
                 </div>
