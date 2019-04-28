@@ -1178,3 +1178,8 @@ button.transfer-parking {
   margin-left: 1em;
 }
 
+.alert-warning {
+  color: black;
+  background-color: #fcc32b;
+  border-color: black;
+}
