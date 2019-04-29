@@ -519,15 +519,14 @@ exports.updateParkingAsCityRep = function (companyName, id, filename, location, 
 exports.saveParking = function (id, filename, approvedStatus, location, email, callback) {
     accounts.findOne(
         {
-            email: email,
-            companyEnabled: true
+            email: email
         },
         { maxTimeMS: 10000 },
         function (e, res) {
             if (e != null) {
                 callback(e);
             } else {
-                if (res.companyName != null && res.companyName !== '') {
+                if (res.companyName && res.companyName !== '') {
                     //User is part of a company, parking will be linked to this company instead of this user
                     exports.updateCompanyParkingIDs(res.companyName, id, function (error, result) {
                         if (error != null) {
@@ -537,8 +536,7 @@ exports.saveParking = function (id, filename, approvedStatus, location, email, c
                         }
                     });
                 } else {
-                    //callback("User is not part of a company (or membership is not approved yet). Could not store parking.");
-                    callback(null, null);
+                    updateOrCreateParking(id, filename, approvedStatus, location, callback);
                 }
             }
         }

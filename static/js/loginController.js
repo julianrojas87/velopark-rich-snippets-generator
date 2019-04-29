@@ -125,17 +125,7 @@ let signinformcitiesloaded = false;
             url: domain + '/signup',
             data: {'email': email, 'pass': pass, 'company': company, 'cities': cities},
             success: () => {
-                $.ajax({
-                    type: "POST",
-                    url: domain + '/login',
-                    data: {'email': email, 'pass': pass },
-                    success: () => {
-                        window.location.href = domain + '/home';
-                    },
-                    error: e => {
-                        alert('Error: ' + e.responseText);
-                    }
-                });
+                alert('Your account request has been sent! Once the admins approve it you can login with your credentials.');
             },
             error: e => {
                 alert('Error: ' + e.responseText);
