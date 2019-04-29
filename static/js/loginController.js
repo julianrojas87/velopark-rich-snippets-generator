@@ -27,7 +27,22 @@ let signinformcitiesloaded = false;
         $('#myParkings').remove();
     }
 
+    $('#cm-signin').on('click', function() {
+        $(this).addClass('active');
+        $('#cr-signin').removeClass('active');
+        $('#signup-company').show();
+        $('#signup-cities').hide();
+    });
+
+    $('#cr-signin').on('click', function() {
+        $(this).addClass('active');
+        $('#cm-signin').removeClass('active');
+        $('#signup-company').hide();
+        $('#signup-cities').show();
+    });
+
     $('#signin').on('click', () => {
+        $('#cm-signin').click();
         $('#signin-form').show();
         let domain = domainName != '' ? '/' + domainName : '';
         if(!signinformcompaniesloaded) {

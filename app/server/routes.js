@@ -84,7 +84,6 @@ module.exports = app => {
                     res.cookie('login', key, {maxAge: 900000});
                     res.status(200).send(o);
                 });
-
             }
         });
     });

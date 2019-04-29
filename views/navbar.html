@@ -6,15 +6,16 @@
     <a id="signin">Sign Up</a>
     <a id="login">Log In</a>
     <a id="logout">Log out</a>
-    <a id="user-email"><%= username %></a>
-    <span id="main-title" class="contact100-form-title"
-          style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
-			Velopark Rich Snippets Generator
-		</span>
+    <a id="user-email">
+        <%= username %></a>
+    <span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
+        Velopark Rich Snippets Generator
+    </span>
 </div>
 
 <div id="drop-menu" class="dropdown-content">
-    <a id="myParkings" href="#"><%= company.name %> Parkings</a>
+    <a id="myParkings" href="#">
+        <%= company.name %> Parkings</a>
     <a id="myAdminOverview" href="#">Admin Page</a>
     <a id="myCityOverview" href="#">Region Page</a>
 </div>
@@ -22,37 +23,26 @@
 <!-- Login/Sign up form -->
 <div id="login-form" class="log-form" style="display: none">
     <h2>Login to your account</h2>
-    <input type="image" id="login_close_button" src="static/images/icons/close_white.png"
-           style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+    <input type="image" id="login_close_button" src="static/images/icons/close_white.png" style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
     <form>
-        <input id="login-email" type="email" title="email" placeholder="email"/>
-        <input id="login-pass" type="password" title="username" placeholder="password"/>
+        <input id="login-email" type="email" title="email" placeholder="email" />
+        <input id="login-pass" type="password" title="username" placeholder="password" />
         <button id="login-button" type="submit" class="btn">Login</button>
     </form>
 </div>
 <div id="signin-form" class="log-form">
     <h2>Create a new account</h2>
-    <input type="image" id="signin_close_button" src="static/images/icons/close_white.png"
-           style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-    <form>
-        <input id="signin-email" type="email" title="email" placeholder="email"/>
-        <input id="signin-pass" type="password" title="username" placeholder="password"/>
-        <h4>Are you a member of a company or a government person?</h4>
-        <p>
-            You can now choose whether you are a member of a company or a government representative for certain regions. You can also be both at the same time.
-        </p>
-        <p>
-            If you are a member of a company you can create, edit and store parking data for your company's
-            parkings. This data will be shared amongst other members of your company.
-        </p>
-        <p>
-            If you apply for regional representative, you will be able to access and approve all the parkingdata for
-            your region.
-        </p>
-        <p>
-            Both of these privilleges will have to be accepted by our system admins before they can be used.
-        </p>
-        <div id="signup-company">
+    <input type="image" id="signin_close_button" src="static/images/icons/close_white.png" style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+    <!-- Tab links -->
+    <div class="tab">
+        <button id="cm-signin">Company Member</button>
+        <button id="cr-signin">City Representative</button>
+    </div>
+    <form style="position: relative; bottom: 40px;">
+        <input id="signin-email" type="email" title="email" placeholder="email" />
+        <input id="signin-pass" type="password" title="username" placeholder="password" />
+        
+        <div id="signup-company" style="display: none;">
             <div>
                 <select id="signin-company" company-names="true" class="js-select2" placeholder="Select Company">
                     <option value=""></option>
@@ -60,7 +50,7 @@
                 <div class="dropDownSelect2"></div>
             </div>
         </div>
-        <div id="signup-cities">
+        <div id="signup-cities" style="display: none;">
             <div>
                 <select city-names="true" class="signin-city js-select2" placeholder="Select Region">
                     <option value=""></option>
