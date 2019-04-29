@@ -5,6 +5,11 @@
         window.location.href = domain + '/';
     });
 
+    $('#addParkings').click(() => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        window.location.href = domain + '/';
+    });
+
     $('#myParkings').click(() => {
         let domain = domainName != '' ? '/' + domainName : '';
         window.location.href = domain + '/parkings';

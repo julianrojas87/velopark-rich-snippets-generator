@@ -82,12 +82,10 @@ module.exports = app => {
                 if (o.companyName) {
                     if (!o.companyEnabled) {
                         res.status(403).send('Your account request for ' + o.companyName
-                            + ' is yet to be approved by the administrators');
+                            + ' is yet to be approved by the admins');
                         return;
                     }
-                }
-
-                if (o.cityNames && o.cityNames.length > 0) {
+                } else if (o.cityNames && o.cityNames.length > 0) {
                     let enabled = false;
                     for (let i in o.cityNames) {
                         if (o.cityNames[i]['enabled']) {
@@ -97,9 +95,12 @@ module.exports = app => {
                     }
                     if (!enabled) {
                         res.status(403).send('Your account request as a City Representative'
-                            + ' is yet to be approved by the administrators');
+                            + ' is yet to be approved by the admins');
                         return;
                     }
+                } else if (!o.superAdmin) {
+                    res.status(403).send('Your account is not authorized to login. Please contact the admins.');
+                    return;
                 }
 
                 req.session.user = o;
