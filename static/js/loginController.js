@@ -154,7 +154,11 @@ let signinformcitiesloaded = false;
             url: domain + '/login',
             data: {'email': email, 'pass': pass},
             success: () => {
-                window.location.href = domain + '/home';
+                if(user.superAdmin) {
+                    window.location.href = domain + '/admin';
+                } else {
+                    window.location.href = domain + '/home';
+                }
             },
             error: e => {
                 alert('Error: ' + e.responseText);
