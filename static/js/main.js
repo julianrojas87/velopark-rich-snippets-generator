@@ -164,6 +164,13 @@ function handleLoginFeatures() {
     $('#form-velopark-data-t-' + startStepNumberFacilitySection).parent().before(String.format(stepOverviewFacilityTitleFormat, 1));
 
     let availableLang = ["nl", "en", "de", "es", "fr"];
+    let langDisplayMap = {
+        "nl": "Dutch",
+        "en": "English",
+        "de": "German",
+        "es": "Spanish",
+        "fr": "French"
+    };
 
     $('#language-selection-container input').change(function(){
         let langs = [];
@@ -202,7 +209,7 @@ function handleLoginFeatures() {
                     }
                     newField.find('.input100').attr('lang', langs[i]);
                     newField.attr('lang', langs[i]);
-                    newField.find('span').text(langs[i]);
+                    newField.find('span').text(langDisplayMap[langs[i]]);
                 }
             }
         });

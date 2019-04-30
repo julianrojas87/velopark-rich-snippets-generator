@@ -1203,6 +1203,7 @@ input[type=checkbox].css-checkbox + label.css-label {
 input[type=checkbox].css-checkbox:checked + label.css-label {
     background-position: 0 -18px;
 }
+
 label.css-label {
     background-image: url(../images/icons/checkbox_18px.png);
     -webkit-touch-callout: none;
@@ -1211,4 +1212,9 @@ label.css-label {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.translatable-free-text > span {
+  color: darkslateblue;
+  font-variant-caps: all-small-caps;
 }
