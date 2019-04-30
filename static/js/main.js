@@ -1,3 +1,4 @@
+let parkingDataLoaded = false;
 var loadingPromises = [];
 var context = null;
 const startStepNumberFacilitySection = 4;
@@ -173,80 +174,97 @@ function handleLoginFeatures() {
     };
 
     $('#language-selection-container input').change(function () {
-        let langs = [];
-        $('#language-selection-container input').each(function () {
-            if ($(this).prop("checked")) {
-                langs.push($(this).val());
+        let oneSelected = false;
+        $('#language-selection-container input').each(function(){
+            if($(this).prop('checked')){
+                oneSelected = true;
             }
         });
-        let langsToRemove = new Set(availableLang);
-        [...langs].forEach(function (v) {
-            langsToRemove.delete(v);
-        });
-        let setInputsToHandle = new Set();
+        if(parkingDataLoaded && !oneSelected){
+            //Not allowed, at least one needs to be selected.
+            $(this).prop('checked', true);
+            $('#at-least-one-language').slideDown();
+            setTimeout(function(){
+                $('#at-least-one-language').slideUp();
+            }, 2000);
+        } else {
+            let langs = [];
+            $('#language-selection-container input').each(function () {
+                if ($(this).prop("checked")) {
+                    langs.push($(this).val());
+                }
+            });
+            let langsToRemove = new Set(availableLang);
+            [...langs].forEach(function (v) {
+                langsToRemove.delete(v);
+            });
+            let setInputsToHandle = new Set();
 
-        $('.translatable-free-text').each(function (index, element) {
-            let siblingLangs = new Set();
-            let thisLang = $(this).attr('lang');
-            if (thisLang) {
-                siblingLangs.add(thisLang);
-            }
-            $(this).siblings().each(function () {
-                thisLang = $(this).attr('lang');
+            $('.translatable-free-text').each(function (index, element) {
+                let siblingLangs = new Set();
+                let thisLang = $(this).attr('lang');
                 if (thisLang) {
                     siblingLangs.add(thisLang);
                 }
-            });
-
-            for (let i in langs) {
-                if (!siblingLangs.has(langs[i])) {
-                    let newField;
-                    if (!$(this).attr('lang')) {
-                        newField = $(this);
-                    } else {
-                        newField = $(this).clone();
-                        newField.find('.input100').val('');
-                        $(this).after(newField);
-                        setInputsToHandle.add(newField.find('.input100'));
+                $(this).siblings().each(function () {
+                    thisLang = $(this).attr('lang');
+                    if (thisLang) {
+                        siblingLangs.add(thisLang);
                     }
-                    newField.find('.input100').attr('lang', langs[i]);
-                    newField.attr('lang', langs[i]);
-                    newField.find('span').text(langDisplayMap[langs[i]]);
+                });
+
+                for (let i in langs) {
+                    if (!siblingLangs.has(langs[i])) {
+                        let newField;
+                        if (!$(this).attr('lang')) {
+                            newField = $(this);
+                        } else {
+                            newField = $(this).clone();
+                            newField.find('.input100').val('');
+                            $(this).after(newField);
+                            setInputsToHandle.add(newField.find('.input100'));
+                        }
+                        newField.find('.input100').attr('lang', langs[i]);
+                        newField.attr('lang', langs[i]);
+                        newField.find('span').text(langDisplayMap[langs[i]]);
 
 
-                    /*let input = newField.find('.input100');
-                    input.unbind(focus);
-                    input.focus(function () {
-                        hideValidate(this);
-                        $(this).parent().removeClass('true-validate');
-                    });*/
+                        /*let input = newField.find('.input100');
+                        input.unbind(focus);
+                        input.focus(function () {
+                            hideValidate(this);
+                            $(this).parent().removeClass('true-validate');
+                        });*/
+                    }
                 }
-            }
-        });
-
-        $('.translatable-free-text').each(function () {
-            let fieldLang = $(this).attr('lang');
-            if (langsToRemove.has(fieldLang) || fieldLang === '') {
-                if ($(this).siblings().length > 0) {
-                    $(this).remove();
-                    setInputsToHandle.delete($(this).find('.input100'));
-                } else {
-                    $(this).find('.input100').attr('lang', '');
-                    $(this).attr('lang', '');
-                    $(this).find('span').text('');
-                }
-            }
-        });
-        
-        setInputsToHandle.forEach(function(input){
-            input.unbind(focus);
-            input.focus(function () {
-                hideValidate(this);
-                $(this).parent().removeClass('true-validate');
             });
-        });
 
+            $('.translatable-free-text').each(function () {
+                let fieldLang = $(this).attr('lang');
+                if (langsToRemove.has(fieldLang) || fieldLang === '') {
+                    if ($(this).siblings().length > 0) {
+                        $(this).remove();
+                        setInputsToHandle.delete($(this).find('.input100'));
+                    } else {
+                        $(this).find('.input100').attr('lang', '');
+                        $(this).attr('lang', '');
+                        $(this).find('span').text('');
+                    }
+                }
+            });
+
+            setInputsToHandle.forEach(function (input) {
+                input.unbind(focus);
+                input.focus(function () {
+                    hideValidate(this);
+                    $(this).parent().removeClass('true-validate');
+                });
+            });
+        }
     });
+
+    //Default language
+    $('#language-selection-container #dutch').prop('checked', true).trigger("change");
 
     $(".js-select2").each(function () {
         $(this).select2({
