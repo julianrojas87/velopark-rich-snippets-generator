@@ -7,31 +7,48 @@
             </div>
         <% } %>
         <form id="form-velopark-data" class="contact100-form validate-form" novalidate>
+            <h3 class="section-title">Languages</h3>
+            <fieldset>
+                <div id="step-pre-info-1">
+                    <h2>Data Languages</h2>
+                    <div class="wrap-contact100-section pre-information">
+                        <p class="info-text">
+                            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                            Please select all the languages you want to provide this data in.
+                            This means that the free text fields such as location descriptions and removal conditions
+                            of bikes in your parking will need to have a translation for each of the selected languages.
+                        </p>
+                        <div id="language-selection-container" class="wrap-contact100-subsection">
+                            <div>
+                                <input class="css-checkbox" type="checkbox" id="dutch" name="lang" value="nl">
+                                <label class="css-label" for="dutch">Dutch</label>
+                            </div>
+                            <div>
+                                <input class="css-checkbox" type="checkbox" id="french" name="lang" value="fr">
+                                <label class="css-label" for="french">French</label>
+                            </div>
+                            <div>
+                                <input class="css-checkbox" type="checkbox" id="german" name="lang" value="de">
+                                <label class="css-label" for="german">German</label>
+                            </div>
+                            <div>
+                                <input class="css-checkbox" type="checkbox" id="english" name="lang" value="en">
+                                <label class="css-label" for="english">English</label>
+                            </div>
+                            <div>
+                                <input class="css-checkbox" type="checkbox" id="spanish" name="lang" value="es">
+                                <label class="css-label" for="spanish">Spanish</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
             <h3 class="section-title">Parking Information</h3>
             <fieldset>
                 <div id="step-general-info-1">
                     <h2>General - Parking Information</h2>
                     <div id="general-information" class="wrap-contact100-section general-information">
-                        <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">
-                            <span class="label-input100">Parking Facility URI *</span>
-                            <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
-                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                <h2 style="margin-bottom: 15px;"></h2>
-                                <input type="image" title="close" class="info_close_button"
-                                       src="static/images/icons/close_white.png"
-                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">The link / URL where the data about this bicycle parking will be published.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i></span><br>
-                                <span style="display: inherit; padding-left: 15px;">In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i></span><br>
-                                <span style="display: inherit; padding-left: 15px;">Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.
-                            We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (<a
-                                            style="font-family: Montserrat-SemiBold; font-size: 16px;"
-                                            href="http://velopark.be">http://velopark.be</a>) if you need assistance for this.</span><br>
-                            </div>
-                            <input class="input100" type="url" name="@id"
-                                   placeholder="For example: http://data.gent.be/parkings/fiets/35677">
-                        </div>
 
                         <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
                              data-validate="Enter the facility name">
@@ -158,8 +175,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Description of how users can reach the bicycle parking.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i></span>
                                 </div>
-                                <textarea class="input100" name="address.description"
-                                          placeholder="Describe how to arrive here"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="address.description"
+                                                  placeholder="Describe how to arrive here"></textarea>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="wrap-input100 bg1">
@@ -177,6 +199,7 @@
                                 <input class="input100" type="url" name="hasMap.url"
                                        placeholder="Enter the map URL">
                             </div>
+
                             <div class="dynamic-input-group">
                                 <div class="wrap-input100 bg1">
                                     <span class="label-input100">Close To</span>
@@ -198,6 +221,7 @@
                                 <button class="plus_button_input"><i class="fas fa-plus-square"></i>Add extra landmark
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -633,8 +657,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe who can park their bike here.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Brede publiek</i></span>
                                 </div>
-                                <input class="input100" type="text" name="intendedAudience"
-                                       placeholder="Enter the intended audience (e.g. general public, neighborhood residents)">
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <input class="input100" type="text" name="intendedAudience"
+                                               placeholder="Enter the intended audience (e.g. general public, neighborhood residents)">
+                                    </div>
+                                </div>
                             </div>
                             <div class="wrap-input100 bg0">
                                 <span class="label-input100">Restrictions</span>
@@ -648,8 +677,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe the restrictions of use of this parking garage.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Geen bromfietsen</i></span>
                                 </div>
-                                <textarea class="input100" name="restrictions"
-                                          placeholder="Enter the restrictions (e.g. maximum 2 bikes per resident)"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="restrictions"
+                                                  placeholder="Enter the restrictions (e.g. maximum 2 bikes per resident)"></textarea>
+                                    </div>
+                                </div>
                             </div>
                             <div class="wrap-input100 bg0">
                                 <span class="label-input100">Removal Conditions</span>
@@ -663,8 +697,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe on what conditions / when a bike will be removed from the bicycle parking.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i></span>
                                 </div>
-                                <textarea class="input100" name="removalConditions"
-                                          placeholder="Describe the conditions to be met for removing a bike (e.g. exceed maximum storage time)"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="removalConditions"
+                                                  placeholder="Describe the conditions to be met for removing a bike (e.g. exceed maximum storage time)"></textarea>
+                                    </div>
+                                </div>
                             </div>
                             <div class="wrap-input100 bg0">
                                 <span class="label-input100">Post Removal Action</span>
@@ -678,8 +717,13 @@
                                     <span style="display: inherit; padding-left: 15px;">Describe how, when and how cyclists can recover a bike that was removed.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Verwijderde fiertsen kunnen gedurende drie maanden opgehaald worden bij het centraal depot. Daarna worden ze verkocht of vernietigd. (zie contactgegevens voor mail / telefoon).</i></span>
                                 </div>
-                                <textarea class="input100" name="postRemovalAction"
-                                          placeholder="Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"></textarea>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <textarea class="input100" name="postRemovalAction"
+                                                  placeholder="Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"></textarea>
+                                    </div>
+                                </div>
                             </div>
 
                             <span class="contact100-form-subsubsection" style="width: 90%;">
@@ -880,8 +924,13 @@
                                                 <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
                                                 <span style="display: inherit; padding-left: 15px;">Example: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i></span>
                                             </div>
-                                            <textarea class="input100" name="entrance._Entrance.description"
-                                                      placeholder="Describe how to get here"></textarea>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100" name="entrance._Entrance.description"
+                                                              placeholder="Describe how to get here"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>
@@ -948,8 +997,13 @@
                                                 <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
                                                 <span style="display: inherit; padding-left: 15px;">Example: <i>De uitgang bevindt zich aan beide zijden van het plein. Let op: verboden om in de garage te fietsen!</i></span>
                                             </div>
-                                            <textarea class="input100" name="exit._Exit.description"
-                                                      placeholder="Describe how to get here"></textarea>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100" name="exit._Exit.description"
+                                                              placeholder="Describe how to get here"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra exit
@@ -972,7 +1026,8 @@
                             <div class="wrap-contact100-subsection">
                                 <p class="info-text">
                                     <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                                    Here you can enter the different types of bicycles someone can store in this facility section.
+                                    Here you can enter the different types of bicycles someone can store in this
+                                    facility section.
                                 </p>
                                 <p class="no-items-error">Please add at least one bicycle type that is allowed in this
                                     facility section.</p>
@@ -1060,7 +1115,8 @@
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
                                 <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                                    Here you can add special features this facility section provides. Take a look at the available options.
+                                    Here you can add special features this facility section provides. Take a look at the
+                                    available options.
                                 </p>
                                 <div>
                                     <div class="wrap-contact100-subsection dynamic-section">
@@ -1354,9 +1410,14 @@
                                                 <span style="display: inherit; padding-left: 15px;">Describe how this price specification operates.</span><br>
                                                 <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
                                             </div>
-                                            <textarea class="input100"
-                                                      name="priceSpecification._PriceSpecification.description"
-                                                      placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100"
+                                                              name="priceSpecification._PriceSpecification.description"
+                                                              placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
@@ -1375,7 +1436,59 @@
                 <div id="step-facility-section-6-1">
                     <h2>Facility Section - Add Extra Section</h2>
                     <div class="big-text-no-title">Would you like to add another section to this bicycle parking?</div>
-                    <button class="btn btn-primary form-button" type='button' id="button-add-facility-section">Add Section</button>
+                    <button class="btn btn-primary form-button" type='button' id="button-add-facility-section">Add
+                        Section
+                    </button>
+                </div>
+            </fieldset>
+
+            <h3 class="section-title">URI</h3>
+            <fieldset>
+                <div id="step-general-info-4">
+                    <h2>General - URI</h2>
+                    <div class="wrap-contact100-section general-information">
+                        <p>
+                            In this step you can provide the link/URL where the data about this bicycle parking will be
+                            published.
+                        </p>
+                        <p>
+                            For example: https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein
+                        </p>
+                        <p>
+                            In case you don't have one we will provide it based on the Data Owner and Local Identifier,
+                            and publish the data for you. You should leave this field empty if that is what you want.
+                        </p>
+                        <p>
+                            The URI will look something like this for example:
+                            https://velopark.ilabt.imec.be/data/APCOA/APCOA_018
+                        </p>
+                        <p>
+                            Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it
+                            will remain online indefinitely. We recommend that you publish the data generated with this
+                            tool on your own website and link it to your CMS system so it updates automatically. Contact
+                            us (http://velopark.be) if you need assistance for this.
+                        </p>
+                        <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">
+                            <span class="label-input100">Parking Facility URI *</span>
+                            <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
+                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                <h2 style="margin-bottom: 15px;"></h2>
+                                <input type="image" title="close" class="info_close_button"
+                                       src="static/images/icons/close_white.png"
+                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                <span style="display: inherit; padding-left: 15px;">The link / URL where the data about this bicycle parking will be published.</span><br>
+                                <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i></span><br>
+                                <span style="display: inherit; padding-left: 15px;">In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.</span><br>
+                                <span style="display: inherit; padding-left: 15px;">Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i></span><br>
+                                <span style="display: inherit; padding-left: 15px;">Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.
+                            We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (<a
+                                            style="font-family: Montserrat-SemiBold; font-size: 16px;"
+                                            href="http://velopark.be">http://velopark.be</a>) if you need assistance for this.</span><br>
+                            </div>
+                            <input class="input100" type="url" name="@id"
+                                   placeholder="For example: http://data.gent.be/parkings/fiets/35677">
+                        </div>
+                    </div>
                 </div>
             </fieldset>
 

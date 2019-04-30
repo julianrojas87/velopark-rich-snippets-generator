@@ -73,6 +73,7 @@ function loadSections(graph) {
 }
 
 function processArray(path, arr, input) {
+    //console.log(path);
     let lastPath = path[path.length - 1];
     // Handle div inputs
     if (['openingHoursSpecification', 'hoursAvailable'].indexOf(lastPath) >= 0) {
@@ -127,10 +128,29 @@ function processArray(path, arr, input) {
         // Normal object arrays that map to a single UI input (e.g closeTo or availableLanguages)
         for (let i = 0; i < arr.length; i++) {
             let obj = arr[i];
-            path.push('_' + obj['@type']);
-            processObject(obj, path, input);
-            path.pop();
+            if(obj["@language"]){
+                let checkbox = $('#language-selection-container input[value="' + obj["@language"] + '"]');
+                if(!checkbox[0].checked){
+                    checkbox.prop('checked', true).trigger("change");
+                }
+                processObjectWithLanguage(obj, path, input);
+            } else {
+                path.push('_' + obj['@type']);
+                processObject(obj, path, input);
+                path.pop();
+            }
         }
+    }
+}
+
+function processObjectWithLanguage(obj, path, inputs){
+    let name = path.join('.');
+    let lang = obj["@language"];
+    let value = obj["@value"];
+    if(inputs) {
+        inputs.filter('[name="' + name + '"][lang="' + lang + '"]').val(value);
+    } else {
+        $('.input100[name="' + name + '"][lang="' + lang + '"]').val(value);
     }
 }
 
