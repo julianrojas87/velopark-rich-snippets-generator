@@ -455,80 +455,6 @@ textarea.input100 {
   }
 }
 
-
-
-/*------------------------------------------------------------------
-[ Alert validate ]*/
-
-.validate-input {
-  position: relative;
-}
-
-.alert-validate::before {
-  content: attr(data-validate);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  position: absolute;
-  width: 80%;
-  min-height: 40px;
-  background-color: #f7f7f7;
-  top: 35px;
-  left: 0px;
-  padding: 0 45px 0 22px;
-  pointer-events: none;
-
-  font-family: Montserrat-SemiBold;
-  font-size: 18px;
-  color: #fa4251;
-  line-height: 1.2;
-}
-
-.btn-hide-validate {
-  font-family: Material-Design-Iconic-Font;
-  font-size: 18px;
-  color: #fa4251;
-  cursor: pointer;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  top: 35px;
-  right: 70px;
-}
-
-.rs1-alert-validate.alert-validate::before {
-  background-color: #fff;
-}
-
-.true-validate::after {
-  content: "\f26b";
-  font-family: Material-Design-Iconic-Font;
-  font-size: 18px;
-  color: #00ad5f;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  top: 35px;
-  right: 70px;
-}
-
 /*---------------------------------------------*/
 @media (max-width: 576px) {
   .alert-validate::before {
@@ -1145,7 +1071,7 @@ button.steps-overview-remove-facility-button i {
   border-radius: 0;
 }
 
-.steps>ul>li:nth-of-type(1), .steps>ul>li:nth-of-type(2), .steps>ul>li:nth-of-type(3), .steps>ul>li:nth-last-of-type(1), .steps>ul>li:nth-last-of-type(2) {
+.steps>ul>li:nth-of-type(1), .steps>ul>li:nth-of-type(2), .steps>ul>li:nth-of-type(3), .steps>ul>li:nth-of-type(4), .steps>ul>li:nth-last-of-type(1), .steps>ul>li:nth-last-of-type(2), .steps>ul>li:nth-last-of-type(3) {
   margin: 4px;
   border-left: none;
 }
@@ -1176,6 +1102,131 @@ button.transfer-parking i {
 
 button.transfer-parking {
   margin-left: 1em;
+}
+
+#language-selection-container {
+    font-size: 20px;
+}
+
+input[type=checkbox].css-checkbox {
+    position:absolute;
+    z-index:-1000;
+    left:-1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height:1px;
+    width:1px;
+    margin:-1px;
+    padding:0;
+    border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left:23px;
+    height:18px;
+    display:inline-block;
+    line-height:18px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    font-size:18px;
+    vertical-align:middle;
+    cursor:pointer;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -18px;
+}
+
+label.css-label {
+    background-image: url(../images/icons/checkbox_18px.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.translatable-free-text {
+  position: relative;
+}
+
+.translatable-free-text > span {
+  color: darkslateblue;
+  font-variant-caps: all-small-caps;
+}
+
+/*------------------------------------------------------------------
+[ Alert validate ]*/
+
+.validate-input {
+  position: relative;
+}
+
+.alert-validate::before {
+  content: attr(data-validate);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 80%;
+  min-height: 40px;
+  background-color: #f7f7f7;
+  top: 35px;
+  left: 0px;
+  padding: 0 45px 0 22px;
+  pointer-events: none;
+
+  font-family: Montserrat-SemiBold;
+  font-size: 18px;
+  color: #fa4251;
+  line-height: 1.2;
+}
+
+.btn-hide-validate {
+  font-family: Material-Design-Iconic-Font;
+  font-size: 18px;
+  color: #fa4251;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 35px;
+  right: 70px;
+}
+
+.rs1-alert-validate.alert-validate::before {
+  background-color: #fff;
+}
+
+.true-validate::after {
+  content: "\f26b";
+  font-family: Material-Design-Iconic-Font;
+  font-size: 18px;
+  color: #00ad5f;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 35px;
+  right: 70px;
 }
 
 .alert-warning {
