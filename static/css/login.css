@@ -57,11 +57,6 @@ body {
   z-index: 9999;
 }
 
-#signin-form {
-  width: 75%;
-  max-width: 80%;
-}
-
 @media (max-width: 40em) {
   .log-form, #signin-form {
     width: 95%;
@@ -154,4 +149,31 @@ body {
 }
 #signup-cities>div>* {
   display: inline-block;
+}
+
+.tab {
+  overflow-y: hidden;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  position: relative;
+  bottom: 50px;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 13px 15px;
+  transition: 0.3s;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tab button.active {
+  background-color: #fcc32b;
 }

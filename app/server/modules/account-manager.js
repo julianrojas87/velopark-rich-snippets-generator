@@ -1,9 +1,15 @@
 
 const crypto = require('crypto');
 const moment = require('moment');
+const utils = require('../utils/utils');
 const dbAdapter = require('./database-adapter');
 
-const guid = function () { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0, v = c == 'x' ? r : r & 0x3 | 0x8; return v.toString(16); }); }
+const guid = () => { 
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, 
+		c => { 
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : r & 0x3 | 0x8; return v.toString(16); 
+		}); 
+}
 
 /*
 	login validation methods
@@ -54,12 +60,12 @@ exports.validatePasswordKey = function (passKey, ipAddress, callback) {
 	dbAdapter.findAccountByPasskey(passKey, ipAddress, callback);
 };
 
-exports.isUserSuperAdmin = function(email, callback){
-	dbAdapter.findAccountByEmail(email, function(error, res){
-		if(error != null){
+exports.isUserSuperAdmin = function (email, callback) {
+	dbAdapter.findAccountByEmail(email, function (error, res) {
+		if (error != null) {
 			callback(error);
 		} else {
-			if(res.superAdmin){
+			if (res.superAdmin) {
 				callback(null, true);
 			} else {
 				callback(null, false);
@@ -68,9 +74,9 @@ exports.isUserSuperAdmin = function(email, callback){
 	});
 };
 
-exports.getAccountCityNamesByEmail = function(email, callback){
-	dbAdapter.findAccountByEmail(email, function(error, res){
-		if(error != null){
+exports.getAccountCityNamesByEmail = function (email, callback) {
+	dbAdapter.findAccountByEmail(email, function (error, res) {
+		if (error != null) {
 			callback(error);
 		} else {
 			callback(null, res.cityNames);
@@ -78,13 +84,13 @@ exports.getAccountCityNamesByEmail = function(email, callback){
 	});
 };
 
-exports.isUserCityRep = function(email, cityName, callback){
-	dbAdapter.findAccountByEmail(email, function(error, res){
-		if(error != null){
+exports.isUserCityRep = function (email, cityName, callback) {
+	dbAdapter.findAccountByEmail(email, function (error, res) {
+		if (error != null) {
 			callback(error);
 		} else {
 
-			if(cityName === ''){	//if city is not specified, return whether or not there are cities linked to this account
+			if (cityName === '') {	//if city is not specified, return whether or not there are cities linked to this account
 				callback(null, res.cityNames.length > 0);
 			} else {	//if city is specified, return whether this city is managed by this user
 				let found = false;
@@ -105,11 +111,11 @@ exports.isUserCityRep = function(email, cityName, callback){
 	});
 };
 
-exports.isAccountCityRepForParkingID = function(email, parkingID, callback){
+exports.isAccountCityRepForParkingID = function (email, parkingID, callback) {
 	dbAdapter.isAccountCityRepForParkingID(email, parkingID, callback);
 };
 
-exports.getAllEmails = function(callback){
+exports.getAllEmails = function (callback) {
 	dbAdapter.findAllEmails(callback);
 };
 
@@ -122,39 +128,34 @@ exports.addNewAccount = function (newData, callback) {
 	let email = newData.email;
 	let companyName = newData.companyName;
 	let cityNames = [];
-	for(let city in newData.cityNames){
+	for (let city in newData.cityNames) {
 		cityNames.push({ name: newData.cityNames[city], enabled: false });
 	}
 
 	//TODO: validate city names
 
-	if(!email.includes("@")){
-		callback("Invalid email adress.");
-	} else if((companyName == null || companyName === '') && cityNames.length === 0){
+	if (!email.includes("@")) {
+		callback("Invalid email address.");
+	} else if ((companyName == null || companyName === '') && cityNames.length === 0) {
 		callback("No valid company or region given.");
 	} else {
-		if(companyName === ''){
+		if (companyName === '') {
 			companyName = null;
 		}
 		dbAdapter.findAccountByEmail(email, function (e, o) {
 			if (o) {
 				callback('There is already an account with this email address');
 			} else {
-				saltAndHash(pass, function (hash) {
-					pass = hash;
-					// append date stamp when record was created //
-					let date = moment().format('MMMM Do YYYY, h:mm:ss a');
-					//copy data to prevent unwanted data fields in database in case of misuse.
-					let insertData = {
-						email: email,
-						pass: pass,
-						date: date,
-						companyName: companyName,
-						cityNames: cityNames,
-						superAdmin: false
-					};
-					dbAdapter.insertAccount(insertData, callback);
-				});
+				//copy data to prevent unwanted data fields in database in case of misuse.
+				let insertData = {
+					email: email,
+					pass: utils.saltAndHash(pass),
+					date: new Date(),
+					companyName: companyName,
+					cityNames: cityNames,
+					superAdmin: false
+				};
+				dbAdapter.insertAccount(insertData, callback);
 			}
 		});
 	}
@@ -164,18 +165,14 @@ exports.updateAccount = function (newData, callback) {
 	if (!newData.pass || newData.pass === '') {
 		dbAdapter.updateAccount(newData, callback);
 	} else {
-		saltAndHash(newData.pass, function (hash) {
-			newData.pass = hash;
-			dbAdapter.updateAccount(newData, callback);
-		});
+		newData.pass = utils.saltAndHash(newData.pass);
+		dbAdapter.updateAccount(newData, callback);
 	}
 };
 
 exports.updatePassword = function (passKey, newPass, callback) {
-	saltAndHash(newPass, function (hash) {
-		newPass = hash;
-		dbAdapter.updateAccountPassByPasskey(passKey, newPass, callback);
-	});
+	newPass = utils.saltAndHash(newPass);
+	dbAdapter.updateAccountPassByPasskey(passKey, newPass, callback);
 };
 
 /*
@@ -194,40 +191,21 @@ exports.deleteAllAccounts = function (callback) {
 	dbAdapter.deleteAccounts(callback);
 };
 
-exports.toggleCompanyEnabled = function(email, enabled, callback){
+exports.toggleCompanyEnabled = function (email, enabled, callback) {
 	dbAdapter.updateAccountEnableCompany(email, enabled, callback);
 };
 
-exports.toggleCityEnabled = function(email, cityName, enabled, callback){
+exports.toggleCityEnabled = function (email, cityName, enabled, callback) {
 	dbAdapter.updateAccountEnableCity(email, cityName, enabled, callback);
 };
 
 /*
-	private encryption & validation methods
+	validation methods
 */
-
-var generateSalt = function () {
-	var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ';
-	var salt = '';
-	for (var i = 0; i < 10; i++) {
-		var p = Math.floor(Math.random() * set.length);
-		salt += set[p];
-	}
-	return salt;
-};
-
-var md5 = function (str) {
-	return crypto.createHash('md5').update(str).digest('hex');
-};
-
-var saltAndHash = function (pass, callback) {
-	var salt = generateSalt();
-	callback(salt + md5(pass + salt));
-};
 
 var validatePassword = function (plainPass, hashedPass, callback) {
 	var salt = hashedPass.substr(0, 10);
-	var validHash = salt + md5(plainPass + salt);
+	var validHash = salt + utils.md5(plainPass + salt);
 	callback(null, hashedPass === validHash);
 };
 

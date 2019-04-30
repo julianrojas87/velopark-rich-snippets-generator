@@ -7,7 +7,7 @@ const PM = require('./modules/parkings-manager');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
-const vocabURI = config['vocabulary'] || 'https://velopark.ilabt.imec.be';
+const vocabURI = config['vocabulary'] || 'http://velopark.ilabt.imec.be';
 
 module.exports = app => {
 
@@ -24,7 +24,7 @@ module.exports = app => {
                 vocabURI: vocabURI,
                 username: null,
                 superAdmin: false,
-                company: {name: null, enabled: false},
+                company: { name: null, enabled: false },
                 cityrep: false
             });
         } else {
@@ -42,7 +42,7 @@ module.exports = app => {
                         vocabURI: vocabURI,
                         username: null,
                         superAdmin: false,
-                        company: {name: null, enabled: false},
+                        company: { name: null, enabled: false },
                         cityrep: false
                     });
                 }
@@ -79,12 +79,35 @@ module.exports = app => {
             if (!o) {
                 res.status(400).send(e);
             } else {
+                if (o.companyName) {
+                    if (!o.companyEnabled) {
+                        res.status(403).send('Your account request for ' + o.companyName
+                            + ' is yet to be approved by the admins');
+                        return;
+                    }
+                } else if (o.cityNames && o.cityNames.length > 0) {
+                    let enabled = false;
+                    for (let i in o.cityNames) {
+                        if (o.cityNames[i]['enabled']) {
+                            enabled = true;
+                            break;
+                        }
+                    }
+                    if (!enabled) {
+                        res.status(403).send('Your account request as a City Representative'
+                            + ' is yet to be approved by the admins');
+                        return;
+                    }
+                } else if (!o.superAdmin) {
+                    res.status(403).send('Your account is not authorized to login. Please contact the admins.');
+                    return;
+                }
+
                 req.session.user = o;
                 AM.generateLoginKey(o.email, req.ip, function (key) {
-                    res.cookie('login', key, {maxAge: 900000});
+                    res.cookie('login', key, { maxAge: 900000 });
                     res.status(200).send(o);
                 });
-
             }
         });
     });
@@ -120,7 +143,7 @@ module.exports = app => {
                             username: req.session.user.email,
                             loadedParking: parkingData,
                             superAdmin: req.session.user.superAdmin,
-                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             emailParkingOwner: accountEmail,
                             nameCompanyParkingOwner: companyName
@@ -134,7 +157,7 @@ module.exports = app => {
                     username: req.session.user.email,
                     loadedParking: '',
                     superAdmin: req.session.user.superAdmin,
-                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     emailParkingOwner: null,
                     nameCompanyParkingOwner: null
@@ -161,7 +184,7 @@ module.exports = app => {
                             vocabURI: vocabURI,
                             username: req.session.user.email,
                             superAdmin: req.session.user.superAdmin,
-                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                         });
                     } else {
@@ -192,7 +215,7 @@ module.exports = app => {
                 } else {
                     if (value === true) {
                         PM.listAllParkings(function (error, parkings) {
-                            if(error != null){
+                            if (error != null) {
                                 console.error(error);
                                 res.status(500).send();
                             } else {
@@ -243,7 +266,7 @@ module.exports = app => {
                                     username: req.session.user.email,
                                     users: users ? users : {},
                                     superAdmin: req.session.user.superAdmin,
-                                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -337,7 +360,7 @@ module.exports = app => {
                                     username: req.session.user.email,
                                     companies: companies ? companies : [],
                                     superAdmin: req.session.user.superAdmin,
-                                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -438,7 +461,7 @@ module.exports = app => {
                         username: req.session.user.email,
                         cityNames: result,
                         superAdmin: req.session.user.superAdmin,
-                        company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                        company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 } else {
@@ -479,7 +502,7 @@ module.exports = app => {
                                     cityName: cityname,
                                     parkings: parkings ? parkings : {},
                                     superAdmin: req.session.user.superAdmin,
-                                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -524,7 +547,7 @@ module.exports = app => {
             res.redirect(domain + '/');
         } else {
             PM.listParkingsByEmail(req.session.user.email, function (error, parkings) {
-                if(error != null){
+                if (error != null) {
                     res.status(500).send("Could not get parkings for this user.");
                 } else {
                     res.render('parkings.html', {
@@ -533,7 +556,7 @@ module.exports = app => {
                         username: req.session.user.email,
                         parkings: parkings ? parkings : {},
                         superAdmin: req.session.user.superAdmin,
-                        company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                        company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 }
@@ -607,7 +630,7 @@ module.exports = app => {
                         if (error != null) {
                             res.status(500).send('Database error');
                         } else {
-                            if(result != null) {
+                            if (result != null) {
                                 res.status(200).send('ok');
                             } else {
                                 //user could still be a city representative for his own parkings (or even superadmin), even if his company is disabled.. This would be an awkward thing, but he should still be able to edit the parkings
@@ -622,7 +645,7 @@ module.exports = app => {
         }
     });
 
-    let saveParkingAsAdminOrCityRep = function(req, res){
+    let saveParkingAsAdminOrCityRep = function (req, res) {
         AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
             if (value) {
                 if (req.body['jsonld']) {
@@ -799,7 +822,7 @@ module.exports = app => {
                 res.redirect('/');
             } else {
                 req.session.passKey = req.query['key'];
-                res.render('reset', {title: 'Reset Password'});
+                res.render('reset', { title: 'Reset Password' });
             }
         })
     });
@@ -824,7 +847,7 @@ module.exports = app => {
 
     app.get('/print', function (req, res) {
         AM.getAllRecords(function (e, accounts) {
-            res.render('print', {title: 'Account List', accts: accounts});
+            res.render('print', { title: 'Account List', accts: accounts });
         })
     });
 

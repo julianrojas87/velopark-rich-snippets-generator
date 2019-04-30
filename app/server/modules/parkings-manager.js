@@ -64,7 +64,8 @@ exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
 };
 
 /*
-    If a username is given, it will be checked whether his company membership had been approved. If only a company is given, no check is performed.
+    If a username is given, it will be checked whether his company membership had been approved. 
+    If only a company is given, no check is performed.
 */
 exports.saveParking = async (user, companyName, parking, callback) => {
     if (user == null && companyName == null) {
@@ -203,7 +204,7 @@ exports.getParking = async (user, parkingId, callback) => {
                                         if (account) {
                                             callback(null, result, account.email);
                                         } else {
-                                            callback(null, result, null, company.name);
+                                            callback(null, result, null, company ? company.name : null);
                                         }
                                     });
                                 } else {
