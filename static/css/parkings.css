@@ -33,7 +33,6 @@ div.table-title {
   background: white;
   border-radius:3px;
   border-collapse: collapse;
-  height: 320px;
   margin: auto;
   max-width: 100%;
   padding:5px;
@@ -129,4 +128,8 @@ td.text-center {
 
 td.text-right {
   text-align: right;
+}
+
+.table-parkings i.far {
+  font-size: 25px;
 }

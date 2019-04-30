@@ -1,5 +1,11 @@
 <div class="container-contact100">
     <div class="wrap-contact100">
+        <% if(!username){ %>
+            <div class="alert alert-warning" role="alert">
+                <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                WARNING: You are not logged in. You can still use this tool to generate a JSON-LD file, but you will not be able to save it into our catalog.
+            </div>
+        <% } %>
         <form id="form-velopark-data" class="contact100-form validate-form" novalidate>
             <h3 class="section-title">Parking Information</h3>
             <fieldset>
@@ -522,7 +528,6 @@
             <fieldset>
                 <div id="step-facility-section-1-1">
                     <h2>Facility Section - Operation Information</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
 
                     <div class="wrap-contact100-section">
                         <div parking-section="0" class="wrap-contact100-subsection">
@@ -743,7 +748,6 @@
             <fieldset>
                 <div id="step-facility-section-2-1">
                     <h2>Facility Section - Location</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
 
                     <div>
                         <div parking-section="0">
@@ -961,7 +965,6 @@
             <fieldset>
                 <div id="step-facility-section-3-1">
                     <h2>Facility Section - Allowed Bicycles</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
 
                     <div>
                         <div parking-section="0">
@@ -1052,7 +1055,6 @@
             <fieldset>
                 <div id="step-facility-section-4-1">
                     <h2>Facility Section - Features</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
 
                     <div>
                         <div parking-section="0">
@@ -1166,7 +1168,6 @@
             <fieldset>
                 <div id="step-facility-section-5-1">
                     <h2>Facility Section - Cost Model</h2>
-                    <button type="button" class="minus-button-facility"><i class="fas fa-trash-alt"></i>Remove Facility</button>
 
                     <div>
                         <div parking-section="0">

@@ -15,21 +15,7 @@
     </p>
 
     <!-- Navigation Bar -->
-    <div id="navbar" class="sticky">
-        <div id="page-logo-helper">
-            <img src="static/images/icons/velopark.png">
-        </div>
-        <a id="logout">Log out</a>
-        <a id="user-email">
-            <%= username %></a>
-        <span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
-            Velopark Rich Snippets Generator
-        </span>
-    </div>
-
-    <div id="drop-menu" class="dropdown-content">
-        <a id="myParkings" href="#">My Parking Facilities</a>
-    </div>
+    <% include navbar.html %>
 
     <div class="container-contact100">
         <div class="wrap-contact100" style="width: 100%;">
@@ -38,6 +24,7 @@
                     <tr>
                         <th class="text-left">Parking Facility URI</th>
                         <th class="text-left">Parking Name</th>
+                        <th class="text-left">Approved</th>
                         <th class="text-left">Actions</th>
                     </tr>
                 </thead>
@@ -50,6 +37,13 @@
                         </td>
                         <td class="text-left" style="font-size: 20px;">
                             <%= parkings[i]['name'] %>
+                        </td>
+                        <td class="text-left" style="font-size: 20px;">
+                            <% if(parkings[i]['approvedstatus']){ %>
+                                <i class="far fa-check-circle" style="color:#00b417"></i>
+                            <% } else { %>
+                                <i class="fas fa-times" style="color:red"></i>
+                            <% } %>
                         </td>
                         <td class="text-left">
                             <input title="Edit" type="image" src="static/images/icons/edit.png" style="float: left; width: 40px;">

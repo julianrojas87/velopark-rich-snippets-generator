@@ -1,7 +1,86 @@
+let signinformcompaniesloaded = false;
+let signinformcitiesloaded = false;
+
 ($ => {
 
+    if (user && user.name && user.name !== '') {
+        $('#signin').hide();
+        $('#login').hide();
+        $('#logout').show();
+        $('#user-email').text(user.name).show();
+    } else {
+        $('#logout').hide();
+        $('#user-email').hide();
+        $('#signin').show();
+        $('#login').show();
+    }
+
+    if (!user || user.superAdmin !== "true") {
+        $('#myAdminOverview').remove();
+    }
+
+    if (!user || !user.cityrep || user.cityrep !== "true") {
+        $('#myCityOverview').remove();
+    }
+
+    if (!user.company.name || user.company.enabled !== "true") {
+        $('#myParkings').remove();
+    }
+
+    $('#cm-signin').on('click', function () {
+        $(this).addClass('active');
+        $('#cr-signin').removeClass('active');
+        $('#signup-company').show();
+        $('#signup-cities').hide();
+    });
+
+    $('#cr-signin').on('click', function () {
+        $(this).addClass('active');
+        $('#cm-signin').removeClass('active');
+        $('#signup-company').hide();
+        $('#signup-cities').show();
+    });
+
     $('#signin').on('click', () => {
+        $('#cm-signin').click();
         $('#signin-form').show();
+        let domain = domainName != '' ? '/' + domainName : '';
+        if (!signinformcompaniesloaded) {
+            $.ajax({
+                type: "GET",
+                url: domain + '/companynames',
+                success: data => {
+                    signinformcompaniesloaded = true;
+                    $('select[company-names="true"]').each(function () {
+                        for (let i in data) {
+                            $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                        }
+                    });
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
+                    reject(e);
+                }
+            });
+        }
+        if (!signinformcitiesloaded) {
+            $.ajax({
+                type: "GET",
+                url: domain + '/citynames',
+                success: data => {
+                    signinformcitiesloaded = true;
+                    $('select[city-names="true"]').each(function () {
+                        for (let i in data) {
+                            $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                        }
+                    });
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
+                    reject(e);
+                }
+            });
+        }
     });
 
     $('#signin_close_button').on('click', () => {
@@ -32,23 +111,26 @@
         let domain = domainName != '' ? '/' + domainName : '';
         let email = $('#signin-email').val();
         let pass = $('#signin-pass').val();
+        let company = null;
+        let cities = [];
+
+        if ($('#cm-signin').hasClass('active')) {
+            company = $('#signin-company').val();
+        } else {
+            $('.signin-city').each(function () {
+                let city = $(this).val();
+                if (city != "") {
+                    cities.push(city);
+                }
+            });
+        }
 
         $.ajax({
             type: "POST",
             url: domain + '/signup',
-            data: { 'email': email, 'pass': pass },
+            data: { 'email': email, 'pass': pass, 'company': company, 'cities': cities },
             success: () => {
-                $.ajax({
-                    type: "POST",
-                    url: domain + '/login',
-                    data: { 'email': email, 'pass': pass },
-                    success: () => {
-                        window.location.href = domain + '/home?username=' + email;
-                    },
-                    error: e => {
-                        alert('Error: ' + e.responseText);
-                    }
-                });
+                alert('Your account request has been sent! Once the admins approve it you can login with your credentials.');
             },
             error: e => {
                 alert('Error: ' + e.responseText);
@@ -67,7 +149,11 @@
             url: domain + '/login',
             data: { 'email': email, 'pass': pass },
             success: () => {
-                window.location.href = domain + '/home?username=' + email;
+                if (user.superAdmin) {
+                    window.location.href = domain + '/admin';
+                } else {
+                    window.location.href = domain + '/home';
+                }
             },
             error: e => {
                 alert('Error: ' + e.responseText);
@@ -76,3 +162,5 @@
         return false;
     });
 })(jQuery);
+
+

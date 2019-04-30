@@ -33,7 +33,7 @@
 }
 body {
   font-family: 'open sans', helvetica, arial, sans;
-  background: url(http://farm8.staticflickr.com/7064/6858179818_5d652f531c_h.jpg) no-repeat center center fixed;
+  /*background: url(http://farm8.staticflickr.com/7064/6858179818_5d652f531c_h.jpg) no-repeat center center fixed;*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -56,8 +56,9 @@ body {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   z-index: 9999;
 }
+
 @media (max-width: 40em) {
-  .log-form {
+  .log-form, #signin-form {
     width: 95%;
     position: relative;
     margin: 2.5% auto 0 auto;
@@ -136,4 +137,43 @@ body {
 }
 .log-form .forgot:hover {
   color: #1ba0a9;
+}
+
+.log-form input[type="radio"] {
+  display: inline-block;
+  width: auto;
+}
+
+#signup-cities .select2-container {
+  min-width: 15em;
+}
+#signup-cities>div>* {
+  display: inline-block;
+}
+
+.tab {
+  overflow-y: hidden;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  position: relative;
+  bottom: 50px;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 13px 15px;
+  transition: 0.3s;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tab button.active {
+  background-color: #fcc32b;
 }
