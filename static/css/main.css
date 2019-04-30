@@ -1183,3 +1183,8 @@ button.transfer-parking {
   background-color: #fcc32b;
   border-color: black;
 }
+
+#create-new-company {
+  float: left;
+  margin-right: 10px;
+}

@@ -633,7 +633,7 @@ module.exports = app => {
                             if (result != null) {
                                 res.status(200).send('ok');
                             } else {
-                                //user could still be a city representative for his own parkings (or even superadmin), even if his company is disabled.. This would be an awkward thing, but he should still be able to edit the parkings
+                                //user could still be a city representative for his own parkings (or even superadmin), even if his company is disabled. This would be an awkward thing, but he should still be able to edit the parkings
                                 saveParkingAsAdminOrCityRep(req, res);
                             }
                         }
