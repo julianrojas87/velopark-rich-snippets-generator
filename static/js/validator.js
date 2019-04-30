@@ -17,7 +17,7 @@
     /*==================================================================
     [ Validate ]*/
 
-    $('.validate-form .input100').each(function () {
+    $('.validate-form .input100, .translatable-free-text .input100').each(function () {
         $(this).focus(function () {
             hideValidate(this);
             $(this).parent().removeClass('true-validate');
@@ -75,6 +75,26 @@ function validate(input) {
         if ($(input).val().trim() == '') {
             return false;
         }
+    }
+}
+
+function validateLang(freeTextContainer){
+    let empty = [];
+    let filledIn = [];
+    let inputs = freeTextContainer.find('.input100');
+    inputs.each(function(){
+        let input = $(this);
+        if(input.val()){
+            filledIn.push(input);
+        } else {
+            input.parent().attr('data-validate', "You need to fill in this field for each language.");
+            empty.push(input);
+        }
+    });
+    if(empty.length > 0 && filledIn.length > 0){
+        return empty;
+    } else {
+        return null;
     }
 }
 

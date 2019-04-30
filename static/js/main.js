@@ -7,9 +7,9 @@ var currentNumFacilitySections = 1;
 const stepOverviewFacilityTitleFormat = '<div class="steps-overview-facility-title" facilitynum="{0}"><h4 >Facility Section {0}</h4><button type="button" class="minus_button steps-overview-remove-facility-button" facilitynum="{0}"><i class="fas fa-trash-alt"></i></button></div>';
 
 if (!String.format) {
-    String.format = function(format) {
+    String.format = function (format) {
         var args = Array.prototype.slice.call(arguments, 1);
-        return format.replace(/{(\d+)}/g, function(match, number) {
+        return format.replace(/{(\d+)}/g, function (match, number) {
             return typeof args[number] != 'undefined'
                 ? args[number]
                 : match
@@ -172,33 +172,34 @@ function handleLoginFeatures() {
         "fr": "French"
     };
 
-    $('#language-selection-container input').change(function(){
+    $('#language-selection-container input').change(function () {
         let langs = [];
-        $('#language-selection-container input').each(function(){
-            if($(this).prop("checked")){
+        $('#language-selection-container input').each(function () {
+            if ($(this).prop("checked")) {
                 langs.push($(this).val());
             }
         });
         let langsToRemove = new Set(availableLang);
-        [...langs].forEach(function(v) {
+        [...langs].forEach(function (v) {
             langsToRemove.delete(v);
         });
+        let setInputsToHandle = new Set();
 
-        $('.translatable-free-text').each(function(){
+        $('.translatable-free-text').each(function (index, element) {
             let siblingLangs = new Set();
             let thisLang = $(this).attr('lang');
-            if(thisLang){
+            if (thisLang) {
                 siblingLangs.add(thisLang);
             }
-            $(this).siblings().each(function(){
+            $(this).siblings().each(function () {
                 thisLang = $(this).attr('lang');
-                if(thisLang){
+                if (thisLang) {
                     siblingLangs.add(thisLang);
                 }
             });
 
-            for(let i in langs){
-                if(!siblingLangs.has(langs[i])) {
+            for (let i in langs) {
+                if (!siblingLangs.has(langs[i])) {
                     let newField;
                     if (!$(this).attr('lang')) {
                         newField = $(this);
@@ -206,19 +207,29 @@ function handleLoginFeatures() {
                         newField = $(this).clone();
                         newField.find('.input100').val('');
                         $(this).after(newField);
+                        setInputsToHandle.add(newField.find('.input100'));
                     }
                     newField.find('.input100').attr('lang', langs[i]);
                     newField.attr('lang', langs[i]);
                     newField.find('span').text(langDisplayMap[langs[i]]);
+
+
+                    /*let input = newField.find('.input100');
+                    input.unbind(focus);
+                    input.focus(function () {
+                        hideValidate(this);
+                        $(this).parent().removeClass('true-validate');
+                    });*/
                 }
             }
         });
 
-        $('.translatable-free-text').each(function() {
+        $('.translatable-free-text').each(function () {
             let fieldLang = $(this).attr('lang');
             if (langsToRemove.has(fieldLang) || fieldLang === '') {
-                if($(this).siblings().length > 0) {
+                if ($(this).siblings().length > 0) {
                     $(this).remove();
+                    setInputsToHandle.delete($(this).find('.input100'));
                 } else {
                     $(this).find('.input100').attr('lang', '');
                     $(this).attr('lang', '');
@@ -226,6 +237,15 @@ function handleLoginFeatures() {
                 }
             }
         });
+        
+        setInputsToHandle.forEach(function(input){
+            input.unbind(focus);
+            input.focus(function () {
+                hideValidate(this);
+                $(this).parent().removeClass('true-validate');
+            });
+        });
+
     });
 
     $(".js-select2").each(function () {
@@ -236,11 +256,11 @@ function handleLoginFeatures() {
         });
     });
 
-    $('.js-select2[name="priceSpecification._PriceSpecification.freeOfCharge"]').change(function(){
+    $('.js-select2[name="priceSpecification._PriceSpecification.freeOfCharge"]').change(function () {
         let priceField = $(this).parent().parent().next().find('input[name="priceSpecification._PriceSpecification.price"]');
         let free = $(this).val() === "true";
         priceField.prop('disabled', free);
-        if(free){
+        if (free) {
             priceField.val('');
             priceField.attr('placeholder', 'This parking section is free');
         } else {
@@ -275,7 +295,7 @@ function handleLoginFeatures() {
         });
     });
 
-    $('.minus-button-facility').on('click', function() {
+    $('.minus-button-facility').on('click', function () {
         let stepId = $(this).parent().attr('id');
         const regExp = /step-facility-section-(\d)(?:-(\d))?/g;
         let myArray = regExp.exec(stepId);
@@ -284,11 +304,10 @@ function handleLoginFeatures() {
         removeFacilitySection(facilityNum);
     });
 
-    $('.steps-overview-remove-facility-button').on('click', function(){
-       let facilitynum = parseInt($(this).attr('facilitynum'));
-       removeFacilitySection(facilitynum);
+    $('.steps-overview-remove-facility-button').on('click', function () {
+        let facilitynum = parseInt($(this).attr('facilitynum'));
+        removeFacilitySection(facilitynum);
     });
-
 
 
     $('.plus_button_input').on('click', function () {
@@ -375,7 +394,7 @@ function handleLoginFeatures() {
                 } else if (($(this).attr('type') !== 'button')) {
                     $(this).val('');
                     $(this).prop('disabled', false);
-                    if($(this).attr('name') === "priceSpecification._PriceSpecification.price"){
+                    if ($(this).attr('name') === "priceSpecification._PriceSpecification.price") {
                         $(this).attr('placeholder', 'Enter the price');
                     }
                 }
@@ -474,7 +493,7 @@ function addFacilitySection() {
             } else if (($(this).attr('type') !== 'button')) {
                 $(this).val('');
                 $(this).prop('disabled', false);
-                if($(this).attr('name') === "priceSpecification._PriceSpecification.price"){
+                if ($(this).attr('name') === "priceSpecification._PriceSpecification.price") {
                     $(this).attr('placeholder', 'Enter the price');
                 }
             }
@@ -506,7 +525,7 @@ function addFacilitySection() {
     //insert group title in step overview
     let lastNewStepTitle = $('#form-velopark-data-t-' + currentStepNumberInsertPos).parent();
     lastNewStepTitle.before(String.format(stepOverviewFacilityTitleFormat, currentNumFacilitySections));
-    lastNewStepTitle.prev('.steps-overview-facility-title').find('.steps-overview-remove-facility-button').on('click', function(){
+    lastNewStepTitle.prev('.steps-overview-facility-title').find('.steps-overview-remove-facility-button').on('click', function () {
         let facilitynum = parseInt($(this).attr('facilitynum'));
         removeFacilitySection(facilitynum);
     });
@@ -543,12 +562,12 @@ function addFacilitySection() {
 
 }
 
-function removeFacilitySection(facilityNum){
-    if(currentNumFacilitySections > 1) {
+function removeFacilitySection(facilityNum) {
+    if (currentNumFacilitySections > 1) {
         let startstep = startStepNumberFacilitySection + (facilityNum - 1) * numStepsFacilitySection;
         let endstep = startstep + numStepsFacilitySection - 1;
 
-        if(confirm("Are you sure you want to delete this section?\nAll data entered in steps " + (startstep+1) + " to " + (endstep+1) + " will be irretrievably lost.")) {
+        if (confirm("Are you sure you want to delete this section?\nAll data entered in steps " + (startstep + 1) + " to " + (endstep + 1) + " will be irretrievably lost.")) {
             $('#form-velopark-data-t-' + (endstep + 1)).get(0).click();
             setTimeout(function () {
                 let formVeloparkData = $("#form-velopark-data");
