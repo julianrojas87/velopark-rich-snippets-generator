@@ -36,7 +36,7 @@
                                 <%= parkings[i]['@id'] %></a>
                         </td>
                         <td class="text-left" style="font-size: 20px;">
-                            <%= parkings[i]['name'] %>
+                            <%= parkings[i]['name'][0]['@value'] ? parkings[i]['name'][0]['@value'] : parkings[i]['name'] %>
                         </td>
                         <td class="text-left" style="font-size: 20px;">
                             <% if(parkings[i]['approvedstatus']){ %>
