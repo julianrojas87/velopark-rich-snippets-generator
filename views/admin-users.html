@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- head tag -->
+<% include head.html %>
+
+<body>
+<!-- Domain name to deal with reverse proxies -->
+<p id="domainName" style="display: none;">
+    <%= domainName %>
+</p>
+<!-- URI to vocabulary -->
+<p id="vocabURI" style="display: none;">
+    <%= vocabURI %>
+</p>
+
+<!-- Navigation Bar -->
+<% include navbar.html %>
+
+<div class="container-contact100">
+    <div class="wrap-contact100 table-parkings" style="width: 100%;">
+        <table id="users-list" class="table-fill">
+            <thead>
+            <tr>
+                <th class="text-left">Email</th>
+                <th class="text-left">Company</th>
+                <th class="text-left">City Representative</th>
+                <th class="text-left">Admin</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            <% for (var i = 0; i < users.length; i++) { %>
+            <tr>
+                <td class="text-left">
+                    <%= users[i]['email'] %>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <svg class="loading-icon" width="15px" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring"><circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}" fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(244.478 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
+                    <input id="checkbox-companyUserEnabled-<%= users[i]['email'] %>" class="checkbox-companyUserEnabled" type="checkbox" <%= users[i]['companyEnabled'] ? 'checked' : '' %> <%= users[i]['companyName'] == null ? 'disabled' : '' %> useremail="<%= users[i]['email'] %>">
+                    <label for="checkbox-companyUserEnabled-<%= users[i]['email'] %>"><%= users[i]['companyName'] %></label>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <% if(users[i]['cityNames'] == null) users[i]['cityNames'] = [];
+                    for (var cityNum in users[i]['cityNames']) { let city = users[i]['cityNames'][cityNum];%>
+                        <svg class="loading-icon" width="15px" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring"><circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}" fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(244.478 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
+                        <input id="checkbox-cityUserEnabled-<%= city.name %>-<%= users[i]['email'] %>" class="checkbox-cityUserEnabled" type="checkbox" <%= city.enabled ? 'checked' : '' %> useremail="<%= users[i]['email'] %>" cityName="<%= city.name %>">
+                    <label for="checkbox-cityUserEnabled-<%= city.name %>-<%= users[i]['email'] %>"><%= city.name %></label>
+                    <% } %>
+                </td>
+                <td class="text-left">
+                    <% if(users[i]['superAdmin']){ %>
+                        <i class="far fa-check-circle"></i>
+                    <% } %>
+                </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JS scripts-->
+<% include scripts.html %>
+
+</body>
+
+</html>

@@ -64,7 +64,11 @@
         $.ajax({
             type: "POST",
             url: domain + '/save-parking',
-            data: { 'user': username, 'jsonld': JSON.stringify(resultingObject) },
+            data: {
+                'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
+                'jsonld': JSON.stringify(resultingObject),
+                'company': parkingOwner.company
+            },
             success: () => {
                 alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
             },

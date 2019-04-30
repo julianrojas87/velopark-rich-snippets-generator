@@ -2,8 +2,6 @@ let parkingDataLoaded = false;
 
 ($ => {
 
-    addClickListeners();
-
     Promise.all(loadingPromises).then(() => {
         loadParkingValues();
         parkingDataLoaded = true;
@@ -15,7 +13,7 @@ var originalId = null;
 
 function loadParkingValues() {
     let parkingData = $('#loadedParking').text().trim();
-    if (parkingData && parkingData != '') {
+    if (parkingData && parkingData !== '') {
         let parking = JSON.parse(parkingData);
         originalId = parking['@id'];
         processObject(parking);
@@ -64,7 +62,6 @@ function loadSections(graph) {
             let input = section.find('[name^="' + keys[j] + '"]');
             if (Array.isArray(obj)) {
                 processArray(path, obj, input);
-                path.pop();
             } else if (typeof obj !== 'object') {
                 loadParkingValue(path, obj, true, input);
             } else {
@@ -123,6 +120,9 @@ function processArray(path, arr, input) {
                 path.pop();
             }
         }
+
+        path.pop();
+
     } else {
         // Normal object arrays that map to a single UI input (e.g closeTo or availableLanguages)
         for (let i = 0; i < arr.length; i++) {
@@ -249,51 +249,4 @@ function reverseFormatValue(name, value) {
         }
     }
     return value;
-}
-
-function addClickListeners() {
-    $('#parking-list input[title=Edit]').each(function () {
-        $(this).on('click', editClick);
-    });
-
-    $('#parking-list input[title=Delete]').each(function () {
-        $(this).on('click', deleteClick);
-    });
-
-    $('#parking-list input[title=Download]').each(function () {
-        $(this).on('click', downloadClick);
-    });
-}
-
-function editClick() {
-    let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text().trim();
-    let userName = $('#user-email').text().trim();
-    window.location.href = domain + '/home?username=' + userName + '&parkingId=' + parkingId;
-}
-
-function deleteClick() {
-    let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text().trim();
-    let userName = $('#user-email').text().trim();
-
-    if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
-        $.ajax({
-            type: "DELETE",
-            url: domain + '/delete-parking?username=' + userName + '&parkingId=' + parkingId,
-            success: () => {
-                window.location.href = domain + '/parkings?username=' + userName;
-            },
-            error: e => {
-                alert('Error: ' + e.responseText);
-            }
-        });
-    }
-}
-
-function downloadClick() {
-    let domain = domainName !== '' ? '/' + domainName : '';
-    let parkingId = $(this).parent().parent().find('a').text().trim();
-    let userName = $('#user-email').text().trim();
-    window.location.href = domain + '/download?username=' + userName + '&parkingId=' + parkingId;
 }

@@ -11,32 +11,26 @@
 	<p id="vocabURI" style="display: none;"><%= vocabURI %></p>
 
 	<!-- Loaded data for editing -->
-	<p id="loadedParking" style="display: none;"><%= loadedParking %></p>
+	<p id="loadedParking" style="display: none;"><%= loadedParking ? loadedParking : '' %></p>
+	<script>let parkingOwner = {
+		email: "<%= emailParkingOwner %>",
+		company: "<%= nameCompanyParkingOwner %>"
+	}</script>
 
 	<!-- Resulting JSON-LD -->
 	<% include json-ld.html %>
 
 	<!-- Navigation Bar -->
-	<div id="navbar" class="sticky">
-		<div id="page-logo-helper">
-			<img src="static/images/icons/velopark.png">
-		</div>
-		<a id="logout">Log out</a>
-		<a id="user-email"><%= username %></a>
-		<span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
-			Velopark Rich Snippets Generator
-		</span>
-	</div>
+	<% include navbar.html %>
 
-	<div id="drop-menu" class="dropdown-content">
-		<a id="myParkings" href="#">My Parking Facilities</a>
-	</div>
+
 
 	<!-- Data Input Form-->
 	<% include data-form.html %>
 
 	<!-- JS scripts-->
 	<% include scripts.html %>
+	<% include data-form-scripts.html %>
 </body>
 
 </html>
