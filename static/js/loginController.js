@@ -19,22 +19,22 @@ let signinformcitiesloaded = false;
         $('#myAdminOverview').remove();
     }
 
-    if (!user || !user.cityrep || user.cityrep!=="true") {
+    if (!user || !user.cityrep || user.cityrep !== "true") {
         $('#myCityOverview').remove();
     }
 
-    if(!user.company.name || user.company.enabled!=="true"){
+    if (!user.company.name || user.company.enabled !== "true") {
         $('#myParkings').remove();
     }
 
-    $('#cm-signin').on('click', function() {
+    $('#cm-signin').on('click', function () {
         $(this).addClass('active');
         $('#cr-signin').removeClass('active');
         $('#signup-company').show();
         $('#signup-cities').hide();
     });
 
-    $('#cr-signin').on('click', function() {
+    $('#cr-signin').on('click', function () {
         $(this).addClass('active');
         $('#cm-signin').removeClass('active');
         $('#signup-company').hide();
@@ -45,7 +45,7 @@ let signinformcitiesloaded = false;
         $('#cm-signin').click();
         $('#signin-form').show();
         let domain = domainName != '' ? '/' + domainName : '';
-        if(!signinformcompaniesloaded) {
+        if (!signinformcompaniesloaded) {
             $.ajax({
                 type: "GET",
                 url: domain + '/companynames',
@@ -63,7 +63,7 @@ let signinformcitiesloaded = false;
                 }
             });
         }
-        if(!signinformcitiesloaded) {
+        if (!signinformcitiesloaded) {
             $.ajax({
                 type: "GET",
                 url: domain + '/citynames',
@@ -111,19 +111,24 @@ let signinformcitiesloaded = false;
         let domain = domainName != '' ? '/' + domainName : '';
         let email = $('#signin-email').val();
         let pass = $('#signin-pass').val();
-        let company = $('#signin-company').val();
+        let company = null;
         let cities = [];
-        $('.signin-city').each(function(){
-            let city = $(this).val();
-            if(city != "") {
-                cities.push(city);
-            }
-        });
+
+        if ($('#cm-signin').hasClass('active')) {
+            company = $('#signin-company').val();
+        } else {
+            $('.signin-city').each(function () {
+                let city = $(this).val();
+                if (city != "") {
+                    cities.push(city);
+                }
+            });
+        }
 
         $.ajax({
             type: "POST",
             url: domain + '/signup',
-            data: {'email': email, 'pass': pass, 'company': company, 'cities': cities},
+            data: { 'email': email, 'pass': pass, 'company': company, 'cities': cities },
             success: () => {
                 alert('Your account request has been sent! Once the admins approve it you can login with your credentials.');
             },
@@ -142,9 +147,9 @@ let signinformcitiesloaded = false;
         $.ajax({
             type: "POST",
             url: domain + '/login',
-            data: {'email': email, 'pass': pass},
+            data: { 'email': email, 'pass': pass },
             success: () => {
-                if(user.superAdmin) {
+                if (user.superAdmin) {
                     window.location.href = domain + '/admin';
                 } else {
                     window.location.href = domain + '/home';
