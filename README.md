@@ -23,6 +23,7 @@ Next is an example of the configuration:
 {
   "data": "/opt/velopark/data",
   "domain": "",
-  "vocabulary": ""
+  "vocabulary": "",
+  "superAdmins": ["velopark@fietsberaad.be"]
 }
 ```
