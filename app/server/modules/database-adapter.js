@@ -466,13 +466,12 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
         });
 };
 
-exports.updateParkingAsCityRep = function (companyName, id, filename, location, parkingCityNames, callback) {
+exports.updateParkingAsCityRep = function (id, filename, location, parkingCityNames, callback) {
     //1. find account of city rep
     //2. make sure the city rep is responsible for this parking location
     //3. update the parking itself, leaving the owning company as is
-    accounts.findOne(
+    /*accounts.findOne(
         {
-            companyName: companyName,
             cityNames: {
                 $elemMatch: {
                     name: {
@@ -486,7 +485,7 @@ exports.updateParkingAsCityRep = function (companyName, id, filename, location, 
             if (e != null) {
                 callback(e);
             } else {
-                if (res != null) {
+                if (res != null) {*/
                     //User is city rep for this parking. He can update this parking.
                     parkings.findOneAndUpdate(
                         {
@@ -497,9 +496,13 @@ exports.updateParkingAsCityRep = function (companyName, id, filename, location, 
                                 filename: filename,
                                 location: location
                             },
+                            $setOnInsert : {
+                                approvedstatus: false
+                            }
                         },
                         {
-                            returnOriginal: false
+                            returnOriginal: false,
+                            upsert: true
                         },
                         function (e, o) {
                             if (o.value != null) {
@@ -508,15 +511,20 @@ exports.updateParkingAsCityRep = function (companyName, id, filename, location, 
                                 callback(e);
                             }
                         });
-                } else {
+                /*} else {
                     callback("You are not representative for this region.");
                 }
             }
         }
-    );
+    );*/
 };
 
-exports.saveParking = function (id, filename, approvedStatus, location, email, callback) {
+exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, callback) {
+    updateOrCreateParking(id, filename, approvedStatus, location, callback);
+};
+
+//Same as saveParkingToCompany, but get the companyName from the user account
+/*exports.saveParkingAsCompanyUser = function (id, filename, approvedStatus, location, email, callback) {
     accounts.findOne(
         {
             email: email
@@ -527,21 +535,15 @@ exports.saveParking = function (id, filename, approvedStatus, location, email, c
                 callback(e);
             } else {
                 if (res.companyName && res.companyName !== '') {
-                    //User is part of a company, parking will be linked to this company instead of this user
-                    exports.updateCompanyParkingIDs(res.companyName, id, function (error, result) {
-                        if (error != null) {
-                            callback(error);
-                        } else {
-                            updateOrCreateParking(id, filename, approvedStatus, location, callback);
-                        }
-                    });
+                    //User is part of a company, parking will be linked to this company
+                    exports.saveParkingToCompany(id,filename, approvedStatus, location, res.companyName, callback);
                 } else {
                     updateOrCreateParking(id, filename, approvedStatus, location, callback);
                 }
             }
         }
     );
-};
+};*/
 
 exports.saveParkingToCompany = function (id, filename, approvedStatus, location, companyName, callback) {
     exports.updateCompanyParkingIDs(companyName, id, function (error, result) {
