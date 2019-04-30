@@ -1,4 +1,3 @@
-let parkingDataLoaded = false;
 
 ($ => {
 
@@ -16,6 +15,8 @@ function loadParkingValues() {
     if (parkingData && parkingData !== '') {
         let parking = JSON.parse(parkingData);
         originalId = parking['@id'];
+        //reset languages
+        $('#language-selection-container input[type="checkbox"]').prop('checked', false).trigger("change");
         processObject(parking);
     }
 }
