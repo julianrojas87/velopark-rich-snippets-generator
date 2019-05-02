@@ -14,10 +14,12 @@
                     <div class="wrap-contact100-section pre-information">
                         <p class="info-text">
                             <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                            Please select all the languages you want to provide this data in.
-                            This means that the free text fields such as location descriptions and removal conditions
-                            of bikes in your parking will need to have a translation for each of the selected languages.
+                            Please select all the languages you want to use to describe your Bicycle Parking.
                         </p>
+                        <div id="at-least-one-language" class="alert alert-warning" role="alert" style="display: none;">
+                            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                            Please select at least one language
+                        </div>
                         <div id="language-selection-container" class="wrap-contact100-subsection">
                             <div>
                                 <input class="css-checkbox" type="checkbox" id="dutch" name="lang" value="nl">
@@ -62,7 +64,13 @@
                                 <span style="display: inherit; padding-left: 15px;">The name of the bicycle parking as it is locally known.</span><br>
                                 <span style="display: inherit; padding-left: 15px;">Example: <i>Fietsparking Rector De Somerplein</i></span>
                             </div>
-                            <input class="input100" type="text" name="name" placeholder="Parking facility name ">
+                            <div>
+                                <div class="translatable-free-text">
+                                    <span></span>
+                                    <input class="input100" type="text" name="name" placeholder="Parking facility name ">
+                                </div>
+                            </div>
+                            
                         </div>
 
                         <div class="spacer"></div>
@@ -1442,34 +1450,19 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title">URI</h3>
+            <h3 class="section-title">Data publishing</h3>
             <fieldset>
                 <div id="step-general-info-4">
-                    <h2>General - URI</h2>
+                    <h2>Data publishing</h2>
                     <div class="wrap-contact100-section general-information">
-                        <p>
-                            In this step you can provide the link/URL where the data about this bicycle parking will be
-                            published.
-                        </p>
-                        <p>
-                            For example: https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein
-                        </p>
-                        <p>
-                            In case you don't have one we will provide it based on the Data Owner and Local Identifier,
-                            and publish the data for you. You should leave this field empty if that is what you want.
-                        </p>
-                        <p>
-                            The URI will look something like this for example:
-                            https://velopark.ilabt.imec.be/data/APCOA/APCOA_018
-                        </p>
-                        <p>
-                            Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it
-                            will remain online indefinitely. We recommend that you publish the data generated with this
-                            tool on your own website and link it to your CMS system so it updates automatically. Contact
-                            us (http://velopark.be) if you need assistance for this.
+                        <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                            If you decide to publish the data generated in this tool on your website, 
+                            then enter here the URL where the information for this parking will be available.
+                            Otherwise leave this field empty.<br/><br/>
+                            ** We recommend that you publish the data on your own website **.
                         </p>
                         <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">
-                            <span class="label-input100">Parking Facility URI *</span>
+                            <span class="label-input100">Parking Facility URI</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                 <h2 style="margin-bottom: 15px;"></h2>
