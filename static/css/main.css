@@ -1236,6 +1236,6 @@ label.css-label {
 }
 
 #create-new-company {
-  float: left;
+  display: inline-block;
   margin-right: 10px;
 }

@@ -24,7 +24,7 @@ module.exports = app => {
                 vocabURI: vocabURI,
                 username: null,
                 superAdmin: false,
-                company: { name: null, enabled: false },
+                company: {name: null, enabled: false},
                 cityrep: false
             });
         } else {
@@ -42,7 +42,7 @@ module.exports = app => {
                         vocabURI: vocabURI,
                         username: null,
                         superAdmin: false,
-                        company: { name: null, enabled: false },
+                        company: {name: null, enabled: false},
                         cityrep: false
                     });
                 }
@@ -105,7 +105,7 @@ module.exports = app => {
 
                 req.session.user = o;
                 AM.generateLoginKey(o.email, req.ip, function (key) {
-                    res.cookie('login', key, { maxAge: 900000 });
+                    res.cookie('login', key, {maxAge: 900000});
                     res.status(200).send(o);
                 });
             }
@@ -143,7 +143,7 @@ module.exports = app => {
                             username: req.session.user.email,
                             loadedParking: parkingData,
                             superAdmin: req.session.user.superAdmin,
-                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             emailParkingOwner: accountEmail,
                             nameCompanyParkingOwner: companyName
@@ -157,7 +157,7 @@ module.exports = app => {
                     username: req.session.user.email,
                     loadedParking: '',
                     superAdmin: req.session.user.superAdmin,
-                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     emailParkingOwner: null,
                     nameCompanyParkingOwner: null
@@ -184,7 +184,7 @@ module.exports = app => {
                             vocabURI: vocabURI,
                             username: req.session.user.email,
                             superAdmin: req.session.user.superAdmin,
-                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                         });
                     } else {
@@ -266,7 +266,10 @@ module.exports = app => {
                                     username: req.session.user.email,
                                     users: users ? users : {},
                                     superAdmin: req.session.user.superAdmin,
-                                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                                    company: {
+                                        name: req.session.user.companyName,
+                                        enabled: req.session.user.companyEnabled
+                                    },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -360,7 +363,10 @@ module.exports = app => {
                                     username: req.session.user.email,
                                     companies: companies ? companies : [],
                                     superAdmin: req.session.user.superAdmin,
-                                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                                    company: {
+                                        name: req.session.user.companyName,
+                                        enabled: req.session.user.companyEnabled
+                                    },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -461,7 +467,7 @@ module.exports = app => {
                         username: req.session.user.email,
                         cityNames: result,
                         superAdmin: req.session.user.superAdmin,
-                        company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                        company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 } else {
@@ -502,7 +508,10 @@ module.exports = app => {
                                     cityName: cityname,
                                     parkings: parkings ? parkings : {},
                                     superAdmin: req.session.user.superAdmin,
-                                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                                    company: {
+                                        name: req.session.user.companyName,
+                                        enabled: req.session.user.companyEnabled
+                                    },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
                             }
@@ -513,6 +522,29 @@ module.exports = app => {
                 }
             });
 
+        }
+    });
+
+    app.post('/cityrep/check-location/:lat/:lng', async function(req, res){
+        if (req.session.user == null) {
+            res.status(401).send('Unauthorized');
+        } else if (req.session.user.cityNames.length > 0) {
+            if(req.params.lat && req.params.lng) {
+                try {
+                    CiM.isLocationWithinCities(parseFloat(req.params.lat), parseFloat(req.params.lng), req.session.user.cityNames, function (error, result) {
+                        if (error != null) {
+                            console.error(error);
+                            res.status(500).send(error);
+                        } else {
+                            res.status(200).send(result);   //result == true/false
+                        }
+                    });
+                } catch (e){
+                    res.status(500).send("Could not process your request");
+                }
+            }
+        } else {
+            res.status(401).send('Unauthorized');
         }
     });
 
@@ -556,7 +588,7 @@ module.exports = app => {
                         username: req.session.user.email,
                         parkings: parkings ? parkings : {},
                         superAdmin: req.session.user.superAdmin,
-                        company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
+                        company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 }
@@ -622,70 +654,53 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            if (req.session.user.email !== req.body['user']) {
-                saveParkingAsAdminOrCityRep(req, res);
-            } else {
-                if (req.body['jsonld'] && req.body['user']) {
-                    PM.saveParking(req.session.user.email, null, req.body['jsonld'], function (error, result) {
-                        if (error != null) {
-                            res.status(500).send('Database error');
-                        } else {
-                            if (result != null) {
-                                res.status(200).send('ok');
-                            } else {
-                                //user could still be a city representative for his own parkings (or even superadmin), even if his company is disabled. This would be an awkward thing, but he should still be able to edit the parkings
-                                saveParkingAsAdminOrCityRep(req, res);
-                            }
-                        }
-                    });
-                } else {
-                    res.status(400).send('Oops! We can\'t understand your request.');
-                }
+            if (!req.body['jsonld']) {
+                res.status(400).send('Oops! We can\'t understand your request.');
+                return;
             }
-        }
-    });
-
-    let saveParkingAsAdminOrCityRep = function (req, res) {
-        AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
-            if (value) {
-                if (req.body['jsonld']) {
-                    if (req.body['company']) {
-                        //save straight to company
-                        PM.saveParking(null, req.body['company'], req.body['jsonld'], function (error, result) {
-                            if (error != null) {
-                                res.status(500).send('Database error');
-                            } else {
-                                res.status(200).send('ok');
-                            }
-                        });
-                    } else if (req.body['user']) {
-                        //we don't know the company, we should be able to get the company via the username
-                        PM.saveParking(req.body['user'], null, req.body['jsonld'], function (error, result) {
-                            if (error != null) {
-                                res.status(500).send('Database error');
-                            } else {
-                                res.status(200).send('ok');
-                            }
-                        });
-                    } else {
-                        res.status(400).send('Oops! We can\'t understand your request.');
-                    }
-                } else {
-                    res.status(400).send('Oops! We can\'t understand your request.');
-                }
-            } else {
-                //User is not superAdmin, maybe he is city rep?
-                PM.saveParkingAsCityRep(req.body['company'], req.body['jsonld'], function (error, result) {
+            let user = req.session.user;
+            if (user.superAdmin) {
+                console.log('saving as Admin');
+                //save as admin
+                //companyName can be null because Admin cannot create parkings and assign them to a company
+                PM.saveParkingAsSuperAdmin(null, req.body['jsonld'], function (error, result) {
                     if (error != null) {
-                        res.status(500).send('Failed');
+                        res.status(500).send(error);
                     } else {
                         res.status(200).send('ok');
                     }
                 });
-                //res.status(401).send('You are not allowed to save this to another company.');
+            } else if (user.companyName) {
+                if (user.companyEnabled) {
+                    console.log('saving as company user');
+                    //save as company user
+                    PM.saveParkingAsCompanyUser(req.body['company'], req.body['jsonld'], function (error, result) {
+                        if (error != null) {
+                            res.status(500).send(error);
+                        } else {
+                            res.status(200).send('ok');
+                        }
+                    });
+                } else {
+                    res.status(401).send("Your company membership has not been approved yet."); //should not happen, since this person is not allowed to log in
+                }
+            } else if (user.cityNames.length > 0) {
+                console.log('saving as cityrep');
+                //check if parking is within your regions
+                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, function(error, result){
+                    if (error != null) {
+                        console.log(error);
+                        res.status(500).send(error);
+                    } else {
+                        res.status(200).send('ok');
+                    }
+                });
+            } else {
+                //you cannot save parkings.
+                res.status(401).send("you cannot save parkings."); //should not happen, since this person is not allowed to log in
             }
-        });
-    };
+        }
+    });
 
     app.get('/get-parking', async function (req, res) {
         // check if the user is logged in
@@ -822,7 +837,7 @@ module.exports = app => {
                 res.redirect('/');
             } else {
                 req.session.passKey = req.query['key'];
-                res.render('reset', { title: 'Reset Password' });
+                res.render('reset', {title: 'Reset Password'});
             }
         })
     });
@@ -847,7 +862,7 @@ module.exports = app => {
 
     app.get('/print', function (req, res) {
         AM.getAllRecords(function (e, accounts) {
-            res.render('print', { title: 'Account List', accts: accounts });
+            res.render('print', {title: 'Account List', accts: accounts});
         })
     });
 
