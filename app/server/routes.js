@@ -662,7 +662,6 @@ module.exports = app => {
             }
             let user = req.session.user;
             if (user.superAdmin) {
-                console.log('saving as Admin');
                 //save as admin
                 //companyName can be null because Admin cannot create parkings and assign them to a company
                 PM.saveParkingAsSuperAdmin(null, req.body['jsonld'], function (error, result) {
@@ -674,7 +673,6 @@ module.exports = app => {
                 });
             } else if (user.companyName) {
                 if (user.companyEnabled) {
-                    console.log('saving as company user');
                     //save as company user
                     PM.saveParkingAsCompanyUser(req.body['company'], req.body['jsonld'], function (error, result) {
                         if (error != null) {
@@ -687,7 +685,6 @@ module.exports = app => {
                     res.status(401).send("Your company membership has not been approved yet."); //should not happen, since this person is not allowed to log in
                 }
             } else if (user.cityNames.length > 0) {
-                console.log('saving as cityrep');
                 //check if parking is within your regions
                 PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, function(error, result){
                     if (error != null) {
