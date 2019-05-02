@@ -614,7 +614,7 @@ module.exports = app => {
                                 console.error(error);
                                 res.status(500).send();
                             } else {
-                                if (result.value != null) {
+                                if (result != null) {
                                     res.status(200).json(result);
                                 } else {
                                     res.status(409).send('Could not enable/disable parking.');
@@ -630,7 +630,7 @@ module.exports = app => {
                                         console.error(error);
                                         res.status(500).send();
                                     } else {
-                                        if (result.value != null) {
+                                        if (result != null) {
                                             res.status(200).json(result);
                                         } else {
                                             res.status(409).send('Could not enable/disable parking.');
