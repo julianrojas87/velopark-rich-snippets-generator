@@ -51,27 +51,80 @@ function initPointMap(target, latid, lonid, clear) {
     });
     pointMap.addInteraction(point);
 
-    pointSource.on('addfeature', event => {
-        if (pointSource.getFeatures().length > 1) {
-            pointSource.removeFeature(pointSource.getFeatures()[0]);
-        }
-        let coordinates = ol.proj.toLonLat(event.feature.getGeometry().getCoordinates());
-        let lat = coordinates[1];
-        let long = coordinates[0];
-        let latInput = $('#' + latid);
-        let lonInput = $('#' + lonid);
+    if((user && (user.cityrep || user.cityrep === "true")) && target === 'point-map'){
+        let domain = domainName !== '' ? '/' + domainName : '';
+        pointSource.on('addfeature', event => {
+            $('.city-rep-location-loading-icon').css('visibility', 'visible');
+            if (pointSource.getFeatures().length > 1) {
+                pointSource.removeFeature(pointSource.getFeatures()[0]);
+            }
+            let coordinates = ol.proj.toLonLat(event.feature.getGeometry().getCoordinates());
+            let lat = coordinates[1];
+            let long = coordinates[0];
+            $.ajax({
+                type: "POST",
+                url: domain + '/cityrep/check-location/' + lat + '/' + long,
+                success: data => {
+                    if(data){
+                        $('.city-rep-location-loading-icon').css('visibility', 'hidden');
+                        let latInput = $('#' + latid);
+                        let lonInput = $('#' + lonid);
 
-        latInput.val(lat);
-        lonInput.val(long);
+                        latInput.val(lat);
+                        lonInput.val(long);
 
-        if (latInput.parent().hasClass('validate-input')) {
-            fullValidation(latInput);
-        }
+                        if (latInput.parent().hasClass('validate-input')) {
+                            fullValidation(latInput);
+                        }
 
-        if (lonInput.parent().hasClass('validate-input')) {
-            fullValidation(lonInput);
-        }
-    });
+                        if (lonInput.parent().hasClass('validate-input')) {
+                            fullValidation(lonInput);
+                        }
+                    } else {
+                        $('.city-rep-location-loading-icon').css('visibility', 'hidden');
+
+                        //clear
+                        pointSource.clear();
+                        $('#' + latid).val('');
+                        hideValidate($('#' + latid));
+                        $('#' + lonid).val('');
+                        hideValidate($('#' + lonid));
+
+                        setTimeout(function(){  //To give UI time to update
+                            alert("You are not allowed to create a parking in this area.");
+                        }, 10);
+
+                    }
+                },
+                error: e => {
+                    $('.city-rep-location-loading-icon').css('visibility', 'hidden');
+                }
+            });
+        });
+    } else {
+        pointSource.on('addfeature', event => {
+            console.log(event);
+            if (pointSource.getFeatures().length > 1) {
+                pointSource.removeFeature(pointSource.getFeatures()[0]);
+            }
+            let coordinates = ol.proj.toLonLat(event.feature.getGeometry().getCoordinates());
+            let lat = coordinates[1];
+            let long = coordinates[0];
+            let latInput = $('#' + latid);
+            let lonInput = $('#' + lonid);
+
+            latInput.val(lat);
+            lonInput.val(long);
+
+            if (latInput.parent().hasClass('validate-input')) {
+                fullValidation(latInput);
+            }
+
+            if (lonInput.parent().hasClass('validate-input')) {
+                fullValidation(lonInput);
+            }
+        });
+    }
 
     $('#' + latid).on('change', function () {
         let lat = $(this).val();
@@ -117,7 +170,6 @@ function initPointMap(target, latid, lonid, clear) {
         hideValidate($('#' + lonid));
     });
 }
-
 
 function initPolygonMap(target, polyid, clear) {
     var polygonSource = new VectorSource({ wrapX: false });

@@ -525,6 +525,29 @@ module.exports = app => {
         }
     });
 
+    app.post('/cityrep/check-location/:lat/:lng', async function(req, res){
+        if (req.session.user == null) {
+            res.status(401).send('Unauthorized');
+        } else if (req.session.user.cityNames.length > 0) {
+            if(req.params.lat && req.params.lng) {
+                try {
+                    CiM.isLocationWithinCities(parseFloat(req.params.lat), parseFloat(req.params.lng), req.session.user.cityNames, function (error, result) {
+                        if (error != null) {
+                            console.error(error);
+                            res.status(500).send(error);
+                        } else {
+                            res.status(200).send(result);   //result == true/false
+                        }
+                    });
+                } catch (e){
+                    res.status(500).send("Could not process your request");
+                }
+            }
+        } else {
+            res.status(401).send('Unauthorized');
+        }
+    });
+
     app.get('/get-all-emails', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
