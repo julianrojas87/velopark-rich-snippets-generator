@@ -137,6 +137,27 @@
                                    placeholder="Enter the link for the regulations document">
                         </div>
 
+                        <div class="wrap-input100 bg0">
+                            <span class="label-input100">Description</span>
+                            <input type="image" title="about" class="info_button"
+                                   src="static/images/icons/info.png">
+                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                <h2 style="margin-bottom: 15px;"></h2>
+                                <input type="image" title="close" class="info_close_button"
+                                       src="static/images/icons/close_white.png"
+                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                <span style="display: inherit; padding-left: 15px;">General description of this bicycle parking or how users can reach the bicycle parking.</span><br>
+                                <span style="display: inherit; padding-left: 15px;">Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i></span>
+                            </div>
+                            <div>
+                                <div class="translatable-free-text">
+                                    <span></span>
+                                    <textarea class="input100" name="address.description"
+                                              placeholder="Describe how to arrive here"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <span class="contact100-form-subsubsection">
                     Address Information
                 </span>
@@ -168,11 +189,12 @@
                                     <span style="display: inherit; padding-left: 15px;">Postal code of the bicycle parking.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>3000</i></span>
                                 </div>
-                                <input class="input100" type="number" name="address.postalCode"
+                                <input class="input100" type="text" name="address.postalCode"
                                        placeholder="Enter the postal code">
                             </div>
-                            <div class="wrap-input100 bg0">
-                                <span class="label-input100">Address Description</span>
+
+                            <div class="wrap-input100 validate-input bg1" data-validate="Enter the postal code">
+                                <span class="label-input100">Country *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -180,32 +202,16 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Description of how users can reach the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i></span>
+                                    <span style="display: inherit; padding-left: 15px;">Country of the bicycle parking.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Belgium</i></span>
                                 </div>
                                 <div>
-                                    <div class="translatable-free-text">
-                                        <span></span>
-                                        <textarea class="input100" name="address.description"
-                                                  placeholder="Describe how to arrive here"></textarea>
-                                    </div>
+                                    <select class="js-select2" placeholder="Select Country" name="address.country">
+                                        <option value=""></option>
+                                        <% include country-list.html %>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
                                 </div>
-                            </div>
-
-                            <div class="wrap-input100 bg1">
-                                <span class="label-input100">Map URL</span>
-                                <input type="image" title="about" class="info_button"
-                                       src="static/images/icons/info.png">
-                                <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                    <h2 style="margin-bottom: 15px;"></h2>
-                                    <input type="image" title="close" class="info_close_button"
-                                           src="static/images/icons/close_white.png"
-                                           style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Paste a link to an online map or routeplanner, like Open Street Maps, Google Maps, etc.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://goo.gl/maps/DeeYGUNPybQ2</i></span>
-                                </div>
-                                <input class="input100" type="url" name="hasMap.url"
-                                       placeholder="Enter the map URL">
                             </div>
 
                             <div class="dynamic-input-group">
@@ -563,6 +569,27 @@
 
                     <div class="wrap-contact100-section">
                         <div parking-section="0" class="wrap-contact100-subsection">
+                            <div class="wrap-input100 bg1 rs2-wrap-input100"
+                                 data-validate="Enter the facility name">
+                                <span class="label-input100">Name</span>
+                                <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
+                                <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                    <h2 style="margin-bottom: 15px;"></h2>
+                                    <input type="image" title="close" class="info_close_button"
+                                           src="static/images/icons/close_white.png"
+                                           style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                    <span style="display: inherit; padding-left: 15px;">An optional name of the bicycle parking section as it is locally known.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Groene zone</i></span>
+                                </div>
+                                <div>
+                                    <div class="translatable-free-text">
+                                        <span></span>
+                                        <input class="input100" type="text" name="sectionName" placeholder="Parking section name ">
+                                    </div>
+                                </div>
+
+                            </div>
+
                             <div class="wrap-input100 input100-select bg1">
                                 <span class="label-input100">Parking Type</span>
                                 <input type="image" title="about" class="info_button"
@@ -624,7 +651,7 @@
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
                                  data-validate="Enter a value">
-                                <span class="label-input100">Maximum storage time (days) *</span>
+                                <span class="label-input100">Maximum parking duration (days) *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -639,7 +666,7 @@
                                        placeholder="Enter the amount of days">
                             </div>
                             <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                <span class="label-input100">Minimum storage time (minutes)</span>
+                                <span class="label-input100">Minimum parking duration (minutes)</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
