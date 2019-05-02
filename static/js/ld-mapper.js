@@ -236,12 +236,21 @@ function processElement(jsonld, element) {
                     // Check if it is an array (name starts with _)
                     let length = temp_obj.length - 1;
                     if (temp_obj[length][`${dName[i]}`] === undefined || temp_obj[length][`${dName[i]}`] === '' || element.is('div')) {
-                        temp_obj[length][`${dName[i]}`] = setElementValue(element, temp_obj[length][`${dName[i]}`] || [], dName[i]);
+                        if (element.attr('lang')) {
+                            temp_obj[length][`${dName[i]}`] = [];
+                            temp_obj[length][`${dName[i]}`][0] = setElementWithLanguageValue(element, temp_obj[length][`${dName[i]}`] || []);
+                        } else {
+                            temp_obj[length][`${dName[i]}`] = setElementValue(element, temp_obj[length][`${dName[i]}`] || [], dName[i]);
+                        }
                     } else {
-                        let newObj = {};
-                        newObj['@type'] = dName[i - 1].substring(1);
-                        newObj[`${dName[i]}`] = setElementValue(element, newObj[`${dName[i]}`], dName[i]);
-                        temp_obj.push(newObj);
+                        if (element.attr('lang')) {
+                            temp_obj[length][`${dName[i]}`].push(setElementWithLanguageValue(element, {}));
+                        } else {
+                            let newObj = {};
+                            newObj['@type'] = dName[i - 1].substring(1);
+                            newObj[`${dName[i]}`] = setElementValue(element, newObj[`${dName[i]}`], dName[i]);
+                            temp_obj.push(newObj);
+                        }
                     }
                 } else if (element.attr('lang')) {
                     //element exists in different languages and will therefore also generate an array
@@ -279,7 +288,7 @@ function processElement(jsonld, element) {
                     if (i > 0 && dName[i - 1].startsWith('_')) {
                         let x = temp_obj[temp_obj.length - 1][`${dName[i]}`];
                         if (x) {
-                            if (x[`${dName[i + 1]}`] && x[`${dName[i + 1]}`] != '') {
+                            if (x[`${dName[i + 1]}`] && x[`${dName[i + 1]}`] !== '') {
                                 let type = temp_obj[temp_obj.length - 1][`${dName[i]}`]['@type'];
                                 temp_obj.push({
                                     '@type': dName[i - 1].substring(1),
