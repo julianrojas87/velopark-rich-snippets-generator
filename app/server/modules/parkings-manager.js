@@ -59,8 +59,27 @@ exports.listParkingsInCity = function (cityName, callback) {
 };
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
-    dbAdapter.updateParkingApproved(parkingid, enabled, callback);
-    //TODO: add/remove from catalog. Anything else?
+    dbAdapter.updateParkingApproved(parkingid, enabled, function(error, result){
+        if(error != null){
+            callback(error);
+        } else if(result != null){
+            if(enabled){
+                try {
+                    addParkingToCatalog(parkingid);
+                    callback(null, "Parking added to catalog");
+                } catch (e){
+                    callback('Could not add parking to catalog.');
+                }
+            } else {
+                try {
+                    removeParkingFromCatalog(parkingid);
+                    callback(null, "Parking removed from catalog");
+                } catch(e){
+                    callback('Could not remove parking from catalog.');
+                }
+            }
+        }
+    });
 };
 
 /*
@@ -398,7 +417,8 @@ async function getTermsRDF() {
     });
 }
 
-async function addParkingToCatalog(parking, id) {
+async function addParkingToCatalog(id) {
+    let parking = JSON.parse(await readFile(data + '/public/' + parkingID + '.jsonld', 'utf8'));
     let catalog = JSON.parse(await readFile(data + '/public/catalog.jsonld', 'utf8'));
     let dists = catalog['dcat:dataset']['dcat:distribution'];
     let found = false;
