@@ -642,7 +642,7 @@ module.exports = app => {
                 //companyName can be null because Admin cannot create parkings and assign them to a company
                 PM.saveParkingAsSuperAdmin(null, req.body['jsonld'], function (error, result) {
                     if (error != null) {
-                        res.status(500).send('Database error');
+                        res.status(500).send(error);
                     } else {
                         res.status(200).send('ok');
                     }
@@ -653,7 +653,7 @@ module.exports = app => {
                     //save as company user
                     PM.saveParkingAsCompanyUser(req.body['company'], req.body['jsonld'], function (error, result) {
                         if (error != null) {
-                            res.status(500).send('Database error');
+                            res.status(500).send(error);
                         } else {
                             res.status(200).send('ok');
                         }
@@ -667,7 +667,7 @@ module.exports = app => {
                 PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, function(error, result){
                     if (error != null) {
                         console.log(error);
-                        res.status(500).send('Database error');
+                        res.status(500).send(error);
                     } else {
                         res.status(200).send('ok');
                     }
@@ -676,76 +676,8 @@ module.exports = app => {
                 //you cannot save parkings.
                 res.status(401).send("you cannot save parkings."); //should not happen, since this person is not allowed to log in
             }
-
-
-            /*if (req.session.user.email !== req.body['user']) {
-                saveParkingAsAdminOrCityRep(req, res);
-            } else {
-                console.log('saving parking as normal user');
-                console.log(req.session.user);
-                if (req.body['jsonld'] && req.body['user']) {
-                    PM.saveParkingAsCompanyUser(req.session.user.email, null, req.body['jsonld'], function (error, result) {
-                        if (error != null) {
-                            res.status(500).send('Database error');
-                        } else {
-                            if (result != null) {
-                                res.status(200).send('ok');
-                            } else {
-                                //user could still be a city representative for his own parkings (or even superadmin), even if his company is disabled. This would be an awkward thing, but he should still be able to edit the parkings
-                                saveParkingAsAdminOrCityRep(req, res);
-                            }
-                        }
-                    });
-                } else {
-                    res.status(400).send('Oops! We can\'t understand your request.');
-                }
-            }*/
         }
     });
-
-    /*let saveParkingAsAdminOrCityRep = function (req, res) {
-        console.log('saving parking as admin or city rep');
-        AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
-            if (value) {
-                if (req.body['jsonld']) {
-                    if (req.body['company']) {
-                        //save straight to company
-                        PM.saveParkingAsCompanyUser(null, req.body['company'], req.body['jsonld'], function (error, result) {
-                            if (error != null) {
-                                res.status(500).send('Database error');
-                            } else {
-                                res.status(200).send('ok');
-                            }
-                        });
-                    } else if (req.body['user']) {
-                        //we don't know the company, we should be able to get the company via the username
-                        PM.saveParkingAsCompanyUser(req.body['user'], null, req.body['jsonld'], function (error, result) {
-                            if (error != null) {
-                                res.status(500).send('Database error');
-                            } else {
-                                res.status(200).send('ok');
-                            }
-                        });
-                    } else {
-                        res.status(400).send('Oops! We can\'t understand your request.');
-                    }
-                } else {
-                    res.status(400).send('Oops! We can\'t understand your request.');
-                }
-            } else {
-                //User is not superAdmin, maybe he is city rep?
-                console.log('trying to save parking as city rep');
-                PM.saveParkingAsCityRep(req.body['company'], req.body['jsonld'], function (error, result) {
-                    if (error != null) {
-                        res.status(500).send('Failed');
-                    } else {
-                        res.status(200).send('ok');
-                    }
-                });
-                //res.status(401).send('You are not allowed to save this to another company.');
-            }
-        });
-    };*/
 
     app.get('/get-parking', async function (req, res) {
         // check if the user is logged in

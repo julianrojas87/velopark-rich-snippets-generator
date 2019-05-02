@@ -120,7 +120,7 @@ exports.saveParkingAsCityRep = async (parking, userCities, callback) => {
             let isCityRep = false;
             for(parkingcity in res) {
                 for (usercity in userCities) {
-                    if(userCities[usercity].name === res[parkingcity]){
+                    if(userCities[usercity].enabled && userCities[usercity].name === res[parkingcity]){
                         isCityRep = true;
                         break;
                     }
