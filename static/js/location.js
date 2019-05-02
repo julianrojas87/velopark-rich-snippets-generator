@@ -51,7 +51,7 @@ function initPointMap(target, latid, lonid, clear) {
     });
     pointMap.addInteraction(point);
 
-    if((user && (user.cityrep || user.cityrep === "true")) && target === 'point-map'){
+    if((user && (user.cityrep || user.cityrep === "true")) && target.startsWith('point-map')){
         let domain = domainName !== '' ? '/' + domainName : '';
         pointSource.on('addfeature', event => {
             $('.city-rep-location-loading-icon').css('visibility', 'visible');
@@ -103,7 +103,6 @@ function initPointMap(target, latid, lonid, clear) {
         });
     } else {
         pointSource.on('addfeature', event => {
-            console.log(event);
             if (pointSource.getFeatures().length > 1) {
                 pointSource.removeFeature(pointSource.getFeatures()[0]);
             }
