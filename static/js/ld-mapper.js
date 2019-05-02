@@ -174,6 +174,11 @@ function fillAutomaticData(jsonld) {
             }
         }
     }
+    let lonlat = [jsonld['@graph'][0]['geo'][0]['longitude'], jsonld['@graph'][0]['geo'][0]['latitude']];
+    jsonld['hasMap'] = {
+        "@type": "Map",
+        "url": 'https://www.openstreetmap.org/#map=18/' + lonlat[1] + '/' + lonlat[0]
+    };
 
     return true;
 }
