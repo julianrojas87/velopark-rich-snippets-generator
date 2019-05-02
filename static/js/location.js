@@ -103,7 +103,6 @@ function initPointMap(target, latid, lonid, clear) {
         });
     } else {
         pointSource.on('addfeature', event => {
-            console.log(event);
             if (pointSource.getFeatures().length > 1) {
                 pointSource.removeFeature(pointSource.getFeatures()[0]);
             }

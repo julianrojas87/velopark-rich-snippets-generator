@@ -288,8 +288,8 @@ exports.findParkings = function (callback) {
     parkings.find().toArray(callback);
 };
 
-exports.findParkingByID = function (id, callback) {
-    parkings.findOne({parkingID: id}, callback);
+exports.findParkingByID = id => {
+    return parkings.findOne({parkingID: id});
 };
 
 exports.findParkingsByEmail = function (email, callback) {
@@ -466,7 +466,7 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
         });
 };
 
-exports.updateParkingAsCityRep = function (id, filename, location, parkingCityNames, callback) {
+exports.updateParkingAsCityRep = function (id, filename, location, approved, callback) {
     //1. find account of city rep
     //2. make sure the city rep is responsible for this parking location
     //3. update the parking itself, leaving the owning company as is
@@ -480,7 +480,7 @@ exports.updateParkingAsCityRep = function (id, filename, location, parkingCityNa
                 location: location
             },
             $setOnInsert: {
-                approvedstatus: false
+                approvedstatus: approved
             }
         },
         {

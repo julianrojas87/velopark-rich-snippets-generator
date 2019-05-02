@@ -145,8 +145,8 @@ module.exports = app => {
                             superAdmin: req.session.user.superAdmin,
                             company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
-                            emailParkingOwner: accountEmail,
-                            nameCompanyParkingOwner: companyName
+                            emailParkingOwner: req.session.user.email,
+                            nameCompanyParkingOwner: req.session.user.companyName
                         });
                     }
                 });
@@ -528,7 +528,9 @@ module.exports = app => {
     app.post('/cityrep/check-location/:lat/:lng', async function(req, res){
         if (req.session.user == null) {
             res.status(401).send('Unauthorized');
-        } else if (req.session.user.cityNames.length > 0) {
+        } else if(req.session.user.superAdmin || (req.session.user.companyName && req.session.user.companyName !== '')) {
+            res.status(200).send(true);
+        } else if (req.session.user.cityNames && req.session.user.cityNames.length > 0) {
             if(req.params.lat && req.params.lng) {
                 try {
                     CiM.isLocationWithinCities(parseFloat(req.params.lat), parseFloat(req.params.lng), req.session.user.cityNames, function (error, result) {

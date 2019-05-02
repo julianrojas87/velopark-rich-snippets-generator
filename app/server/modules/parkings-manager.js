@@ -101,7 +101,15 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, callback) => {
         } catch (e) {
             console.error("Could not extract location from parking. " + e);
         }
-        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', false, location, companyName, function (e, res) {
+
+        let approved = false;
+        // Do not modify approval status if parking already exists
+        let p = await dbAdapter.findParkingByID(parkingID);
+        if (p) {
+            approved = p.approvedstatus;
+        }
+
+        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', approved, location, companyName, function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -132,6 +140,13 @@ exports.saveParkingAsCityRep = async (parking, userCities, callback) => {
         console.error("Could not extract location from parking." + e);
     }
 
+    let approved = false;
+    // Do not modify approval status if parking already exists
+    let p = await dbAdapter.findParkingByID(parkingID);
+    if (p) {
+        approved = p.approvedstatus;
+    }
+
     getCitiesOfParking(park_obj, function (error, res) {
         if (error != null) {
             callback(error);
@@ -146,7 +161,7 @@ exports.saveParkingAsCityRep = async (parking, userCities, callback) => {
                 }
             }
             if (isCityRep) {
-                dbAdapter.updateParkingAsCityRep(parkingID, parkingID + '.jsonld', location, res, function (e, result) {
+                dbAdapter.updateParkingAsCityRep(parkingID, parkingID + '.jsonld', location, approved, function (e, result) {
                     if (e != null) {
                         console.log("Error saving parking in database:");
                         console.log(e);
@@ -181,8 +196,16 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, callback) => {
         console.error("Could not extract location from parking." + e);
     }
 
+    let approved = false;
+
+    // Do not modify approval status if parking already exists
+    let p = await dbAdapter.findParkingByID(parkingID);
+    if (p) {
+        approved = p.approvedstatus;
+    }
+
     if (companyName) {
-        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', false, location, companyName, function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, parkingID + '.jsonld', approved, location, companyName, function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -194,7 +217,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, callback) => {
             }
         });
     } else {
-        dbAdapter.saveParkingAsAdmin(parkingID, parkingID + '.jsonld', false, location, function (e, res) {
+        dbAdapter.saveParkingAsAdmin(parkingID, parkingID + '.jsonld', approved, location, function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
