@@ -7,25 +7,30 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
 var db, accounts, parkings, companies, cities;
 
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (e, client) {
-    if (e) {
-        console.error(e);
-    } else {
-        db = client.db(process.env.DB_NAME);
-        accounts = db.collection('accounts');
-        parkings = db.collection('parkings');
-        companies = db.collection('companies');
-        cities = db.collection('geocities');
+exports.initDbAdapter = function () {
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (e, client) {
+            if (e) {
+                console.error(e);
+            } else {
+                db = client.db(process.env.DB_NAME);
+                accounts = db.collection('accounts');
+                parkings = db.collection('parkings');
+                companies = db.collection('companies');
+                cities = db.collection('geocities');
 
-        accounts.createIndex({ location: "2dsphere" });
-        cities.createIndex({ geometry: "2dsphere" });
-        // index fields 'user' & 'email' for faster new account validation //
-        accounts.createIndex({ user: 1, email: 1 });
-        console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
+                accounts.createIndex({ location: "2dsphere" });
+                cities.createIndex({ geometry: "2dsphere" });
+                // index fields 'user' & 'email' for faster new account validation //
+                accounts.createIndex({ user: 1, email: 1 });
+                console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
 
-        initDB();
-    }
-});
+                initDB();
+                resolve();
+            }
+        });
+    });
+}
 
 let getObjectId = function (id) {
     return new require('mongodb').ObjectID(id);
@@ -549,13 +554,11 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                 callback(error);
             } else if (res == null) {
                 callback("user not found");
-            } else if (!res.value.companyEnabled) {
-                callback("The company membership has not been approved yet. Operation not allowed.");
             } else {
                 //looking for a company now
                 companies.findOneAndUpdate({
                     parkingIDs: parkingId,
-                    name: res.value.companyName
+                    name: res.companyName
                 }, {
                         $pull: { parkingIDs: parkingId }
                     },
@@ -584,7 +587,7 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
 };
 
 exports.deleteParkingById = function (parkingId, callback) {
-    accounts.findOneAndUpdate({
+    companies.findOneAndUpdate({
         parkingIDs: parkingId
     }, {
             $pull: { parkingIDs: parkingId }
@@ -595,7 +598,6 @@ exports.deleteParkingById = function (parkingId, callback) {
                 callback(error);
             } else {
                 if (res.value) {
-                    //One document has been updated. The user was managing this parking by himself (not trough a company)
                     deleteParkingFromParkingsTable(parkingId, function (error, res) {
                         if (error != null) {
                             callback(error);
@@ -604,31 +606,14 @@ exports.deleteParkingById = function (parkingId, callback) {
                         }
                     });
                 } else {
-                    //did not find a user with this parkingId, looking for a company now
-                    companies.findOneAndUpdate({
-                        parkingIDs: parkingId
-                    }, {
-                            $pull: { parkingIDs: parkingId }
-                        },
-                        {},
-                        function (error, res) {
-                            if (error != null) {
-                                callback(error);
-                            } else {
-                                if (res.value) {
-                                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
-                                        if (error != null) {
-                                            callback(error);
-                                        } else {
-                                            callback(null, true);
-                                        }
-                                    });
-                                } else {
-                                    //did not find a company or user with this parkingId
-                                    callback(null, false);
-                                }
-                            }
-                        });
+                    // parking does not belong to a company
+                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
+                        if (error != null) {
+                            callback(error);
+                        } else {
+                            callback(null, true);
+                        }
+                    });
                 }
             }
         });

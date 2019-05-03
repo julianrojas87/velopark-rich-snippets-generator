@@ -149,7 +149,7 @@ function fillAutomaticData(jsonld) {
         }
     } else {
         // Generate automatic @id
-        jsonld['@id'] = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(jsonld['dataOwner']['companyName'].replace(/\s/g, '-'))
+        jsonld['@id'] = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(jsonld['ownedBy']['companyName'].replace(/\s/g, '-'))
             + '_' + encodeURIComponent(jsonld['identifier'].replace(/\s/g, '-'));
     }
 
