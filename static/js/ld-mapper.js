@@ -391,7 +391,7 @@ function formatValue(name, value) {
                 }
             }
             if (type = 'xsd:duration' && value) {
-                if (name == 'maximumStorageTime') {
+                if (name == 'maximumParkingDuration') {
                     return 'P' + value + 'D';
                 }
                 if (name == 'minimumStorageTime') {

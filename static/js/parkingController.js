@@ -262,7 +262,7 @@ function reverseFormatValue(name, value) {
                 return Boolean(value).toString();
             }
             if (type === 'xsd:duration') {
-                if (name === 'maximumStorageTime') {
+                if (name === 'maximumParkingDuration') {
                     return value.substring(1).slice(0, -1);
                 }
                 if (name === 'minimumStorageTime') {
