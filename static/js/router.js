@@ -131,7 +131,11 @@
                     type: "DELETE",
                     url: domain + '/delete-parking?parkingId=' + parkingId,
                     success: () => {
-                        window.location.href = domain + '/parkings';
+                        if(user.superAdmin) {
+                            window.location.href = domain + '/admin-parkings';
+                        } else {
+                            window.location.href = domain + '/parkings';
+                        }
                     },
                     error: e => {
                         alert('Error: ' + e.responseText);

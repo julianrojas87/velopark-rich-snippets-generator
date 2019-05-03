@@ -159,8 +159,8 @@ module.exports = app => {
                     superAdmin: req.session.user.superAdmin,
                     company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
-                    emailParkingOwner: null,
-                    nameCompanyParkingOwner: null
+                    emailParkingOwner: req.session.user.email,
+                    nameCompanyParkingOwner: req.session.user.companyName
                 });
             }
         }
