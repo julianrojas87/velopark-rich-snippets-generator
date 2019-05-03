@@ -16,6 +16,23 @@
             }
         }
 
+        //validate free text languages
+        let inputLang = new Set();
+        $('.translatable-free-text').each(function () {
+                inputLang.add($(this).parent());
+        });
+        inputLang.forEach(function(key, val, set){
+            let empties = validateLang(val);
+            if (check &&  empties != null) {
+                wrongInput = empties[0];
+                empties.forEach(function(empty){
+                    showValidate(empty);
+                });
+                check = false;
+            }
+        });
+
+
         if (check) {
             // JSON-LD skeleton already containing the predefined @context and data structure
             loadAPSkeleton().then(jsonld => {
@@ -93,7 +110,7 @@ async function mapData(jsonld) {
         sections[i] = $('div[parking-section=' + i + ']');
     }
     await processSections(jsonld, sections);
-    if(fillAutomaticData(jsonld)) {
+    if (fillAutomaticData(jsonld)) {
         cleanEmptyValues(jsonld);
     } else {
         throw new Error('Malformed Parking URI');
@@ -121,9 +138,9 @@ async function processSections(jsonld, sections) {
 
 function fillAutomaticData(jsonld) {
     // Handle @id
-    if(jsonld['@id'] != '') {
+    if (jsonld['@id'] != '') {
         let idInput = $('input[name="@id"]');
-        if(!fullValidation(idInput[0])) {
+        if (!fullValidation(idInput[0])) {
             $('html, body').animate({
                 scrollTop: idInput.offset().top - 200
             }, 500);
@@ -132,7 +149,7 @@ function fillAutomaticData(jsonld) {
         }
     } else {
         // Generate automatic @id
-        jsonld['@id'] = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(jsonld['dataOwner']['companyName'].replace(/\s/g, '-')) 
+        jsonld['@id'] = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(jsonld['ownedBy']['companyName'].replace(/\s/g, '-'))
             + '_' + encodeURIComponent(jsonld['identifier'].replace(/\s/g, '-'));
     }
 
@@ -157,6 +174,11 @@ function fillAutomaticData(jsonld) {
             }
         }
     }
+    let lonlat = [jsonld['@graph'][0]['geo'][0]['longitude'], jsonld['@graph'][0]['geo'][0]['latitude']];
+    jsonld['hasMap'] = {
+        "@type": "Map",
+        "url": 'https://www.openstreetmap.org/#map=18/' + lonlat[1] + '/' + lonlat[0]
+    };
 
     return true;
 }
@@ -198,7 +220,14 @@ function cleanEmptyValues(obj) {
 function processElement(jsonld, element) {
     let dName = element.attr('name').split('.');
     if (dName.length < 2) {
-        jsonld[`${dName[0]}`] = setElementValue(element, jsonld[`${dName[0]}`], dName[0]);
+        if (element.attr('lang')) {
+            if (jsonld[`${dName[0]}`] === undefined || jsonld[`${dName[0]}`] === '') {
+                jsonld[`${dName[0]}`] = [];
+            }
+            jsonld[`${dName[0]}`].push(setElementWithLanguageValue(element, jsonld[`${dName[0]}`]));
+        } else {
+            jsonld[`${dName[0]}`] = setElementValue(element, jsonld[`${dName[0]}`], dName[0]);
+        }
     } else {
         let temp_obj = jsonld;
 
@@ -212,12 +241,31 @@ function processElement(jsonld, element) {
                     // Check if it is an array (name starts with _)
                     let length = temp_obj.length - 1;
                     if (temp_obj[length][`${dName[i]}`] === undefined || temp_obj[length][`${dName[i]}`] === '' || element.is('div')) {
-                        temp_obj[length][`${dName[i]}`] = setElementValue(element, temp_obj[length][`${dName[i]}`] || [], dName[i]);
+                        if (element.attr('lang')) {
+                            temp_obj[length][`${dName[i]}`] = [];
+                            temp_obj[length][`${dName[i]}`][0] = setElementWithLanguageValue(element, temp_obj[length][`${dName[i]}`] || []);
+                        } else {
+                            temp_obj[length][`${dName[i]}`] = setElementValue(element, temp_obj[length][`${dName[i]}`] || [], dName[i]);
+                        }
+                    } else {
+                        if (element.attr('lang')) {
+                            temp_obj[length][`${dName[i]}`].push(setElementWithLanguageValue(element, {}));
+                        } else {
+                            let newObj = {};
+                            newObj['@type'] = dName[i - 1].substring(1);
+                            newObj[`${dName[i]}`] = setElementValue(element, newObj[`${dName[i]}`], dName[i]);
+                            temp_obj.push(newObj);
+                        }
+                    }
+                } else if (element.attr('lang')) {
+                    //element exists in different languages and will therefore also generate an array
+                    if (temp_obj[`${dName[i]}`] === undefined || temp_obj[`${dName[i]}`] === '') {
+                        temp_obj[`${dName[i]}`] = [];
+                        temp_obj[`${dName[i]}`][0] = setElementWithLanguageValue(element, temp_obj[`${dName[i]}`] || []);
                     } else {
                         let newObj = {};
-                        newObj['@type'] = dName[i - 1].substring(1);
-                        newObj[`${dName[i]}`] = setElementValue(element, newObj[`${dName[i]}`], dName[i]);
-                        temp_obj.push(newObj);
+                        newObj = setElementWithLanguageValue(element, newObj[`${dName[i]}`]);
+                        temp_obj[`${dName[i]}`].push(newObj);
                     }
                 } else {
                     //Is not an array. Add value to referenced object
@@ -245,7 +293,7 @@ function processElement(jsonld, element) {
                     if (i > 0 && dName[i - 1].startsWith('_')) {
                         let x = temp_obj[temp_obj.length - 1][`${dName[i]}`];
                         if (x) {
-                            if (x[`${dName[i + 1]}`] && x[`${dName[i + 1]}`] != '') {
+                            if (x[`${dName[i + 1]}`] && x[`${dName[i + 1]}`] !== '') {
                                 let type = temp_obj[temp_obj.length - 1][`${dName[i]}`]['@type'];
                                 temp_obj.push({
                                     '@type': dName[i - 1].substring(1),
@@ -302,6 +350,18 @@ function setElementValue(el, jsonEl, name) {
     }
 }
 
+function setElementWithLanguageValue(el, jsonEl) {
+    if (el.val()) {
+        jsonEl = {
+            "@value": el.val(),
+            "@language": el.attr('lang')
+        };
+    } else {
+        jsonEl = {};
+    }
+    return jsonEl;
+}
+
 function formatValue(name, value) {
     if (context[`${name}`]) {
         let type = context[`${name}`]['@type'];
@@ -331,7 +391,7 @@ function formatValue(name, value) {
                 }
             }
             if (type = 'xsd:duration' && value) {
-                if (name == 'maximumStorageTime') {
+                if (name == 'maximumParkingDuration') {
                     return 'P' + value + 'D';
                 }
                 if (name == 'minimumStorageTime') {

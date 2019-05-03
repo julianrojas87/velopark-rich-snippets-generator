@@ -7,25 +7,30 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
 var db, accounts, parkings, companies, cities;
 
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (e, client) {
-    if (e) {
-        console.error(e);
-    } else {
-        db = client.db(process.env.DB_NAME);
-        accounts = db.collection('accounts');
-        parkings = db.collection('parkings');
-        companies = db.collection('companies');
-        cities = db.collection('geocities');
+exports.initDbAdapter = function () {
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (e, client) {
+            if (e) {
+                console.error(e);
+            } else {
+                db = client.db(process.env.DB_NAME);
+                accounts = db.collection('accounts');
+                parkings = db.collection('parkings');
+                companies = db.collection('companies');
+                cities = db.collection('geocities');
 
-        accounts.createIndex({ location: "2dsphere" });
-        cities.createIndex({ geometry: "2dsphere" });
-        // index fields 'user' & 'email' for faster new account validation //
-        accounts.createIndex({ user: 1, email: 1 });
-        console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
+                accounts.createIndex({ location: "2dsphere" });
+                cities.createIndex({ geometry: "2dsphere" });
+                // index fields 'user' & 'email' for faster new account validation //
+                accounts.createIndex({ user: 1, email: 1 });
+                console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
 
-        initDB();
-    }
-});
+                initDB();
+                resolve();
+            }
+        });
+    });
+}
 
 let getObjectId = function (id) {
     return new require('mongodb').ObjectID(id);
@@ -288,8 +293,8 @@ exports.findParkings = function (callback) {
     parkings.find().toArray(callback);
 };
 
-exports.findParkingByID = function (id, callback) {
-    parkings.findOne({ parkingID: id }, callback);
+exports.findParkingByID = id => {
+    return parkings.findOne({ parkingID: id });
 };
 
 exports.findParkingsByEmail = function (email, callback) {
@@ -466,81 +471,38 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
         });
 };
 
-exports.updateParkingAsCityRep = function (companyName, id, filename, location, parkingCityNames, callback) {
+exports.updateParkingAsCityRep = function (id, filename, location, approved, callback) {
     //1. find account of city rep
     //2. make sure the city rep is responsible for this parking location
     //3. update the parking itself, leaving the owning company as is
-    accounts.findOne(
+    parkings.findOneAndUpdate(
         {
-            companyName: companyName,
-            cityNames: {
-                $elemMatch: {
-                    name: {
-                        $in: parkingCityNames
-                    }
-                }
+            parkingID: id
+        },
+        {
+            $set: {
+                filename: filename,
+                location: location
+            },
+            $setOnInsert: {
+                approvedstatus: approved
             }
         },
-        {},
-        function (e, res) {
-            if (e != null) {
-                callback(e);
+        {
+            returnOriginal: false,
+            upsert: true
+        },
+        function (e, o) {
+            if (o.value != null) {
+                callback(null, o.value);
             } else {
-                if (res != null) {
-                    //User is city rep for this parking. He can update this parking.
-                    parkings.findOneAndUpdate(
-                        {
-                            parkingID: id
-                        },
-                        {
-                            $set: {
-                                filename: filename,
-                                location: location
-                            },
-                        },
-                        {
-                            returnOriginal: false
-                        },
-                        function (e, o) {
-                            if (o.value != null) {
-                                callback(null, o.value);
-                            } else {
-                                callback(e);
-                            }
-                        });
-                } else {
-                    callback("You are not representative for this region.");
-                }
+                callback(e);
             }
-        }
-    );
+        });
 };
 
-exports.saveParking = function (id, filename, approvedStatus, location, email, callback) {
-    accounts.findOne(
-        {
-            email: email
-        },
-        { maxTimeMS: 10000 },
-        function (e, res) {
-            if (e != null) {
-                callback(e);
-            } else {
-                if (res.companyName && res.companyName !== '') {
-                    //User is part of a company, parking will be linked to this company instead of this user
-                    exports.updateCompanyParkingIDs(res.companyName, id, function (error, result) {
-                        if (error != null) {
-                            callback(error);
-                        } else {
-                            updateOrCreateParking(id, filename, approvedStatus, location, callback);
-                        }
-                    });
-                } else {
-                    updateOrCreateParking(id, filename, approvedStatus, location, callback);
-                }
-            }
-        }
-    );
+exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, callback) {
+    updateOrCreateParking(id, filename, approvedStatus, location, callback);
 };
 
 exports.saveParkingToCompany = function (id, filename, approvedStatus, location, companyName, callback) {
@@ -592,13 +554,11 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                 callback(error);
             } else if (res == null) {
                 callback("user not found");
-            } else if (!res.value.companyEnabled) {
-                callback("The company membership has not been approved yet. Operation not allowed.");
             } else {
                 //looking for a company now
                 companies.findOneAndUpdate({
                     parkingIDs: parkingId,
-                    name: res.value.companyName
+                    name: res.companyName
                 }, {
                         $pull: { parkingIDs: parkingId }
                     },
@@ -627,7 +587,7 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
 };
 
 exports.deleteParkingById = function (parkingId, callback) {
-    accounts.findOneAndUpdate({
+    companies.findOneAndUpdate({
         parkingIDs: parkingId
     }, {
             $pull: { parkingIDs: parkingId }
@@ -638,7 +598,6 @@ exports.deleteParkingById = function (parkingId, callback) {
                 callback(error);
             } else {
                 if (res.value) {
-                    //One document has been updated. The user was managing this parking by himself (not trough a company)
                     deleteParkingFromParkingsTable(parkingId, function (error, res) {
                         if (error != null) {
                             callback(error);
@@ -647,31 +606,14 @@ exports.deleteParkingById = function (parkingId, callback) {
                         }
                     });
                 } else {
-                    //did not find a user with this parkingId, looking for a company now
-                    companies.findOneAndUpdate({
-                        parkingIDs: parkingId
-                    }, {
-                            $pull: { parkingIDs: parkingId }
-                        },
-                        {},
-                        function (error, res) {
-                            if (error != null) {
-                                callback(error);
-                            } else {
-                                if (res.value) {
-                                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
-                                        if (error != null) {
-                                            callback(error);
-                                        } else {
-                                            callback(null, true);
-                                        }
-                                    });
-                                } else {
-                                    //did not find a company or user with this parkingId
-                                    callback(null, false);
-                                }
-                            }
-                        });
+                    // parking does not belong to a company
+                    deleteParkingFromParkingsTable(parkingId, function (error, res) {
+                        if (error != null) {
+                            callback(error);
+                        } else {
+                            callback(null, true);
+                        }
+                    });
                 }
             }
         });
@@ -801,7 +743,13 @@ exports.transferParkingToCompany = function (newCompany, parkingID, callback) {
                             }
                         });
                     } else {
-                        callback("Could not find company to update.");
+                        exports.updateCompanyParkingIDs(newCompany, parkingID, (error, result) => {
+                            if (result) {
+                                callback(null, result);
+                            } else {
+                                callback("Could not find company to update.");
+                            }
+                        });
                     }
                 }
             });

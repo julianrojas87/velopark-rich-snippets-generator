@@ -14,7 +14,8 @@ The configuration of the application is made through the `config.json` file, pre
 
 - **data:** Path to the folder that will be used to store the generated data. **Is a mandatory parameter**.
 - **domain:** Domain name of the application server if configured behind a reverse proxy (e.g. NGINX). It is empty by default.
-- **vocabulary:** Open Velopark vocabulary base URI. Default value is https://velopark.ilabt.imec.be. Only needed if using a different distribution of the vocabulary. 
+- **vocabulary:** Open Velopark vocabulary base URI. Default value is https://velopark.ilabt.imec.be. Only needed if using a different distribution of the vocabulary.
+- **superAdmins:** Array containing the user emails for the predefined Super Admin accounts.
 
 Next is an example of the configuration:
 
@@ -22,6 +23,7 @@ Next is an example of the configuration:
 {
   "data": "/opt/velopark/data",
   "domain": "",
-  "vocabulary": ""
+  "vocabulary": "",
+  "superAdmins": ["velopark@fietsberaad.be"]
 }
 ```

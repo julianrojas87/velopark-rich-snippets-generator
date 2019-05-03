@@ -1,5 +1,3 @@
-let parkingDataLoaded = false;
-
 ($ => {
 
     Promise.all(loadingPromises).then(() => {
@@ -16,6 +14,8 @@ function loadParkingValues() {
     if (parkingData && parkingData !== '') {
         let parking = JSON.parse(parkingData);
         originalId = parking['@id'];
+        //reset languages
+        $('#language-selection-container input[type="checkbox"]').prop('checked', false).trigger("change");
         processObject(parking);
     }
 }
@@ -25,24 +25,27 @@ function processObject(obj, oldPath, input) {
     if (oldPath) {
         path = oldPath;
     }
-
-    let keys = Object.keys(obj);
-    for (let i in keys) {
-        if (keys[i] !== '@context') {
-            path.push(keys[i]);
-            if (Array.isArray(obj[keys[i]])) {
-                if (keys[i] === '@graph') {
-                    loadSections(obj[keys[i]]);
+    try {
+        let keys = Object.keys(obj);
+        for (let i in keys) {
+            if (keys[i] !== '@context') {
+                path.push(keys[i]);
+                if (Array.isArray(obj[keys[i]])) {
+                    if (keys[i] === '@graph') {
+                        loadSections(obj[keys[i]]);
+                    } else {
+                        processArray(path, obj[keys[i]], input);
+                    }
+                } else if (typeof obj[keys[i]] == 'object') {
+                    processObject(obj[keys[i]], path);
                 } else {
-                    processArray(path, obj[keys[i]], input);
+                    loadParkingValue(path, obj[keys[i]], false, input);
                 }
-            } else if (typeof obj[keys[i]] == 'object') {
-                processObject(obj[keys[i]], path);
-            } else {
-                loadParkingValue(path, obj[keys[i]], false, input);
+                path.pop();
             }
-            path.pop();
         }
+    } catch (e) {
+        console.error("Processing of object failed.", oldPath.toString(), ": ", obj);
     }
 }
 
@@ -73,6 +76,7 @@ function loadSections(graph) {
 }
 
 function processArray(path, arr, input) {
+    //console.log(path);
     let lastPath = path[path.length - 1];
     // Handle div inputs
     if (['openingHoursSpecification', 'hoursAvailable'].indexOf(lastPath) >= 0) {
@@ -127,10 +131,29 @@ function processArray(path, arr, input) {
         // Normal object arrays that map to a single UI input (e.g closeTo or availableLanguages)
         for (let i = 0; i < arr.length; i++) {
             let obj = arr[i];
-            path.push('_' + obj['@type']);
-            processObject(obj, path, input);
-            path.pop();
+            if (obj["@language"]) {
+                let checkbox = $('#language-selection-container input[value="' + obj["@language"] + '"]');
+                if (!checkbox[0].checked) {
+                    checkbox.prop('checked', true).trigger("change");
+                }
+                processObjectWithLanguage(obj, path, input);
+            } else {
+                path.push('_' + obj['@type']);
+                processObject(obj, path, input);
+                path.pop();
+            }
         }
+    }
+}
+
+function processObjectWithLanguage(obj, path, inputs) {
+    let name = path.join('.');
+    let lang = obj["@language"];
+    let value = obj["@value"];
+    if (inputs) {
+        inputs.filter('[name="' + name + '"][lang="' + lang + '"]').val(value);
+    } else {
+        $('.input100[name="' + name + '"][lang="' + lang + '"]').val(value);
     }
 }
 
@@ -239,7 +262,7 @@ function reverseFormatValue(name, value) {
                 return Boolean(value).toString();
             }
             if (type === 'xsd:duration') {
-                if (name === 'maximumStorageTime') {
+                if (name === 'maximumParkingDuration') {
                     return value.substring(1).slice(0, -1);
                 }
                 if (name === 'minimumStorageTime') {
