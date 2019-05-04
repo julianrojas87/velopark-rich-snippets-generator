@@ -14,7 +14,9 @@
 	<p id="loadedParking" style="display: none;"><%= loadedParking ? loadedParking : '' %></p>
 	<script>let parkingOwner = {
 		email: "<%= emailParkingOwner %>",
-		company: "<%= nameCompanyParkingOwner %>"
+		company: "<%= nameCompanyParkingOwner %>",
+		approved: "<%= parkingApproved %>",
+		parkingCompany: "<%= parkingCompany %>"
 	}</script>
 
 	<!-- Resulting JSON-LD -->

@@ -48,7 +48,7 @@
                 <td class="text-left" style="font-size: 20px;">
                     <% if(companies[i]['parkingIDs'] == null) companies[i]['parkingIDs'] = [];
                     for (var parkingIDnum in companies[i]['parkingIDs']) { let parkingID = companies[i]['parkingIDs'][parkingIDnum];%>
-                    <div><%= parkingID %></div>
+                    <div><%= decodeURIComponent(parkingID) %></div>
                     <% } %>
                 </td>
             </tr>

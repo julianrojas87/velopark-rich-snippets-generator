@@ -556,10 +556,10 @@ function addFacilitySection() {
         let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
         $(this).prev().attr('id', newClear);
         $(this).prev().off('click');
-        let newLat = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-        $(this).next().find('input.input100').attr('id', newLat);
-        let newLon = $(this).next().next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-        $(this).next().next().find('input.input100').attr('id', newLon);
+        let newLat = $(this).parent().find('input[name*="latitude"]').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).parent().find('input[name*="latitude"]').attr('id', newLat);
+        let newLon = $(this).parent().find('input[name*="longitude"]').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).parent().find('input[name*="longitude"]').attr('id', newLon);
 
         initPointMap(newMap, newLat, newLon, newClear);
     });

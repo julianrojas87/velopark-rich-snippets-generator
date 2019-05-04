@@ -15,6 +15,18 @@ const guid = () => {
 	login validation methods
 */
 
+exports.getAccountByEmail = function(email) {
+	return new Promise((resolve, reject) => {
+		dbAdapter.findAccountByEmail(email, (err, acc) => {
+			if(err) {
+				reject(err);
+			} else {
+				resolve(acc);
+			}
+		});
+	});
+}
+
 exports.autoLogin = function (email, pass, callback) {
 	dbAdapter.findAccountByEmail(email, function (e, o) {
 		if (o) {
