@@ -70,6 +70,8 @@ function initPointMap(target, latid, lonid, clear) {
                         let latInput = $('#' + latid);
                         let lonInput = $('#' + lonid);
 
+                        
+
                         latInput.val(lat);
                         lonInput.val(long);
 

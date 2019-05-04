@@ -95,7 +95,7 @@
         $(this).hide();
         $(this).prev('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
-        let parkingid = $(this).attr('parkingid');
+        let parkingid = encodeURIComponent($(this).attr('parkingid'));
         $.ajax({
             type: "POST",
             url: domain + '/parkings/toggle-parking-enabled/' + parkingid,
@@ -116,7 +116,8 @@
     $('#parking-list input[title=Edit]').each(function () {
         $(this).on('click', function () {
             let domain = domainName !== '' ? '/' + domainName : '';
-            let parkingId = $(this).parent().parent().find('a').text().trim();
+            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
+            console.log(parkingId);
             window.location.href = domain + '/home?parkingId=' + parkingId;
         });
     });
@@ -124,14 +125,14 @@
     $('#parking-list input[title=Delete]').each(function () {
         $(this).on('click', function () {
             let domain = domainName !== '' ? '/' + domainName : '';
-            let parkingId = $(this).parent().parent().find('a').text().trim();
+            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
 
             if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
                 $.ajax({
                     type: "DELETE",
                     url: domain + '/delete-parking?parkingId=' + parkingId,
                     success: () => {
-                        if(user.superAdmin) {
+                        if(user.superAdmin === 'true') {
                             window.location.href = domain + '/admin-parkings';
                         } else {
                             window.location.href = domain + '/parkings';
@@ -148,7 +149,7 @@
     $('#parking-list input[title=Download]').each(function () {
         $(this).on('click', function () {
             let domain = domainName !== '' ? '/' + domainName : '';
-            let parkingId = $(this).parent().parent().find('a').text().trim();
+            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
             window.location.href = domain + '/download?parkingId=' + parkingId;
         });
     });
@@ -178,8 +179,7 @@
     let selectedParkingToTransfer = null;
 
     $('.transfer-parking').on('click', function() {
-        selectedParkingToTransfer = $(this).attr('parkingid');
-        console.log(selectedParkingToTransfer);
+        selectedParkingToTransfer = encodeURIComponent($(this).attr('parkingid'));
         $('#transfer-parking-form').show();
         let domain = domainName != '' ? '/' + domainName : '';
         if (!signinformcompaniesloaded) {

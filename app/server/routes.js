@@ -103,9 +103,10 @@ module.exports = app => {
                     return;
                 }
 
+                delete o.pass;
                 req.session.user = o;
                 AM.generateLoginKey(o.email, req.ip, function (key) {
-                    res.cookie('login', key, {maxAge: 900000});
+                    res.cookie('login', key, {maxAge: 90000000});
                     res.status(200).send(o);
                 });
             }
@@ -131,7 +132,7 @@ module.exports = app => {
         } else {
             let parkingData = null;
             if (req.query.parkingId) {
-                PM.getParking(req.session.user.email, req.query.parkingId, function (error, result, accountEmail, companyName) {
+                PM.getParking(req.session.user.email, encodeURIComponent(req.query.parkingId), (error, result, approved, company) => {
                     if (error != null) {
                         console.error(error);
                         res.status(500).send();
@@ -146,7 +147,9 @@ module.exports = app => {
                             company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             emailParkingOwner: req.session.user.email,
-                            nameCompanyParkingOwner: req.session.user.companyName
+                            nameCompanyParkingOwner: req.session.user.companyName,
+                            parkingApproved: approved,
+                            parkingCompany: company? company.name : null
                         });
                     }
                 });
@@ -160,7 +163,9 @@ module.exports = app => {
                     company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     emailParkingOwner: req.session.user.email,
-                    nameCompanyParkingOwner: req.session.user.companyName
+                    nameCompanyParkingOwner: req.session.user.companyName,
+                    parkingApproved: null,
+                    parkingCompany: null
                 });
             }
         }
@@ -527,7 +532,7 @@ module.exports = app => {
 
     app.post('/cityrep/check-location/:lat/:lng', async function(req, res){
         if (req.session.user == null) {
-            res.status(401).send('Unauthorized');
+            res.status(200).send(true);
         } else if(req.session.user.superAdmin || (req.session.user.companyName && req.session.user.companyName !== '')) {
             res.status(200).send(true);
         } else if (req.session.user.cityNames && req.session.user.cityNames.length > 0) {
@@ -611,7 +616,7 @@ module.exports = app => {
                     res.status(500).send();
                 } else {
                     if (value === true) {
-                        PM.toggleParkingEnabled(req.params.parkingid, req.body['parkingEnabled'] === "true", function (error, result) {
+                        PM.toggleParkingEnabled(encodeURIComponent(req.params.parkingid), req.body['parkingEnabled'] === "true", function (error, result) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send();
@@ -625,9 +630,9 @@ module.exports = app => {
                         });
                     } else {
                         //User is not superAdmin, maybe he is cityrep for the region of this parking?
-                        AM.isAccountCityRepForParkingID(req.session.user.email, req.params.parkingid, function (error, value) {
+                        AM.isAccountCityRepForParkingID(req.session.user.email, encodeURIComponent(req.params.parkingid), function (error, value) {
                             if (value === true) {
-                                PM.toggleParkingEnabled(req.params.parkingid, req.body['parkingEnabled'] === "true", function (error, result) {
+                                PM.toggleParkingEnabled(encodeURIComponent(req.params.parkingid), req.body['parkingEnabled'] === "true", function (error, result) {
                                     if (error != null) {
                                         console.error(error);
                                         res.status(500).send();
@@ -663,8 +668,7 @@ module.exports = app => {
             let user = req.session.user;
             if (user.superAdmin) {
                 //save as admin
-                //companyName can be null because Admin cannot create parkings and assign them to a company
-                PM.saveParkingAsSuperAdmin(null, req.body['jsonld'], function (error, result) {
+                PM.saveParkingAsSuperAdmin(req.body['parkingCompany'], req.body['jsonld'], req.body['approved'] === 'true', function (error, result) {
                     if (error != null) {
                         res.status(500).send(error);
                     } else {
@@ -674,7 +678,7 @@ module.exports = app => {
             } else if (user.companyName) {
                 if (user.companyEnabled) {
                     //save as company user
-                    PM.saveParkingAsCompanyUser(req.body['company'], req.body['jsonld'], function (error, result) {
+                    PM.saveParkingAsCompanyUser(req.body['company'], req.body['jsonld'], req.body['approved'] === 'true', function (error, result) {
                         if (error != null) {
                             res.status(500).send(error);
                         } else {
@@ -686,7 +690,7 @@ module.exports = app => {
                 }
             } else if (user.cityNames.length > 0) {
                 //check if parking is within your regions
-                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, function(error, result){
+                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, req.body['approved'] === 'true', req.body['parkingCompany'], function(error, result){
                     if (error != null) {
                         console.log(error);
                         res.status(500).send(error);
@@ -723,13 +727,13 @@ module.exports = app => {
         }
     });
 
-    app.delete('/delete-parking', async function (req, res) {
+    app.delete('/delete-parking', function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            await PM.deleteParking(req.session.user.email, req.query.parkingId, function (error) {
+            PM.deleteParking(req.session.user.email, encodeURIComponent(req.query.parkingId), function (error) {
                 if (error != null) {
                     console.error(error);
                     res.status(500).send('fail');
@@ -746,7 +750,7 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            PM.downloadParking(req.session.user.email, req.query.parkingId, res);
+            PM.downloadParking(req.session.user.email, encodeURIComponent(req.query.parkingId), res);
         }
     });
 

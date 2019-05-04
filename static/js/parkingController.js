@@ -17,6 +17,10 @@ function loadParkingValues() {
         //reset languages
         $('#language-selection-container input[type="checkbox"]').prop('checked', false).trigger("change");
         processObject(parking);
+        // leave Parking Facility URI empty if @id was set automatically
+        if(parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
+            $('input[name="@id"]').val('');
+        }
     }
 }
 

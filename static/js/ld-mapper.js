@@ -19,13 +19,13 @@
         //validate free text languages
         let inputLang = new Set();
         $('.translatable-free-text').each(function () {
-                inputLang.add($(this).parent());
+            inputLang.add($(this).parent());
         });
-        inputLang.forEach(function(key, val, set){
+        inputLang.forEach(function (key, val, set) {
             let empties = validateLang(val);
-            if (check &&  empties != null) {
+            if (check && empties != null) {
                 wrongInput = empties[0];
-                empties.forEach(function(empty){
+                empties.forEach(function (empty) {
                     showValidate(empty);
                 });
                 check = false;
@@ -65,35 +65,53 @@
         let domain = domainName != '' ? '/' + domainName : '';
         let username = $('#user-email').text().trim();
 
-        if (originalId != null && originalId != resultingObject['@id']) {
+        if (originalId !== null) {
             $.ajax({
                 type: "DELETE",
                 url: domain + '/delete-parking?username=' + username + '&parkingId=' + originalId,
                 success: () => {
                     originalId = null;
+                    $.ajax({
+                        type: "POST",
+                        url: domain + '/save-parking',
+                        data: {
+                            'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
+                            'jsonld': JSON.stringify(resultingObject),
+                            'company': parkingOwner.company,
+                            'approved': parkingOwner.approved,
+                            'parkingCompany': parkingOwner.parkingCompany
+                        },
+                        success: () => {
+                            originalId = resultingObject['@id'];
+                            alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
+                        },
+                        error: e => {
+                            alert('Error: ' + e.responseText);
+                        }
+                    });
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
+                }
+            });
+        } else {
+            $.ajax({
+                type: "POST",
+                url: domain + '/save-parking',
+                data: {
+                    'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
+                    'jsonld': JSON.stringify(resultingObject),
+                    'company': parkingOwner.company
+                },
+                success: () => {
+                    originalId = resultingObject['@id'];
+                    alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
                 },
                 error: e => {
                     alert('Error: ' + e.responseText);
                 }
             });
         }
-
-        $.ajax({
-            type: "POST",
-            url: domain + '/save-parking',
-            data: {
-                'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
-                'jsonld': JSON.stringify(resultingObject),
-                'company': parkingOwner.company
-            },
-            success: () => {
-                alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
-            },
-            error: e => {
-                alert('Error: ' + e.responseText);
-            }
-        });
-
         return false;
     });
 
@@ -149,8 +167,7 @@ function fillAutomaticData(jsonld) {
         }
     } else {
         // Generate automatic @id
-        jsonld['@id'] = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent(jsonld['ownedBy']['companyName'].replace(/\s/g, '-'))
-            + '_' + encodeURIComponent(jsonld['identifier'].replace(/\s/g, '-'));
+        jsonld['@id'] = 'https://velopark.ilabt.imec.be/data/' + encodeURIComponent((jsonld['ownedBy']['companyName'] + '_' + jsonld['identifier']).replace(/\s/g, '-'));
     }
 
     // Set dateModified

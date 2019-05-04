@@ -702,7 +702,11 @@ exports.updateCompanyParkingIDs = function (companyName, parkingID, callback) {
 
 exports.transferParkingToCompany = function (newCompany, parkingID, callback) {
     if (!newCompany) {
-        callback("Company to transfer to not given.");
+        companies.findOneAndUpdate({parkingIDs: parkingID}, {
+            $pull: {parkingIDs: parkingID}
+        }).then(result => {
+            callback(null, result);
+        });
     } else {
         companies.findOneAndUpdate({
             parkingIDs: parkingID

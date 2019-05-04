@@ -161,11 +161,14 @@ let signinformcitiesloaded = false;
             type: "POST",
             url: domain + '/login',
             data: { 'email': email, 'pass': pass },
-            success: () => {
+            success: user => {
+                console.log(user);
                 if (user.superAdmin) {
                     window.location.href = domain + '/admin';
+                } else if(user.companyName && user.companyName !== '') {
+                    window.location.href = domain + '/parkings';
                 } else {
-                    window.location.href = domain + '/home';
+                    window.location.href = domain + '/cityrep';
                 }
             },
             error: e => {
