@@ -361,5 +361,71 @@
       "buttonGenerate" : "Generate Linked Data",
       "titleResult" : "Resulting Linked Data in JSON-LD"
     }
+  },
+  "logIn" : {
+    "title" : "Login to your account",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Password",
+    "lostPasswd" : "Forgot your password?",
+    "loginButton" : "Login"
+  },
+  "lostPasswd" : {
+    "title" : "Password Recovery",
+    "emailPlaceholder" : "Email",
+    "sendButton" : "Send",
+    "successText" : "An email has been dispatched to you. We sent you a link which you can use to enter a new password for your account."
+  },
+  "signUp" : {
+    "title" : "Create a new account",
+    "companyMember" : "Company Member",
+    "cityRep" : "City Representative",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Password",
+    "selectCompany" : {
+      "field" : "Company",
+      "placeholder" : "Select Company"
+    },
+    "selectCity" : {
+      "field" : "Region",
+      "placeholder" : "Select Region",
+      "addExtra" : "Add extra region"
+    },
+    "signupButton" : "Sign Up"
+  },
+  "parkings" : {
+    "title" : "Parkings in ",
+    "th" : [
+      "Parking Facility URI", "Parking Name", "Approved", "Actions"
+    ]
+  },
+  "admin" : {
+    "title" : "Admin Hub",
+    "manageParkings" : "Manage Parkings",
+    "manageUsers" : "Manage Users",
+    "manageCompanies" : "Manage Companies"
+  },
+  "adminParkings" : {
+    "title" : "All Parkings Overview",
+    "th" : [
+      "Parking Facility URI", "Parking Name", "Company", "Regions", "Approved", "Actions"
+    ],
+    "transfer" : {
+      "title" : "Transfer parking",
+      "text" : "Select the company you want to transfer this parking to.",
+      "companyPlaceholder" : "Select Company",
+      "saveButton" : "Save"
+    }
+  },
+  "adminUsers" : {
+
+  },
+  "adminCompanies" : {
+
+  },
+  "cityRep" : {
+
+  },
+  "cityRepParkings" : {
+
   }
 }
