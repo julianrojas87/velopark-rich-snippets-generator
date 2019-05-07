@@ -1183,14 +1183,15 @@ label.css-label {
 
   font-family: Montserrat-SemiBold;
   font-size: 18px;
-  color: #fa4251;
+  color: #fa4251 !important;
   line-height: 1.2;
+  font-variant-caps: normal !important;
 }
 
 .btn-hide-validate {
   font-family: Material-Design-Iconic-Font;
   font-size: 18px;
-  color: #fa4251;
+  color: #fa4251 !important;
   cursor: pointer;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1204,6 +1205,7 @@ label.css-label {
   height: 40px;
   top: 35px;
   right: 70px;
+  font-variant-caps: normal !important;
 }
 
 .rs1-alert-validate.alert-validate::before {
