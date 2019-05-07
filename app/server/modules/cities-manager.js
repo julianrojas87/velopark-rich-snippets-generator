@@ -21,3 +21,15 @@ exports.isLocationWithinCities = function (lat, lon, cityNames, callback) {
         }
     });
 };
+
+exports.listCitiesForLocation = function(lat, lon){
+    return new Promise((resolve, reject) => {
+        dbAdapter.findCitiesByLocation(lat, lon, function(error, res){
+            if(error != null){
+                reject(error);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+};

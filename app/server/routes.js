@@ -149,7 +149,7 @@ module.exports = app => {
                             emailParkingOwner: req.session.user.email,
                             nameCompanyParkingOwner: req.session.user.companyName,
                             parkingApproved: approved,
-                            parkingCompany: company? company.name : null
+                            parkingCompany: company ? company.name : null
                         });
                     }
                 });
@@ -219,11 +219,8 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
-                        PM.listAllParkings(function (error, parkings) {
-                            if (error != null) {
-                                console.error(error);
-                                res.status(500).send();
-                            } else {
+                        PM.listAllParkings()
+                            .then(parkings => {
                                 res.render('admin-parkings.html', {
                                     domainName: domainName,
                                     vocabURI: vocabURI,
@@ -236,8 +233,11 @@ module.exports = app => {
                                     },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
-                            }
-                        });
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                res.status(500).send();
+                            });
                     } else {
                         res.redirect(domain + '/home');
                     }
@@ -530,13 +530,13 @@ module.exports = app => {
         }
     });
 
-    app.post('/cityrep/check-location/:lat/:lng', async function(req, res){
+    app.post('/cityrep/check-location/:lat/:lng', async function (req, res) {
         if (req.session.user == null) {
             res.status(200).send(true);
-        } else if(req.session.user.superAdmin || (req.session.user.companyName && req.session.user.companyName !== '')) {
+        } else if (req.session.user.superAdmin || (req.session.user.companyName && req.session.user.companyName !== '')) {
             res.status(200).send(true);
         } else if (req.session.user.cityNames && req.session.user.cityNames.length > 0) {
-            if(req.params.lat && req.params.lng) {
+            if (req.params.lat && req.params.lng) {
                 try {
                     CiM.isLocationWithinCities(parseFloat(req.params.lat), parseFloat(req.params.lng), req.session.user.cityNames, function (error, result) {
                         if (error != null) {
@@ -546,12 +546,33 @@ module.exports = app => {
                             res.status(200).send(result);   //result == true/false
                         }
                     });
-                } catch (e){
+                } catch (e) {
                     res.status(500).send("Could not process your request");
                 }
             }
         } else {
             res.status(401).send('Unauthorized');
+        }
+    });
+
+    app.get('/cityrep/get-regions/:lat/:lng', async function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send('Unauthorized');
+        } else {
+            if (req.params.lat && req.params.lng) {
+                try {
+                    CiM.listCitiesForLocation(parseFloat(req.params.lat), parseFloat(req.params.lng))
+                        .then(result => {
+                            res.status(200).send(result);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            res.status(500).send(error);
+                        });
+                } catch (e) {
+                    res.status(500).send("Could not process your request");
+                }
+            }
         }
     });
 
@@ -690,7 +711,7 @@ module.exports = app => {
                 }
             } else if (user.cityNames.length > 0) {
                 //check if parking is within your regions
-                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, req.body['approved'] === 'true', req.body['parkingCompany'], function(error, result){
+                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, req.body['approved'] === 'true', req.body['parkingCompany'], function (error, result) {
                     if (error != null) {
                         console.log(error);
                         res.status(500).send(error);
