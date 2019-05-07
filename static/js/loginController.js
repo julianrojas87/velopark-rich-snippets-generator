@@ -178,6 +178,36 @@ let signinformcitiesloaded = false;
         return false;
     });
 
+    $('#lost-password-button').on('click', () => {
+        $('#password-reset-form').show();
+        $('#login-form').hide();
+    });
+
+    $('#password-reset_close_button').on('click', () => {
+        $('#password-reset-form').toggle();
+    });
+
+    $('#lost-password-submit-button').on('click', function(){
+        $(this).siblings('.loading-icon').show();
+        $(this).hide();
+        let domain = domainName !== '' ? '/' + domainName : '';
+        let email = $('#password-reset-email').val();
+        $.ajax({
+            type: "POST",
+            url: domain + '/lost-password',
+            data: { 'email': email },
+            success: () => {
+                $(this).parent().hide();
+                $('#password-reset-mail-sent-message').show();
+            },
+            error: e => {
+                alert(e.responseText);
+            }
+        });
+        return false;
+    });
+
+
     //insert regions in admin parking overview
     let domain = domainName !== '' ? '/' + domainName : '';
     $('.parking-region-dummy').each(function(){

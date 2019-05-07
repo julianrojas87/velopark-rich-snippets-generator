@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- head tag -->
+<% include head.html %>
+
+<body>
+    <!-- Domain name to deal with reverse proxies -->
+    <p id="domainName" style="display: none;">
+        <%= domainName %>
+    </p>
+    <!-- URI to vocabulary -->
+    <p id="vocabURI" style="display: none;">
+        <%= vocabURI %>
+    </p>
+
+    <!-- Navigation Bar -->
+    <% include navbar.html %>
+
+    <div class="container-contact100">
+        <div class="wrap-contact100" style="width: 100%;">
+            <h4>Hallo <%= lostusername %>!</h4>
+            <div id="password-reset-area">
+                Je hebt aangegeven je wachtwoord vergeten te zijn. Op deze pagina kan je een nieuw wachtwoord instellen voor je account.<br>
+                On this page you can setup a new password for your account.
+                <form>
+                    <input type="hidden" autocomplete="username" id="username-pswd-reset-field" name="username" value="<%= lostusername %>"/>
+                    <input type="password" autocomplete="new-password" id="pswd-reset-field" name="pass" placeholder="Nieuw wachtwoord"/>
+                    <button id="pswd-reset-button" class="btn btn-primary" type="button">Save</button>
+                </form>
+            </div>
+            <div id="pswd-reset-success-message" style="display: none;">
+                Gelukt! Je wachtwoord is aangepast. Je kan je nu aanmelden met je nieuwe credentials.<br>
+                Success! Your password has been updated. You can now log in using your new credentials.
+            </div>
+        </div>
+    </div>
+
+    <!-- JS scripts-->
+    <% include scripts.html %>
+
+</body>
+
+</html>

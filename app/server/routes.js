@@ -4,6 +4,7 @@ const EM = require('./modules/email-dispatcher');
 const CoM = require('./modules/company-manager');
 const CiM = require('./modules/cities-manager');
 const PM = require('./modules/parkings-manager');
+const ToM = require('./modules/token-manager');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
@@ -842,6 +843,7 @@ module.exports = app => {
             if (e) {
                 res.status(400).send(e);
             } else {
+                account.passKeyToken = ToM.getTokenForString(account.passKey);
                 EM.dispatchResetPasswordLink(account, function (e, m) {
                     // TODO this callback takes a moment to return, add a loader to give user feedback //
                     if (!e) {
@@ -856,14 +858,39 @@ module.exports = app => {
     });
 
     app.get('/reset-password', function (req, res) {
-        AM.validatePasswordKey(req.query['key'], req.ip, function (e, o) {
-            if (e || o == null) {
-                res.redirect('/');
-            } else {
-                req.session.passKey = req.query['key'];
-                res.render('reset', {title: 'Reset Password'});
-            }
-        })
+        if (!req.query['key']) {
+            let domain = domainName !== '' ? '/' + domainName : '';
+            res.redirect(domain + '/');
+        } else {
+            let key = decodeURIComponent(req.query['key']);
+            ToM.getStringForToken(key, function (error, result) {
+                if (error != null) {
+                    res.status(500).send(e);
+                } else {
+                    AM.validatePasswordKey(result, req.ip, function (e, o) {
+                        if (e || o == null) {
+                            res.status(400).send('ERROR: Invalid reset-token.');
+                        } else {
+                            req.session.passKey = result;
+                            res.render('pswd-reset.html',
+                                {
+                                    title: 'Reset Password',
+                                    domainName: domainName,
+                                    username: null,
+                                    lostusername: o.email,
+                                    vocabURI: vocabURI,
+                                    superAdmin: false,
+                                    company: {
+                                        name: null,
+                                        enabled: false
+                                    },
+                                    cityrep: false,
+                                });
+                        }
+                    });
+                }
+            });
+        }
     });
 
     app.post('/reset-password', function (req, res) {

@@ -224,4 +224,24 @@
         $('#transfer-parking-form').toggle();
     });
 
+    $('#pswd-reset-button').on('click', function(){
+        let domain = domainName !== '' ? '/' + domainName : '';
+        let newPass = $('#pswd-reset-field').val();
+        $.ajax({
+            type: "POST",
+            url: domain + '/reset-password',
+            data: {
+                pass: newPass
+            },
+            success: (data) => {
+                console.log("Password successfully reset! " + data);
+                $('#password-reset-area').hide();
+                $('#pswd-reset-success-message').show();
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+            }
+        });
+    });
+
 })(jQuery);
