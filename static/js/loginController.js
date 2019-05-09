@@ -298,6 +298,9 @@ function translate(lang){
                 alert('Error: ' + e.responseText);
             }
         });
+    } else {
+        //Set standard language to dutch
+        translate('nl');    //TODO: replace all text in html files to the dutch versions, since dutch should be default. This is a temporary hack.
     }
 }
 

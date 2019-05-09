@@ -3,7 +3,8 @@
     "title": "Velopark Rich Snippets Generator",
     "login" : "Aanmelden",
     "logout" : "Uitloggen",
-    "signup" : "Account maken"
+    "signup" : "Account maken",
+    "langSelect" : "Taal"
   },
   "home" : {
     "buttons" : {

@@ -3,7 +3,8 @@
     "title": "Velopark Rich Snippets Generator",
     "login" : "Log In",
     "logout" : "Log Out",
-    "signup" : "Sign Up"
+    "signup" : "Sign Up",
+    "langSelect" : "Language"
   },
   "home" : {
     "buttons" : {
