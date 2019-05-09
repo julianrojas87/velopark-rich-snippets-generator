@@ -3,6 +3,7 @@
     <div id="page-logo-helper">
         <img src="static/images/icons/velopark.png">
     </div>
+    <a id="language-selector" transl-id="navbar.langSelect" style="display: block;">Language</a>
     <a id="signin" transl-id="navbar.signup" >Sign Up</a>
     <a id="login" transl-id="navbar.login" >Log In</a>
     <a id="logout" transl-id="navbar.logout" >Log out</a>
@@ -18,6 +19,14 @@
     <a id="myParkings" href="#"><%= company.name %> Parkings</a>
     <a id="myAdminOverview" href="#">Manage Entities</a>
     <a id="myCityOverview" href="#">Mange Regions</a>
+</div>
+
+<div id="drop-menu-lang" class="dropdown-content" style="z-index: 50; min-width: 60px;">
+    <a id="lang-nl" href="#" class="lang-selector" lang-select="nl">nl</a>
+    <a id="lang-en" href="#" class="lang-selector" lang-select="en">en</a>
+    <a id="lang-fr" href="#" class="lang-selector" lang-select="fr">fr</a>
+    <a id="lang-de" href="#" class="lang-selector" lang-select="de">de</a>
+    <a id="lang-es" href="#" class="lang-selector" lang-select="es">es</a>
 </div>
 
 <!-- Login/Sign up form -->

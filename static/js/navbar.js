@@ -26,6 +26,10 @@
         $('#drop-menu').show();
     });
 
+    $('#language-selector').hover(() => {
+        $('#drop-menu-lang').show();
+    });
+
     $('#myParkings').click(e => {
         e.stopPropagation();
     });
@@ -36,6 +40,12 @@
 
     $('body,html').click(e => {
         $('#drop-menu').hide();
+        $('#drop-menu-lang').hide();
+    });
+
+    $('.lang-selector').on('click', function() {
+        let lang = $(this).attr('lang-select');
+        translate(lang);
     });
 
     $('.plus_button_city_select').on('click', function () {

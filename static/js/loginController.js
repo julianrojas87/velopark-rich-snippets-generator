@@ -228,14 +228,13 @@ let signinformcitiesloaded = false;
     });
 })(jQuery);
 
-function translate(){
-    //localStorage.setItem("languagePref", "nl");
-    if (typeof(Storage) !== "undefined") {
-        let lang = localStorage.getItem("languagePref");
-        if(!lang){
-            //language hasn't been set, just leave default language in display
-            return;
-        }
+//if no lang parameter given, setting is loaded from localStorage
+function translate(lang){
+    if (typeof(Storage) !== "undefined" && lang) {
+        localStorage.setItem("languagePref", lang);
+    }
+    if (lang || (typeof(Storage) !== "undefined" && localStorage.getItem("languagePref"))) {
+        lang = localStorage.getItem("languagePref");
         let domain = domainName !== '' ? '/' + domainName : '';
         $.ajax({
             type: "GET",
