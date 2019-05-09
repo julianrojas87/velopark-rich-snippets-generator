@@ -417,15 +417,31 @@
     }
   },
   "adminUsers" : {
-
+    "title" : "All Users Overview",
+    "th" : [
+      "Email", "Company", "Region representative", "Admin"
+    ]
   },
   "adminCompanies" : {
-
+    "title" : "All Companies Overview",
+    "th" : [
+      "Company Name", "Users", "Parkings"
+    ],
+    "newCompany" : {
+      "title" : "Create new company: ",
+      "newCompanyPlaceholder" : "New name",
+      "saveButton" : "Save"
+    }
   },
   "cityRep" : {
-
+    "title" : "Region Hub",
+    "buttonRegion" : "Manage parkings",
+    "warningNotApproved" : "Your request for managing this region hasn't been approved by the system administrator yet."
   },
   "cityRepParkings" : {
-
+    "title" : "Parkings in ",
+    "th" : [
+      "Parking Facility URI", "Parking Name", "Approved", "Actions"
+    ]
   }
 }
