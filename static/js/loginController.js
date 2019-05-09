@@ -3,6 +3,8 @@ let signinformcitiesloaded = false;
 
 ($ => {
 
+    translate();
+
     if (user && user.name && user.name !== '') {
         $('#signin').hide();
         $('#login').hide();
@@ -226,4 +228,77 @@ let signinformcitiesloaded = false;
     });
 })(jQuery);
 
+function translate(){
+    //localStorage.setItem("languagePref", "nl");
+    if (typeof(Storage) !== "undefined") {
+        let lang = localStorage.getItem("languagePref");
+        if(!lang){
+            //language hasn't been set, just leave default language in display
+            return;
+        }
+        let domain = domainName !== '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/static/lang/' + lang + '.json',
+            data: {},
+            success: (data) => {
+                console.log("Dictionary loaded! \n", data);
+                $('[transl-id]').each(function () {
+                    let path;
+                    try {
+                        path = $(this).attr("transl-id").split(/[\.\[\]]/);
+                        let dictObj = data;
+                        for (i in path) {
+                            if(path[i])
+                                dictObj = dictObj[path[i]];
+                        }
+                        if(!dictObj){
+                            throw "Missing translation";
+                        }
+                        $(this).html(dictObj);
+                    } catch (e) {
+                        console.warn("Missing translation! (" + lang + ')', path);
+                    }
+                });
+                $('[transl-id-placeholder]').each(function () {
+                    let path;
+                    try {
+                        path = $(this).attr("transl-id-placeholder").split(/[\.\[\]]/);
+                        let dictObj = data;
+                        for (i in path) {
+                            if(path[i])
+                                dictObj = dictObj[path[i]];
+                        }
+                        if(!dictObj){
+                            throw "Missing translation";
+                        }
+                        $(this).attr('placeholder', dictObj);
+                    } catch (e) {
+                        console.warn("Missing translation!! (" + lang + ')', path);
+                    }
+                });
+                $('[transl-id-validate]').each(function () {
+                    let path;
+                    try {
+                        path = $(this).attr("transl-id-validate").split(/[\.\[\]]/);
+                        let dictObj = data;
+                        for (i in path) {
+                            if(path[i])
+                                dictObj = dictObj[path[i]];
+                        }
+                        if(!dictObj){
+                            throw "Missing translation";
+                        }
+                        $(this).attr('data-validate', dictObj);
+                    } catch (e) {
+                        console.warn("Missing translation!! (" + lang + ')', path);
+                    }
+                });
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+            }
+        });
+    }
+}
 
