@@ -16,6 +16,7 @@
     "lang" : {
       "title" : "Vertalingen",
       "infoAlert" : "Selecteer alstublieft alle talen waarin u deze fietsenparking wilt beschrijven.",
+      "warningAlert" : "Selecteer aub tenminste één taal.",
       "langName" : {
         "du" : "Nederlands",
         "fr" : "Frans",
@@ -34,37 +35,48 @@
       },
       "localID" : {
         "field" : "Locale ID *",
-        "infoText" : "De lokale code voor deze fietsenstalling.\n\nVoorbeeld: APCOA_018"
+        "infoText" : "De lokale code voor deze fietsenstalling.\n\nVoorbeeld: APCOA_018",
+        "placeholder" : "Lokale faciliteits-ID",
+        "validation" : "Vul de ID in"
       },
       "openingDate" : {
         "field" : "Eerste Openingsdag *",
-        "infoText" : "De datum waarop deze stalling geopend werd/wordt (Kan ook voor tijdelijke stallingen gebruikt worden).\n\nVoorbeeld: 03/25/2019"
+        "infoText" : "De datum waarop deze stalling geopend werd/wordt (Kan ook voor tijdelijke stallingen gebruikt worden).\n\nVoorbeeld: 03/25/2019",
+        "placeholder" : "Vul de openingsdatum in"
       },
       "closingDate" : {
         "field" : "Finale Sluitingsdag",
-        "infoText" : "De datum waarop de stalling definitief zal sluiten / is gesloten (Kan ook voor tijdelijke stallingen gebruikt worden).\n\nVoorbeeld: 03/25/2019"
+        "infoText" : "De datum waarop de stalling definitief zal sluiten / is gesloten (Kan ook voor tijdelijke stallingen gebruikt worden).\n\nVoorbeeld: 03/25/2019",
+        "placeholder" : "Vul de sluitingsdatum in"
       },
       "regulations" : {
         "field" : "Regelement",
-        "infoText" : "De link / URL waar informatie over deze stalling kan gevonden worden.\n\nVoorbeeld: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf"
+        "infoText" : "De link / URL waar informatie over deze stalling kan gevonden worden.\n\nVoorbeeld: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
+        "placeholder" : "Vul de link in naar het regelement"
       },
-      "Description" : {
+      "description" : {
         "field" : "Beschrijving",
-        "infoText" : "Algemene beschrijving van deze stalling of hoe gebruikers deze stalling kunnen bereiken.<br><br>Voorbeeld: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>"
+        "infoText" : "Algemene beschrijving van deze stalling of hoe gebruikers deze stalling kunnen bereiken.<br><br>Voorbeeld: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "placeholder" : "Geef een beschrijving"
       },
-      "Address" :  {
+      "address" :  {
         "title" : "Adres Informatie",
         "street" : {
           "field" : "Straat Naam en Nummer *",
-          "infoText" : "De naam van de straat en de nummer waar de parkin zich bevindt.<br><br>Voorbeeld: <i>Rector De Somerplein 8</i>"
+          "infoText" : "De naam van de straat en de nummer waar de parkin zich bevindt.<br><br>Voorbeeld: <i>Rector De Somerplein 8</i>",
+          "placeholder" : "Vul straatnaam en nummer in",
+          "validation" : "Vul straatnaam en nummer in"
         },
         "postal" : {
           "field" : "Postcode *",
-          "infoText" : "Postcode van de gemeente waarin de stalling zich bevindt.<br><br>Voorbeeld: <i>3000</i>"
+          "infoText" : "Postcode van de gemeente waarin de stalling zich bevindt.<br><br>Voorbeeld: <i>3000</i>",
+          "placeholder" : "Postcode",
+          "validation" : "Vul de postcode in"
         },
         "country" : {
           "field" : "Land *",
-          "infoText" : "Het land waarin de parking zich bevindt.<br><br>Voorbeeld: <i>Belgium</i>"
+          "infoText" : "Het land waarin de parking zich bevindt.<br><br>Voorbeeld: <i>Belgium</i>",
+          "validation" : "Vul het land in"
         }
       }
     },
@@ -80,7 +92,8 @@
         "name": {
           "field": "Naam Organisatie *",
           "infoText": "Geef de naam van de organisatie dat deze parking bezit op.<br><br>Voorbeeld: <i>Stad Leuven</i>",
-          "placeholder": "Geef de naam van de organization"
+          "placeholder": "Naam van de organisatie",
+          "validation" : "Vul de naam van de organisatie in"
         }
       },
       "operator" : {
@@ -93,7 +106,8 @@
         "name": {
           "field": "Naam Organisatie *",
           "infoText": "Geef de naam van de organisatie op die verantwoordelijk is voor de dagelijkse operatie van deze parking.<br><br>Voorbeeld: <i>APCOA PARKING</i>",
-          "placeholder": "Geef de naam van de organization"
+          "placeholder": "Naam van de organisatie",
+          "validation" : "Vul de naam van de organisatie in"
         }
       },
       "contact" : {
@@ -129,11 +143,13 @@
       "sectionName": {
         "field": "Sectie Naam",
         "infoText": "Een optionele naam van deze parkingssectie.<br><br>Voorbeeld: <i>Groene zone</i>",
-        "placeholder": "Naam Parkingssectie"
+        "placeholder": "Naam Parkingssectie",
+        "validation" : "Vul de parkingsectie-naam in"
       },
       "type": {
         "field": "Type Parking",
-        "infoText": "Selecteer welk type fietsenparking van toepassing is op deze sectie.<br><br>Voorbeeld: <i>Bicycle parking station</i>"
+        "infoText": "Selecteer welk type fietsenparking van toepassing is op deze sectie.<br><br>Voorbeeld: <i>Bicycle parking station</i>",
+        "placeholder" : "Selecteer het parking-type"
       },
       "levels": {
         "field": "Aantal verdiepingen",
@@ -148,7 +164,8 @@
       "maxDur": {
         "field": "Maximale parkeertijd (dagen) *",
         "infoText": "Definieer het maximale aantal opeenvolgende dagen dat een fiets in deze stalling mag blijven staan.<br><br>Voorbeeld: <i>21</i>",
-        "placeholder": "Geef het aantal dagen op"
+        "placeholder": "Geef het aantal dagen op",
+        "validation" : "Vul een waarde in"
       },
       "audience": {
         "field": "Doelpubliek",
@@ -171,15 +188,18 @@
         "placeholder": "Beschrijf wat te doen wanneer je fiets verwijderd werd (bv. Contacteer APCOA op het nummer 0473 33 89 11)"
       },
       "openingHours" : {
+        "title" : "Opening Hours",
         "infoText": "Geef aan wanneer deze sectie open is (als er slechts één sectie is, geldt dit voor de gehele fietsenparking). Je kan verschillende uren toevoegen via de \"Voeg extra uren toe\"-knop, als de openingsuren verschillen van dag tot dag.<br><br>Voorbeeld: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Vul aub tenminste één openingsuur in.",
         "open": {
           "field": "Openingstijd *",
-          "placeholder": "Vul de openingstijd in"
+          "placeholder": "Vul de openingstijd in",
+          "validation" : "Vul een geldige openingstijd in"
         },
         "close": {
           "field": "Sluitingstijd *",
-          "placeholder": "Vul de sluitingstijd in"
+          "placeholder": "Vul de sluitingstijd in",
+          "validation" : "Vul een geldige sluitingstijd in"
         },
         "day" : ["Ma", "Di", "Woe", "Do", "Vr", "Za", "Zo"],
         "addExtra": "Voeg extra uren toe"
@@ -193,12 +213,14 @@
         "lat" : {
           "field": "Breedtegraad *",
           "infoText": "Duid op de kaart de locatie van deze Faciliteitssectie aan.",
-          "placeholder": "Vul de breedtegraad in"
+          "placeholder": "Vul de breedtegraad in",
+          "validation": "Vul de breedtegraad in"
         },
         "lon" : {
           "field": "Lengtegraad *",
           "infoText": "Duid op de kaart de locatie van deze Faciliteitssectie aan.",
-          "placeholder": "Vul de lengtegraad in"
+          "placeholder": "Vul de lengtegraad in",
+          "validation": "Vul de lengtegraad in"
         }
       },
       "polygon" : {
@@ -210,6 +232,7 @@
         }
       },
       "entrance" : {
+        "title" : "Ingang",
         "text" : "Selecteer de locatie van de ingang van deze parking:",
         "lat" : {
           "field": "Breedtegraad",
@@ -229,6 +252,7 @@
         "addExtra" : "Voeg extra ingang toe"
       },
       "exit" : {
+        "title" : "Uitgang",
         "text" : "Selecteer de locatie van de uitgang van deze parking:",
         "lat" : {
           "field": "Breedtegraad",
@@ -254,12 +278,14 @@
       "noItemsError" : "Voeg aub tenminste één type fiets toe.",
       "type" : {
         "field": "Type Fiets",
-        "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>"
+        "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "placeholder" : "Selecteer een fietstype"
       },
       "capacity" : {
         "field": "Capaciteit *",
         "infoText": "Geef het miximum aantal fietsen van dit type op dat toegelaten worden in deze faciliteitssectie.<br><br>Voorbeeld: <i>250</i>",
-        "placeholder": "Vul de toegelaten capaciteit in"
+        "placeholder": "Vul de toegelaten capaciteit in",
+        "validation" : "Vul een waarde in"
       },
       "counting" : {
         "field": "Telsysteem",
@@ -277,6 +303,7 @@
         "placeholder" : "Selecteer een voorziening"
       },
       "availableHours" : {
+        "title" : "Beschikbare uren",
         "infoText": "Selecteer de dage en uren waarop deze voorziening beschikbaar of actief is in deze faciliteitssectie.<br><br>Voorbeeld: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
           "field": "Openingstijd *",
@@ -299,6 +326,7 @@
         "placeholder" : "Vul een link in naar de kostenbeschrijving voor deze faciliteitssectie"
       },
       "spec" : {
+        "title" : "Prijsspecificatie",
         "free" : {
           "field": "Gratis",
           "infoText": "Is deze faciliteitssectie gratis te gebruiken?<br><br>Voobeeld: <i>Yes / No</i>",
@@ -338,10 +366,10 @@
           "field": "Beschrijving",
           "infoText": "Beschrijf hoe deze prijsspecificatie werkt.<br><br>Voobeeld: <i>Gratis voor het eerste uur</i>",
           "placeholder" : "Beschrijf deze prijsspecificatie (bv. Gratis voor het eerste uur)"
-        }
-      },
-      "addExtra" : "Voeg extra prijsspecificatie toe"
-    },
+        },
+        "addExtra" : "Voeg extra prijsspecificatie toe"
+      }
+  },
     "extraSection" : {
       "title" : "Faciliteitssectie - Voeg Extra Sectie Toe",
       "text" : "Wil je een nieuwe sectie toevoegen aan deze fietsenparking?",

@@ -16,6 +16,7 @@
     "lang" : {
       "title" : "Data Languages",
       "infoAlert" : "Please select all the languages you want to use to describe your Bicycle Parking.",
+      "warningAlert" : "Please select at least one language",
       "langName" : {
         "du" : "Dutch",
         "fr" : "French",
@@ -34,37 +35,48 @@
       },
       "localID" : {
         "field" : "Local Identifier *",
-        "infoText" : "The local code used for the bicycle parking.\n\nExample: APCOA_018"
+        "infoText" : "The local code used for the bicycle parking.\n\nExample: APCOA_018",
+        "placeholder" : "Facility local ID",
+        "validation" : "Enter the identifier"
       },
       "openingDate" : {
         "field" : "Initial Opening Date *",
-        "infoText" : "The date the bicycle parking was opened / will open (can also be used for temporary bicycle parkings).\n\nExample: 03/25/2019"
+        "infoText" : "The date the bicycle parking was opened / will open (can also be used for temporary bicycle parkings).\n\nExample: 03/25/2019",
+        "placeholder" : "Enter the opening date"
       },
       "closingDate" : {
         "field" : "Final Closing Date",
-        "infoText" : "The date the bicycle parking was closed / will be closed (can also be used for temporary bicycle parkings).\n\nExample: 03/25/2019"
+        "infoText" : "The date the bicycle parking was closed / will be closed (can also be used for temporary bicycle parkings).\n\nExample: 03/25/2019",
+        "placeholder" : "Final closing date"
       },
       "regulations" : {
         "field" : "Regulations",
-        "infoText" : "The link / URL where information can be found about the bicycle parking.\n\nExample: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf"
+        "infoText" : "The link / URL where information can be found about the bicycle parking.\n\nExample: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
+        "placeholder" : "Enter the link for the regulations document"
       },
-      "Description" : {
+      "description" : {
         "field" : "Description",
-        "infoText" : "General description of this bicycle parking or how users can reach the bicycle parking.<br><br>Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>"
+        "infoText" : "General description of this bicycle parking or how users can reach the bicycle parking.<br><br>Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "placeholder" : "Describe how to arrive here"
       },
-      "Address" :  {
+      "address" :  {
         "title" : "Address Information",
         "street" : {
           "field" : "Street Name and Number *",
-          "infoText" : "The name of the street and number where the parking is located.<br><br>Example: <i>Rector De Somerplein 8</i>"
+          "infoText" : "The name of the street and number where the parking is located.<br><br>Example: <i>Rector De Somerplein 8</i>",
+          "placeholder" : "Enter the street name and number",
+          "validation" : "Enter the street name"
         },
         "postal" : {
           "field" : "Postal Code *",
-          "infoText" : "Postal code of the bicycle parking.<br><br>Example: <i>3000</i>"
+          "infoText" : "Postal code of the bicycle parking.<br><br>Example: <i>3000</i>",
+          "placeholder" : "Enter the postal code",
+          "validation" : "Enter the postal code"
         },
         "country" : {
           "field" : "Country *",
-          "infoText" : "Country of the bicycle parking.<br><br>Example: <i>Belgium</i>"
+          "infoText" : "Country of the bicycle parking.<br><br>Example: <i>Belgium</i>",
+          "validation" : "Enter the country"
         }
       }
     },
@@ -80,7 +92,8 @@
         "name": {
           "field": "Organization Name *",
           "infoText": "Put here the name of the organization that owns the bicycle parking.<br><br>Example: <i>Stad Leuven</i>",
-          "placeholder": "Enter the organization name"
+          "placeholder": "Enter the organization name",
+          "validation" : "Enter the organization name"
         }
       },
       "operator" : {
@@ -93,7 +106,8 @@
         "name": {
           "field": "Organization Name *",
           "infoText": "Put here the name of the organization that is responsible for the day-to-day operations.<br><br>Example: <i>APCOA PARKING</i>",
-          "placeholder": "Enter the organization name"
+          "placeholder": "Enter the organization name",
+          "validation" : "Enter the organisation name"
         }
       },
       "contact" : {
@@ -129,11 +143,13 @@
       "sectionName": {
         "field": "Section Name",
         "infoText": "An optional name of the bicycle parking section as it is locally known.<br><br>Example: <i>Green zone</i>",
-        "placeholder": "Parking section name"
+        "placeholder": "Parking section name",
+        "validation" : "Enter the facility name"
       },
       "type": {
         "field": "Parking Type",
-        "infoText": "Select what type of bicycle parking applies to this section.<br><br>Example: <i>Bicycle parking station</i>"
+        "infoText": "Select what type of bicycle parking applies to this section.<br><br>Example: <i>Bicycle parking station</i>",
+        "placeholder" : "Select parking type"
       },
       "levels": {
         "field": "Number of Levels",
@@ -148,7 +164,8 @@
       "maxDur": {
         "field": "Maximum parking duration (days) *",
         "infoText": "Define here the maximum number of consecutive days a bicycle can stay in the parking.<br><br>Example: <i>21</i>",
-        "placeholder": "Enter the amount of days"
+        "placeholder": "Enter the amount of days",
+        "validation" : "Enter a value"
       },
       "audience": {
         "field": "Intended Audience",
@@ -171,15 +188,18 @@
         "placeholder": "Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"
       },
       "openingHours" : {
-        "infoText": "Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.<br><br>Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
+        "title" : "Opening Hours",
+        "infoText" : "Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.<br><br>Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Please add at least one opening hour entry.",
         "open": {
           "field": "Opening Time *",
-          "placeholder": "Enter the opening time"
+          "placeholder": "Enter the opening time",
+          "validation" : "Enter a valid opening time"
         },
         "close": {
           "field": "Closing Time *",
-          "placeholder": "Enter the closing time"
+          "placeholder": "Enter the closing time",
+          "validation" : "Enter a valid closing time"
         },
         "day" : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         "addExtra": "Add extra hours"
@@ -193,12 +213,14 @@
         "lat" : {
           "field": "Latitude *",
           "infoText": "Indicate on the map the location of this section of the bicycle parking.",
-          "placeholder": "Enter the latitude"
+          "placeholder": "Enter the latitude",
+          "validation": "Enter the latitude"
         },
         "lon" : {
           "field": "Longitude *",
           "infoText": "Indicate on the map the location of this section of the bicycle parking.",
-          "placeholder": "Enter the longitude"
+          "placeholder": "Enter the longitude",
+          "validation": "Enter the longitude"
         }
       },
       "polygon" : {
@@ -210,6 +232,7 @@
         }
       },
       "entrance" : {
+        "title" : "Entrance",
         "text" : "Select the Entrance location in the map:",
         "lat" : {
           "field": "Latitude",
@@ -229,6 +252,7 @@
         "addExtra" : "Add extra entrance"
       },
       "exit" : {
+        "title" : "Exit",
         "text" : "Select the Exit location in the map:",
         "lat" : {
           "field": "Latitude",
@@ -254,12 +278,14 @@
       "noItemsError" : "Please add at least one bicycle type that is allowed in this facility section.",
       "type" : {
         "field": "Bicycle Type",
-        "infoText": "Select here the types of bicycles allowed in this parking section.<br><br>Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>"
+        "infoText": "Select here the types of bicycles allowed in this parking section.<br><br>Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "placeholder" : "Select bicylcle type"
       },
       "capacity" : {
         "field": "Capacity *",
         "infoText": "Indicate the maximum amount of bicycles of this type allowed in this section.<br><br>Example: <i>250</i>",
-        "placeholder": "Enter the allowed capacity"
+        "placeholder": "Enter the allowed capacity",
+        "validation" : "Enter a value"
       },
       "counting" : {
         "field": "Counting System",
@@ -277,6 +303,7 @@
         "placeholder" : "Select a Feature"
       },
       "availableHours" : {
+        "title" : "Hours Available",
         "infoText": "Select the days and hours this feature is available or active in the parking section.<br><br>Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
           "field": "Opening Time *",
@@ -299,6 +326,7 @@
         "placeholder" : "Enter the link to the costs description"
       },
       "spec" : {
+        "title" : "Price Specification",
         "free" : {
           "field": "Free of Charge",
           "infoText": "Is this price specification free of charge?<br><br>Example: <i>Yes / No</i>",
@@ -338,10 +366,10 @@
           "field": "Description",
           "infoText": "Describe how this price specification operates.<br><br>Example: <i>Gratis voor het eerste uur</i>",
           "placeholder" : "Describe this pricing definition (e.g. free for the first hour)"
-        }
-      },
-      "addExtra" : "Add extra price specification"
-    },
+        },
+        "addExtra" : "Add extra price specification"
+      }
+  },
     "extraSection" : {
       "title" : "Facility Section - Add Extra Section",
       "text" : "Would you like to add another section to this bicycle parking?",
