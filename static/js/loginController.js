@@ -228,6 +228,7 @@ let signinformcitiesloaded = false;
     });
 })(jQuery);
 
+
 //if no lang parameter given, setting is loaded from localStorage
 function translate(lang){
     if(lang){
@@ -240,7 +241,7 @@ function translate(lang){
                 lang: lang
             },
             success: (data) => {
-                console.log("Language successfully updated! " + data);
+                //console.log("Language successfully updated! " + data);
             },
             error: e => {
                 console.error('Error: ' + e.responseText);
@@ -258,7 +259,6 @@ function translate(lang){
             url: domain + '/static/lang/' + lang + '.json',
             data: {},
             success: (data) => {
-                console.log("Dictionary loaded! \n", data);
                 $('[transl-id]').each(function () {
                     let path;
                     try {
@@ -312,7 +312,7 @@ function translate(lang){
                 });
             },
             error: e => {
-                alert('Error: ' + e.responseText);
+                console.error('Error: ' + e.responseText);
             }
         });
     } else {
