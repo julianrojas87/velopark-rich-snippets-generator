@@ -14,7 +14,7 @@
   },
   "home" : {
     "buttons" : {
-      "previous" : "Vorige",
+      "prev" : "Vorige",
       "next" : "Volgende"
     },
     "logInWarning" : "WAARSCHUWING: Je bent niet aangemeld. Je kan deze tool nog steeds gebruiken om een JSON-LD beschrijving van jouw parking te genereren, maar je zal deze niet kunnen opslaan in onze catalogus."
@@ -33,10 +33,6 @@
       "addExtra" : "Extra Sectie Toevoegen",
       "publish" : "Data Publicering",
       "generate" : "Gestructureerde Data Genereren"
-    },
-    "buttons" : {
-      "prev" : "Vorige",
-      "next" : "Volgende"
     },
     "lang" : {
       "title" : "Vertalingen",

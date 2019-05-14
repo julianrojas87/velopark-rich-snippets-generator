@@ -14,8 +14,8 @@ function make_wizard(){
                 '<span class="step-text">#title#</span>' +
             '</div>',
         labels: {
-            previous: '<span transl-id="step.buttons.prev">Previous</span>',
-            next: '<span transl-id="step.buttons.next">Next</span>'
+            previous: '<span transl-id="home.buttons.prev">Previous</span>',
+            next: '<span transl-id="home.buttons.next">Next</span>'
         },
         /*onStepChanging: function(event, currentIndex, newIndex) {
             if (currentIndex === 0) {

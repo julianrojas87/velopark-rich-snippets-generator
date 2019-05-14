@@ -14,7 +14,7 @@
   },
   "home" : {
     "buttons" : {
-      "previous" : "Previous",
+      "prev" : "Previous",
       "next" : "Next"
     },
     "logInWarning" : "WARNING: You are not logged in. You can still use this tool to generate a JSON-LD description of your parking, but you will not be able to save it into our catalog."
@@ -33,10 +33,6 @@
       "addExtra" : "Add Extra Section",
       "publish" : "Data Publishing",
       "generate" : "Generate Structured Data"
-    },
-    "buttons" : {
-      "prev" : "Previous",
-      "next" : "Next"
     },
     "lang" : {
       "title" : "Data Languages",
