@@ -465,7 +465,7 @@
     "transfer" : {
       "title" : "Parking Overdragen",
       "text" : "Selecteer het bedrijf naar waar je deze parking wil overdragen.",
-      "companyPlaceholder" : "Selecter Bedrijf",
+      "companyPlaceholder" : "Selecteer Bedrijf",
       "saveButton" : "Opslaan"
     }
   },

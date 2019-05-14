@@ -18,34 +18,35 @@
 <% include navbar.html %>
 
 <div id="transfer-parking-form" class="log-form">
-    <h2>Transfer parking</h2>
+    <h2 transl-id="adminParkings.transfer.title">Transfer parking</h2>
     <input type="image" id="transfer-parking_close_button" src="static/images/icons/close_white.png"
            style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
     <form>
-        <p>
+        <p transl-id="adminParkings.transfer.text">
             Select the company you want to transfer this parking to.
         </p>
         <div>
-            <select id="transfer-parking-company" company-names="true" class="js-select2" placeholder="Select Company">
+            <select id="transfer-parking-company" company-names="true" class="js-select2" placeholder="Select Company" transl-id-placeholder="adminParkings.transfer.companyPlaceholder">
                 <option value=""></option>
             </select>
             <div class="dropDownSelect2"></div>
         </div>
-        <button id="transfer-company-button" type="submit" class="btn">Save</button>
+        <button id="transfer-company-button" type="submit" class="btn" transl-id="adminParkings.transfer.saveButton">Save</button>
     </form>
 </div>
 
 <div class="container-contact100">
     <div class="wrap-contact100 table-parkings-scroll-helper" style="width: 100%;">
+        <h2 transl-id="adminParkings.title">Overview: All Parkings</h2>
         <table id="parking-list" class="table-fill">
             <thead>
             <tr>
-                <th class="text-left">Parking Facility URI</th>
-                <th class="text-left">Parking Name</th>
-                <th class="text-left">Company</th>
-                <th class="text-left">Regions</th>
-                <th class="text-left">Approved</th>
-                <th class="text-left">Actions</th>
+                <th class="text-left" transl-id="adminParkings.th[0]">Parking Facility URI</th>
+                <th class="text-left" transl-id="adminParkings.th[1]">Parking Name</th>
+                <th class="text-left" transl-id="adminParkings.th[2]">Company</th>
+                <th class="text-left" transl-id="adminParkings.th[3]">Regions</th>
+                <th class="text-left" transl-id="adminParkings.th[4]">Approved</th>
+                <th class="text-left" transl-id="adminParkings.th[5]">Actions</th>
             </tr>
             </thead>
             <tbody class="table-hover">

@@ -19,15 +19,16 @@
 
 <div class="container-contact100">
     <div class="wrap-contact100 table-parkings-scroll-helper" style="width: 100%;">
-            <h4 id="create-new-company">Create new company: </h4>
-            <input type="text" id="new-company-name" />
-            <button class="btn btn-primary" id="button-create-new-company">Save</button>
+        <h2 transl-id="adminCompanies.title">All Companies Overview</h2>
+            <h4 id="create-new-company" transl-id="adminCompanies.newCompany.title">Create new company: </h4>
+            <input type="text" id="new-company-name" placeholder="New name" transl-id-placeholder="adminCompanies.newCompany.newCompanyPlaceholder"/>
+            <button class="btn btn-primary" id="button-create-new-company" transl-id="adminCompanies.newCompany.saveButton">Save</button>
         <table id="users-list" class="table-fill">
             <thead>
             <tr>
-                <th class="text-left">Company Name</th>
-                <th class="text-left">Users</th>
-                <th class="text-left">Parkings</th>
+                <th class="text-left" transl-id="adminCompanies.th[0]">Company Name</th>
+                <th class="text-left" transl-id="adminCompanies.th[1]">Users</th>
+                <th class="text-left" transl-id="adminCompanies.th[2]">Parkings</th>
             </tr>
             </thead>
             <tbody class="table-hover">
