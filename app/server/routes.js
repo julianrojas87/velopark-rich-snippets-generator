@@ -832,6 +832,25 @@ module.exports = app => {
         res.status(200).json(list);
     });
 
+    app.post('/user/update-lang', function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send();
+        } else {
+            if (req.body['lang']) {
+                AM.updateLanguage(req.session.user.email, req.body['lang'])
+                    .then((result) => {
+                        req.session.user.lang = req.body['lang'];
+                        res.status(200).send("OK");
+                    })
+                    .catch((reason) => {
+                        console.error(reason);
+                        res.status(400).send("Something went wrong :(");
+                    });
+            } else {
+                res.status(400).send("No language preference given");
+            }
+        }
+    });
 
     /*
         password reset

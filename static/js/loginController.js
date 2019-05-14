@@ -230,6 +230,23 @@ let signinformcitiesloaded = false;
 
 //if no lang parameter given, setting is loaded from localStorage
 function translate(lang){
+    if(lang){
+        //send preference to the server (async)
+        let domain = domainName !== '' ? '/' + domainName : '';
+        $.ajax({
+            type: "POST",
+            url: domain + '/user/update-lang',
+            data: {
+                lang: lang
+            },
+            success: (data) => {
+                console.log("Language successfully updated! " + data);
+            },
+            error: e => {
+                console.error('Error: ' + e.responseText);
+            }
+        });
+    }
     if (typeof(Storage) !== "undefined" && lang) {
         localStorage.setItem("languagePref", lang);
     }

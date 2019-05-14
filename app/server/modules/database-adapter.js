@@ -161,7 +161,8 @@ exports.updateAccount = function (data, callback) {
     let o = {
         name: data.name,
         email: data.email,
-        country: data.country
+        country: data.country,
+        lang: data.lang
     };
     if (data.pass) o.pass = data.pass;
     accounts.findOneAndUpdate({_id: getObjectId(data.id)}, {$set: o}, {returnOriginal: false}, callback);
@@ -216,6 +217,18 @@ exports.updateAccountEnableCity = function (email, cityName, enabled, callback) 
         },
         callback
     );
+};
+
+exports.updateAccountLanguage = function(email, lang){
+    return accounts.findOneAndUpdate(
+        {
+            email: email
+        },
+        {
+        $set: {
+            lang: lang
+        }
+    });
 };
 
 /*
