@@ -111,6 +111,21 @@ exports.findAccounts = function (callback) {
     });
 };
 
+exports.findAccountsByEmails = function(emails){
+    return new Promise((resolve, reject) => {
+        accounts.find({
+            email: { $in : emails }
+        }).toArray(function (e, res) {
+            if (e) {
+                reject(e);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+
+};
+
 exports.findAllEmails = function (callback) {
     let emails = [];
     accounts.find().project({email: 1, _id: 0}).forEach(function (res) {
@@ -185,8 +200,8 @@ exports.updateAccountParkingIDs = function (email, parkingID, callback) {
     );
 };
 
-exports.updateAccountEnableCompany = function (email, enabled, callback) {
-    accounts.findOneAndUpdate(
+exports.updateAccountEnableCompany = function (email, enabled) {
+    return accounts.findOneAndUpdate(
         {
             email: email,
             companyName: {$not: {$type: 10}, $exists: true} //can't enable/disable company if user does not have one
@@ -196,8 +211,7 @@ exports.updateAccountEnableCompany = function (email, enabled, callback) {
         },
         {
             returnOriginal: false
-        },
-        callback
+        }
     );
 };
 

@@ -1,3 +1,4 @@
+const dbAdapter = require('./database-adapter');
 
 var EM = {};
 module.exports = EM;
@@ -6,6 +7,31 @@ const fs = require('fs');
 const config_secret = JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8'));
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
+let activatedAccounts = new Set();
+
+setInterval(sendRecentAccountActivatedEmails, 10*60*1000);	//send mails every 10 minutes
+
+function sendRecentAccountActivatedEmails(){
+	if(activatedAccounts.size) {
+		dbAdapter.findAccountsByEmails(Array.from(activatedAccounts))
+			.then(accountArray => {
+				accountArray.forEach(function (account) {
+					EM.dispatchAccountActivated(account, function (e, m) {
+						if (!e) {
+							console.log("Mail sent: account activated", account.email);
+						} else {
+							for (k in e) console.error('ERROR : ', k, e[k]);
+							console.error(e);
+						}
+					});
+				});
+			})
+			.catch(reason => {
+				console.error("Failed to send activation mails to", activatedAccounts.toString(), "Reason:", reason);
+			});
+		activatedAccounts.clear();
+	}
+}
 
 EM.server = require("emailjs/email").server.connect(
 {
@@ -21,14 +47,32 @@ EM.dispatchResetPasswordLink = function(account, callback){
 		to           : account.email,
 		subject      : 'Password Reset',
 		text         : 'something went wrong... :(',
-		attachment   : EM.composeEmail(account.passKeyToken, account.lang)
+		attachment   : EM.composePasswordResetEmail(account.passKeyToken, account.lang)
 	}, callback );
 };
 
-EM.composeEmail = function(passKey, lang) {
+EM.addActivatedAccountToBeMailed = function(account){
+	activatedAccounts.add(account.email);
+};
+
+EM.removeActivatedAccountToBeMailed = function(account){
+	activatedAccounts.delete(account.email);
+};
+
+EM.dispatchAccountActivated = function(account, callback){
+	EM.server.send({
+		from         : config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+		to           : account.email,
+		subject      : 'Account activated',
+		text         : 'something went wrong... :(',
+		attachment   : EM.composeAccountEnabledEmail(account.email, account.lang)
+	}, callback );
+};
+
+EM.composePasswordResetEmail = function(passKey, lang) {
 	let baseurl = process.env.NL_SITE_URL || domainName || 'http://localhost:3000';
 	let html;
-	if(lang == 'en'){
+	if(lang === 'en'){
 		html = "<html><body>";
 		html += "Hi!<br><br>";
 		html += "You requested a password reset for your Velopark account.<br>";
@@ -37,7 +81,7 @@ EM.composeEmail = function(passKey, lang) {
 		html += "Greetings,<br>";
 		html += "Velopark Team<br>";
 		html += "</body></html>";
-	} else if(lang == 'de') {
+	} else if(lang === 'de') {
 		html = "<html><body>";
 		html += "Hallo!<br><br>";
 		html += "Sie haben ein Zurücksetzen des Passworts für Ihr Velopark-Konto angefordert.<br>";
@@ -46,7 +90,7 @@ EM.composeEmail = function(passKey, lang) {
 		html += "Schöne Grüße,<br>";
 		html += "Velopark Team<br>";
 		html += "</body></html>";
-	} else if(lang == 'fr') {
+	} else if(lang === 'fr') {
 		html = "<html><body>";
 		html += "Bonjour!<br><br>";
 		html += "Vous avez demandé une réinitialisation du mot de passe pour votre compte Velopark.<br>";
@@ -55,7 +99,7 @@ EM.composeEmail = function(passKey, lang) {
 		html += "Salutations,<br>";
 		html += "Velopark Team<br>";
 		html += "</body></html>";
-	} else if(lang == 'es') {
+	} else if(lang === 'es') {
 		html = "<html><body>";
 		html += "¡Hola!<br><br>";
 		html += "Usted solicitó un restablecimiento de contraseña para su cuenta Velopark.<br>";
@@ -71,6 +115,54 @@ EM.composeEmail = function(passKey, lang) {
 		html += "Je hebt een wachtwoordreset aangevraagd voor je Velopark account.<br>";
 		html += "<a href='" + baseurl + '/reset-password?key=' + passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
 		html += "Indien je deze reset niet zelf hebt aangevraagd kan je deze mail gewoon negeren.<br><br>";
+		html += "Vriendelijke groeten,<br>";
+		html += "Velopark Team<br>";
+		html += "</body></html>";
+	}
+	return [{data:html, alternative:true}];
+};
+
+EM.composeAccountEnabledEmail = function(email, lang){
+	let baseurl = process.env.NL_SITE_URL || domainName || 'http://localhost:3000';
+	let html;
+	if(lang === 'en'){
+		html = "<html><body>";
+		html += "Hi!<br><br>";
+		html += "We are pleased to inform you that the registration of your Velopark account has been activated.<br>";
+		html += "You can now <a href='" + baseurl + "'>log in to your account</a> using <b>" + email + "</b> as your email address and the password you provided during the signup process.<br><br>";
+		html += "Greetings,<br>";
+		html += "Velopark Team<br>";
+		html += "</body></html>";
+	} else if(lang === 'de') {
+		html = "<html><body>";
+		html += "Hallo!<br><br>";
+		html += "Wir freuen uns, Ihnen mitteilen zu können, dass die Registrierung Ihres Velopark-Kontos aktiviert wurde.<br>";
+		html += "Sie können sich jetzt mit <b>" + email + "</b> als E-Mail-Adresse und dem Kennwort, das Sie während des Anmeldevorgangs angegeben haben, <a href='" + baseurl + "'>in Ihrem Konto anmelden</a>.<br><br>";
+		html += "Schöne Grüße,<br>";
+		html += "Velopark Team<br>";
+		html += "</body></html>";
+	} else if(lang === 'fr') {
+		html = "<html><body>";
+		html += "Bonjour!<br><br>";
+		html += "Nous avons le plaisir de vous informer que l'enregistrement de votre compte Velopark a été activé.<br>";
+		html += "Vous pouvez maintenant <a href='" + baseurl + "'>vous connecter à votre compte</a> en utilisant <b>" + email + "</b> comme adresse électronique et le mot de passe que vous avez fourni lors de la procédure d'inscription.<br><br>";
+		html += "Salutations,<br>";
+		html += "Velopark Team<br>";
+		html += "</body></html>";
+	} else if(lang === 'es') {
+		html = "<html><body>";
+		html += "¡Hola!<br><br>";
+		html += "Nos complace informarle que el registro de su cuenta Velopark ha sido activado.<br>";
+		html += "Ahora puede <a href='" + baseurl + "'>iniciar sesión</a> en su cuenta utilizando <b>" + email + "</b> como su dirección de correo electrónico y la contraseña que proporcionó durante el proceso de registro.<br><br>";
+		html += "Saludos,<br>";
+		html += "Velopark Team<br>";
+		html += "</body></html>";
+	} else {
+		//Dutch is default
+		html = "<html><body>";
+		html += "Hallo!<br><br>";
+		html += "We zijn blij je te kunnen mededelen dat de registratie van je Velopark account geactiveerd werd.<br>";
+		html += "Je kan je nu <a href='" + baseurl + "'>aanmelden in je account</a> door gebruik te maken van  <b>" + email + "</b> als je email adres en het wachtwoord dat je tijdens het registratieprocess hebt opgegeven.<br><br>";
 		html += "Vriendelijke groeten,<br>";
 		html += "Velopark Team<br>";
 		html += "</body></html>";

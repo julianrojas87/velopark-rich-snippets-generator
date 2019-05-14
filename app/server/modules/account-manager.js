@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const moment = require('moment');
 const utils = require('../utils/utils');
 const dbAdapter = require('./database-adapter');
+const EM = require('./email-dispatcher');
 
 const guid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
@@ -220,7 +221,18 @@ exports.deleteAllAccounts = function (callback) {
 };
 
 exports.toggleCompanyEnabled = function (email, enabled, callback) {
-    dbAdapter.updateAccountEnableCompany(email, enabled, callback);
+    dbAdapter.updateAccountEnableCompany(email, enabled)
+        .then(result => {
+            callback(null, result);
+            if(enabled){
+                EM.addActivatedAccountToBeMailed(result.value);
+            } else {
+                EM.removeActivatedAccountToBeMailed(result.value);
+            }
+        })
+        .catch(error => {
+            callback(error)
+        });
 };
 
 exports.toggleCityEnabled = function (email, cityName, enabled, callback) {
