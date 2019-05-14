@@ -14,6 +14,20 @@
     "logInWarning" : "WARNING: You are not logged in. You can still use this tool to generate a JSON-LD description of your parking, but you will not be able to save it into our catalog."
   },
   "step" : {
+    "title" : {
+      "lang" : "Languages",
+      "parkinfo" : "Parking Information",
+      "authinfo" : "Authority Information",
+      "photo" : "Photos",
+      "operation" : "Operation Information",
+      "location" : "Location",
+      "allowed" : "Allowed Bicycles",
+      "features" : "Features",
+      "cost" : "Cost Model",
+      "addExtra" : "Add Extra Section",
+      "publish" : "Data Publishing",
+      "generate" : "Generate Structured Data"
+    },
     "lang" : {
       "title" : "Data Languages",
       "infoAlert" : "Please select all the languages you want to use to describe your Bicycle Parking.",
@@ -377,7 +391,7 @@
       "addExtra" : "Add Section"
     },
     "publish" : {
-      "title" : "Data publishing",
+      "title" : "Data Publishing",
       "infoText" : "If you decide to publish the data generated in this tool on your website, then enter here the URL where the information for this parking will be available. Otherwise leave this field empty.\n\n** We recommend that you publish the data on your own website **.",
       "URI" : {
         "field": "Parking Facility URI",

@@ -14,6 +14,20 @@
     "logInWarning" : "WAARSCHUWING: Je bent niet aangemeld. Je kan deze tool nog steeds gebruiken om een JSON-LD beschrijving van jouw parking te genereren, maar je zal deze niet kunnen opslaan in onze catalogus."
   },
   "step" : {
+    "title" : {
+      "lang" : "Vertalingen",
+      "parkinfo" : "Parking Informatie",
+      "authinfo" : "Authoriteitsinformatie",
+      "photo" : "Foto's",
+      "operation" : "Werkings Informatie",
+      "location" : "Locatie",
+      "allowed" : "Toegestane Fietsen",
+      "features" : "Eienschappen",
+      "cost" : "Kosten Model",
+      "addExtra" : "Extra Sectie Toevoegen",
+      "publish" : "Data Publicering",
+      "generate" : "Gestructureerde Data Genereren"
+    },
     "lang" : {
       "title" : "Vertalingen",
       "infoAlert" : "Selecteer alstublieft alle talen waarin u deze fietsenparking wilt beschrijven.",
@@ -377,7 +391,7 @@
       "addExtra" : "Voeg Sectie Toe"
     },
     "publish" : {
-      "title" : "Data publicering",
+      "title" : "Data Publicering",
       "infoText" : "Als je beslist de data die gegenereerd zal worden met deze tool te publiceren op je eigen website, kan je hier de URL invullen waar deze beschikbaar zal komen. Indien dit niet het geval is kan je dit veld leeg laten.\n\n** We raden sterk aan dat je deze data zelf publiceert op jouw website. **.",
       "URI" : {
         "field": "Parkeerfaciliteit URI",
