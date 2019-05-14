@@ -28,6 +28,10 @@
       "publish" : "Data Publicering",
       "generate" : "Gestructureerde Data Genereren"
     },
+    "buttons" : {
+      "prev" : "Vorige",
+      "next" : "Volgende"
+    },
     "lang" : {
       "title" : "Vertalingen",
       "infoAlert" : "Selecteer alstublieft alle talen waarin u deze fietsenparking wilt beschrijven.",

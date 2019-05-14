@@ -13,12 +13,10 @@ function make_wizard(){
                 '<span class="step-number">#index#.&nbsp;</span>' +
                 '<span class="step-text">#title#</span>' +
             '</div>',
-        /*labels: {
-            previous: 'Previous',
-            next: 'Next',
-            finish: 'Finish',
-            current: ''
-        },*/
+        labels: {
+            previous: '<span transl-id="step.buttons.prev">Previous</span>',
+            next: '<span transl-id="step.buttons.next">Next</span>'
+        },
         /*onStepChanging: function(event, currentIndex, newIndex) {
             if (currentIndex === 0) {
                 form.parent().parent().parent().append('<div class="footer footer-' + currentIndex + '"></div>');

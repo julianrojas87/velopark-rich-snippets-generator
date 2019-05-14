@@ -28,6 +28,10 @@
       "publish" : "Data Publishing",
       "generate" : "Generate Structured Data"
     },
+    "buttons" : {
+      "prev" : "Previous",
+      "next" : "Next"
+    },
     "lang" : {
       "title" : "Data Languages",
       "infoAlert" : "Please select all the languages you want to use to describe your Bicycle Parking.",
