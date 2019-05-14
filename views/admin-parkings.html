@@ -51,8 +51,8 @@
             <tbody class="table-hover">
             <% for (var i = 0; i < parkings.length; i++) { %>
             <tr>
-                <td class="text-left">
-                    <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold;"
+                <td class="text-left" style="max-width: 25vw;">
+                    <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold; overflow-wrap: break-word;"
                        href="<%= parkings[i]['@id'] %>">
                         <%= parkings[i]['@id'] %></a>
                 </td>
