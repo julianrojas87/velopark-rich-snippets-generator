@@ -4,7 +4,13 @@
     "login" : "Log In",
     "logout" : "Log Out",
     "signup" : "Sign Up",
-    "langSelect" : "Language"
+    "langSelect" : "Language",
+    "drop" : {
+      "addParkings" : "Add Parkings",
+      "companyParkings" : "Parkings",
+      "admin" : "Manage Entities",
+      "cityRep" : "Manage Regions"
+    }
   },
   "home" : {
     "buttons" : {

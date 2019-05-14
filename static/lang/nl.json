@@ -4,7 +4,13 @@
     "login" : "Aanmelden",
     "logout" : "Uitloggen",
     "signup" : "Account maken",
-    "langSelect" : "Taal"
+    "langSelect" : "Taal",
+    "drop" : {
+      "addParkings" : "Parkings Toevoegen",
+      "companyParkings" : "Parkings",
+      "admin" : "Beheer Entiteiten",
+      "cityRep" : "Beheer Regio's"
+    }
   },
   "home" : {
     "buttons" : {
