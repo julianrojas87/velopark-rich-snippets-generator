@@ -459,7 +459,7 @@
   "adminParkings" : {
     "title" : "Alle Parkplätze im Überblick",
     "th" : [
-      "URI der Parkanlage", "Parkname", "Unternehmen", "Regionen", "Genehmigt", "Aktionen"
+      "URI der Parkanlage", "Parkname", "Unternehmen", "Region", "Genehmigt", "Aktionen"
     ],
     "transfer" : {
       "title" : "Transfer parken",

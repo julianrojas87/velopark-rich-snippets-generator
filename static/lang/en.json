@@ -460,7 +460,7 @@
   "adminParkings" : {
     "title" : "All Parkings Overview",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Company", "Regions", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Actions"
     ],
     "transfer" : {
       "title" : "Transfer parking",

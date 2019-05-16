@@ -459,7 +459,7 @@
   "adminParkings" : {
     "title" : "Tous les parkings",
     "th" : [
-      "URI du parking", "Nom du parking", "Entreprise", "Régions", "Approuvé", "Actions"
+      "URI du parking", "Nom du parking", "Entreprise", "Région", "Approuvé", "Actions"
     ],
     "transfer" : {
       "title" : "Transférer ce parking",

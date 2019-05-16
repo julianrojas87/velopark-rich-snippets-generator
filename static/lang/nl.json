@@ -459,7 +459,7 @@
   "adminParkings" : {
     "title" : "Overzicht: Alle Parkings",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio's", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio", "Goedgekeurd", "Acties"
     ],
     "transfer" : {
       "title" : "Parking Overdragen",
