@@ -230,10 +230,11 @@
       "title" : "Faciliteitssectie - Locatie",
       "clear" : "Wissen",
       "point" : {
-        "text" : "Selecteer de locatie van de Faciliteitssectie op de kaart:",
+        "title" : "Hoofdingang",
+        "text" : "Selecteer de hoofdingang van de Faciliteitssectie op de kaart:",
         "lat" : {
           "field": "Breedtegraad *",
-          "infoText": "Duid op de kaart de locatie van deze Faciliteitssectie aan.",
+          "infoText": "Duid op de kaart de hoofdingang van deze Faciliteitssectie aan.",
           "placeholder": "Vul de breedtegraad in",
           "validation": "Vul de breedtegraad in"
         },
@@ -253,7 +254,7 @@
         }
       },
       "entrance" : {
-        "title" : "Ingang",
+        "title" : "Extra Ingangen",
         "text" : "Selecteer de locatie van de ingang van deze parking:",
         "lat" : {
           "field": "Breedtegraad",

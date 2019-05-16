@@ -230,10 +230,11 @@
       "title" : "Facility Section - Location",
       "clear" : "clear",
       "point" : {
-        "text" : "Select the Parking Facility location in the map:",
+        "title" : "Main Entrance",
+        "text" : "Select the location of the main entrance of this parking facility in the map:",
         "lat" : {
           "field": "Latitude *",
-          "infoText": "Indicate on the map the location of this section of the bicycle parking.",
+          "infoText": "Indicate on the map the main entrance of this section of the bicycle parking.",
           "placeholder": "Enter the latitude",
           "validation": "Enter the latitude"
         },
@@ -253,7 +254,7 @@
         }
       },
       "entrance" : {
-        "title" : "Entrance",
+        "title" : "Extra Entrances",
         "text" : "Select the Entrance location in the map:",
         "lat" : {
           "field": "Latitude",

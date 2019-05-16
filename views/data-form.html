@@ -772,10 +772,12 @@
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
-                                <span class="contact100-form-subsubsection"
-                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
-                                      transl-id="step.loc.point.text">
-                                    Select the Parking Facility location in the map:
+                                <span class="contact100-form-subsubsection" transl-id="step.loc.point.title">
+                                    Main Entrance
+                                </span>
+                                <span class="contact100-form-subsubsection" transl-id="step.loc.point.text"
+                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
+                                    Select the location of the main entrance of this parking facility in the map:
                                 </span>
                                 <button id="clear-point" value="clear" class="btn btn-primary btn-sm" type="button"
                                         style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
@@ -825,44 +827,12 @@
                                            transl-id-placeholder="step.loc.point.lon.placeholder">
                                 </div>
 
-                                <span class="contact100-form-subsubsection"
-                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
-                                      transl-id="step.loc.polygon.text">
-                                    Draw the Parking Facility geometry in the map:
-                                </span>
-                                <button id="clear-polygon" value="clear" class="btn btn-primary btn-sm" type="button"
-                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
-                                        transl-id="step.loc.clear">
-                                    clear
-                                </button>
-
-                                <div id="polygon-map" class="ol-polygon-map"
-                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-
-                                <div class="wrap-input100 bg1">
-                                    <span class="label-input100" transl-id="step.loc.polygon.geoPolygon.field">Geo Polygon</span>
-                                    <input type="image" title="about" class="info_button"
-                                           src="static/images/icons/info.png">
-                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                        <h2 style="margin-bottom: 15px;"></h2>
-                                        <input type="image" title="close" class="info_close_button"
-                                               src="static/images/icons/close_white.png"
-                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;"
-                                              transl-id="step.loc.polygon.geoPolygon.infoText">Draw the boundaries of this section of bicycle parking on the map.</span><br>
-                                    </div>
-                                    <input id="poly_string" class="input100" type="text"
-                                           name="geo._GeoShape.polygon"
-                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
-                                           transl-id-placeholder="step.loc.polygon.geoPolygon.placeholder">
-                                </div>
-
                                 <span class="contact100-form-subsubsection" transl-id="step.loc.entrance.title">
-                            Entrance
+                            Extra Entrances
                         </span>
 
                                 <div>
-                                    <div class="wrap-contact100-subsection dynamic-section">
+                                    <div class="wrap-contact100-subsection dynamic-section" style="display: none;">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <span class="contact100-form-subsubsection"
@@ -943,90 +913,36 @@
                                     </button>
                                 </div>
 
-                                <span class="contact100-form-subsubsection" transl-id="step.loc.exit.title">
-                                    Exit
+                                <span class="contact100-form-subsubsection"
+                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
+                                      transl-id="step.loc.polygon.text">
+                                    Draw the Parking Facility geometry in the map:
                                 </span>
-                                <div>
-                                    <div class="wrap-contact100-subsection dynamic-section">
-                                        <button type="button" class="minus_button minus_button_input"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                        <span class="contact100-form-subsubsection"
-                                              style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;"
-                                              transl-id="step.loc.exit.text">
-                                            Select the Exit location in the map:
-                                        </span>
-                                        <button id="clear-exit-point" value="clear" class="btn btn-primary btn-sm"
-                                                type="button"
-                                                style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
-                                                transl-id="step.loc.clear">
-                                            clear
-                                        </button>
+                                <button id="clear-polygon" value="clear" class="btn btn-primary btn-sm" type="button"
+                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
+                                        transl-id="step.loc.clear">
+                                    clear
+                                </button>
 
-                                        <div id="exit-point-map" class="ol-point-map"
-                                             style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100"
-                                                  transl-id="step.loc.exit.lat.field">Latitude</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;"
-                                                      transl-id="step.loc.exit.lat.infoText">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
-                                            </div>
-                                            <input id="exit_lat" class="input100" type="text"
-                                                   name="exit._Exit.geo.latitude"
-                                                   placeholder="Enter the latitude"
-                                                   transl-id-placeholder="step.loc.exit.lat.placeholder">
-                                        </div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100"
-                                                  transl-id="step.loc.exit.lon.field">Longitude</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;"
-                                                      transl-id="step.loc.exit.lon.infoText">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
-                                            </div>
-                                            <input id="exit_lon" class="input100" type="text"
-                                                   name="exit._Exit.geo.longitude"
-                                                   placeholder="Enter the longitude"
-                                                   transl-id-placeholder="step.loc.exit.lon.placeholder">
-                                        </div>
-                                        <div class="wrap-input100 bg0">
-                                            <span class="label-input100" transl-id="step.loc.exit.description.field">Description</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.loc.exit.description.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>De uitgang bevindt zich aan beide zijden van het plein. Let op: verboden om in de garage te fietsen!</i></span>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="translatable-free-text">
-                                                    <span></span>
-                                                    <textarea class="input100" name="exit._Exit.description"
-                                                              placeholder="Describe how to get here"
-                                                              transl-id-placeholder="step.loc.exit.description.placeholder"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div id="polygon-map" class="ol-polygon-map"
+                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+
+                                <div class="wrap-input100 bg1">
+                                    <span class="label-input100" transl-id="step.loc.polygon.geoPolygon.field">Geo Polygon</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <span style="display: inherit; padding-left: 15px;"
+                                              transl-id="step.loc.polygon.geoPolygon.infoText">Draw the boundaries of this section of bicycle parking on the map.</span><br>
                                     </div>
-                                    <button class="plus_button_section">
-                                        <i class="fas fa-plus-square"></i><span transl-id="step.loc.exit.addExtra">Add extra exit</span>
-                                    </button>
+                                    <input id="poly_string" class="input100" type="text"
+                                           name="geo._GeoShape.polygon"
+                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
+                                           transl-id-placeholder="step.loc.polygon.geoPolygon.placeholder">
                                 </div>
                             </div>
                         </div>

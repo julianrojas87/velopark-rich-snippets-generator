@@ -230,10 +230,11 @@
       "title" : "Section de Stationnement - Localisation",
       "clear" : "effacer",
       "point" : {
-        "text" : "Sélectionnez l'emplacement du parking sur la carte:",
+        "title" : "Entrée Principale",
+        "text" : "Sélectionnez l'entrée principale de la section de stationnement sur la carte.:",
         "lat" : {
           "field": "Latitude *",
-          "infoText": "Indiquez sur la carte l'emplacement de cette section du parking pour vélos.",
+          "infoText": "Indiquez sur la carte l'entrée principale de cette section du parking pour vélos.",
           "placeholder": "Entrez la latitude",
           "validation": "Entrez la latitude"
         },
@@ -253,7 +254,7 @@
         }
       },
       "entrance" : {
-        "title" : "Entrée",
+        "title" : "Entrées Extra",
         "text" : "Sélectionnez l'emplacement de l'entrée sur la carte:",
         "lat" : {
           "field": "Latitude",

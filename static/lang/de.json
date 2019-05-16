@@ -230,10 +230,11 @@
       "title" : "Facility-Bereich - Ort",
       "clear" : "wischen",
       "point" : {
-        "text" : "Wählen Sie den Standort des Parkhauses auf der Karte aus:",
+        "title" : "Haupteingang",
+        "text" : "Wählen Sie den Haupteingang des Parkbereichs auf der Karte aus:",
         "lat" : {
           "field": "Breitengrad *",
-          "infoText": "Geben Sie auf der Karte die Position dieses Abschnitts des Fahrradabstellplatzes an.",
+          "infoText": "Geben Sie auf der Karte den Haupteingang dieses Abschnitts des Fahrradabstellplatzes an.",
           "placeholder": "Geben Sie den Breitengrad ein",
           "validation": "Geben Sie den Breitengrad ein"
         },
@@ -253,7 +254,7 @@
         }
       },
       "entrance" : {
-        "title" : "Eingang",
+        "title" : "Zusätzliche Eingänge",
         "text" : "Wählen Sie den Eingangsort in der Karte aus:",
         "lat" : {
           "field": "Breitengrad",
