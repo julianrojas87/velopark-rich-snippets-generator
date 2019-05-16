@@ -1,1 +1,496 @@
-{}
+{
+  "navbar": {
+    "title": "Velopark Rich Snippets Generator",
+    "login" : "Einloggen",
+    "logout" : "Ausloggen",
+    "signup" : "Anmelden",
+    "langSelect" : "Sprache",
+    "drop" : {
+      "addParkings" : "Parkplätze hinzufügen",
+      "companyParkings" : "Parkplätze",
+      "admin" : "Entitäten verwalten",
+      "cityRep" : "Regionen verwalten"
+    }
+  },
+  "home" : {
+    "buttons" : {
+      "prev" : "Bisherige",
+      "next" : "Nächster"
+    },
+    "logInWarning" : "WARNUNG: Sie sind nicht angemeldet. Mit diesem Tool können Sie weiterhin eine JSON-LD-Beschreibung Ihres Parkplatzes generieren, diese kann jedoch nicht in unserem Katalog gespeichert werden."
+  },
+  "step" : {
+    "title" : {
+      "lang" : "Sprachen",
+      "parkinfo" : "Parkinformationen",
+      "authinfo" : "Informationen zur Behörde",
+      "photo" : "Fotos",
+      "operation" : "Betriebsinformationen",
+      "location" : "Ort",
+      "allowed" : "Erlaubte Fahrräder",
+      "features" : "Eigenschaften",
+      "cost" : "Kostenmodell",
+      "addExtra" : "Zusätzlichen Abschnitt hinzufügen",
+      "publish" : "Datenveröffentlichung",
+      "generate" : "Generieren Sie strukturierte Daten"
+    },
+    "lang" : {
+      "title" : "Datensprachen",
+      "infoAlert" : "Bitte wählen Sie alle Sprachen aus, in denen Sie Ihr Fahrradparken beschreiben möchten.",
+      "warningAlert" : "Bitte wählen Sie mindestens eine Sprache aus",
+      "langName" : {
+        "du" : "Niederländisch",
+        "fr" : "Französisch",
+        "de" : "Deutsche",
+        "en" : "English",
+        "es" : "Spanisch"
+      }
+    },
+    "parkInfo" : {
+      "title" : "Allgemein - Parkinformationen",
+      "name" : {
+        "field" : "Name *",
+        "infoText" : "Der Name des Fahrradstellplatzes, wie er vor Ort bekannt ist.\n\nBeispiel: Fietsparking Rector De Somerplein",
+        "placeholder" : "Name der Parkeinrichtung",
+        "validation" : "Geben Sie den Namen der Einrichtung ein"
+      },
+      "localID" : {
+        "field" : "Lokale Kennung *",
+        "infoText" : "Die lokale Vorwahl für das Abstellen von Fahrrädern.\n\nBeispiel: APCOA_018",
+        "placeholder" : "Lokale ID der Einrichtung",
+        "validation" : "Geben Sie die Kennung ein"
+      },
+      "openingDate" : {
+        "field" : "Eröffnungsdatum *",
+        "infoText" : "Das Datum, an dem der Fahrradabstellplatz geöffnet wurde / wird (kann auch für temporäre Fahrradabstellplätze verwendet werden).\n\nBeispiel: 03/25/2019",
+        "placeholder" : "Geben Sie das Eröffnungsdatum ein"
+      },
+      "closingDate" : {
+        "field" : "Schlussdatum",
+        "infoText" : "Das Datum, an dem der Fahrradabstellplatz geschlossen wurde / wird (kann auch für temporäre Fahrradabstellplätze verwendet werden).\n\nBeispiel: 03/25/2019",
+        "placeholder" : "Letzter Schlusstermin"
+      },
+      "regulations" : {
+        "field" : "Verordnungen",
+        "infoText" : "Der Link / URL, über den Informationen zum Fahrradabstellplatz abgerufen werden können.\n\nBeispiel: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
+        "placeholder" : "Geben Sie den Link für das Reglement ein"
+      },
+      "description" : {
+        "field" : "Beschreibung",
+        "infoText" : "Allgemeine Beschreibung dieses Fahrradabstellplatzes oder wie Benutzer den Fahrradabstellplatz erreichen können.<br><br>Beispiel: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "placeholder" : "Beschreiben Sie, wie Sie hier ankommen"
+      },
+      "address" :  {
+        "title" : "Adresse",
+        "street" : {
+          "field" : "Straßenname und Nummer *",
+          "infoText" : "Der Name der Straße und der Nummer, in der sich der Parkplatz befindet.<br><br>Beispiel: <i>Rector De Somerplein 8</i>",
+          "placeholder" : "Geben Sie den Straßennamen und die Hausnummer ein",
+          "validation" : "Geben Sie den Straßennamen ein"
+        },
+        "postal" : {
+          "field" : "Postleitzahl *",
+          "infoText" : "Postleitzahl des Fahrradabstellplatzes.<br><br>Beispiel: <i>3000</i>",
+          "placeholder" : "Geben Sie die Postleitzahl ein",
+          "validation" : "Geben Sie die Postleitzahl ein"
+        },
+        "country" : {
+          "field" : "Land *",
+          "infoText" : "Land der Fahrradabstellplätze.<br><br>Beispiel: <i>Belgium</i>",
+          "validation" : "Geben Sie das Land ein"
+        }
+      }
+    },
+    "authInfo" : {
+      "title" : "Allgemein - Informationen zur Behörde",
+      "owner" : {
+        "title" : "Anlagenbesitzer",
+        "website": {
+          "field": "Organisations-Website",
+          "infoText": "Setzen Sie hier einen Link auf die Website des Eigentümers des Fahrradabstellplatzes.<br><br>Beispiel: <i>https://www.leuven.be</i>",
+          "placeholder": "Enter the organization Website"
+        },
+        "name": {
+          "field": "Name der Organisation *",
+          "infoText": "Tragen Sie hier den Namen der Organisation ein, der der Fahrradabstellplatz gehört.<br><br>Beispiel: <i>Stad Leuven</i>",
+          "placeholder": "Geben Sie den Organisationsnamen ein",
+          "validation" : "Geben Sie den Organisationsnamen ein"
+        }
+      },
+      "operator" : {
+        "title" : "Anlagenbetreiber",
+        "website": {
+          "field": "Organisations-Website",
+          "infoText": "Put here a link to the website of the operator of the bicycle parking.<br><br>Beispiel: <i>https://www.apcoa.be</i>",
+          "placeholder": "Enter the organization Website"
+        },
+        "name": {
+          "field": "Name der Organisation *",
+          "infoText": "Tragen Sie hier den Namen der Organisation ein, die für den laufenden Betrieb verantwortlich ist.<br><br>Beispiel: <i>APCOA PARKING</i>",
+          "placeholder": "Geben Sie den Organisationsnamen ein",
+          "validation" : "Geben Sie den Organisationsnamen ein"
+        }
+      },
+      "contact" : {
+        "title" : "Kontaktinformation",
+        "website": {
+          "field": "Webseite",
+          "infoText": "Fügen Sie hier einen Link zu einem Kontaktformular oder einer Website ein, auf der Kunden den Betreiber kontaktieren können.<br><br>Beispiel: <i>https://www.apcoa.be/contact/</i>",
+          "placeholder": "Rufen Sie die Service-Website auf"
+        },
+        "email": {
+          "field": "Email",
+          "infoText": "Tragen Sie hier die E-Mail-Adresse ein, an die Benutzer Fragen / Bemerkungen / Wünsche / Beschwerden senden können.<br><br>Beispiel: <i>fietsenparking.leuven@apcoa.be</i>",
+          "placeholder": "Geben Sie die Kontakt-E-Mail ein"
+        },
+        "phone": {
+          "field": "Telefonnummer",
+          "infoText": "Geben Sie hier die Telefonnummer ein, unter der Benutzer den Betreiber erreichen können.<br><br>Beispiel: <i>016 29 93 23</i>",
+          "placeholder": "Geben Sie die Kontakttelefonnummer ein"
+        }
+      }
+    },
+    "photo" : {
+      "title" : "Allgemein - Fotos",
+      "url": {
+        "field": "Foto-URL",
+        "infoText": "Fügen Sie hier einen Link zu einem Bild des Fahrradstellplatzes, seiner Umgebung oder Einrichtungen ein.<br><br>Beispiel: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg",
+        "placeholder": "Geben Sie die Foto-URL ein"
+      },
+      "addExtra" : "Zusätzliches Foto hinzufügen"
+    },
+    "operation" : {
+      "title" : "Facility-Bereich - Betriebsinformationen",
+      "sectionName": {
+        "field": "Abteilungsname",
+        "infoText": "Ein optionaler Name des Fahrradabstellbereichs, wie er lokal bekannt ist.<br><br>Beispiel: <i>Green zone</i>",
+        "placeholder": "Name des Parkplatzes",
+        "validation" : "Geben Sie den Namen der Einrichtung ein"
+      },
+      "type": {
+        "field": "Parkart",
+        "infoText": "Wählen Sie aus, welche Art von Fahrradparken für diesen Abschnitt gilt.<br><br>Beispiel: <i>Bicycle parking station</i>",
+        "placeholder" : "Parkart auswählen"
+      },
+      "levels": {
+        "field": "Anzahl der Ebenen",
+        "infoText": "Geben Sie hier die Anzahl der Ebenen des Fahrradstellplatzes ein.<br><br>Beispiel: <i>2</i>",
+        "placeholder": "Geben Sie die Anzahl der Ebenen ein"
+      },
+      "public": {
+        "field": "Öffentlicher Zugang",
+        "infoText": "Kann hier jemand sein Fahrrad parken oder brauchen Sie einen Schlüssel oder einen Ausweis?<br><br>Beispiel: <i>Yes</i>",
+        "placeholder": "Yes/No"
+      },
+      "maxDur": {
+        "field": "Maximale Parkdauer (Tage) *",
+        "infoText": "Definieren Sie hier die maximale Anzahl aufeinanderfolgender Tage, an denen ein Fahrrad auf dem Parkplatz bleiben kann.<br><br>Beispiel: <i>21</i>",
+        "placeholder": "Geben Sie die Anzahl der Tage ein",
+        "validation" : "Geben Sie einen Wert ein"
+      },
+      "audience": {
+        "field": "Zielgruppe",
+        "infoText": "Beschreiben Sie, wer hier sein Fahrrad abstellen kann.<br><br>Beispiel: <i>Brede publiek</i>",
+        "placeholder": "Geben Sie die gewünschte Zielgruppe ein (z. B. die breite Öffentlichkeit, Anwohner)."
+      },
+      "restrictions": {
+        "field": "Beschränkungen",
+        "infoText": "Beschreiben Sie die Nutzungsbeschränkungen für dieses Parkhaus.<br><br>Beispiel: <i>Geen bromfietsen</i>",
+        "placeholder": "Geben Sie die Einschränkungen ein (z. B. maximal 2 Fahrräder pro Einwohner)"
+      },
+      "removal": {
+        "field": "Entfernungsbedingungen",
+        "infoText": "Beschreiben Sie, unter welchen Bedingungen / wann ein Fahrrad vom Fahrradabstellplatz entfernt wird.<br><br>Beispiel: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i>",
+        "placeholder": "Beschreiben Sie die Bedingungen, die zum Entfernen eines Fahrrads erfüllt sein müssen (z. B. Überschreitung der maximalen Lagerzeit)."
+      },
+      "postRemoval": {
+        "field": "Aktion nach dem Entfernen",
+        "infoText": "Beschreiben Sie, wie, wann und wie Radfahrer ein entferntes Fahrrad wiederherstellen können.<br><br>Beispiel: <i>Verwijderde fiertsen kunnen gedurende drie maanden opgehaald worden bij het centraal depot. Daarna worden ze verkocht of vernietigd. (zie contactgegevens voor mail / telefoon).",
+        "placeholder": "Beschreiben Sie, was zu tun ist, nachdem ein Fahrrad entfernt wurde (z. B. wenden Sie sich an APCOA unter 0473 33 89 11)."
+      },
+      "openingHours" : {
+        "title" : "Öffnungszeiten",
+        "infoText" : "Geben Sie an, wann dieser Abschnitt geöffnet ist (wenn es nur einen Abschnitt gibt, gilt dies für das gesamte Abstellen von Fahrrädern). Sie können Tage mit dem Symbol + hinzufügen, wenn die Öffnungszeiten von Tag zu Tag unterschiedlich sind.<br><br>Beispiel: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
+        "noItemsError" : "Bitte fügen Sie mindestens einen Öffnungszeiteneintrag hinzu.",
+        "open": {
+          "field": "Öffnungszeit *",
+          "placeholder": "Geben Sie die Öffnungszeit ein",
+          "validation" : "Geben Sie eine gültige Öffnungszeit ein"
+        },
+        "close": {
+          "field": "Geschäftsschluss *",
+          "placeholder": "Geben Sie die Schließzeit ein",
+          "validation" : "Geben Sie eine gültige Schließzeit ein"
+        },
+        "day" : ["Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],
+        "addExtra": "Fügen Sie zusätzliche Stunden hinzu"
+      }
+    },
+    "loc" : {
+      "title" : "Facility-Bereich - Ort",
+      "clear" : "wischen",
+      "point" : {
+        "text" : "Wählen Sie den Standort des Parkhauses auf der Karte aus:",
+        "lat" : {
+          "field": "Breitengrad *",
+          "infoText": "Geben Sie auf der Karte die Position dieses Abschnitts des Fahrradabstellplatzes an.",
+          "placeholder": "Geben Sie den Breitengrad ein",
+          "validation": "Geben Sie den Breitengrad ein"
+        },
+        "lon" : {
+          "field": "Längengrad *",
+          "infoText": "Geben Sie auf der Karte die Position dieses Abschnitts des Fahrradabstellplatzes an.",
+          "placeholder": "Geben Sie den Längengrad ein",
+          "validation": "Geben Sie den Längengrad ein"
+        }
+      },
+      "polygon" : {
+        "text" : "Zeichnen Sie die Parkhausgeometrie in die Karte:",
+        "geoPolygon" : {
+          "field": "Geo-Polygon",
+          "infoText": "Zeichnen Sie die Grenzen dieses Abschnitts des Fahrradabstellens auf der Karte.",
+          "placeholder": "Geben Sie die Polygonpunkte ein, z. POLYGON ((30 10, 40 40, 20 40, 10 20))"
+        }
+      },
+      "entrance" : {
+        "title" : "Eingang",
+        "text" : "Wählen Sie den Eingangsort in der Karte aus:",
+        "lat" : {
+          "field": "Breitengrad",
+          "infoText": "Geben Sie die Einfahrt zum Parkplatz auf der Karte an. Wenn es mehrere Eingänge gibt, verwenden Sie das Symbol +.",
+          "placeholder": "Geben Sie den Breitengrad ein"
+        },
+        "lon" : {
+          "field": "Längengrad",
+          "infoText": "Geben Sie die Einfahrt zum Parkplatz auf der Karte an. Wenn es mehrere Eingänge gibt, verwenden Sie das Symbol +.",
+          "placeholder": "Geben Sie den Längengrad ein"
+        },
+        "description" : {
+          "field": "Beschreibung",
+          "infoText": "Beschreiben Sie, wie Benutzer die Einfahrt zum Parkplatz finden können (bei mehreren Einfahrten das Symbol + verwenden).<br><br>Beispiel: <i>Der Eingang befindet sich zu beiden Seiten des Platzes. Achtung: In der Garage darf nicht gefahren werden!</i>",
+          "placeholder": "Beschreiben Sie, wie Sie hierher kommen"
+        },
+        "addExtra" : "Zusätzlichen Eingang hinzufügen"
+      },
+      "exit" : {
+        "title" : "Ausgang",
+        "text" : "Wählen Sie den Ort zum Verlassen der Karte:",
+        "lat" : {
+          "field": "Breitengrad",
+          "infoText": "Geben Sie die Ausfahrt des Parkplatzes auf der Karte an. Wenn es mehrere Ausgänge gibt, verwenden Sie das Symbol +.",
+          "placeholder": "Geben Sie den Breitengrad ein"
+        },
+        "lon" : {
+          "field": "Längengrad",
+          "infoText": "Geben Sie die Ausfahrt des Parkplatzes auf der Karte an. Wenn es mehrere Ausgänge gibt, verwenden Sie das Symbol +.",
+          "placeholder": "Geben Sie den Längengrad ein"
+        },
+        "description" : {
+          "field": "Beschreibung",
+          "infoText": "Beschreiben Sie, wie Benutzer die Ausfahrt des Parkplatzes finden können (wenn es mehrere Ausfahrten gibt, verwenden Sie das + -Symbol).<br><br>Beispiel: <i>Der Ausgang befindet sich zu beiden Seiten des Platzes. Achtung: In der Garage darf nicht gefahren werden!</i>",
+          "placeholder": "Beschreiben Sie, wie Sie hierher kommen"
+        },
+        "addExtra" : "Zusätzlichen Ausgang hinzufügen"
+      }
+    },
+    "allowed" : {
+      "title" : "Facility-Bereich - Erlaubte Fahrräder",
+      "infoAlert" : "Hier können Sie die verschiedenen Fahrradtypen eingeben, die jemand in diesem Bereich unterbringen kann.",
+      "noItemsError" : "Bitte fügen Sie mindestens einen Fahrradtyp hinzu, der in diesem Bereich zulässig ist.",
+      "type" : {
+        "field": "Fahrradtyp",
+        "infoText": "Wählen Sie hier die Fahrradtypen aus, die in diesem Parkbereich zugelassen sind.<br><br>Beispiel: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "placeholder" : "Fahrradtyp auswählen"
+      },
+      "capacity" : {
+        "field": "Kapazität *",
+        "infoText": "Geben Sie die in diesem Abschnitt maximal zulässige Anzahl an Fahrrädern dieses Typs an.<br><br>Beispiel: <i>250</i>",
+        "placeholder": "Geben Sie die erlaubte Kapazität ein",
+        "validation" : "Geben Sie einen Wert ein"
+      },
+      "counting" : {
+        "field": "Zählsystem",
+        "infoText": "Verfügt der Parkplatz über ein System, um zu zählen, wie viele Fahrräder dieses Typs geparkt sind?<br><br>Beispiel: <i>Yes / No</i>",
+        "placeholder": "Yes/No"
+      },
+      "addExtra" : "Zusätzlichen Fahrradtyp hinzufügen"
+    },
+    "features" : {
+      "title" : "Facility-Bereich - Eigenschaften",
+      "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
+      "feature" : {
+        "field": "Merkmal",
+        "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
+        "placeholder" : "Wählen Sie eine Eigenschaft"
+      },
+      "availableHours" : {
+        "title" : "Stunden verfügbar",
+        "infoText": "Wählen Sie die Tage und Stunden aus, an denen diese Funktion verfügbar oder im Parkbereich aktiv ist.<br><br>Beispiel: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
+        "open": {
+          "field": "Öffnungszeit *",
+          "placeholder": "Geben Sie die Öffnungszeit ein"
+        },
+        "close": {
+          "field": "Schlusszeit *",
+          "placeholder": "Geben Sie die Schließzeit ein"
+        },
+        "day" : ["Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],
+        "addExtra": "Fügen Sie zusätzliche Stunden hinzu"
+      },
+      "addExtra" : "Zusätzliche Funktion hinzufügen"
+    },
+    "cost" : {
+      "title" : "Facility-Bereich - Kostenmodell",
+      "description" : {
+        "field": "Kostenbeschreibung",
+        "infoText": "Setzen Sie hier einen Link zu einer Webseite, die die Kosten beschreibt.<br><br>Beispiel: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
+        "placeholder" : "Geben Sie den Link zur Kostenbeschreibung ein"
+      },
+      "spec" : {
+        "title" : "Preis Spezifikation",
+        "free" : {
+          "field": "Kostenlos",
+          "infoText": "Ist diese Preisangabe kostenlos?<br><br>Beispiel: <i>Yes / No</i>",
+          "placeholder" : "Yes/No"
+        },
+        "price" : {
+          "field": "Preis",
+          "infoText": "Geben Sie hier den Preis (falls vorhanden) für diese Preisangabe an.<br><br>Beispiel: <i>10</i>",
+          "placeholder" : "Geben Sie den Preis ein"
+        },
+        "currency" : {
+          "field": "Währung",
+          "infoText": "Geben Sie die Währung an.<br><br>Beispiel: <i>EUR</i>",
+          "placeholder" : "Währung wählen"
+        },
+        "overnight" : {
+          "field": "Über Nacht",
+          "infoText": "Ist diese Preisangabe von einem Tag zum nächsten gültig?<br><br>Beispiel: <i>Yes / No</i>",
+          "placeholder" : "Yes/No"
+        },
+        "timeStart" : {
+          "field": "Zeit Startwert",
+          "infoText": "Geben Sie die Startzeit dieser Preisangabe an.<br><br>Example: <i>0</i>",
+          "placeholder" : "Geben Sie den Startwert ein"
+        },
+        "timeEnd" : {
+          "field": "Zeitendwert",
+          "infoText": "Geben Sie die Endzeit dieser Preisangabe an.<br><br>Example: <i>1</i>",
+          "placeholder" : "Geben Sie den Endwert ein"
+        },
+        "timeUnit" : {
+          "field": "Zeiteinheit",
+          "infoText": "Wählen Sie die Zeiteinheit (sowohl für die Start- als auch für die Endzeit) für diese Preisangabe aus.<br><br>Beispiel: <i>Hour</i>",
+          "placeholder" : "Zeiteinheit auswählen"
+        },
+        "description" : {
+          "field": "Beschreibung",
+          "infoText": "Beschreiben Sie, wie diese Preisspezifikation funktioniert.<br><br>Beispiel: <i>Gratis voor het eerste uur</i>",
+          "placeholder" : "Beschreiben Sie diese Preisdefinition (z. B. kostenlos für die erste Stunde)."
+        },
+        "addExtra" : "Zusätzliche Preisangabe hinzufügen"
+      }
+    },
+    "extraSection" : {
+      "title" : "Facility-Bereich - Zusätzlichen Abschnitt hinzufügen",
+      "text" : "Möchten Sie diesem Fahrradabstellplatz einen weiteren Bereich hinzufügen?",
+      "addExtra" : "Abschnitt hinzufügen"
+    },
+    "publish" : {
+      "title" : "Datenveröffentlichung",
+      "infoText" : "Wenn Sie die mit diesem Tool generierten Daten auf Ihrer Website veröffentlichen möchten, geben Sie hier die URL ein, unter der die Informationen für diesen Parkplatz verfügbar sind. Ansonsten lassen Sie dieses Feld leer.\n\n** Wir empfehlen Ihnen, die Daten auf Ihrer eigenen Website zu veröffentlichen **.",
+      "URI" : {
+        "field": "URI der Parkanlage",
+        "infoText": "Der Link / die URL, unter der die Daten zu diesem Fahrradabstellplatz veröffentlicht werden.<br><br>Beispiel: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i><br><br>Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.\n                            We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (<a style=\"font-family: Montserrat-SemiBold; font-size: 16px;\" href=\"http://velopark.be\">http://velopark.be</a>) if you need assistance for this.",
+        "placeholder" : "Zum Beispiel: http://data.gent.be/parkings/fiets/35677"
+      }
+    },
+    "generate" : {
+      "title" : "Generieren Sie strukturierte Daten",
+      "buttonGenerate" : "Verknüpfte Daten generieren",
+      "titleResult" : "Resultierende verknüpfte Daten in JSON-LD"
+    }
+  },
+  "logIn" : {
+    "title" : "ins Konto einloggen",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Passwort",
+    "lostPasswd" : "Haben Sie Ihr Passwort vergessen?",
+    "loginButton" : "Anmeldung"
+  },
+  "lostPasswd" : {
+    "title" : "Passwort-Wiederherstellung",
+    "emailPlaceholder" : "Email",
+    "sendButton" : "Senden",
+    "successText" : "Eine E-Mail wurde an Sie versendet. Wir haben Ihnen einen Link gesendet, über den Sie ein neues Passwort für Ihr Konto eingeben können."
+  },
+  "signUp" : {
+    "title" : "Ein neues Konto erstellen",
+    "companyMember" : "Mitglied der Firma",
+    "cityRep" : "Vertreter der Stadt",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Passwort",
+    "selectCompany" : {
+      "field" : "Unternehmen",
+      "placeholder" : "Wählen Unternehmen"
+    },
+    "selectCity" : {
+      "field" : "Region",
+      "placeholder" : "Region wählen",
+      "addExtra" : "Zusätzliche Region hinzufügen"
+    },
+    "signupButton" : "Anmelden"
+  },
+  "parkings" : {
+    "title" : "Parkplätze in ",
+    "th" : [
+      "URI der Parkanlage", "Parkname", "Genehmigt", "Aktionen"
+    ]
+  },
+  "admin" : {
+    "title" : "Administrator Portal",
+    "manageParkings" : "Parkplätze verwalten",
+    "manageUsers" : "Benutzer verwalten",
+    "manageCompanies" : "Firmen verwalten"
+  },
+  "adminParkings" : {
+    "title" : "Alle Parkplätze im Überblick",
+    "th" : [
+      "URI der Parkanlage", "Parkname", "Unternehmen", "Regionen", "Genehmigt", "Aktionen"
+    ],
+    "transfer" : {
+      "title" : "Transfer parken",
+      "text" : "Wählen Sie die Firma aus, an die Sie diesen Parkplatz übertragen möchten.",
+      "companyPlaceholder" : "Wählen Unternehmen",
+      "saveButton" : "Bewahren"
+    }
+  },
+  "adminUsers" : {
+    "title" : "Übersicht aller Benutzer",
+    "th" : [
+      "Email", "Unternehmen", "Region repräsentativ", "Administrator"
+    ]
+  },
+  "adminCompanies" : {
+    "title" : "Alle Unternehmen Überblick",
+    "th" : [
+      "Name des Unternehmens", "Benutzer", "Parkplätze"
+    ],
+    "newCompany" : {
+      "title" : "Erstellen Sie eine neue Firma: ",
+      "newCompanyPlaceholder" : "Neuer Name",
+      "saveButton" : "Bewahren"
+    }
+  },
+  "cityRep" : {
+    "title" : "Region Hub",
+    "buttonRegion" : "Parkplätze verwalten",
+    "warningNotApproved" : "Ihre Anfrage zur Verwaltung dieser Region wurde vom Systemadministrator noch nicht genehmigt."
+  },
+  "cityRepParkings" : {
+    "title" : "Parkplätze in ",
+    "th" : [
+      "URI der Parkanlage", "Parkname", "Genehmigt", "Aktionen"
+    ]
+  }
+}

@@ -128,7 +128,7 @@
           "field": "Organization Name *",
           "infoText": "Put here the name of the organization that is responsible for the day-to-day operations.<br><br>Example: <i>APCOA PARKING</i>",
           "placeholder": "Enter the organization name",
-          "validation" : "Enter the organisation name"
+          "validation" : "Enter the organization name"
         }
       },
       "contact" : {
