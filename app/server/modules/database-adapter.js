@@ -215,8 +215,8 @@ exports.updateAccountEnableCompany = function (email, enabled) {
     );
 };
 
-exports.updateAccountEnableCity = function (email, cityName, enabled, callback) {
-    accounts.findOneAndUpdate(
+exports.updateAccountEnableCity = function (email, cityName, enabled) {
+    return accounts.findOneAndUpdate(
         {
             email: email,
             'cityNames.name': cityName
@@ -227,9 +227,8 @@ exports.updateAccountEnableCity = function (email, cityName, enabled, callback) 
             }
         },
         {
-            returnOriginal: false
-        },
-        callback
+            returnOriginal: true
+        }
     );
 };
 

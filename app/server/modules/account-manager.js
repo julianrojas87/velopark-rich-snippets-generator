@@ -236,7 +236,26 @@ exports.toggleCompanyEnabled = function (email, enabled, callback) {
 };
 
 exports.toggleCityEnabled = function (email, cityName, enabled, callback) {
-    dbAdapter.updateAccountEnableCity(email, cityName, enabled, callback);
+    dbAdapter.updateAccountEnableCity(email, cityName, enabled)
+        .then(result => {
+            callback(null, result);
+            if (result.value && result.value.cityNames && result.value.cityNames.length > 0) {
+                let previouslyEnabled = 0;
+                for (let i in result.value.cityNames) {
+                    if (result.value.cityNames[i]['enabled']) {
+                        previouslyEnabled++;
+                    }
+                }
+                if(!previouslyEnabled && enabled){
+                    EM.addActivatedAccountToBeMailed(result.value);
+                } else if(previouslyEnabled <= 1 && !enabled){
+                    EM.removeActivatedAccountToBeMailed(result.value);
+                }
+            }
+        })
+        .catch(error => {
+            callback(error)
+        });
 };
 
 /*
