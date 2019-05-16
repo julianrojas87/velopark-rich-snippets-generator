@@ -71,16 +71,14 @@
     });
 
     $('#save_button').on('click', () => {
-        //saveJSONLD();
-        $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
-            window.location.href = domain + '/download?parkingId=' + originalId;
-        });
+        let domain = domainName !== '' ? '/' + domainName : '';
+        window.location.href = domain + '/download?parkingId=' + originalId;
+
     });
 
 })(jQuery);
 
-function saveJSONLD(){
+function saveJSONLD() {
     let domain = domainName != '' ? '/' + domainName : '';
     let username = $('#user-email').text().trim();
 
