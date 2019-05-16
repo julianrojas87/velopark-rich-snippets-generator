@@ -1241,3 +1241,19 @@ label.css-label {
   display: inline-block;
   margin-right: 10px;
 }
+
+.always-open-selector .btn {
+  color: #fff;
+  background-color: #1072ba;
+  border-color: #1072ba;
+}
+
+.always-open-selector .btn:hover {
+  color: #fff;
+  background-color: #0e5e99;
+  border-color: #0e5e99;
+}
+
+.always-open-selector .btn:focus {
+box-shadow: 0 0 0 3px rgba(16, 114, 186, 0.5);
+}

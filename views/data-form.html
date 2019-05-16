@@ -694,46 +694,52 @@
                                      class="wrap-contact100-subsection dynamic-section">
                                     <button type="button" class="minus_button minus_button_input"><i
                                             class="fas fa-trash-alt"></i></button>
-                                    <div class="wrap-input100 week-day-selector">
-                                        <span class="label-input100"
-                                              transl-id="step.operation.openingHours.day[0]">Mon </span>
-                                        <input class="opening-checkbox" type="checkbox"
-                                               value="http://schema.org/Monday">
-                                        <span class="label-input100"
-                                              transl-id="step.operation.openingHours.day[1]">Tue </span>
-                                        <input class="opening-checkbox" type="checkbox"
-                                               value="http://schema.org/Tuesday">
-                                        <span class="label-input100"
-                                              transl-id="step.operation.openingHours.day[2]">Wed </span>
-                                        <input class="opening-checkbox" type="checkbox"
-                                               value="http://schema.org/Wednesday">
-                                        <span class="label-input100"
-                                              transl-id="step.operation.openingHours.day[3]">Thu </span>
-                                        <input class="opening-checkbox" type="checkbox"
-                                               value="http://schema.org/Thursday">
-                                        <span class="label-input100"
-                                              transl-id="step.operation.openingHours.day[4]">Fri </span>
-                                        <input class="opening-checkbox" type="checkbox"
-                                               value="http://schema.org/Friday">
-                                        <span class="label-input100"
-                                              transl-id="step.operation.openingHours.day[5]">Sat </span>
-                                        <input class="opening-checkbox" type="checkbox"
-                                               value="http://schema.org/Saturday">
-                                        <span class="label-input100"
-                                              transl-id="step.operation.openingHours.day[6]">Sun </span>
-                                        <input class="opening-checkbox" type="checkbox"
-                                               value="http://schema.org/Sunday">
-                                        <input type="image" title="about" class="info_button_div"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <div transl-id="step.operation.openingHours.infoText">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i></span>
+                                    <div style="display: flex;">
+                                        <div class="wrap-input100 week-day-selector" style="flex-grow: 1;">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[0]">Mon </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Monday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[1]">Tue </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Tuesday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[2]">Wed </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Wednesday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[3]">Thu </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Thursday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[4]">Fri </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Friday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[5]">Sat </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Saturday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[6]">Sun </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Sunday">
+                                            <input type="image" title="about" class="info_button_div"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <div transl-id="step.operation.openingHours.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i></span>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="wrap-input100 always-open-selector" style="flex-grow: 0; width: initial; border: none;">
+                                            <button class="btn" type="button"
+                                                    transl-id="step.operation.openingHours.always">Open 24/7</button>
                                         </div>
                                     </div>
                                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
@@ -1109,47 +1115,53 @@
                                                  class="wrap-contact100-subsection dynamic-section">
                                                 <button type="button" class="minus_button minus_button_input"><i
                                                         class="fas fa-trash-alt"></i></button>
-                                                <div class="wrap-input100 week-day-selector">
-                                                    <span class="label-input100"
-                                                          transl-id="step.features.availableHours.day[0]">Mon </span>
-                                                    <input class="opening-checkbox" type="checkbox"
-                                                           value="http://schema.org/Monday">
-                                                    <span class="label-input100"
-                                                          transl-id="step.features.availableHours.day[1]">Tue </span>
-                                                    <input class="opening-checkbox" type="checkbox"
-                                                           value="http://schema.org/Tuesday">
-                                                    <span class="label-input100"
-                                                          transl-id="step.features.availableHours.day[2]">Wed </span>
-                                                    <input class="opening-checkbox" type="checkbox"
-                                                           value="http://schema.org/Wednesday">
-                                                    <span class="label-input100"
-                                                          transl-id="step.features.availableHours.day[3]">Thu </span>
-                                                    <input class="opening-checkbox" type="checkbox"
-                                                           value="http://schema.org/Thursday">
-                                                    <span class="label-input100"
-                                                          transl-id="step.features.availableHours.day[4]">Fri </span>
-                                                    <input class="opening-checkbox" type="checkbox"
-                                                           value="http://schema.org/Friday">
-                                                    <span class="label-input100"
-                                                          transl-id="step.features.availableHours.day[5]">Sat </span>
-                                                    <input class="opening-checkbox" type="checkbox"
-                                                           value="http://schema.org/Saturday">
-                                                    <span class="label-input100"
-                                                          transl-id="step.features.availableHours.day[6]">Sun </span>
-                                                    <input class="opening-checkbox" type="checkbox"
-                                                           value="http://schema.org/Sunday">
-                                                    <input type="image" title="about" class="info_button_div"
-                                                           src="static/images/icons/info.png">
-                                                    <div class="log-form"
-                                                         style="padding-bottom: 20px; word-wrap: break-word;">
-                                                        <h2 style="margin-bottom: 15px;"></h2>
-                                                        <input type="image" title="close" class="info_close_button"
-                                                               src="static/images/icons/close_white.png"
-                                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                        <div transl-id="step.features.availableHours.infoText">
-                                                            <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
-                                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                <div style="display: flex;">
+                                                    <div class="wrap-input100 week-day-selector">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[0]">Mon </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Monday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[1]">Tue </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Tuesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[2]">Wed </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Wednesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[3]">Thu </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Thursday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[4]">Fri </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Friday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[5]">Sat </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Saturday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[6]">Sun </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Sunday">
+                                                        <input type="image" title="about" class="info_button_div"
+                                                               src="static/images/icons/info.png">
+                                                        <div class="log-form"
+                                                             style="padding-bottom: 20px; word-wrap: break-word;">
+                                                            <h2 style="margin-bottom: 15px;"></h2>
+                                                            <input type="image" title="close" class="info_close_button"
+                                                                   src="static/images/icons/close_white.png"
+                                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                            <div transl-id="step.features.availableHours.infoText">
+                                                                <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
+                                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                    <div class="wrap-input100 always-open-selector" style="flex-grow: 0; width: initial; border: none;">
+                                                        <button class="btn" type="button"
+                                                                transl-id="step.operation.openingHours.always">Open 24/7</button>
                                                     </div>
                                                 </div>
                                                 <div class="wrap-input100 bg1 rs3-wrap-input100">

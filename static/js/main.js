@@ -478,6 +478,12 @@ function handleLoginFeatures() {
         $('#form-velopark-data-t-' + (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection)).get(0).click();
     });
 
+    $('.always-open-selector button').on('click', function(){
+        console.log('button clicked');
+        $(this).parent().siblings('.week-day-selector').find('input[type=checkbox]').prop("checked", !$(this).prop("checked"));
+        $(this).parent().parent().parent().find('input[type=time]').val("00:00");
+    });
+
 })(jQuery);
 
 
