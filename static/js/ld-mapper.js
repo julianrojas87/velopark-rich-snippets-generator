@@ -43,7 +43,10 @@
                     $('.overlay').toggle();
                     $('.jsonld').toggle();
 
-                    saveJSONLD();
+                    let userName = $('#user-email').text();
+                    if (userName && userName !== '') {
+                        saveJSONLD();
+                    }
 
                 }).catch(error => {
                     console.log(error);

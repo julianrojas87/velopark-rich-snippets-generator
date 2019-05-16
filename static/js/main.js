@@ -104,6 +104,9 @@ function handleLoginFeatures() {
     if (!userName || userName === '') {
         // Hide JSON-LD view features
         $('#save_button').remove();
+        $('#json-ld-saved-status>.saved-icon').remove();
+        $('#json-ld-saved-status>.loading-icon').remove();
+        $('#json-ld-saved-status>.error-icon').show();
     }
 }
 
