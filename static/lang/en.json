@@ -13,6 +13,7 @@
     }
   },
   "home" : {
+    "title" : "Home",
     "buttons" : {
       "prev" : "Previous",
       "next" : "Next"
