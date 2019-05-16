@@ -42,6 +42,9 @@
                     hljs.highlightBlock(document.querySelectorAll('pre code')[0]);
                     $('.overlay').toggle();
                     $('.jsonld').toggle();
+
+                    saveJSONLD();
+
                 }).catch(error => {
                     console.log(error);
                 });
@@ -59,63 +62,89 @@
         $('.overlay').toggle();
         $('.jsonld').toggle();
         resultingObject = null;
+        $('#json-ld-saved-status>.saved-icon, #save_button').hide();
+        $('#json-ld-saved-status>.loading-icon').show();
+        $('#json-ld-saved-status>.error-icon').hide();
     });
 
     $('#save_button').on('click', () => {
-        let domain = domainName != '' ? '/' + domainName : '';
-        let username = $('#user-email').text().trim();
-
-        if (originalId !== null) {
-            $.ajax({
-                type: "DELETE",
-                url: domain + '/delete-parking?username=' + username + '&parkingId=' + originalId,
-                success: () => {
-                    originalId = null;
-                    $.ajax({
-                        type: "POST",
-                        url: domain + '/save-parking',
-                        data: {
-                            'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
-                            'jsonld': JSON.stringify(resultingObject),
-                            'company': parkingOwner.company,
-                            'approved': parkingOwner.approved,
-                            'parkingCompany': parkingOwner.parkingCompany
-                        },
-                        success: () => {
-                            originalId = resultingObject['@id'];
-                            alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
-                        },
-                        error: e => {
-                            alert('Error: ' + e.responseText);
-                        }
-                    });
-                },
-                error: e => {
-                    alert('Error: ' + e.responseText);
-                }
-            });
-        } else {
-            $.ajax({
-                type: "POST",
-                url: domain + '/save-parking',
-                data: {
-                    'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
-                    'jsonld': JSON.stringify(resultingObject),
-                    'company': parkingOwner.company
-                },
-                success: () => {
-                    originalId = resultingObject['@id'];
-                    alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
-                },
-                error: e => {
-                    alert('Error: ' + e.responseText);
-                }
-            });
-        }
-        return false;
+        //saveJSONLD();
+        $(this).on('click', function () {
+            let domain = domainName !== '' ? '/' + domainName : '';
+            window.location.href = domain + '/download?parkingId=' + originalId;
+        });
     });
 
 })(jQuery);
+
+function saveJSONLD(){
+    let domain = domainName != '' ? '/' + domainName : '';
+    let username = $('#user-email').text().trim();
+
+    if (originalId !== null) {
+        $.ajax({
+            type: "DELETE",
+            url: domain + '/delete-parking?username=' + username + '&parkingId=' + originalId,
+            success: () => {
+                originalId = null;
+                $.ajax({
+                    type: "POST",
+                    url: domain + '/save-parking',
+                    data: {
+                        'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
+                        'jsonld': JSON.stringify(resultingObject),
+                        'company': parkingOwner.company,
+                        'approved': parkingOwner.approved,
+                        'parkingCompany': parkingOwner.parkingCompany
+                    },
+                    success: () => {
+                        originalId = resultingObject['@id'];
+                        //alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
+                        $('#json-ld-saved-status>.saved-icon, #save_button').show();
+                        $('#json-ld-saved-status>.loading-icon').hide();
+                        $('#json-ld-saved-status>.error-icon').hide();
+                    },
+                    error: e => {
+                        alert('Error: ' + e.responseText);
+                        $('#json-ld-saved-status>.saved-icon, #save_button').hide();
+                        $('#json-ld-saved-status>.loading-icon').hide();
+                        $('#json-ld-saved-status>.error-icon').show();
+                    }
+                });
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                $('#json-ld-saved-status>.saved-icon, #save_button').hide();
+                $('#json-ld-saved-status>.loading-icon').hide();
+                $('#json-ld-saved-status>.error-icon').show();
+            }
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: domain + '/save-parking',
+            data: {
+                'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
+                'jsonld': JSON.stringify(resultingObject),
+                'company': parkingOwner.company
+            },
+            success: () => {
+                originalId = resultingObject['@id'];
+                //alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
+                $('#json-ld-saved-status>.saved-icon, #save_button').show();
+                $('#json-ld-saved-status>.loading-icon').hide();
+                $('#json-ld-saved-status>.error-icon').hide();
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                $('#json-ld-saved-status>.saved-icon, #save_button').hide();
+                $('#json-ld-saved-status>.loading-icon').hide();
+                $('#json-ld-saved-status>.error-icon').show();
+            }
+        });
+    }
+    return false;
+}
 
 var resultingObject = null;
 
