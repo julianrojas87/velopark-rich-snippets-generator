@@ -177,7 +177,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         //Dutch is default
         html = "<html><body>";
         html += "Hallo!<br><br>";
-        html += "We zijn blij je te kunnen mededelen dat de registratie van je Velopark account geactiveerd werd.<br>";
+        html += "We zijn blij je te kunnen meedelen dat de registratie van je Velopark account geactiveerd werd.<br>";
         html += "Je kan je nu <a href='" + baseurl + "'>aanmelden in je account</a> door gebruik te maken van  <b>" + email + "</b> als je email adres en het wachtwoord dat je tijdens het registratieprocess hebt opgegeven.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
