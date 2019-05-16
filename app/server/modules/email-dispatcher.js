@@ -4,7 +4,7 @@ var EM = {};
 module.exports = EM;
 
 const fs = require('fs');
-const config_secret = JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8'));
+const config_secret = fs.existsSync('./config_secret.json') ? JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8')) : {};
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
 let activatedAccounts = {};

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const config_secret = JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8'));
+const config_secret = fs.existsSync('./config_secret.json') ? JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8')) : {};
 
 exports.getStringForToken = function (token, callback) {
     if (!token)
