@@ -210,6 +210,7 @@
       },
       "openingHours" : {
         "title" : "Opening Hours",
+        "always" : "Open 24/7",
         "infoText" : "Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.<br><br>Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Please add at least one opening hour entry.",
         "open": {
@@ -326,6 +327,7 @@
       },
       "availableHours" : {
         "title" : "Hours Available",
+        "always" : "Open 24/7",
         "infoText": "Select the days and hours this feature is available or active in the parking section.<br><br>Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
           "field": "Opening Time *",

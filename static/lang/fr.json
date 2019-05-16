@@ -210,6 +210,7 @@
       },
       "openingHours" : {
         "title" : "Heures d'ouverture",
+        "always" : "Ouvert 24/7",
         "infoText" : "Indiquer quand cette section est ouverte (s'il n'y a qu'un seul tronçon, cela concerne l'ensemble du parking vélo). Vous pouvez ajouter des jours avec le symbole d'ajout si les heures d'ouverture diffèrent d'un jour à l'autre.<br><br>Exemple: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Veuillez ajouter au moins une heure d'ouverture.",
         "open": {
@@ -326,6 +327,7 @@
       },
       "availableHours" : {
         "title" : "Heures disponibles",
+        "always" : "Ouvert 24/7",
         "infoText": "Sélectionnez les jours et les heures pour lesquels cette fonctionnalité est disponible ou active dans la section de stationnement.<br><br>Exemple: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
           "field": "Heure d'ouverture *",

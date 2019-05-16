@@ -210,6 +210,7 @@
       },
       "openingHours" : {
         "title" : "Opening Hours",
+        "always" : "Open 24/7",
         "infoText": "Geef aan wanneer deze sectie open is (als er slechts één sectie is, geldt dit voor de gehele fietsenparking). Je kan verschillende uren toevoegen via de \"Voeg extra uren toe\"-knop, als de openingsuren verschillen van dag tot dag.<br><br>Voorbeeld: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Vul aub tenminste één openingsuur in.",
         "open": {
@@ -326,6 +327,7 @@
       },
       "availableHours" : {
         "title" : "Beschikbare uren",
+        "always" : "Open 24/7",
         "infoText": "Selecteer de dage en uren waarop deze voorziening beschikbaar of actief is in deze faciliteitssectie.<br><br>Voorbeeld: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
           "field": "Openingstijd *",

@@ -210,6 +210,7 @@
       },
       "openingHours" : {
         "title" : "Öffnungszeiten",
+        "always" : "24/7 Geöffnet",
         "infoText" : "Geben Sie an, wann dieser Abschnitt geöffnet ist (wenn es nur einen Abschnitt gibt, gilt dies für das gesamte Abstellen von Fahrrädern). Sie können Tage mit dem Symbol + hinzufügen, wenn die Öffnungszeiten von Tag zu Tag unterschiedlich sind.<br><br>Beispiel: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Bitte fügen Sie mindestens einen Öffnungszeiteneintrag hinzu.",
         "open": {
@@ -326,6 +327,7 @@
       },
       "availableHours" : {
         "title" : "Stunden verfügbar",
+        "always" : "24/7 Geöffnet",
         "infoText": "Wählen Sie die Tage und Stunden aus, an denen diese Funktion verfügbar oder im Parkbereich aktiv ist.<br><br>Beispiel: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
           "field": "Öffnungszeit *",
