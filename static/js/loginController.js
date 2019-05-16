@@ -231,7 +231,7 @@ let signinformcitiesloaded = false;
 
 //if no lang parameter given, setting is loaded from localStorage
 function translate(lang){
-    if(lang){
+    if(lang && user && user.name){
         //send preference to the server (async)
         let domain = domainName !== '' ? '/' + domainName : '';
         $.ajax({
@@ -310,6 +310,9 @@ function translate(lang){
                         console.warn("Missing translation!! (" + lang + ')', path);
                     }
                 });
+
+                // Trigger change on data input language to adapt languages names
+                $('#language-selection-container #dutch').trigger('change');
             },
             error: e => {
                 console.error('Error: ' + e.responseText);
