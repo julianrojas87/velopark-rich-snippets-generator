@@ -101,6 +101,9 @@ $(window).on('load', function() {
 
 function handleResize() {
     // Adjust position of dropdown menus
+    var logoPos = $('#page-logo-helper').position();
+    $('#language-selector').css('float', 'left');
+    $('#language-selector').css('left', (logoPos.left + 143 + 80) + 'px');
     var langPos = $('#language-selector').position();
     var dropPos = $('#user-email').position();
     $('#drop-menu-lang').css('left', (langPos.left + 10) + 'px');

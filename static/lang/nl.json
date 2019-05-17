@@ -9,7 +9,7 @@
       "addParkings" : "Parkings Toevoegen",
       "companyParkings" : "Parkings",
       "admin" : "Beheerdersdashboard",
-      "cityRep" : "Beheer Regio's"
+      "cityRep" : "Regio's Dashboard"
     }
   },
   "home" : {
@@ -486,7 +486,7 @@
     }
   },
   "cityRep" : {
-    "title" : "Regio Portaal",
+    "title" : "Regio's Dashboard",
     "buttonRegion" : "Beheer parkings",
     "warningNotApproved" : "Je aanvraag om deze regio te mogen beheren is (nog) niet goedgekeurd door de systeemadministrators."
   },

@@ -9,7 +9,7 @@
       "addParkings" : "Add Parkings",
       "companyParkings" : "Parkings",
       "admin" : "Admin Dashboard",
-      "cityRep" : "Manage Regions"
+      "cityRep" : "Regions Dashboard"
     }
   },
   "home" : {
@@ -487,7 +487,7 @@
     }
   },
   "cityRep" : {
-    "title" : "Region Hub",
+    "title" : "Regions Dashboard",
     "buttonRegion" : "Manage parkings",
     "warningNotApproved" : "Your request for managing this region hasn't been approved by the system administrator yet."
   },

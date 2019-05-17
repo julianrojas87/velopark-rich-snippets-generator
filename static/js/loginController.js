@@ -327,6 +327,7 @@ function translate(lang){
 
                 // Trigger change on data input language to adapt languages names
                 $('#language-selection-container #dutch').trigger('change');
+                handleResize();
             },
             error: e => {
                 console.error('Error: ' + e.responseText);

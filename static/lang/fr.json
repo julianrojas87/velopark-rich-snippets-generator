@@ -9,7 +9,7 @@
       "addParkings" : "Ajouter parking",
       "companyParkings" : "Parkings",
       "admin" : "Tableau de Bord Admin",
-      "cityRep" : "Gérer Les Régions"
+      "cityRep" : "Tableau de Bord des Régions"
     }
   },
   "home" : {
@@ -486,7 +486,7 @@
     }
   },
   "cityRep" : {
-    "title" : "Portail de la région",
+    "title" : "Tableau de Bord des Régions",
     "buttonRegion" : "Gérer les parkings",
     "warningNotApproved" : "Votre demande de gestion de cette région n'a pas encore été approuvée par l'administrateur système."
   },

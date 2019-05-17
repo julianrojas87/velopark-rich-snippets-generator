@@ -9,7 +9,7 @@
       "addParkings" : "Parkplätze hinzufügen",
       "companyParkings" : "Parkplätze",
       "admin" : "Admin-Dashboard",
-      "cityRep" : "Regionen verwalten"
+      "cityRep" : "Regions-Dashboard"
     }
   },
   "home" : {
@@ -486,7 +486,7 @@
     }
   },
   "cityRep" : {
-    "title" : "Region Hub",
+    "title" : "Regions-Dashboard",
     "buttonRegion" : "Parkplätze verwalten",
     "warningNotApproved" : "Ihre Anfrage zur Verwaltung dieser Region wurde vom Systemadministrator noch nicht genehmigt."
   },
