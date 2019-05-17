@@ -429,7 +429,7 @@
   },
   "signUp" : {
     "title" : "Créer un nouveau compte",
-    "companyMember" : "Membre de l'entreprise",
+    "companyMember" : "Opérateur de Stationnement",
     "cityRep" : "Représentant des villes",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Mot de passe",

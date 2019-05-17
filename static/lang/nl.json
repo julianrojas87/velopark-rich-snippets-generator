@@ -429,7 +429,7 @@
   },
   "signUp" : {
     "title" : "Maak Een Nieuw Account Aan",
-    "companyMember" : "Bedrijfslid",
+    "companyMember" : "Parkeeroperator",
     "cityRep" : "Regio Vertegenwoordiger",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Wachtwoord",

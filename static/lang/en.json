@@ -430,7 +430,7 @@
   },
   "signUp" : {
     "title" : "Create a new account",
-    "companyMember" : "Company Member",
+    "companyMember" : "Parking Operator",
     "cityRep" : "City Representative",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Password",

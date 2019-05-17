@@ -429,7 +429,7 @@
   },
   "signUp" : {
     "title" : "Ein neues Konto erstellen",
-    "companyMember" : "Mitglied der Firma",
+    "companyMember" : "Parkbetreiber",
     "cityRep" : "Vertreter der Stadt",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Passwort",
