@@ -495,5 +495,12 @@
     "th" : [
       "URI du parking", "Nom du parking", "Approuvé", "Actions"
     ]
+  },
+  "pswdReset": {
+    "hello": "Bonjour",
+    "changeMessage": "Avez-vous oublié votre mot de passe? Dans cette page, vous pouvez en définir un nouveau.",
+    "password": "Nouveau mot de passe",
+    "save": "Enregistrer",
+    "success": "Votre mot de passe a été mis à jour! Vous pouvez maintenant vous connecter en utilisant vos nouvelles informations d'identification."
   }
 }

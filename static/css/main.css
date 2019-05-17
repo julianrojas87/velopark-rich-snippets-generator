@@ -1297,3 +1297,10 @@ ul.breadcrumbs li a:hover {
   color: #01447e;
   text-decoration: underline;
 }
+
+/* Password reset input */
+#pswd-reset-field {
+  border: 1px solid;
+  border-radius: 3px;
+  padding-left: 5px;
+}

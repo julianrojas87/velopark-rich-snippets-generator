@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const config_secret = fs.existsSync('./config_secret.json') ? JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8')) : {};
+const secretToken = 'ohpWbDrlp7WXpgHKsMWBzGaMq0mdHz2UlvVk7wPaWlqTeT6Obk396UmSlhuwh84';
 
 exports.getStringForToken = function (token, callback) {
     if (!token)
         callback("No token found");
     else {
-        jwt.verify(token, config_secret.tokenSecret, function (err, decoded) {
+        jwt.verify(token, secretToken, function (err, decoded) {
             if (err) {
                 callback(err);
             } else {
@@ -17,7 +17,7 @@ exports.getStringForToken = function (token, callback) {
 };
 
 exports.getTokenForString = function (username) {
-    let token = jwt.sign({name: username}, config_secret.tokenSecret, {
+    let token = jwt.sign({name: username}, secretToken, {
         expiresIn: 24 * 60 * 60 * 1000 // 1 day
     });
     return token;

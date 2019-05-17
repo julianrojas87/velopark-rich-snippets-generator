@@ -495,5 +495,12 @@
     "th" : [
       "Parkingfaciliteit URI", "Naam Parking", "Goedgekeurd", "Acties"
     ]
+  },
+  "pswdReset": {
+    "hello": "Hallo",
+    "changeMessage": "Je hebt aangegeven je wachtwoord vergeten te zijn. Op deze pagina kan je een nieuw wachtwoord instellen voor je account.",
+    "password": "Nieuw wachtwoord",
+    "save": "Opslaan",
+    "success": "Gelukt! Je wachtwoord is aangepast. Je kan je nu aanmelden met je nieuwe credentials."
   }
 }

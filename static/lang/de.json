@@ -495,5 +495,12 @@
     "th" : [
       "URI der Parkanlage", "Parkname", "Genehmigt", "Aktionen"
     ]
+  },
+  "pswdReset": {
+    "hello": "Hallo",
+    "changeMessage": "Hast du dein Passwort vergessen? Auf dieser Seite können Sie eine neue einstellen.",
+    "password": "Neues Kennwort",
+    "save": "Sparen",
+    "success": "Dein Passwort wurde aktualisiert! Sie können sich jetzt mit Ihren neuen Anmeldeinformationen anmelden."
   }
 }

@@ -3,20 +3,18 @@ const fs = require('fs');
 const email = require("emailjs/email");
 
 var EM = {};
-const config_secret = fs.existsSync('./config_secret.json') ? JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8')) : {};
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
 var activatedAccounts = {};
 
 var server = email.server.connect({
-    user: config_secret.NL_EMAIL_USER || "velopark.notifications@gmail.com",
-    password: config_secret.NL_EMAIL_PASS || "velopark",
-    host: config_secret.NL_EMAIL_HOST || "smtp.gmail.com",
+    user: config.emailConfig.NL_EMAIL_USER || "velopark.notifications@gmail.com",
+    password: config.emailConfig.NL_EMAIL_PASS || "velopark",
+    host: config.emailConfig.NL_EMAIL_HOST || "smtp.gmail.com",
     ssl: true
 });
 
-setInterval(sendRecentAccountActivatedEmails, 1 * 10 * 1000);	//send mails every 10 minutes
-
+setInterval(sendRecentAccountActivatedEmails, 1 * 10 * 1000);	//send mails every 10 seconds
 function sendRecentAccountActivatedEmails() {
     if (Object.keys(activatedAccounts).length) {
         let emailsToSendTo = [];
@@ -48,7 +46,7 @@ function sendRecentAccountActivatedEmails() {
 
 EM.dispatchResetPasswordLink = function (account, callback) {
     server.send({
-        from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from: config.emailConfig.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Password Reset',
         text: 'something went wrong... :(',
@@ -75,7 +73,7 @@ EM.removeActivatedAccountToBeMailed = function (account) {
 
 EM.dispatchAccountActivated = function (account, callback) {
     server.send({
-        from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from: config.emailConfig.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Account activated',
         text: 'something went wrong... :(',

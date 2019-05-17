@@ -496,5 +496,12 @@
     "th" : [
       "Parking Facility URI", "Parking Name", "Approved", "Actions"
     ]
+  },
+  "pswdReset": {
+    "hello": "Hello",
+    "changeMessage": "Have you forgotten your password? In this page you can set new one.",
+    "password": "New password",
+    "save": "Save",
+    "success": "Your password has been updated! You can now log in using your new credentials."
   }
 }
