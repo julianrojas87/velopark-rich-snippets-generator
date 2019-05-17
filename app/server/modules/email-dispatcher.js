@@ -1,21 +1,27 @@
 const dbAdapter = require('./database-adapter');
+const fs = require('fs');
+const email = require("emailjs/email");
 
 var EM = {};
-module.exports = EM;
-
-const fs = require('fs');
 const config_secret = fs.existsSync('./config_secret.json') ? JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8')) : {};
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
-let activatedAccounts = {};
+var activatedAccounts = {};
 
-setInterval(sendRecentAccountActivatedEmails, 10 * 60 * 1000);	//send mails every 10 minutes
+var server = email.server.connect({
+    user: config_secret.NL_EMAIL_USER || "velopark.notifications@gmail.com",
+    password: config_secret.NL_EMAIL_PASS || "velopark",
+    host: config_secret.NL_EMAIL_HOST || "smtp.gmail.com",
+    ssl: true
+});
+
+setInterval(sendRecentAccountActivatedEmails, 1 * 10 * 1000);	//send mails every 10 minutes
 
 function sendRecentAccountActivatedEmails() {
     if (Object.keys(activatedAccounts).length) {
         let emailsToSendTo = [];
         for (let email in activatedAccounts) {
-            //Only send email if account was disblad at the beginning of this timers period
+            //Only send email if account was disabled at the beginning of this timers period
             if (!activatedAccounts[email].initialStateEnabled && activatedAccounts[email].mail) {
                 emailsToSendTo.push(email);
             }
@@ -40,16 +46,8 @@ function sendRecentAccountActivatedEmails() {
     }
 }
 
-EM.server = require("emailjs/email").server.connect(
-    {
-        host: config_secret.NL_EMAIL_HOST || 'smtp.gmail.com',
-        user: config_secret.NL_EMAIL_USER || 'your-email-address@gmail.com',
-        password: config_secret.NL_EMAIL_PASS || '1234',
-        ssl: true
-    });
-
 EM.dispatchResetPasswordLink = function (account, callback) {
-    EM.server.send({
+    server.send({
         from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Password Reset',
@@ -76,7 +74,7 @@ EM.removeActivatedAccountToBeMailed = function (account) {
 };
 
 EM.dispatchAccountActivated = function (account, callback) {
-    EM.server.send({
+    server.send({
         from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Account activated',
@@ -90,7 +88,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
     let html;
     if (lang === 'en') {
         html = "<html><body>";
-        html += "Hi!<br><br>";
+        html += "Hello!<br><br>";
         html += "You requested a password reset for your Velopark account.<br>";
         html += "<a href='" + baseurl + '/reset-password?key=' + passKey + "'>Click here to reset your password</a><br><br>";
         html += "If you did not request a password reset, you can safely ignore this email.<br><br>";
@@ -143,7 +141,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
     let html;
     if (lang === 'en') {
         html = "<html><body>";
-        html += "Hi!<br><br>";
+        html += "Hello!<br><br>";
         html += "We are pleased to inform you that the registration of your Velopark account has been activated.<br>";
         html += "You can now <a href='" + baseurl + "'>log in to your account</a> using <b>" + email + "</b> as your email address and the password you provided during the signup process.<br><br>";
         html += "Greetings,<br>";
@@ -185,3 +183,5 @@ EM.composeAccountEnabledEmail = function (email, lang) {
     }
     return [{data: html, alternative: true}];
 };
+
+module.exports = EM;

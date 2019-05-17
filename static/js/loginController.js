@@ -146,6 +146,7 @@ let signinformcitiesloaded = false;
             data: { 'email': email, 'pass': pass, 'company': company, 'cities': cities },
             success: () => {
                 alert('Your account request has been sent! Once the admins approve it you can login with your credentials.');
+                $('#signin-form').toggle();
             },
             error: e => {
                 alert('Error: ' + e.responseText);
