@@ -86,5 +86,23 @@
         newSelect.slideDown('slow');    //animate
         return false;
     });
+
+    $(window).on('resize', handleResize);
+
+    handleResize();
+
+    
     
 })(jQuery);
+
+$(window).on('load', function() {
+    handleResize();
+});
+
+function handleResize() {
+    // Adjust position of dropdown menus
+    var langPos = $('#language-selector').position();
+    var dropPos = $('#user-email').position();
+    $('#drop-menu-lang').css('left', (langPos.left + 10) + 'px');
+    $('#drop-menu').css('left', (dropPos.left + 20) + 'px');
+}
