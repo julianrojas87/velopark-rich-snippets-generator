@@ -3,48 +3,82 @@
     <div id="page-logo-helper">
         <img src="static/images/icons/velopark.png">
     </div>
-    <a id="signin">Sign Up</a>
-    <a id="login">Log In</a>
-    <a id="logout">Log out</a>
-    <a id="user-email">
-        <%= username %></a>
-    <span id="main-title" class="contact100-form-title" style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
+    <a id="logout" transl-id="navbar.logout" >Log out</a>
+    <a id="user-email"><%= username %></a>
+    <a id="signin" transl-id="navbar.signup" >Sign Up</a>
+    <a id="login" transl-id="navbar.login" >Log In</a>
+    <a id="language-selector" transl-id="navbar.langSelect" style="display: block;">Language</a>
+    <span id="main-title" class="contact100-form-title" transl-id="navbar.title" style="color: white; position: relative; width: 53%; top: 21px; left: 20%; cursor: pointer;">
         Velopark Rich Snippets Generator
     </span>
 </div>
 
 <div id="drop-menu" class="dropdown-content">
-    <a id="addParkings" href="#">Add Parkings</a>
-    <a id="myParkings" href="#"><%= company.name %> Parkings</a>
-    <a id="myAdminOverview" href="#">Manage Entities</a>
-    <a id="myCityOverview" href="#">Mange Regions</a>
+    <a id="addParkings" href="#" transl-id="navbar.drop.addParkings">Add Parkings</a>
+    <a id="myParkings" href="#"><%= company.name %> <span  transl-id="navbar.drop.companyParkings">Parkings</span></a>
+    <a id="myAdminOverview" href="#" transl-id="navbar.drop.admin">Admin Dashboard</a>
+    <a id="myCityOverview" href="#" transl-id="navbar.drop.cityRep">Regions Dashboard</a>
+</div>
+
+<div id="drop-menu-lang" class="dropdown-content" style="z-index: 50; min-width: 60px;">
+    <a id="lang-nl" href="#" class="lang-selector" lang-select="nl">Nederlands</a>
+    <a id="lang-fr" href="#" class="lang-selector" lang-select="fr">Français</a>
+    <a id="lang-de" href="#" class="lang-selector" lang-select="de">Deutsch</a>
+    <a id="lang-en" href="#" class="lang-selector" lang-select="en">English</a>
 </div>
 
 <!-- Login/Sign up form -->
 <div id="login-form" class="log-form" style="display: none">
-    <h2>Login to your account</h2>
+    <h2 transl-id="logIn.title">Login to your account</h2>
     <input type="image" id="login_close_button" src="static/images/icons/close_white.png" style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
     <form>
-        <input id="login-email" type="email" title="email" placeholder="email" />
-        <input id="login-pass" type="password" title="username" placeholder="password" />
-        <button id="login-button" type="submit" class="btn">Login</button>
+        <input id="login-email" type="email" title="email" placeholder="email" transl-id-placeholder="logIn.emailPlaceholder"/>
+        <input id="login-pass" type="password" title="username" placeholder="password" transl-id-placeholder="logIn.passwdPlaceholder" />
+        <a id="lost-password-button" type="" href="#" transl-id="logIn.lostPasswd">Wachtwoord vergeten?</a>
+        <button id="login-button" type="submit" class="btn" transl-id="logIn.loginButton">Login</button>
     </form>
 </div>
+
+<div id="password-reset-form" class="log-form" style="display: none">
+    <h2 transl-id="lostPasswd.title">Wachtwoord vergeten</h2>
+    <input type="image" id="password-reset_close_button" src="/static/images/icons/close_white.png" style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+    <form style="text-align: center;">
+        <input id="password-reset-email" type="email" title="email" placeholder="Email" autocomplete="email" transl-id-placeholder="lostPasswd.emailPlaceholder"/>
+        <button id="lost-password-submit-button" type="submit" class="btn" transl-id="lostPasswd.sendButton">Verzenden</button>
+        <svg class="loading-icon lds-dual-ring" width="30px" style="display: none;"
+             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"
+                    ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"
+                    fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"
+                    stroke-dasharray="62.83185307179586 62.83185307179586"
+                    transform="rotate(244.478 50 50)">
+                <animateTransform attributeName="transform" type="rotate" calcMode="linear"
+                                  values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"
+                                  repeatCount="indefinite"></animateTransform>
+            </circle>
+        </svg>
+    </form>
+    <div id="password-reset-mail-sent-message" transl-id="lostPasswd.successText" style="display: none; margin: 30px;">
+        Er is een email verzonden naar het email-adres dat je hebt opgegeven. Je zal daar een link vinden waarmee je een nieuw wachtwoord kan aanmaken.<br>
+        An email has been dispatched to you. We sent you a link which you can use to enter a new password for your account.
+    </div>
+</div>
+
 <div id="signin-form" class="log-form">
-    <h2>Create a new account</h2>
+    <h2 transl-id="signUp.title">Create a new account</h2>
     <input type="image" id="signin_close_button" src="static/images/icons/close_white.png" style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
     <!-- Tab links -->
     <div class="tab">
-        <button id="cm-signin">Company Member</button>
-        <button id="cr-signin">City Representative</button>
+        <button id="cm-signin" transl-id="signUp.companyMember">Parking Operator</button>
+        <button id="cr-signin" transl-id="signUp.cityRep">City Representative</button>
     </div>
     <form style="position: relative; bottom: 40px;">
-        <input id="signin-email" type="email" title="email" placeholder="email" />
-        <input id="signin-pass" type="password" title="username" placeholder="password" />
+        <input id="signin-email" type="email" title="email" placeholder="email" transl-id-placeholder="signUp.emailPlaceholder"/>
+        <input id="signin-pass" type="password" title="username" placeholder="password" transl-id-placeholder="signUp.passwdPlaceholder"/>
         
         <div id="signup-company" style="display: none;">
             <div>
-                <select id="signin-company" company-names="true" class="js-select2" placeholder="Select Company">
+                <select id="signin-company" company-names="true" class="js-select2" placeholder="Select Company" transl-id-placeholder="signUp.selectCompany.placeholder">
                     <option value=""></option>
                 </select>
                 <div class="dropDownSelect2"></div>
@@ -52,14 +86,14 @@
         </div>
         <div id="signup-cities" style="display: none;">
             <div>
-                <select city-names="true" class="signin-city js-select2" placeholder="Select Region">
+                <select city-names="true" class="signin-city js-select2" placeholder="Select Region" transl-id-placeholder="signUp.selectCity.placeholder">
                     <option value=""></option>
                 </select>
                 <div class="dropDownSelect2"></div>
                 <button type="button" class="minus_button minus_button_input"><i class="fas fa-trash-alt"></i></button>
             </div>
-            <button class="plus_button_city_select"><i class="fas fa-plus-square"></i>Add extra region</button>
+            <button class="plus_button_city_select"><i class="fas fa-plus-square"></i><span transl-id="signUp.selectCity.addExtra">Add extra region</span></button>
         </div>
-        <button style="position: relative; top: 60px;" id="signin-button" type="submit" class="btn">Sign Up</button>
+        <button style="position: relative; top: 60px;" id="signin-button" type="submit" class="btn" transl-id="signUp.signupButton">Sign Up</button>
     </form>
 </div>

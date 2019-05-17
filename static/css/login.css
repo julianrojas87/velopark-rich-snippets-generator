@@ -43,7 +43,7 @@ body {
   display: none;
   width: 40%;
   min-width: 320px;
-  max-width: 475px;
+  max-width: 494px;
   background: #fff;
   position: fixed;
   top: 50%;
@@ -108,10 +108,8 @@ body {
   background: #249a40;
   border: 1px solid #236833;
   padding: 0.5em 2em;
-  position: relative;
-  left: 134px;
   color: white;
-  margin-right: 0.5em;
+  margin-left: 18px;
   box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.2);
 }
 .log-form .btn:hover {

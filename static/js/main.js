@@ -104,6 +104,9 @@ function handleLoginFeatures() {
     if (!userName || userName === '') {
         // Hide JSON-LD view features
         $('#save_button').remove();
+        $('#json-ld-saved-status>.saved-icon').remove();
+        $('#json-ld-saved-status>.loading-icon').remove();
+        $('#json-ld-saved-status>.error-icon').show();
     }
 }
 
@@ -164,16 +167,45 @@ function handleLoginFeatures() {
 
     $('#form-velopark-data-t-' + startStepNumberFacilitySection).parent().before(String.format(stepOverviewFacilityTitleFormat, 1));
 
-    let availableLang = ["nl", "en", "de", "es", "fr"];
-    let langDisplayMap = {
-        "nl": "Dutch",
-        "en": "English",
-        "de": "German",
-        "es": "Spanish",
-        "fr": "French"
-    };
+    let availableLang = ["nl", "en", "de", "fr"];
+
+    function getLangDisplayMap() {
+        let nl = 'Nederlands';
+        let en = 'Engels';
+        let fr = 'Frans';
+        let de = 'Duits';
+
+        let lang = localStorage.getItem("languagePref");
+        if(lang && lang === 'en') {
+            nl = 'Dutch';
+            en = 'English';
+            fr = 'French';
+            de = 'German';
+        }
+
+        if(lang && lang === 'fr') {
+            nl = 'Néerlandais';
+            en = 'Anglais';
+            fr = 'Français';
+            de = 'Allemand';
+        }
+
+        if(lang && lang === 'de') {
+            nl = 'Niederländisch';
+            en = 'English';
+            fr = 'Französisch';
+            de = 'Deutsche';
+        }
+        return {
+            "nl": nl,
+            "en": en,
+            "de": de,
+            "fr": fr
+        };
+    }
 
     $('#language-selection-container input').change(function () {
+        let langDisplayMap = getLangDisplayMap();
         let oneSelected = false;
         $('#language-selection-container input').each(function(){
             if($(this).prop('checked')){
@@ -204,6 +236,7 @@ function handleLoginFeatures() {
                 let siblingLangs = new Set();
                 let thisLang = $(this).attr('lang');
                 if (thisLang) {
+                    $(this).find('span').text(langDisplayMap[thisLang]);
                     siblingLangs.add(thisLang);
                 }
                 $(this).siblings().each(function () {
@@ -473,6 +506,12 @@ function handleLoginFeatures() {
     $('#button-add-facility-section').on('click', function () {
         addFacilitySection();
         $('#form-velopark-data-t-' + (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection)).get(0).click();
+    });
+
+    $('.always-open-selector button').on('click', function(){
+        console.log('button clicked');
+        $(this).parent().siblings('.week-day-selector').find('input[type=checkbox]').prop("checked", !$(this).prop("checked"));
+        $(this).parent().parent().parent().find('input[type=time]').val("00:00");
     });
 
 })(jQuery);

@@ -18,15 +18,19 @@
     <% include navbar.html %>
 
     <div class="container-contact100">
+        <ul class="breadcrumbs">
+            <li><a href="/" transl-id="home.title">Home</a></li>
+            <li><a href="/parkings"><span transl-id="parkings.title">Parkings in</span> <%= company.name %></a></li>
+        </ul>
         <div class="wrap-contact100" style="width: 100%;">
-            <h2>Parkings in <%= company.name %></h2>
+            <h2><span transl-id="parkings.title">Parkings in</span> <%= company.name %></h2>
             <table id="parking-list" class="table-fill">
                 <thead>
                     <tr>
-                        <th class="text-left">Parking Facility URI</th>
-                        <th class="text-left">Parking Name</th>
-                        <th class="text-left">Approved</th>
-                        <th class="text-left">Actions</th>
+                        <th class="text-left" transl-id="parkings.th[0]">Parking Facility URI</th>
+                        <th class="text-left" transl-id="parkings.th[1]">Parking Name</th>
+                        <th class="text-left" transl-id="parkings.th[2]">Approved</th>
+                        <th class="text-left" transl-id="parkings.th[3]">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="table-hover">

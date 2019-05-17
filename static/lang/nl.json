@@ -1,0 +1,506 @@
+{
+  "navbar": {
+    "title": "Velopark Rich Snippets Generator",
+    "login" : "Aanmelden",
+    "logout" : "Uitloggen",
+    "signup" : "Account maken",
+    "langSelect" : "Taal",
+    "drop" : {
+      "addParkings" : "Parkings Toevoegen",
+      "companyParkings" : "Parkings",
+      "admin" : "Beheerdersdashboard",
+      "cityRep" : "Regio's Dashboard"
+    }
+  },
+  "home" : {
+    "buttons" : {
+      "prev" : "Vorige",
+      "next" : "Volgende"
+    },
+    "logInWarning" : "WAARSCHUWING: Je bent niet aangemeld. Je kan deze tool nog steeds gebruiken om een JSON-LD beschrijving van jouw parking te genereren, maar je zal deze niet kunnen opslaan in onze catalogus."
+  },
+  "step" : {
+    "title" : {
+      "lang" : "Vertalingen",
+      "parkinfo" : "Parking Informatie",
+      "authinfo" : "Authoriteitsinformatie",
+      "photo" : "Foto's",
+      "operation" : "Werkings Informatie",
+      "location" : "Locatie",
+      "allowed" : "Toegestane Fietsen",
+      "features" : "Eienschappen",
+      "cost" : "Kosten Model",
+      "addExtra" : "Extra Sectie Toevoegen",
+      "publish" : "Data Publicering",
+      "generate" : "Gestructureerde Data Genereren"
+    },
+    "lang" : {
+      "title" : "Vertalingen",
+      "infoAlert" : "Selecteer alstublieft alle talen waarin u deze fietsenparking wilt beschrijven.",
+      "warningAlert" : "Selecteer aub tenminste één taal.",
+      "langName" : {
+        "du" : "Nederlands",
+        "fr" : "Frans",
+        "de" : "Duits",
+        "en" : "Engels",
+        "es" : "Spaans"
+      }
+    },
+    "parkInfo" : {
+      "title" : "Algemeen - Parking Informatie",
+      "name" : {
+        "field" : "Naam *",
+        "infoText" : "De naam van de fietsenparkings zoals die lokaal gekend is.\n\nVoorbeeld: Fietsparking Rector De Somerplein",
+        "placeholder" : "Naam parkeerfaciliteit",
+        "validation" : "Vul de naam van de faciliteit in."
+      },
+      "localID" : {
+        "field" : "Locale ID *",
+        "infoText" : "De lokale code voor deze fietsenstalling.\n\nVoorbeeld: APCOA_018",
+        "placeholder" : "Lokale faciliteits-ID",
+        "validation" : "Vul de ID in"
+      },
+      "openingDate" : {
+        "field" : "Eerste Openingsdag *",
+        "infoText" : "De datum waarop deze stalling geopend werd/wordt (Kan ook voor tijdelijke stallingen gebruikt worden).\n\nVoorbeeld: 03/25/2019",
+        "placeholder" : "Vul de openingsdatum in"
+      },
+      "closingDate" : {
+        "field" : "Finale Sluitingsdag",
+        "infoText" : "De datum waarop de stalling definitief zal sluiten / is gesloten (Kan ook voor tijdelijke stallingen gebruikt worden).\n\nVoorbeeld: 03/25/2019",
+        "placeholder" : "Vul de sluitingsdatum in"
+      },
+      "regulations" : {
+        "field" : "Regelement",
+        "infoText" : "De link / URL waar informatie over deze stalling kan gevonden worden.\n\nVoorbeeld: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
+        "placeholder" : "Vul de link in naar het regelement"
+      },
+      "description" : {
+        "field" : "Beschrijving",
+        "infoText" : "Algemene beschrijving van deze stalling of hoe gebruikers deze stalling kunnen bereiken.<br><br>Voorbeeld: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "placeholder" : "Geef een beschrijving"
+      },
+      "address" :  {
+        "title" : "Adres Informatie",
+        "street" : {
+          "field" : "Straat Naam en Nummer *",
+          "infoText" : "De naam van de straat en de nummer waar de parkin zich bevindt.<br><br>Voorbeeld: <i>Rector De Somerplein 8</i>",
+          "placeholder" : "Vul straatnaam en nummer in",
+          "validation" : "Vul straatnaam en nummer in"
+        },
+        "postal" : {
+          "field" : "Postcode *",
+          "infoText" : "Postcode van de gemeente waarin de stalling zich bevindt.<br><br>Voorbeeld: <i>3000</i>",
+          "placeholder" : "Postcode",
+          "validation" : "Vul de postcode in"
+        },
+        "country" : {
+          "field" : "Land *",
+          "infoText" : "Het land waarin de parking zich bevindt.<br><br>Voorbeeld: <i>Belgium</i>",
+          "validation" : "Vul het land in"
+        }
+      }
+    },
+    "authInfo" : {
+      "title" : "Algemeen - Beheerders Informatie",
+      "owner" : {
+        "title" : "Eigenaar Faciliteit",
+        "website": {
+          "field": "Website Organisatie",
+          "infoText": "Geef hier een link op naar de website van de eigenaar van deze parking.<br><br>Voorbeeld: <i>https://www.leuven.be</i>",
+          "placeholder": "Geef de website van de orgaisatie op"
+        },
+        "name": {
+          "field": "Naam Organisatie *",
+          "infoText": "Geef de naam van de organisatie dat deze parking bezit op.<br><br>Voorbeeld: <i>Stad Leuven</i>",
+          "placeholder": "Naam van de organisatie",
+          "validation" : "Vul de naam van de organisatie in"
+        }
+      },
+      "operator" : {
+        "title" : "Parking Operator",
+        "website": {
+          "field": "Website Organisatie",
+          "infoText": "Geef een link op naar de website van de operator van deze fietsenparking.<br><br>Voorbeeld: <i>https://www.apcoa.be</i>",
+          "placeholder": "Geef de website van de orgaisatie op"
+        },
+        "name": {
+          "field": "Naam Organisatie *",
+          "infoText": "Geef de naam van de organisatie op die verantwoordelijk is voor de dagelijkse operatie van deze parking.<br><br>Voorbeeld: <i>APCOA PARKING</i>",
+          "placeholder": "Naam van de organisatie",
+          "validation" : "Vul de naam van de organisatie in"
+        }
+      },
+      "contact" : {
+        "title" : "Contact Informatie",
+        "website": {
+          "field": "Website",
+          "infoText": "Geef een link op naar een contactformulier of een website waar gebruikers de operator kunnen contacteren.<br><br>Voorbeeld: <i>https://www.apcoa.be/contact/</i>",
+          "placeholder": "Geef de website van de service op"
+        },
+        "email": {
+          "field": "Email",
+          "infoText": "Geef hier het email-adres op waarnaar gebruikers vragen/opmerkingen/verzoeken/klachten kunnen sturen..<br><br>Voorbeeld: <i>fietsenparking.leuven@apcoa.be</i>",
+          "placeholder": "Geef het contact email-adres op."
+        },
+        "phone": {
+          "field": "Telefoonnummer",
+          "infoText": "Geef het telefoonnummer op waarmee gebruikers de operator kunnen bereiken.<br><br>Voorbeeld: <i>016 29 93 23</i>",
+          "placeholder": "Geef het telefoonnummer op"
+        }
+      }
+    },
+    "photo" : {
+      "title" : "Algemeen - Foto's",
+      "url": {
+        "field": "Foto URL",
+        "infoText": "Geef de link op naar een foto van de fietsenparking, zijn omgeving of zijn faciliteiten.<br><br>Voorbeeld: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg",
+        "placeholder": "Geef de foto URL op"
+      },
+      "addExtra" : "Voeg extra foto toe"
+    },
+    "operation" : {
+      "title" : "Faciliteitssectie - Praktische Informatie",
+      "sectionName": {
+        "field": "Sectie Naam",
+        "infoText": "Een optionele naam van deze parkingssectie.<br><br>Voorbeeld: <i>Groene zone</i>",
+        "placeholder": "Naam Parkingssectie",
+        "validation" : "Vul de parkingsectie-naam in"
+      },
+      "type": {
+        "field": "Type Parking",
+        "infoText": "Selecteer welk type fietsenparking van toepassing is op deze sectie.<br><br>Voorbeeld: <i>Bicycle parking station</i>",
+        "placeholder" : "Selecteer het parking-type"
+      },
+      "levels": {
+        "field": "Aantal verdiepingen",
+        "infoText": "Geef het aantal verdiepingen op dat deze parking heeft.<br><br>Voorbeeld: <i>2</i>",
+        "placeholder": "Geef het aantal verdiepingen op"
+      },
+      "public": {
+        "field": "Publiek toegankelijk",
+        "infoText": "Kan iedereen zijn of haar fiets in deze parking plaatsen of heb je een sleutel of badge nodig?<br><br>Voorbeeld: <i>Yes</i>",
+        "placeholder": "Yes/No"
+      },
+      "maxDur": {
+        "field": "Maximale parkeertijd (dagen) *",
+        "infoText": "Definieer het maximale aantal opeenvolgende dagen dat een fiets in deze stalling mag blijven staan.<br><br>Voorbeeld: <i>21</i>",
+        "placeholder": "Geef het aantal dagen op",
+        "validation" : "Vul een waarde in"
+      },
+      "audience": {
+        "field": "Doelpubliek",
+        "infoText": "Beschrijf voor wie deze parking bedoeld is<br><br>Voorbeeld: <i>Brede publiek</i>",
+        "placeholder": "Geef het doelpubliek op (bv. iedereen, buurtbewoners)"
+      },
+      "restrictions": {
+        "field": "Beperkingen",
+        "infoText": "Beschrijf de beperkingen op het gebruik van deze fietsenstalling.<br><br>Voorbeeld: <i>Geen bromfietsen</i>",
+        "placeholder": "Geef de beperkingen op (bv. maximum 2 fietsen per bewoner)"
+      },
+      "removal": {
+        "field": "Voorwaarden voor verwijdering",
+        "infoText": "Beschrijf bij welke voowarden een fiets verwijderd zal worden van de parking. Voorbeeld: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i>",
+        "placeholder": "Beschrijf bij welke voowarden een fiets verwijderd zal worden (bv. Maximum parkeertijd overschreden)"
+      },
+      "postRemoval": {
+        "field": "Actie na verwijdering",
+        "infoText": "Beschrijf hoe, wanneer en waar fietsers hun verwijderde fiets kunnen terugkrijgen.<br><br>Voorbeeld: <i>Verwijderde fiertsen kunnen gedurende drie maanden opgehaald worden bij het centraal depot. Daarna worden ze verkocht of vernietigd. (zie contactgegevens voor mail / telefoon).",
+        "placeholder": "Beschrijf wat te doen wanneer je fiets verwijderd werd (bv. Contacteer APCOA op het nummer 0473 33 89 11)"
+      },
+      "openingHours" : {
+        "title" : "Opening Hours",
+        "always" : "Open 24/7",
+        "infoText": "Geef aan wanneer deze sectie open is (als er slechts één sectie is, geldt dit voor de gehele fietsenparking). Je kan verschillende uren toevoegen via de \"Voeg extra uren toe\"-knop, als de openingsuren verschillen van dag tot dag.<br><br>Voorbeeld: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
+        "noItemsError" : "Vul aub tenminste één openingsuur in.",
+        "open": {
+          "field": "Openingstijd *",
+          "placeholder": "Vul de openingstijd in",
+          "validation" : "Vul een geldige openingstijd in"
+        },
+        "close": {
+          "field": "Sluitingstijd *",
+          "placeholder": "Vul de sluitingstijd in",
+          "validation" : "Vul een geldige sluitingstijd in"
+        },
+        "day" : ["Ma", "Di", "Woe", "Do", "Vr", "Za", "Zo"],
+        "addExtra": "Voeg extra uren toe"
+      }
+    },
+    "loc" : {
+      "title" : "Faciliteitssectie - Locatie",
+      "clear" : "Wissen",
+      "point" : {
+        "title" : "Hoofdingang",
+        "text" : "Selecteer de hoofdingang van de Faciliteitssectie op de kaart:",
+        "lat" : {
+          "field": "Breedtegraad *",
+          "infoText": "Duid op de kaart de hoofdingang van deze Faciliteitssectie aan.",
+          "placeholder": "Vul de breedtegraad in",
+          "validation": "Vul de breedtegraad in"
+        },
+        "lon" : {
+          "field": "Lengtegraad *",
+          "infoText": "Duid op de kaart de locatie van deze Faciliteitssectie aan.",
+          "placeholder": "Vul de lengtegraad in",
+          "validation": "Vul de lengtegraad in"
+        }
+      },
+      "polygon" : {
+        "text" : "Teken de vorm van de Faciliteitssectie op de map:",
+        "geoPolygon" : {
+          "field": "Geo Polygon",
+          "infoText": "Teken de grenzen van deze faciliteitssectie op de map. Klikken voegt punten toe aan de vorm. Sluit de vorm door het beginpunt weer aan te klikken.",
+          "placeholder": "Vul polygon punten in. Klik op de map om dit te genereren. bv. POLYGON ((30 10, 40 40, 20 40, 10 20))"
+        }
+      },
+      "entrance" : {
+        "title" : "Extra Ingangen",
+        "text" : "Selecteer de locatie van de ingang van deze parking:",
+        "lat" : {
+          "field": "Breedtegraad",
+          "infoText": "Duid de ingang van de parking aan op de map. Indien er meerdere zijn, gebruik dan de \"Voeg extra ingang toe\"-knop.",
+          "placeholder": "Enter the Breedtegraad"
+        },
+        "lon" : {
+          "field": "Lengtegraad",
+          "infoText": "Duid de ingang van de parking aan op de map. Indien er meerdere zijn, gebruik dan de \"Voeg extra ingang toe\"-knop.",
+          "placeholder": "Vul de lengtegraad in"
+        },
+        "description" : {
+          "field": "Beschrijving",
+          "infoText": "Beschrijf hoe gebruikers de ingang van de parking kunnen bereiken (Indien er meerdere zijn, gebruik dan de \"Voeg extra ingang toe\"-knop).<br><br>Voorbeeld: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i>",
+          "placeholder": "Beschrijf hoe hier te geraken"
+        },
+        "addExtra" : "Voeg extra ingang toe"
+      },
+      "exit" : {
+        "title" : "Uitgang",
+        "text" : "Selecteer de locatie van de uitgang van deze parking:",
+        "lat" : {
+          "field": "Breedtegraad",
+          "infoText": "Duid de uitgang van de parking aan op de map. Indien er meerdere zijn, gebruik dan de \"Voeg extra uitgang toe\"-knop.",
+          "placeholder": "Vuld de breedtegraad in"
+        },
+        "lon" : {
+          "field": "Lengtegraad",
+          "infoText": "Duid de uitgang van de parking aan op de map. Indien er meerdere zijn, gebruik dan de \"Voeg extra uitgang toe\"-knop.",
+          "placeholder": "Enter the Lengtegraad"
+        },
+        "description" : {
+          "field": "Beschrijving",
+          "infoText": "Beschrijf hoe gebruikers de uitgang van de parking kunnen bereiken (Indien er meerdere zijn, gebruik dan de \"Voeg extra uitgang toe\"-knop).<br><br>Voorbeeld: <i>De uitgang bevindt zich aan beide zijden van het plein. Let op: verboden om in de garage te fietsen!</i>",
+          "placeholder": "Beschrijf hoe hier te geraken"
+        },
+        "addExtra" : "Voeg extra uitgang toe"
+      }
+    },
+    "allowed" : {
+      "title" : "Faciliteitssectie - Toegelaten fietsen",
+      "infoAlert" : "Hier kan je de verschillende types fietsen opgeven dat iemand in deze Faciliteitssectie kan plaatsen.",
+      "noItemsError" : "Voeg aub tenminste één type fiets toe.",
+      "type" : {
+        "field": "Type Fiets",
+        "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "placeholder" : "Selecteer een fietstype"
+      },
+      "capacity" : {
+        "field": "Capaciteit *",
+        "infoText": "Geef het miximum aantal fietsen van dit type op dat toegelaten worden in deze faciliteitssectie.<br><br>Voorbeeld: <i>250</i>",
+        "placeholder": "Vul de toegelaten capaciteit in",
+        "validation" : "Vul een waarde in"
+      },
+      "counting" : {
+        "field": "Telsysteem",
+        "infoText": "Heeft de faciliteitssectie een systeem dat telt hoeveel fietsen van dit type geparkeerd zijn?<br><br>Voorbeeld: <i>Yes / No</i>",
+        "placeholder": "Yes/No"
+      },
+      "addExtra" : "Voeg extra type fiets toe"
+    },
+    "features" : {
+      "title" : "Faciliteitssectie - Voorzieningen",
+      "infoAlert" : "Hier kan je speciale voorzieningen toevoegen die aangeboden worden in deze faciliteitssectie. Neem een kijkje in de beschikbare opties.",
+      "feature" : {
+        "field": "Voorziening",
+        "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
+        "placeholder" : "Selecteer een voorziening"
+      },
+      "availableHours" : {
+        "title" : "Beschikbare uren",
+        "always" : "Open 24/7",
+        "infoText": "Selecteer de dage en uren waarop deze voorziening beschikbaar of actief is in deze faciliteitssectie.<br><br>Voorbeeld: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
+        "open": {
+          "field": "Openingstijd *",
+          "placeholder": "Vul de openingstijd in"
+        },
+        "close": {
+          "field": "Sluitingstijd *",
+          "placeholder": "Vul de sluitingstijd in"
+        },
+        "day" : ["Ma", "Di", "Woe", "Do", "Vr", "Za", "Zo"],
+        "addExtra": "Voeg extra uren toe"
+      },
+      "addExtra" : "Voeg extra voorziening toe"
+    },
+    "cost" : {
+      "title" : "Faciliteitssectie - Kostenmodel",
+      "description" : {
+        "field": "Kosten beschrijving",
+        "infoText": "Vul hier een link in naar de webpagina die het kostenmodel beschrijjft voor deze feciliteitssectie.<br><br>Voorbeeld: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
+        "placeholder" : "Vul een link in naar de kostenbeschrijving voor deze faciliteitssectie"
+      },
+      "spec" : {
+        "title" : "Prijsspecificatie",
+        "free" : {
+          "field": "Gratis",
+          "infoText": "Is deze faciliteitssectie gratis te gebruiken?<br><br>Voobeeld: <i>Yes / No</i>",
+          "placeholder" : "Yes/No"
+        },
+        "price" : {
+          "field": "Prijs",
+          "infoText": "Geef hier de prijs op van deze faciliteitssectie (indien niet gratis).<br><br>Voobeeld: <i>10</i>",
+          "placeholder" : "Vul de prijs in"
+        },
+        "currency" : {
+          "field": "Munteenheid",
+          "infoText": "Geen de munteenheid op.<br><br>Voobeeld: <i>EUR</i>",
+          "placeholder" : "Selecteer munteenheid"
+        },
+        "overnight" : {
+          "field": "Overnachting",
+          "infoText": "Staat dit kostenmodel overnachting toe?<br><br>Voobeeld: <i>Yes / No</i>",
+          "placeholder" : "Yes/No"
+        },
+        "timeStart" : {
+          "field": "Starttijd",
+          "infoText": "Geef de starttijd van deze prijsspecificatie op.<br><br>Voobeeld: <i>0</i>",
+          "placeholder" : "Geef de starttijd op"
+        },
+        "timeEnd" : {
+          "field": "Eindtijd",
+          "infoText": "Geef de eindtijd van deze prijsspecificatie op.<br><br>Voobeeld: <i>1</i>",
+          "placeholder" : "Geef de eindtijd op"
+        },
+        "timeUnit" : {
+          "field": "Tijdseenheid",
+          "infoText": "Selecteer de tijdseenheid (gebruikt voor zowel start- als eindtijd) voor deze prijsspecificatie.<br><br>Voobeeld: <i>Hour</i>",
+          "placeholder" : "Select time unit"
+        },
+        "description" : {
+          "field": "Beschrijving",
+          "infoText": "Beschrijf hoe deze prijsspecificatie werkt.<br><br>Voobeeld: <i>Gratis voor het eerste uur</i>",
+          "placeholder" : "Beschrijf deze prijsspecificatie (bv. Gratis voor het eerste uur)"
+        },
+        "addExtra" : "Voeg extra prijsspecificatie toe"
+      }
+  },
+    "extraSection" : {
+      "title" : "Faciliteitssectie - Voeg Extra Sectie Toe",
+      "text" : "Wil je een nieuwe sectie toevoegen aan deze fietsenparking?",
+      "addExtra" : "Voeg Sectie Toe"
+    },
+    "publish" : {
+      "title" : "Data Publicering",
+      "infoText" : "Als je beslist de data die gegenereerd zal worden met deze tool te publiceren op je eigen website, kan je hier de URL invullen waar deze beschikbaar zal komen. Indien dit niet het geval is kan je dit veld leeg laten.\n\n** We raden sterk aan dat je deze data zelf publiceert op jouw website. **.",
+      "URI" : {
+        "field": "Parkeerfaciliteit URI",
+        "infoText": "De link / URL naar de website waar deze date gepubliceerd zal worden.<br><br>Voobeeld: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>Indien je hier niet over beschikt zullen wij een link genereren, gebaseerd op de data eigenaar en de lokale ID, en vervolgens de data voor jou publiceren.<br><br>Voobeeld: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i><br><br>Weet echter dat, indien u verkiest dat wij de data voor u publiceren, we niet kunnnen garanderen dat deze voor altijd online zal blijven. \nWe adviseren dat je de gegenereerde data zelf publiceert op je eigen website en het link met je CMS systeem zodat het automatisch updatet. Contacteer ons (<a style=\"font-family: Montserrat-SemiBold; font-size: 16px;\" href=\"http://velopark.be\">http://velopark.be</a>) indien je hierbij hulp nodig hebt.",
+        "placeholder" : "Bijvoorbeeld: http://data.gent.be/parkings/fiets/35677"
+      }
+    },
+    "generate" : {
+      "title" : "Genereer Gestructureerde Data",
+      "buttonGenerate" : "Genereer Linked Data",
+      "titleResult" : "Resulterende Linked Data in JSON-LD"
+    }
+  },
+  "logIn" : {
+    "title" : "Aanmelden",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Wachtwoord",
+    "lostPasswd" : "Wachtwoord vergeten?",
+    "loginButton" : "Aanmelden"
+  },
+  "lostPasswd" : {
+    "title" : "Wachtwoord Herstel",
+    "emailPlaceholder" : "Email",
+    "sendButton" : "Verzenden",
+    "successText" : "Er is een email verzonden naar jouw email-adres. We hebben je een link gestuurd, welke je kan gebruiken om een nieuw wachtwoord in te stellen voor jouw account."
+  },
+  "signUp" : {
+    "title" : "Maak Een Nieuw Account Aan",
+    "companyMember" : "Parkeeroperator",
+    "cityRep" : "Regio Vertegenwoordiger",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Wachtwoord",
+    "selectCompany" : {
+      "field" : "Bedrijf",
+      "placeholder" : "Selecteer bedrijf"
+    },
+    "selectCity" : {
+      "field" : "Regio",
+      "placeholder" : "Selecteer Regio",
+      "addExtra" : "Voeg extra regio toe"
+    },
+    "signupButton" : "Inschrijven"
+  },
+  "parkings" : {
+    "title" : "Parkings in ",
+    "th" : [
+      "Parkingfaciliteit URI", "Naam Parking", "Goedgekeurd", "Acties"
+    ]
+  },
+  "admin" : {
+    "title" : "Beheerdersdashboard",
+    "manageParkings" : "Beheer Parkings",
+    "manageUsers" : "Beheer Gebruikers",
+    "manageCompanies" : "Beheer Bedrijven"
+  },
+  "adminParkings" : {
+    "title" : "Beheer Parkings",
+    "th" : [
+      "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio", "Goedgekeurd", "Acties"
+    ],
+    "transfer" : {
+      "title" : "Parking Overdragen",
+      "text" : "Selecteer het bedrijf naar waar je deze parking wil overdragen.",
+      "companyPlaceholder" : "Selecteer Bedrijf",
+      "saveButton" : "Opslaan"
+    }
+  },
+  "adminUsers" : {
+    "title" : "Beheer Gebruikers",
+    "th" : [
+      "Email", "Bedrijf", "Regio Vertegenwoordiger", "Administrator"
+    ]
+  },
+  "adminCompanies" : {
+    "title" : "Beheer Bedrijven",
+    "th" : [
+      "Naam Bedrijf", "Gebruikers", "Parkings"
+    ],
+    "newCompany" : {
+      "title" : "Maak nieuw bedrijf aan: ",
+      "newCompanyPlaceholder" : "Nieuwe naam",
+      "saveButton" : "Opslaan"
+    }
+  },
+  "cityRep" : {
+    "title" : "Regio's Dashboard",
+    "buttonRegion" : "Beheer parkings",
+    "warningNotApproved" : "Je aanvraag om deze regio te mogen beheren is (nog) niet goedgekeurd door de systeemadministrators."
+  },
+  "cityRepParkings" : {
+    "title" : "Parkings in ",
+    "th" : [
+      "Parkingfaciliteit URI", "Naam Parking", "Goedgekeurd", "Acties"
+    ]
+  },
+  "pswdReset": {
+    "hello": "Hallo",
+    "changeMessage": "Je hebt aangegeven je wachtwoord vergeten te zijn. Op deze pagina kan je een nieuw wachtwoord instellen voor je account.",
+    "password": "Nieuw wachtwoord",
+    "save": "Opslaan",
+    "success": "Gelukt! Je wachtwoord is aangepast. Je kan je nu aanmelden met je nieuwe credentials."
+  }
+}

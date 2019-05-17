@@ -12,6 +12,11 @@ var Style = ol.style.Style;
 var Point = ol.geom.Point;
 var Polygon = ol.geom.Polygon;
 
+let myZoomedInView = new ol.View({
+    center: ol.proj.fromLonLat([4.30, 50.85]),
+    zoom: 8
+});
+
 
 var raster = new TileLayer({
     source: new OSM()
@@ -37,10 +42,7 @@ function initPointMap(target, latid, lonid, clear) {
     var pointMap = new Map({
         target: target,
         layers: [raster, pointVector],
-        view: new ol.View({
-            center: ol.proj.fromLonLat([4.30, 50.85]),
-            zoom: 8
-        })
+        view: myZoomedInView
     });
 
     $('#' + target).data('openlayers-map', pointMap);
@@ -69,8 +71,6 @@ function initPointMap(target, latid, lonid, clear) {
                         $('.city-rep-location-loading-icon').css('visibility', 'hidden');
                         let latInput = $('#' + latid);
                         let lonInput = $('#' + lonid);
-
-                        
 
                         latInput.val(lat);
                         lonInput.val(long);
@@ -190,10 +190,7 @@ function initPolygonMap(target, polyid, clear) {
     var polygonMap = new Map({
         target: target,
         layers: [raster, polygonVector],
-        view: new ol.View({
-            center: ol.proj.fromLonLat([4.30, 50.85]),
-            zoom: 8
-        })
+        view: myZoomedInView
     });
 
     $('#' + target).data('openlayers-map', polygonMap);

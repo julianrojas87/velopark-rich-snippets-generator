@@ -18,40 +18,47 @@
 <% include navbar.html %>
 
 <div id="transfer-parking-form" class="log-form">
-    <h2>Transfer parking</h2>
+    <h2 transl-id="adminParkings.transfer.title">Transfer parking</h2>
     <input type="image" id="transfer-parking_close_button" src="static/images/icons/close_white.png"
            style="position: relative; float: right; width: 22px; bottom: 49px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
     <form>
-        <p>
+        <p transl-id="adminParkings.transfer.text">
             Select the company you want to transfer this parking to.
         </p>
         <div>
-            <select id="transfer-parking-company" company-names="true" class="js-select2" placeholder="Select Company">
+            <select id="transfer-parking-company" company-names="true" class="js-select2" placeholder="Select Company" transl-id-placeholder="adminParkings.transfer.companyPlaceholder">
                 <option value=""></option>
             </select>
             <div class="dropDownSelect2"></div>
         </div>
-        <button id="transfer-company-button" type="submit" class="btn">Save</button>
+        <button id="transfer-company-button" type="submit" class="btn" transl-id="adminParkings.transfer.saveButton">Save</button>
     </form>
 </div>
 
 <div class="container-contact100">
+    <ul class="breadcrumbs">
+        <li><a href="/" transl-id="home.title">Home</a></li>
+        <li><a href="/admin" transl-id="admin.title">Admin Dashboard</a></li>
+        <li><a href="/admin-parkings" transl-id="adminParkings.title">Manage Parkings</a></li>
+    </ul>
     <div class="wrap-contact100 table-parkings-scroll-helper" style="width: 100%;">
+        <h2 transl-id="adminParkings.title">Manage Parkings</h2>
         <table id="parking-list" class="table-fill">
             <thead>
             <tr>
-                <th class="text-left">Parking Facility URI</th>
-                <th class="text-left">Parking Name</th>
-                <th class="text-left">Company</th>
-                <th class="text-left">Approved</th>
-                <th class="text-left">Actions</th>
+                <th class="text-left" transl-id="adminParkings.th[0]">Parking Facility URI</th>
+                <th class="text-left" transl-id="adminParkings.th[1]">Parking Name</th>
+                <th class="text-left" transl-id="adminParkings.th[2]">Company</th>
+                <th class="text-left" transl-id="adminParkings.th[3]">Region</th>
+                <th class="text-left" transl-id="adminParkings.th[4]">Approved</th>
+                <th class="text-left" transl-id="adminParkings.th[5]">Actions</th>
             </tr>
             </thead>
             <tbody class="table-hover">
             <% for (var i = 0; i < parkings.length; i++) { %>
             <tr>
-                <td class="text-left">
-                    <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold;"
+                <td class="text-left" style="max-width: 25vw;">
+                    <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold; overflow-wrap: break-word;"
                        href="<%= parkings[i]['@id'] %>">
                         <%= parkings[i]['@id'] %></a>
                 </td>
@@ -61,6 +68,22 @@
                 <td class="text-left" style="font-size: 20px;">
                     <%= parkings[i]['account-company'] %>
                     <button class="btn btn-secondary transfer-parking" parkingid="<%= parkings[i]['@id'] %>"><i class="far fa-edit"></i></button>
+                </td>
+                <td>
+                    <div class="parking-region-dummy" data-long="<%= parkings[i]['location']['lon'] %>" data-lat="<%= parkings[i]['location']['lat'] %>">
+                        <svg class="loading-icon lds-dual-ring" width="15px"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"
+                                    ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"
+                                    fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"
+                                    stroke-dasharray="62.83185307179586 62.83185307179586"
+                                    transform="rotate(244.478 50 50)">
+                                <animateTransform attributeName="transform" type="rotate" calcMode="linear"
+                                                  values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"
+                                                  repeatCount="indefinite"></animateTransform>
+                            </circle>
+                        </svg>
+                    </div>
                 </td>
                 <td class="text-left" style="font-size: 20px;">
                     <svg class="loading-icon lds-dual-ring" width="15px" style="display:none"

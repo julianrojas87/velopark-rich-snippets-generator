@@ -3,3 +3,4 @@ node_modules
 data
 config.json
 .idea
+config_secret.json

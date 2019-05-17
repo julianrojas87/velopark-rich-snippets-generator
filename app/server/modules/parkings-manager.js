@@ -18,47 +18,65 @@ dbAdapter.initDbAdapter().then(() => {
 });
 
 
-let returnTableData = function (error, parkings, callback) {
-    if (error != null) {
-        console.error("Error: " + error);
-        callback(error);
-    } else {
-        let tableData = [];
-        if (parkings != null) {
-            parkings.forEach(function (parking) {
-                let tdata = {};
-                let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
-                tdata['@id'] = decodeURIComponent(parking.parkingID);
-                tdata['name'] = parkingData['name'] || '';
-                tdata['approvedstatus'] = parking.approvedstatus;
-                if (parking.account && parking.account.length > 0) {
-                    tdata['account-company'] = "U: " + parking.account[0].email;
-                }
-                if (parking.company && parking.company.length > 0) {
-                    tdata['account-company'] = parking.company[0].name;
-                }
-                tableData.push(tdata);
-            });
-        }
-        callback(null, tableData);
+let returnTableData = function (parkings, callback) {
+    let tableData = [];
+    if (parkings != null) {
+        parkings.forEach(function (parking) {
+            let tdata = {};
+            let parkingData = JSON.parse(fs.readFileSync(data + '/public/' + parking.filename, 'utf8'));
+            tdata['@id'] = decodeURIComponent(parking.parkingID);
+            tdata['name'] = parkingData['name'] || '';
+            tdata['approvedstatus'] = parking.approvedstatus;
+            if (parking.company && parking.company.length > 0) {
+                tdata['account-company'] = parking.company[0].name;
+            }
+            tdata.location = {};
+            tdata.location.lon = parking.location.coordinates[0];
+            tdata.location.lat = parking.location.coordinates[1];
+            tableData.push(tdata);
+        });
     }
+    callback(null, tableData);
 };
 
-exports.listAllParkings = async (callback) => {
-    dbAdapter.findParkingsWithAccountsAndCompanies(function (error, res) {
-        returnTableData(error, res, callback);
+exports.listAllParkings = async () => {
+    return new Promise((resolve, reject) => {
+        dbAdapter.findParkingsWithCompanies()
+            .then(res => {
+                returnTableData(res, function(error, result){
+                    if(error != null){
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
+
 };
 
 exports.listParkingsByEmail = async (username, callback) => {
     dbAdapter.findParkingsByEmail(username, function (error, res) {
-        returnTableData(error, res, callback);
+        if (error != null) {
+            console.error("Error: " + error);
+            callback(error);
+        } else {
+            returnTableData(res, callback);
+        }
     });
 };
 
 exports.listParkingsInCity = function (cityName, callback) {
     dbAdapter.findParkingsByCityName(cityName, (error, res) => {
-        returnTableData(error, res, callback);
+        if (error != null) {
+            console.error("Error: " + error);
+            callback(error);
+        } else {
+            returnTableData(res, callback);
+        }
     });
 };
 
@@ -233,7 +251,6 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
         });
     }
 };
-
 
 
 let getCitiesOfParking = function (parking, callback) {
