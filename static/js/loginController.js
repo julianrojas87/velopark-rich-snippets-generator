@@ -57,6 +57,7 @@ let signinformcitiesloaded = false;
     });
 
     $('#signin').on('click', () => {
+        $('#login-form').hide();
         $('#cm-signin').click();
         $('#signin-form').show();
         let domain = domainName != '' ? '/' + domainName : '';
@@ -104,6 +105,7 @@ let signinformcitiesloaded = false;
 
     $('#login').on('click', () => {
         $('#login-form').show();
+        $('#signin-form').hide();
     });
 
     $('#login_close_button').on('click', () => {
@@ -289,7 +291,18 @@ function translate(lang){
                         if(!dictObj){
                             throw "Missing translation";
                         }
+
                         $(this).attr('placeholder', dictObj);
+
+                        // Deal with select2 elements
+                        if($(this).is('select')) {
+                            $(this).select2('destroy');
+                            $(this).select2({
+                                minimumResultsForSearch: 20,
+                                dropdownParent: $(this).next('.dropDownSelect2'),
+                                placeholder: $(this).attr('placeholder')
+                            });
+                        }
                     } catch (e) {
                         console.warn("Missing translation!! (" + lang + ')', path);
                     }

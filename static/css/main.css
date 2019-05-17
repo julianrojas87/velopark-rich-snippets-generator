@@ -1243,6 +1243,7 @@ label.css-label {
 #create-new-company {
   display: inline-block;
   margin-right: 10px;
+  margin-top: 30px;
 }
 
 .always-open-selector .btn {

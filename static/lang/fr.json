@@ -8,7 +8,7 @@
     "drop" : {
       "addParkings" : "Ajouter parking",
       "companyParkings" : "Parkings",
-      "admin" : "Gérer Des Entités",
+      "admin" : "Tableau de Bord Admin",
       "cityRep" : "Gérer Les Régions"
     }
   },
@@ -451,13 +451,13 @@
     ]
   },
   "admin" : {
-    "title" : "Portail Administrateur",
+    "title" : "Tableau de Bord Admin",
     "manageParkings" : "Gérer les parkings",
     "manageUsers" : "Gérer les utilisateurs",
     "manageCompanies" : "Gérer des entreprises"
   },
   "adminParkings" : {
-    "title" : "Tous les parkings",
+    "title" : "Gérer les parkings",
     "th" : [
       "URI du parking", "Nom du parking", "Entreprise", "Région", "Approuvé", "Actions"
     ],
@@ -469,13 +469,13 @@
     }
   },
   "adminUsers" : {
-    "title" : "Tous les utilisateurs",
+    "title" : "Gérer les utilisateurs",
     "th" : [
       "Email", "Entreprise", "Représentant régional", "Admin"
     ]
   },
   "adminCompanies" : {
-    "title" : "Toutes les entreprises",
+    "title" : "Gérer des entreprises",
     "th" : [
       "Nom de l'entreprise", "Utilisateurs", "Parkings"
     ],

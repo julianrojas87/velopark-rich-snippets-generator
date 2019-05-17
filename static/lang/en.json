@@ -8,7 +8,7 @@
     "drop" : {
       "addParkings" : "Add Parkings",
       "companyParkings" : "Parkings",
-      "admin" : "Manage Entities",
+      "admin" : "Admin Dashboard",
       "cityRep" : "Manage Regions"
     }
   },
@@ -452,13 +452,13 @@
     ]
   },
   "admin" : {
-    "title" : "Admin Hub",
+    "title" : "Admin Dashboard",
     "manageParkings" : "Manage Parkings",
     "manageUsers" : "Manage Users",
     "manageCompanies" : "Manage Companies"
   },
   "adminParkings" : {
-    "title" : "All Parkings Overview",
+    "title" : "Manage Parkings",
     "th" : [
       "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Actions"
     ],
@@ -470,13 +470,13 @@
     }
   },
   "adminUsers" : {
-    "title" : "All Users Overview",
+    "title" : "Manage Users",
     "th" : [
       "Email", "Company", "Region representative", "Admin"
     ]
   },
   "adminCompanies" : {
-    "title" : "All Companies Overview",
+    "title" : "Manage Companies",
     "th" : [
       "Company Name", "Users", "Parkings"
     ],

@@ -8,7 +8,7 @@
     "drop" : {
       "addParkings" : "Parkplätze hinzufügen",
       "companyParkings" : "Parkplätze",
-      "admin" : "Entitäten verwalten",
+      "admin" : "Admin-Dashboard",
       "cityRep" : "Regionen verwalten"
     }
   },
@@ -451,13 +451,13 @@
     ]
   },
   "admin" : {
-    "title" : "Administrator Portal",
+    "title" : "Admin-Dashboard",
     "manageParkings" : "Parkplätze verwalten",
     "manageUsers" : "Benutzer verwalten",
     "manageCompanies" : "Firmen verwalten"
   },
   "adminParkings" : {
-    "title" : "Alle Parkplätze im Überblick",
+    "title" : "Parkplätze verwalten",
     "th" : [
       "URI der Parkanlage", "Parkname", "Unternehmen", "Region", "Genehmigt", "Aktionen"
     ],
@@ -469,13 +469,13 @@
     }
   },
   "adminUsers" : {
-    "title" : "Übersicht aller Benutzer",
+    "title" : "Benutzer verwalten",
     "th" : [
       "Email", "Unternehmen", "Region repräsentativ", "Administrator"
     ]
   },
   "adminCompanies" : {
-    "title" : "Alle Unternehmen Überblick",
+    "title" : "Firmen verwalten",
     "th" : [
       "Name des Unternehmens", "Benutzer", "Parkplätze"
     ],

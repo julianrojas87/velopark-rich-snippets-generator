@@ -8,7 +8,7 @@
     "drop" : {
       "addParkings" : "Parkings Toevoegen",
       "companyParkings" : "Parkings",
-      "admin" : "Beheer Entiteiten",
+      "admin" : "Beheerdersdashboard",
       "cityRep" : "Beheer Regio's"
     }
   },
@@ -451,13 +451,13 @@
     ]
   },
   "admin" : {
-    "title" : "Administrator Portaal",
+    "title" : "Beheerdersdashboard",
     "manageParkings" : "Beheer Parkings",
     "manageUsers" : "Beheer Gebruikers",
     "manageCompanies" : "Beheer Bedrijven"
   },
   "adminParkings" : {
-    "title" : "Overzicht: Alle Parkings",
+    "title" : "Beheer Parkings",
     "th" : [
       "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio", "Goedgekeurd", "Acties"
     ],
@@ -469,13 +469,13 @@
     }
   },
   "adminUsers" : {
-    "title" : "Overzicht: Alle Gebruikers",
+    "title" : "Beheer Gebruikers",
     "th" : [
       "Email", "Bedrijf", "Regio Vertegenwoordiger", "Administrator"
     ]
   },
   "adminCompanies" : {
-    "title" : "Overzicht: Alle Bedrijven",
+    "title" : "Beheer Bedrijven",
     "th" : [
       "Naam Bedrijf", "Gebruikers", "Parkings"
     ],
