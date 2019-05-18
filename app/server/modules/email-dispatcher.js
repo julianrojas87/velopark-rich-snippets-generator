@@ -82,13 +82,12 @@ EM.dispatchAccountActivated = function (account, callback) {
 };
 
 EM.composePasswordResetEmail = function (passKey, lang) {
-    let baseurl = process.env.NL_SITE_URL || domainName || 'http://localhost:3000';
     let html;
     if (lang === 'en') {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "You requested a password reset for your Velopark account.<br>";
-        html += "<a href='" + baseurl + '/reset-password?key=' + passKey + "'>Click here to reset your password</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" +  passKey + "'>Click here to reset your password</a><br><br>";
         html += "If you did not request a password reset, you can safely ignore this email.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -97,7 +96,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Sie haben ein Zurücksetzen des Passworts für Ihr Velopark-Konto angefordert.<br>";
-        html += "<a href='" + baseurl + '/reset-password?key=' + passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
         html += "Wenn Sie kein Zurücksetzen des Kennworts angefordert haben, können Sie diese E-Mail ignorieren.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -106,7 +105,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Vous avez demandé une réinitialisation du mot de passe pour votre compte Velopark.<br>";
-        html += "<a href='" + baseurl + '/reset-password?key=' + passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
         html += "Si vous n'avez pas demandé de réinitialisation de mot de passe, vous pouvez ignorer cet email en toute sécurité.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
@@ -115,7 +114,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Usted solicitó un restablecimiento de contraseña para su cuenta Velopark.<br>";
-        html += "<a href='" + baseurl + '/reset-password?key=' + passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
         html += "Si no solicitó un restablecimiento de contraseña, puede ignorar este correo electrónico de forma segura.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -125,7 +124,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Je hebt een wachtwoordreset aangevraagd voor je Velopark account.<br>";
-        html += "<a href='" + baseurl + '/reset-password?key=' + passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
         html += "Indien je deze reset niet zelf hebt aangevraagd kan je deze mail gewoon negeren.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
@@ -135,13 +134,12 @@ EM.composePasswordResetEmail = function (passKey, lang) {
 };
 
 EM.composeAccountEnabledEmail = function (email, lang) {
-    let baseurl = process.env.NL_SITE_URL || domainName || 'http://localhost:3000';
     let html;
     if (lang === 'en') {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "We are pleased to inform you that the registration of your Velopark account has been activated.<br>";
-        html += "You can now <a href='" + baseurl + "'>log in to your account</a> using <b>" + email + "</b> as your email address and the password you provided during the signup process.<br><br>";
+        html += "You can now <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>log in to your account</a> using <b>" + email + "</b> as your email address and the password you provided during the signup process.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -149,7 +147,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Wir freuen uns, Ihnen mitteilen zu können, dass die Registrierung Ihres Velopark-Kontos aktiviert wurde.<br>";
-        html += "Sie können sich jetzt mit <b>" + email + "</b> als E-Mail-Adresse und dem Kennwort, das Sie während des Anmeldevorgangs angegeben haben, <a href='" + baseurl + "'>in Ihrem Konto anmelden</a>.<br><br>";
+        html += "Sie können sich jetzt mit <b>" + email + "</b> als E-Mail-Adresse und dem Kennwort, das Sie während des Anmeldevorgangs angegeben haben, <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>in Ihrem Konto anmelden</a>.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -157,7 +155,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Nous avons le plaisir de vous informer que l'enregistrement de votre compte Velopark a été activé.<br>";
-        html += "Vous pouvez maintenant <a href='" + baseurl + "'>vous connecter à votre compte</a> en utilisant <b>" + email + "</b> comme adresse électronique et le mot de passe que vous avez fourni lors de la procédure d'inscription.<br><br>";
+        html += "Vous pouvez maintenant <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>vous connecter à votre compte</a> en utilisant <b>" + email + "</b> comme adresse électronique et le mot de passe que vous avez fourni lors de la procédure d'inscription.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -165,7 +163,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Nos complace informarle que el registro de su cuenta Velopark ha sido activado.<br>";
-        html += "Ahora puede <a href='" + baseurl + "'>iniciar sesión</a> en su cuenta utilizando <b>" + email + "</b> como su dirección de correo electrónico y la contraseña que proporcionó durante el proceso de registro.<br><br>";
+        html += "Ahora puede <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>iniciar sesión</a> en su cuenta utilizando <b>" + email + "</b> como su dirección de correo electrónico y la contraseña que proporcionó durante el proceso de registro.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -174,7 +172,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "We zijn blij je te kunnen meedelen dat de registratie van je Velopark account geactiveerd werd.<br>";
-        html += "Je kan je nu <a href='" + baseurl + "'>aanmelden in je account</a> door gebruik te maken van  <b>" + email + "</b> als je email adres en het wachtwoord dat je tijdens het registratieprocess hebt opgegeven.<br><br>";
+        html += "Je kan je nu <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>aanmelden in je account</a> door gebruik te maken van  <b>" + email + "</b> als je email adres en het wachtwoord dat je tijdens het registratieprocess hebt opgegeven.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
