@@ -98,7 +98,7 @@ exports.findAccountByCookie = function (cookie, callback) {
 };
 
 exports.findAccountByPasskey = function (passKey, ipAddress, callback) {
-    accounts.findOne({passKey: passKey, ip: ipAddress}, callback);
+    accounts.findOne({passKey: passKey}, callback);
 };
 
 exports.findAccounts = function (callback) {
