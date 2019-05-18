@@ -87,7 +87,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "You requested a password reset for your Velopark account.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" +  passKey + "'>Click here to reset your password</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Click here to reset your password</a><br><br>";
         html += "If you did not request a password reset, you can safely ignore this email.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -96,7 +96,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Sie haben ein Zurücksetzen des Passworts für Ihr Velopark-Konto angefordert.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
         html += "Wenn Sie kein Zurücksetzen des Kennworts angefordert haben, können Sie diese E-Mail ignorieren.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -105,7 +105,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Vous avez demandé une réinitialisation du mot de passe pour votre compte Velopark.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
         html += "Si vous n'avez pas demandé de réinitialisation de mot de passe, vous pouvez ignorer cet email en toute sécurité.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
@@ -114,7 +114,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Usted solicitó un restablecimiento de contraseña para su cuenta Velopark.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
         html += "Si no solicitó un restablecimiento de contraseña, puede ignorar este correo electrónico de forma segura.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -124,7 +124,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Je hebt een wachtwoordreset aangevraagd voor je Velopark account.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key='" + passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
         html += "Indien je deze reset niet zelf hebt aangevraagd kan je deze mail gewoon negeren.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
