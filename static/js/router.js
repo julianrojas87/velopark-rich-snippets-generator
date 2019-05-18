@@ -95,11 +95,14 @@
         $(this).hide();
         $(this).prev('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
-        let parkingid = encodeURIComponent($(this).attr('parkingid'));
+        let parkingid = $(this).attr('parkingid');
         $.ajax({
             type: "POST",
-            url: domain + '/parkings/toggle-parking-enabled/' + parkingid,
-            data: {'parkingEnabled': this.checked},
+            url: domain + '/parkings/toggle-parking-enabled',
+            data: {
+                'parkingId': parkingid,
+                'parkingEnabled': this.checked
+            },
             success: () => {
                 $(this).show();
                 $(this).prev('.loading-icon').hide();

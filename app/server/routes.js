@@ -626,7 +626,7 @@ module.exports = app => {
     });
 
 
-    app.post('/parkings/toggle-parking-enabled/:parkingid', function (req, res) {
+    app.post('/parkings/toggle-parking-enabled', function (req, res) {
         if (req.session.user == null) {
             res.status(401).send();
         } else {
@@ -638,7 +638,7 @@ module.exports = app => {
                     res.status(500).send();
                 } else {
                     if (value === true) {
-                        PM.toggleParkingEnabled(encodeURIComponent(req.params.parkingid), req.body['parkingEnabled'] === "true", function (error, result) {
+                        PM.toggleParkingEnabled(encodeURIComponent(req.body['parkingId']), req.body['parkingEnabled'] === "true", function (error, result) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send();
@@ -654,7 +654,7 @@ module.exports = app => {
                         //User is not superAdmin, maybe he is cityrep for the region of this parking?
                         AM.isAccountCityRepForParkingID(req.session.user.email, encodeURIComponent(req.params.parkingid), function (error, value) {
                             if (value === true) {
-                                PM.toggleParkingEnabled(encodeURIComponent(req.params.parkingid), req.body['parkingEnabled'] === "true", function (error, result) {
+                                PM.toggleParkingEnabled(encodeURIComponent(req.body['parkingId']), req.body['parkingEnabled'] === "true", function (error, result) {
                                     if (error != null) {
                                         console.error(error);
                                         res.status(500).send();
