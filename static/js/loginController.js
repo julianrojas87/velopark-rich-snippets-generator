@@ -3,6 +3,8 @@ let signinformcitiesloaded = false;
 
 ($ => {
 
+    translate();
+
     if (user && user.name && user.name !== '') {
         $('#signin').hide();
         $('#login').hide();
@@ -55,6 +57,7 @@ let signinformcitiesloaded = false;
     });
 
     $('#signin').on('click', () => {
+        $('#login-form').hide();
         $('#cm-signin').click();
         $('#signin-form').show();
         let domain = domainName != '' ? '/' + domainName : '';
@@ -102,6 +105,7 @@ let signinformcitiesloaded = false;
 
     $('#login').on('click', () => {
         $('#login-form').show();
+        $('#signin-form').hide();
     });
 
     $('#login_close_button').on('click', () => {
@@ -144,6 +148,7 @@ let signinformcitiesloaded = false;
             data: { 'email': email, 'pass': pass, 'company': company, 'cities': cities },
             success: () => {
                 alert('Your account request has been sent! Once the admins approve it you can login with your credentials.');
+                $('#signin-form').toggle();
             },
             error: e => {
                 alert('Error: ' + e.responseText);
@@ -177,6 +182,160 @@ let signinformcitiesloaded = false;
         });
         return false;
     });
+
+    $('#lost-password-button').on('click', () => {
+        $('#password-reset-form').show();
+        $('#login-form').hide();
+    });
+
+    $('#password-reset_close_button').on('click', () => {
+        $('#password-reset-form').toggle();
+    });
+
+    $('#lost-password-submit-button').on('click', function(){
+        $(this).siblings('.loading-icon').show();
+        $(this).hide();
+        let domain = domainName !== '' ? '/' + domainName : '';
+        let email = $('#password-reset-email').val();
+        $.ajax({
+            type: "POST",
+            url: domain + '/lost-password',
+            data: { 'email': email },
+            success: () => {
+                $(this).parent().hide();
+                $('#password-reset-mail-sent-message').show();
+            },
+            error: e => {
+                alert(e.responseText);
+            }
+        });
+        return false;
+    });
+
+
+    //insert regions in admin parking overview
+    let domain = domainName !== '' ? '/' + domainName : '';
+    $('.parking-region-dummy').each(function(){
+        let lat = $(this).attr('data-lat');
+        let lon = $(this).attr('data-long');
+        $.ajax({
+            type: "GET",
+            url: domain + '/cityrep/get-regions/' + lat + '/' + lon,
+            success: data => {
+                $(this).parent().html(data.toString());
+            },
+            error: e => {
+                $(this).html("[Error]");
+            }
+        });
+    });
 })(jQuery);
 
+
+//if no lang parameter given, setting is loaded from localStorage
+function translate(lang){
+    if(lang && user && user.name){
+        //send preference to the server (async)
+        let domain = domainName !== '' ? '/' + domainName : '';
+        $.ajax({
+            type: "POST",
+            url: domain + '/user/update-lang',
+            data: {
+                lang: lang
+            },
+            success: (data) => {
+                //console.log("Language successfully updated! " + data);
+            },
+            error: e => {
+                console.error('Error: ' + e.responseText);
+            }
+        });
+    }
+    if (typeof(Storage) !== "undefined" && lang) {
+        localStorage.setItem("languagePref", lang);
+    }
+    if (lang || (typeof(Storage) !== "undefined" && localStorage.getItem("languagePref"))) {
+        lang = localStorage.getItem("languagePref");
+        let domain = domainName !== '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/static/lang/' + lang + '.json',
+            data: {},
+            success: (data) => {
+                $('[transl-id]').each(function () {
+                    let path;
+                    try {
+                        path = $(this).attr("transl-id").split(/[\.\[\]]/);
+                        let dictObj = data;
+                        for (i in path) {
+                            if(path[i])
+                                dictObj = dictObj[path[i]];
+                        }
+                        if(!dictObj){
+                            throw "Missing translation";
+                        }
+                        $(this).html(dictObj);
+                    } catch (e) {
+                        console.warn("Missing translation! (" + lang + ')', path);
+                    }
+                });
+                $('[transl-id-placeholder]').each(function () {
+                    let path;
+                    try {
+                        path = $(this).attr("transl-id-placeholder").split(/[\.\[\]]/);
+                        let dictObj = data;
+                        for (i in path) {
+                            if(path[i])
+                                dictObj = dictObj[path[i]];
+                        }
+                        if(!dictObj){
+                            throw "Missing translation";
+                        }
+
+                        $(this).attr('placeholder', dictObj);
+
+                        // Deal with select2 elements
+                        if($(this).is('select')) {
+                            $(this).select2('destroy');
+                            $(this).select2({
+                                minimumResultsForSearch: 20,
+                                dropdownParent: $(this).next('.dropDownSelect2'),
+                                placeholder: $(this).attr('placeholder')
+                            });
+                        }
+                    } catch (e) {
+                        console.warn("Missing translation!! (" + lang + ')', path);
+                    }
+                });
+                $('[transl-id-validate]').each(function () {
+                    let path;
+                    try {
+                        path = $(this).attr("transl-id-validate").split(/[\.\[\]]/);
+                        let dictObj = data;
+                        for (i in path) {
+                            if(path[i])
+                                dictObj = dictObj[path[i]];
+                        }
+                        if(!dictObj){
+                            throw "Missing translation";
+                        }
+                        $(this).attr('data-validate', dictObj);
+                    } catch (e) {
+                        console.warn("Missing translation!! (" + lang + ')', path);
+                    }
+                });
+
+                // Trigger change on data input language to adapt languages names
+                $('#language-selection-container #dutch').trigger('change');
+                handleResize();
+            },
+            error: e => {
+                console.error('Error: ' + e.responseText);
+            }
+        });
+    } else {
+        //Set standard language to dutch
+        translate('nl');    //TODO: replace all text in html files to the dutch versions, since dutch should be default. This is a temporary hack.
+    }
+}
 

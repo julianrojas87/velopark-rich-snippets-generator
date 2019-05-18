@@ -1,144 +1,167 @@
 <div class="container-contact100">
     <div class="wrap-contact100">
         <% if(!username){ %>
-            <div class="alert alert-warning" role="alert">
-                <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                WARNING: You are not logged in. You can still use this tool to generate a JSON-LD description of your parking, but you will not be able to save it into our catalog.
-            </div>
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+            <span transl-id="home.logInWarning">
+                    WARNING: You are not logged in. You can still use this tool to generate a JSON-LD description of your parking, but you will not be able to save it into our catalog.
+                </span>
+        </div>
         <% } %>
         <form id="form-velopark-data" class="contact100-form validate-form" novalidate>
-            <h3 class="section-title">Languages</h3>
+            <h3 class="section-title">
+                <span transl-id="step.title.lang">Languages</span>
+            </h3>
             <fieldset>
                 <div id="step-pre-info-1">
-                    <h2>Data Languages</h2>
+                    <h2 transl-id="step.lang.title">Data Languages</h2>
                     <div class="wrap-contact100-section pre-information">
                         <p class="info-text">
                             <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                            Please select all the languages you want to use to describe your Bicycle Parking.
+                            <span transl-id="step.lang.infoAlert">
+                                Please select all the languages you want to use to describe your Bicycle Parking.
+                            </span>
                         </p>
                         <div id="at-least-one-language" class="alert alert-warning" role="alert" style="display: none;">
                             <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                            Please select at least one language
+                            <span transl-id="step.lang.warningAlert">
+                                Please select at least one language
+                            </span>
                         </div>
                         <div id="language-selection-container" class="wrap-contact100-subsection">
                             <div>
                                 <input class="css-checkbox" type="checkbox" id="dutch" name="lang" value="nl">
-                                <label class="css-label" for="dutch">Dutch</label>
+                                <label class="css-label" for="dutch" transl-id="step.lang.langName.du">Dutch</label>
                             </div>
                             <div>
                                 <input class="css-checkbox" type="checkbox" id="french" name="lang" value="fr">
-                                <label class="css-label" for="french">French</label>
+                                <label class="css-label" for="french" transl-id="step.lang.langName.fr">French</label>
                             </div>
                             <div>
                                 <input class="css-checkbox" type="checkbox" id="german" name="lang" value="de">
-                                <label class="css-label" for="german">German</label>
+                                <label class="css-label" for="german" transl-id="step.lang.langName.de">German</label>
                             </div>
                             <div>
                                 <input class="css-checkbox" type="checkbox" id="english" name="lang" value="en">
-                                <label class="css-label" for="english">English</label>
-                            </div>
-                            <div>
-                                <input class="css-checkbox" type="checkbox" id="spanish" name="lang" value="es">
-                                <label class="css-label" for="spanish">Spanish</label>
+                                <label class="css-label" for="english" transl-id="step.lang.langName.en">English</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </fieldset>
 
-            <h3 class="section-title">Parking Information</h3>
+            <h3 class="section-title">
+                <span transl-id="step.title.parkinfo">Parking Information</span>
+            </h3>
             <fieldset>
                 <div id="step-general-info-1">
-                    <h2>General - Parking Information</h2>
+                    <h2 transl-id="step.parkInfo.title">General - Parking Information</h2>
                     <div id="general-information" class="wrap-contact100-section general-information">
 
-                        <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
-                             data-validate="Enter the facility name">
-                            <span class="label-input100">Name *</span>
+                        <div class="wrap-input100 validate-input bg1 rs2-wrap-input100">
+                            <span class="label-input100" transl-id="step.parkInfo.name.field">Name *</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                 <h2 style="margin-bottom: 15px;"></h2>
                                 <input type="image" title="close" class="info_close_button"
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">The name of the bicycle parking as it is locally known.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>Fietsparking Rector De Somerplein</i></span>
-                            </div>
-                            <div>
-                                <div class="translatable-free-text">
-                                    <span></span>
-                                    <input class="input100" type="text" name="name" placeholder="Parking facility name ">
+                                <div transl-id="step.parkInfo.name.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">The name of the bicycle parking as it is locally known.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Fietsparking Rector De Somerplein</i></span>
                                 </div>
                             </div>
-                            
+                            <div>
+                                <div class="translatable-free-text" data-validate="Enter the facility name"
+                                     transl-id-validate="step.parkInfo.name.validation">
+                                    <span></span>
+                                    <input class="input100" type="text" name="name" placeholder="Parking facility name"
+                                           transl-id-placeholder="step.parkInfo.name.placeholder">
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="spacer"></div>
 
                         <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
-                             data-validate="Enter the identifier">
-                            <span class="label-input100">Local Identifier *</span>
+                             data-validate="Enter the identifier" transl-id-validate="step.parkInfo.localID.validation">
+                            <span class="label-input100"
+                                  transl-id="step.parkInfo.localID.field">Local Identifier *</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                 <h2 style="margin-bottom: 15px;"></h2>
                                 <input type="image" title="close" class="info_close_button"
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">The local code used for the bicycle parking.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>APCOA_018</i></span>
+                                <div transl-id="step.parkInfo.localID.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">The local code used for the bicycle parking.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>APCOA_018</i></span>
+                                </div>
                             </div>
-                            <input class="input100" type="text" name="identifier" placeholder="Facility local ID">
+                            <input class="input100" type="text" name="identifier" placeholder="Facility local ID"
+                                   transl-id-placeholder="step.parkInfo.localID.placeholder">
                         </div>
 
                         <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
                              data-validate="Enter the opening date">
-                            <span class="label-input100">Initial Opening Date *</span>
+                            <span class="label-input100" transl-id="step.parkInfo.openingDate.field">Initial Opening Date *</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                 <h2 style="margin-bottom: 15px;"></h2>
                                 <input type="image" title="close" class="info_close_button"
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">The date the bicycle parking was opened / will open (can also be used for temporary bicycle parkings).</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>03/25/2019</i></span>
+                                <div transl-id="step.parkInfo.openingDate.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">The date the bicycle parking was opened / will open (can also be used for temporary bicycle parkings).</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>03/25/2019</i></span>
+                                </div>
                             </div>
                             <input class="input100" type="date" name="startDate"
-                                   placeholder="Enter the opening date">
+                                   placeholder="Enter the opening date"
+                                   transl-id-placeholder="step.parkInfo.openingDate.placeholder">
                         </div>
 
                         <div class="spacer"></div>
 
                         <div class="wrap-input100 bg1 rs2-wrap-input100">
-                            <span class="label-input100">Final Closing Date</span>
+                            <span class="label-input100"
+                                  transl-id="step.parkInfo.closingDate.field">Final Closing Date</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                 <h2 style="margin-bottom: 15px;"></h2>
                                 <input type="image" title="close" class="info_close_button"
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">The date the bicycle parking was closed / will be closed  (can also be used for temporary bicycle parkings).</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>03/25/2019</i></span>
+                                <div transl-id="step.parkInfo.closingDate.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">The date the bicycle parking was closed / will be closed  (can also be used for temporary bicycle parkings).</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>03/25/2019</i></span>
+                                </div>
                             </div>
-                            <input class="input100" type="date" name="endDate" placeholder="Final closing date">
+                            <input class="input100" type="date" name="endDate" placeholder="Final closing date"
+                                   transl-id-placeholder="step.parkInfo.closingDate.placeholder">
                         </div>
 
                         <div class="wrap-input100 bg1">
-                            <span class="label-input100">Regulations</span>
+                            <span class="label-input100" transl-id="step.parkInfo.regulations.field">Regulations</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                 <h2 style="margin-bottom: 15px;"></h2>
                                 <input type="image" title="close" class="info_close_button"
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">The link / URL where information can be found about the bicycle parking.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf</i></span>
+                                <div transl-id="step.parkInfo.regulations.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">The link / URL where information can be found about the bicycle parking.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf</i></span>
+                                </div>
                             </div>
                             <input class="input100" type="url" name="rights"
-                                   placeholder="Enter the link for the regulations document">
+                                   placeholder="Enter the link for the regulations document"
+                                   transl-id-placeholder="step.parkInfo.regulations.placeholder">
                         </div>
 
                         <div class="wrap-input100 bg0">
-                            <span class="label-input100">Description</span>
+                            <span class="label-input100" transl-id="step.parkInfo.description.field">Description</span>
                             <input type="image" title="about" class="info_button"
                                    src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -146,24 +169,28 @@
                                 <input type="image" title="close" class="info_close_button"
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">General description of this bicycle parking or how users can reach the bicycle parking.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i></span>
+                                <div transl-id="step.parkInfo.description.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">General description of this bicycle parking or how users can reach the bicycle parking.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i></span>
+                                </div>
                             </div>
                             <div>
                                 <div class="translatable-free-text">
                                     <span></span>
                                     <textarea class="input100" name="address.description"
-                                              placeholder="Describe how to arrive here"></textarea>
+                                              placeholder="Describe how to arrive here"
+                                              transl-id-placeholder="step.parkInfo.description.placeholder"></textarea>
                                 </div>
                             </div>
                         </div>
 
-                        <span class="contact100-form-subsubsection">
+                        <span class="contact100-form-subsubsection" transl-id="step.parkInfo.address.title">
                     Address Information
                 </span>
                         <div class="wrap-contact100-subsection">
-                            <div class="wrap-input100 validate-input bg1" data-validate="Enter the street name">
-                                <span class="label-input100">Street Name and Number*</span>
+                            <div class="wrap-input100 validate-input bg1" data-validate="Enter the street name"
+                                 transl-id-validate="step.parkInfo.address.street.validation">
+                                <span class="label-input100" transl-id="step.parkInfo.address.street.field">Street Name and Number*</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -171,14 +198,18 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">The name of the street and number where the parking is located.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Rector De Somerplein 8</i></span>
+                                    <div transl-id="step.parkInfo.address.street.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">The name of the street and number where the parking is located.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Rector De Somerplein 8</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="text" name="address.streetAddress"
-                                       placeholder="Enter the street name and number">
+                                       placeholder="Enter the street name and number"
+                                       transl-id-placeholder="step.parkInfo.address.street.placeholder">
                             </div>
-                            <div class="wrap-input100 validate-input bg1" data-validate="Enter the postal code">
-                                <span class="label-input100">Postal Code *</span>
+                            <div class="wrap-input100 validate-input bg1" data-validate="Enter the postal code"
+                                 transl-id-validate="step.parkInfo.address.postal.validation">
+                                <span class="label-input100" transl-id="step.parkInfo.address.postal.field">Postal Code *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -186,15 +217,20 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Postal code of the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>3000</i></span>
+                                    <div transl-id="step.parkInfo.address.postal.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Postal code of the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>3000</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="text" name="address.postalCode"
-                                       placeholder="Enter the postal code">
+                                       placeholder="Enter the postal code"
+                                       transl-id-placeholder="step.parkInfo.address.postal.placeholder">
                             </div>
 
-                            <div class="wrap-input100 validate-input bg1" data-validate="Enter the postal code">
-                                <span class="label-input100">Country *</span>
+                            <div class="wrap-input100 validate-input bg1" data-validate="Enter the country"
+                                 transl-id-validate="step.parkInfo.address.country.validation">
+                                <span class="label-input100"
+                                      transl-id="step.parkInfo.address.country.field">Country *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -202,8 +238,10 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Country of the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Belgium</i></span>
+                                    <div transl-id="step.parkInfo.address.country.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Country of the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Belgium</i></span>
+                                    </div>
                                 </div>
                                 <div>
                                     <select class="js-select2" placeholder="Select Country" name="address.country">
@@ -219,15 +257,18 @@
             </fieldset>
 
 
-            <h3 class="section-title">Authority Information</h3>
+            <h3 class="section-title">
+                <span transl-id="step.title.authinfo">Authority Information</span>
+            </h3>
             <fieldset>
                 <div id="step-general-info-2">
-                    <h2>General - Authority Information</h2>
+                    <h2 transl-id="step.authInfo.title">General - Authority Information</h2>
                     <div id="general-information-2" class="wrap-contact100-section general-information">
-                        <span class="contact100-form-subsubsection">Facility Owner</span>
+                        <span class="contact100-form-subsubsection"
+                              transl-id="step.authInfo.owner.title">Facility Owner</span>
                         <div class="wrap-contact100-subsection">
                             <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                <span class="label-input100">Organization Website</span>
+                                <span class="label-input100" transl-id="step.authInfo.owner.website.field">Organization Website</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -235,15 +276,18 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here a link to the website of the owner of the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.leuven.be</i></span>
+                                    <div transl-id="step.authInfo.owner.website.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Put here a link to the website of the owner of the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.leuven.be</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="url" name="ownedBy.@id"
-                                       placeholder="Enter the organization Website">
+                                       placeholder="Enter the organization Website"
+                                       transl-id-placeholder="step.authInfo.owner.website.placeholder">
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                 data-validate="Enter the organization name">
-                                <span class="label-input100">Organization Name *</span>
+                                 data-validate="Enter the organization name" transl-id-validate="step.authInfo.owner.name.validation">
+                                <span class="label-input100" transl-id="step.authInfo.owner.name.field">Organization Name *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -251,20 +295,23 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here the name of the organization that owns the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Stad Leuven</i></span>
+                                    <div transl-id="step.authInfo.owner.name.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Put here the name of the organization that owns the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Stad Leuven</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="text" name="ownedBy.companyName"
-                                       placeholder="Enter the organization name">
+                                       placeholder="Enter the organization name"
+                                       transl-id-placeholder="step.authInfo.owner.name.placeholder">
                             </div>
                         </div>
 
-                        <span class="contact100-form-subsubsection">
+                        <span class="contact100-form-subsubsection" transl-id="step.authInfo.operator.title">
                     Facility Operator
                 </span>
                         <div class="wrap-contact100-subsection">
                             <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                <span class="label-input100">Organization Website</span>
+                                <span class="label-input100" transl-id="step.authInfo.operator.website.field">Organization Website</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -272,15 +319,19 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here a link to the website of the operator of the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.apcoa.be</i></span>
+                                    <div transl-id="step.authInfo.operator.website.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Put here a link to the website of the operator of the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.apcoa.be</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="url" name="operatedBy.@id"
-                                       placeholder="Enter the organization Website">
+                                       placeholder="Enter the organization Website"
+                                       transl-id-placeholder="step.authInfo.operator.website.placeholder">
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                 data-validate="Enter the organization name">
-                                <span class="label-input100">Organization Name *</span>
+                                 data-validate="Enter the organization name"
+                                 transl-id-validate="step.authInfo.operator.name.validation">
+                                <span class="label-input100" transl-id="step.authInfo.operator.name.field">Organization Name *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -288,20 +339,24 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here the name of the organization that is responsible for the day-to-day operations.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>APCOA PARKING</i></span>
+                                    <div transl-id="step.authInfo.operator.name.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Put here the name of the organization that is responsible for the day-to-day operations.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>APCOA PARKING</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="text" name="operatedBy.companyName"
-                                       placeholder="Enter the organization name">
+                                       placeholder="Enter the organization name"
+                                       transl-id-placeholder="step.authInfo.operator.name.placeholder">
                             </div>
                         </div>
 
-                        <span class="contact100-form-subsubsection">
+                        <span class="contact100-form-subsubsection" transl-id="step.authInfo.contact.title">
                     Contact Information
                 </span>
                         <div class="wrap-contact100-subsection">
                             <div class="wrap-input100 bg1">
-                                <span class="label-input100">Website</span>
+                                <span class="label-input100"
+                                      transl-id="step.authInfo.contact.website.field">Website</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -309,14 +364,17 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here a link to a contact form or a website where customers can contact the operator.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.apcoa.be/contact/</i></span>
+                                    <div transl-id="step.authInfo.contact.website.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Put here a link to a contact form or a website where customers can contact the operator.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.apcoa.be/contact/</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="url" name="interactionService.url"
-                                       placeholder="Enter the service website">
+                                       placeholder="Enter the service website"
+                                       transl-id-placeholder="step.authInfo.contact.website.placeholder">
                             </div>
                             <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                <span class="label-input100">Email</span>
+                                <span class="label-input100" transl-id="step.authInfo.contact.email.field">Email</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -324,14 +382,18 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here the e-mail address where users can send questions / remarks / requests / complaints to.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>fietsenparking.leuven@apcoa.be</i></span>
+                                    <div transl-id="step.authInfo.contact.email.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Put here the e-mail address where users can send questions / remarks / requests / complaints to.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>fietsenparking.leuven@apcoa.be</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="email" name="contactPoint.email"
-                                       placeholder="Enter the contact email">
+                                       placeholder="Enter the contact email"
+                                       transl-id-placeholder="step.authInfo.contact.email.placeholder">
                             </div>
                             <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                <span class="label-input100">Phone Number</span>
+                                <span class="label-input100"
+                                      transl-id="step.authInfo.contact.phone.field">Phone Number</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -339,11 +401,14 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Put here the phone number where users can reach the operator.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>016 29 93 23</i></span>
+                                    <div transl-id="step.authInfo.contact.phone.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Put here the phone number where users can reach the operator.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>016 29 93 23</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="text" name="contactPoint.telephone"
-                                       placeholder="Enter the contact telephone">
+                                       placeholder="Enter the contact telephone"
+                                       transl-id-placeholder="step.authInfo.contact.phone.placeholder">
                             </div>
                         </div>
                     </div>
@@ -351,17 +416,20 @@
             </fieldset>
 
 
-            <h3 class="section-title">Photos</h3>
+            <h3 class="section-title">
+                <span transl-id="step.title.photo">Photos</span>
+            </h3>
             <fieldset>
                 <div id="step-general-info-3">
-                    <h2>General - Photos</h2>
+                    <h2 transl-id="step.photo.title">General - Photos</h2>
                     <div id="general-information-3" class="wrap-contact100-section general-information">
                         <div class="wrap-contact100-subsection">
                             <div class="wrap-contact100-subsection dynamic-section">
-                                <button type="button" class="minus_button minus_button_input"><i
-                                        class="fas fa-trash-alt"></i></button>
+                                <button type="button" class="minus_button minus_button_input">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                                 <div class="wrap-input100 bg1">
-                                    <span class="label-input100">Photo URL</span>
+                                    <span class="label-input100" transl-id="step.photo.url.field">Photo URL</span>
                                     <input type="image" title="about" class="info_button"
                                            src="static/images/icons/info.png">
                                     <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -369,51 +437,65 @@
                                         <input type="image" title="close" class="info_close_button"
                                                src="static/images/icons/close_white.png"
                                                style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Put here a link a picture of the bicycle parking, its surroundings or facilities.</span><br>
-                                        <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg</i></span>
+                                        <div transl-id="step.photo.url.infoText">
+                                            <span style="display: inherit; padding-left: 15px;">Put here a link a picture of the bicycle parking, its surroundings or facilities.</span><br>
+                                            <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg</i></span>
+                                        </div>
                                     </div>
                                     <input class="input100" type="url" name="photos._Photograph.image"
                                            style="width: 90%;"
-                                           placeholder="Enter the photo URL">
+                                           placeholder="Enter the photo URL"
+                                           transl-id-placeholder="step.photo.url.placeholder">
                                 </div>
                             </div>
-                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra photo
+                            <button class="plus_button_section">
+                                <i class="fas fa-plus-square"></i><span
+                                    transl-id="step.photo.addExtra">Add extra photo</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-1-title">Operation Information</h3>
+            <h3 class="section-title step-facility-section-1-title">
+                <span transl-id="step.title.operation">Operation Information</span>
+            </h3>
             <fieldset>
                 <div id="step-facility-section-1-1">
-                    <h2>Facility Section - Operation Information</h2>
+                    <h2 transl-id="step.operation.title">Facility Section - Operation Information</h2>
 
                     <div class="wrap-contact100-section">
                         <div parking-section="0" class="wrap-contact100-subsection">
                             <div class="wrap-input100 bg1"
-                                 data-validate="Enter the facility name">
-                                <span class="label-input100">Section Name</span>
-                                <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
+                                 data-validate="Enter the facility name"
+                                 transl-id-validate="step.operation.sectionName.validation">
+                                <span class="label-input100"
+                                      transl-id="step.operation.sectionName.field">Section Name</span>
+                                <input type="image" title="about" class="info_button"
+                                       src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                     <h2 style="margin-bottom: 15px;"></h2>
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">An optional name of the bicycle parking section as it is locally known.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Groene zone</i></span>
+                                    <div transl-id="step.operation.sectionName.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">An optional name of the bicycle parking section as it is locally known.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Groene zone</i></span>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="translatable-free-text">
                                         <span></span>
-                                        <input class="input100" type="text" name="sectionName" placeholder="Parking section name ">
+                                        <input class="input100" type="text" name="sectionName"
+                                               placeholder="Parking section name"
+                                               transl-id-placeholder="step.operation.sectionName.placeholder">
                                     </div>
                                 </div>
 
                             </div>
 
                             <div class="wrap-input100 input100-select bg1 rs2-wrap-input100">
-                                <span class="label-input100">Parking Type</span>
+                                <span class="label-input100" transl-id="step.operation.type.field">Parking Type</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -421,21 +503,25 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Select what type of bicycle parking applies to this section.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Bicycle parking station</i></span>
+                                    <div transl-id="step.operation.type.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Select what type of bicycle parking applies to this section.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Bicycle parking station</i></span>
+                                    </div>
                                 </div>
                                 <div>
                                     <select name="@type" parking-types="true" class="js-select2"
-                                            placeholder="Select parking type">
-                                        <option value="http://schema.mobivoc.org/BicycleParkingStation">Bicycle Parking
-                                            Station
+                                            placeholder="Select parking type"
+                                            transl-id-placeholder="step.operation.type.placeholder">
+                                        <option value="http://schema.mobivoc.org/BicycleParkingStation">
+                                            Bicycle Parking Station
                                         </option>
                                     </select>
                                     <div class="dropDownSelect2"></div>
                                 </div>
                             </div>
                             <div class="wrap-input100 bg1 rs2-wrap-input100">
-                                <span class="label-input100">Number of Levels</span>
+                                <span class="label-input100"
+                                      transl-id="step.operation.levels.field">Number of Levels</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -443,14 +529,18 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Enter here the number of levels in the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>2</i></span>
+                                    <div transl-id="step.operation.levels.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>2</i></span>
+                                        <span style="display: inherit; padding-left: 15px;">Enter here the number of levels in the bicycle parking.</span><br>
+                                    </div>
                                 </div>
                                 <input class="input100" type="number" name="numberOfLevels"
-                                       placeholder="Enter the number of levels">
+                                       placeholder="Enter the number of levels"
+                                       transl-id-placeholder="step.operation.levels.placeholder">
                             </div>
                             <div class="wrap-input100 input100-select bg1 rs2-wrap-input100">
-                                <span class="label-input100">Public Access</span>
+                                <span class="label-input100"
+                                      transl-id="step.operation.public.field">Public Access</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -458,11 +548,14 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Can anybody park her / his bike here, or do you need a key or badge?.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Yes</i></span>
+                                    <div transl-id="step.operation.public.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Can anybody park her / his bike here, or do you need a key or badge?</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Yes</i></span>
+                                    </div>
                                 </div>
                                 <div>
-                                    <select class="js-select2" name="publicAccess" placeholder="Yes/No">
+                                    <select class="js-select2" name="publicAccess" placeholder="Yes/No"
+                                            transl-id-placeholder="step.operation.public.placeholder">
                                         <option value=""></option>
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
@@ -471,8 +564,8 @@
                                 </div>
                             </div>
                             <div class="wrap-input100 validate-input bg1 rs2-wrap-input100"
-                                 data-validate="Enter a value">
-                                <span class="label-input100">Maximum parking duration (days) *</span>
+                                 data-validate="Enter a value" transl-id-validate="step.operation.maxDur.validation">
+                                <span class="label-input100" transl-id="step.operation.maxDur.field">Maximum parking duration (days) *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -480,14 +573,18 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Define here the maximum number of consecutive days a bicycle can stay in the parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>21</i></span>
+                                    <div transl-id="step.operation.maxDur.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Define here the maximum number of consecutive days a bicycle can stay in the parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>21</i></span>
+                                    </div>
                                 </div>
                                 <input class="input100" type="number" name="maximumParkingDuration"
-                                       placeholder="Enter the amount of days">
+                                       placeholder="Enter the amount of days"
+                                       transl-id-placeholder="step.operation.maxDur.placeholder">
                             </div>
                             <div class="wrap-input100 bg1">
-                                <span class="label-input100">Intended Audience</span>
+                                <span class="label-input100"
+                                      transl-id="step.operation.audience.field">Intended Audience</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -495,19 +592,23 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Describe who can park their bike here.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Brede publiek</i></span>
+                                    <div transl-id="step.operation.audience.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Describe who can park their bike here.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Brede publiek</i></span>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="translatable-free-text">
                                         <span></span>
                                         <input class="input100" type="text" name="intendedAudience"
-                                               placeholder="Enter the intended audience (e.g. general public, neighborhood residents)">
+                                               placeholder="Enter the intended audience (e.g. general public, neighborhood residents)"
+                                               transl-id-placeholder="step.operation.audience.placeholder">
                                     </div>
                                 </div>
                             </div>
                             <div class="wrap-input100 bg0">
-                                <span class="label-input100">Restrictions</span>
+                                <span class="label-input100"
+                                      transl-id="step.operation.restrictions.field">Restrictions</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -515,19 +616,23 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Describe the restrictions of use of this parking garage.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Geen bromfietsen</i></span>
+                                    <div transl-id="step.operation.restrictions.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Describe the restrictions of use of this parking garage.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Geen bromfietsen</i></span>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="translatable-free-text">
                                         <span></span>
                                         <textarea class="input100" name="restrictions"
-                                                  placeholder="Enter the restrictions (e.g. maximum 2 bikes per resident)"></textarea>
+                                                  placeholder="Enter the restrictions (e.g. maximum 2 bikes per resident)"
+                                                  transl-id-placeholder="step.operation.restrictions.placeholder"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="wrap-input100 bg0">
-                                <span class="label-input100">Removal Conditions</span>
+                                <span class="label-input100"
+                                      transl-id="step.operation.removal.field">Removal Conditions</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -535,19 +640,22 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Describe on what conditions / when a bike will be removed from the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i></span>
+                                    <div transl-id="step.operation.removal.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Describe on what conditions / when a bike will be removed from the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i></span>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="translatable-free-text">
                                         <span></span>
                                         <textarea class="input100" name="removalConditions"
-                                                  placeholder="Describe the conditions to be met for removing a bike (e.g. exceed maximum storage time)"></textarea>
+                                                  placeholder="Describe the conditions to be met for removing a bike (e.g. exceed maximum storage time)"
+                                                  transl-id-placeholder="step.operation.removal.placeholder"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="wrap-input100 bg0">
-                                <span class="label-input100">Post Removal Action</span>
+                                <span class="label-input100" transl-id="step.operation.postRemoval.field">Post Removal Action</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -555,73 +663,100 @@
                                     <input type="image" title="close" class="info_close_button"
                                            src="static/images/icons/close_white.png"
                                            style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                    <span style="display: inherit; padding-left: 15px;">Describe how, when and how cyclists can recover a bike that was removed.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Verwijderde fiertsen kunnen gedurende drie maanden opgehaald worden bij het centraal depot. Daarna worden ze verkocht of vernietigd. (zie contactgegevens voor mail / telefoon).</i></span>
+                                    <div transl-id="step.operation.postRemoval.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Describe how, when and how cyclists can recover a bike that was removed.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Verwijderde fiertsen kunnen gedurende drie maanden opgehaald worden bij het centraal depot. Daarna worden ze verkocht of vernietigd. (zie contactgegevens voor mail / telefoon).</i></span>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="translatable-free-text">
                                         <span></span>
                                         <textarea class="input100" name="postRemovalAction"
-                                                  placeholder="Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"></textarea>
+                                                  placeholder="Describe what to do after a bike gets removed (e.g. Contact APCOA on 0473 33 89 11)"
+                                                  transl-id-placeholder="step.operation.postRemoval.placeholder"></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            <span class="contact100-form-subsubsection" style="width: 90%;">
-                        Opening Hours
-                    </span>
-                            <p class="no-items-error">Please add at least one opening hour entry.</p>
+                            <span class="contact100-form-subsubsection" style="width: 90%;"
+                                  transl-id="step.operation.openingHours.title">
+                                Opening Hours
+                            </span>
+                            <p class="no-items-error" transl-id="step.operation.openingHours.noItemsError">Please add at
+                                least one opening hour entry.</p>
                             <div>
 
                                 <div name="openingHoursSpecification"
                                      class="wrap-contact100-subsection dynamic-section">
                                     <button type="button" class="minus_button minus_button_input"><i
                                             class="fas fa-trash-alt"></i></button>
-                                    <div class="wrap-input100 week-day-selector">
-                                        <span class="label-input100">Mon </span><input class="opening-checkbox"
-                                                                                       type="checkbox"
-                                                                                       value="http://schema.org/Monday">
-                                        <span class="label-input100">Tue </span><input class="opening-checkbox"
-                                                                                       type="checkbox"
-                                                                                       value="http://schema.org/Tuesday">
-                                        <span class="label-input100">Wed </span><input class="opening-checkbox"
-                                                                                       type="checkbox"
-                                                                                       value="http://schema.org/Wednesday">
-                                        <span class="label-input100">Thu </span><input class="opening-checkbox"
-                                                                                       type="checkbox"
-                                                                                       value="http://schema.org/Thursday">
-                                        <span class="label-input100">Fri </span><input class="opening-checkbox"
-                                                                                       type="checkbox"
-                                                                                       value="http://schema.org/Friday">
-                                        <span class="label-input100">Sat </span><input class="opening-checkbox"
-                                                                                       type="checkbox"
-                                                                                       value="http://schema.org/Saturday">
-                                        <span class="label-input100">Sun </span><input class="opening-checkbox"
-                                                                                       type="checkbox"
-                                                                                       value="http://schema.org/Sunday">
-                                        <input type="image" title="about" class="info_button_div"
-                                               src="static/images/icons/info.png">
-                                        <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                            <h2 style="margin-bottom: 15px;"></h2>
-                                            <input type="image" title="close" class="info_close_button"
-                                                   src="static/images/icons/close_white.png"
-                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                            <span style="display: inherit; padding-left: 15px;">Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.</span><br>
-                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i></span>
+                                    <div style="display: flex;">
+                                        <div class="wrap-input100 week-day-selector" style="flex-grow: 1;">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[0]">Mon </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Monday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[1]">Tue </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Tuesday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[2]">Wed </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Wednesday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[3]">Thu </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Thursday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[4]">Fri </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Friday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[5]">Sat </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Saturday">
+                                            <span class="label-input100"
+                                                  transl-id="step.operation.openingHours.day[6]">Sun </span>
+                                            <input class="opening-checkbox" type="checkbox"
+                                                   value="http://schema.org/Sunday">
+                                            <input type="image" title="about" class="info_button_div"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <div transl-id="step.operation.openingHours.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wrap-input100 always-open-selector" style="flex-grow: 0; width: initial; border: none;">
+                                            <button class="btn" type="button"
+                                                    transl-id="step.operation.openingHours.always">Open 24/7</button>
                                         </div>
                                     </div>
                                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                         data-validate="Enter a valid opening time">
-                                        <span class="label-input100">Opening Time *</span>
-                                        <input class="input100" type="time" placeholder="Enter the opening time">
+                                         data-validate="Enter a valid opening time"
+                                         transl-id-validate="step.operation.openingHours.open.validation">
+                                        <span class="label-input100" transl-id="step.operation.openingHours.open.field">Opening Time *</span>
+                                        <input class="input100" type="time" placeholder="Enter the opening time"
+                                               transl-id-placeholder="step.operation.openingHours.open.placeholder">
                                     </div>
                                     <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                         data-validate="Enter a valid closing time">
-                                        <span class="label-input100">Closing Time *</span>
-                                        <input class="input100" type="time" placeholder="Enter the closing time">
+                                         data-validate="Enter a valid closing time"
+                                         transl-id-validate="step.operation.openingHours.close.validation">
+                                        <span class="label-input100"
+                                              transl-id="step.operation.openingHours.close.field">Closing Time *</span>
+                                        <input class="input100" type="time" placeholder="Enter the closing time"
+                                               transl-id-placeholder="step.operation.openingHours.close.placeholder">
                                     </div>
                                 </div>
-                                <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra hours
+                                <button class="plus_button_section">
+                                    <i class="fas fa-plus-square"></i><span
+                                        transl-id="step.operation.openingHours.addExtra">Add extra hours</span>
                                 </button>
                             </div>
                         </div>
@@ -629,27 +764,36 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-2-title">Location</h3>
+            <h3 class="section-title step-facility-section-2-title">
+                <span transl-id="step.title.location">Location</span>
+            </h3>
             <fieldset>
                 <div id="step-facility-section-2-1">
-                    <h2>Facility Section - Location</h2>
+                    <h2 transl-id="step.loc.title">Facility Section - Location</h2>
 
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
-                        <span class="contact100-form-subsubsection"
-                              style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
-                            Select the Parking Facility location in the map:
-                        </span>
-                                <input id="clear-point" type="button" value="clear"
-                                       style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+                                <span class="contact100-form-subsubsection" transl-id="step.loc.point.title">
+                                    Main Entrance
+                                </span>
+                                <span class="contact100-form-subsubsection" transl-id="step.loc.point.text"
+                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
+                                    Select the location of the main entrance of this parking facility in the map:
+                                </span>
+                                <button id="clear-point" value="clear" class="btn btn-primary btn-sm" type="button"
+                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
+                                        transl-id="step.loc.clear">
+                                    clear
+                                </button>
 
                                 <div id="point-map" class="ol-point-map"
                                      style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
 
                                 <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                     data-validate="Enter the latitude">
-                                    <span class="label-input100">Latitude *</span>
+                                     data-validate="Enter the latitude"
+                                     transl-id-validate="step.loc.point.lat.validation">
+                                    <span class="label-input100" transl-id="step.loc.point.lat.field">Latitude *</span>
                                     <input type="image" title="about" class="info_button"
                                            src="static/images/icons/info.png">
                                     <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -657,15 +801,18 @@
                                         <input type="image" title="close" class="info_close_button"
                                                src="static/images/icons/close_white.png"
                                                style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Indicate on the map the location of this section of the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;"
+                                              transl-id="step.loc.point.lat.infoText">Indicate on the map the location of this section of the bicycle parking.</span><br>
                                     </div>
                                     <input id="point_lat" class="input100" type="text"
                                            name="geo._GeoCoordinates.latitude"
-                                           placeholder="Enter the latitude">
+                                           placeholder="Enter the latitude"
+                                           transl-id-placeholder="step.loc.point.lat.placeholder">
                                 </div>
                                 <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                     data-validate="Enter the longitude">
-                                    <span class="label-input100">Longitude *</span>
+                                     data-validate="Enter the longitude"
+                                     transl-id-validate="step.loc.point.lon.validation">
+                                    <span class="label-input100" transl-id="step.loc.point.lon.field">Longitude *</span>
                                     <input type="image" title="about" class="info_button"
                                            src="static/images/icons/info.png">
                                     <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -673,58 +820,39 @@
                                         <input type="image" title="close" class="info_close_button"
                                                src="static/images/icons/close_white.png"
                                                style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Indicate on the map the location of this section of the bicycle parking.</span><br>
+                                        <span style="display: inherit; padding-left: 15px;"
+                                              transl-id="step.loc.point.lon.infoText">Indicate on the map the location of this section of the bicycle parking.</span><br>
                                     </div>
                                     <input id="point_lon" class="input100" type="text"
                                            name="geo._GeoCoordinates.longitude"
-                                           placeholder="Enter the longitude">
+                                           placeholder="Enter the longitude"
+                                           transl-id-placeholder="step.loc.point.lon.placeholder">
                                 </div>
 
-                                <span class="contact100-form-subsubsection"
-                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;">
-                            Draw the Parking Facility geometry in the map:
-                        </span>
-                                <input id="clear-polygon" type="button" value="clear"
-                                       style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
-
-                                <div id="polygon-map" class="ol-polygon-map"
-                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-
-                                <div class="wrap-input100 bg1">
-                                    <span class="label-input100">Geo Polygon</span>
-                                    <input type="image" title="about" class="info_button"
-                                           src="static/images/icons/info.png">
-                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                        <h2 style="margin-bottom: 15px;"></h2>
-                                        <input type="image" title="close" class="info_close_button"
-                                               src="static/images/icons/close_white.png"
-                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Draw the boundaries of this section of bicycle parking on the map.</span><br>
-                                    </div>
-                                    <input id="poly_string" class="input100" type="text"
-                                           name="geo._GeoShape.polygon"
-                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))">
-                                </div>
-
-                                <span class="contact100-form-subsubsection">
-                            Entrance
+                                <span class="contact100-form-subsubsection" transl-id="step.loc.entrance.title">
+                            Extra Entrances
                         </span>
 
                                 <div>
-                                    <div class="wrap-contact100-subsection dynamic-section">
+                                    <div class="wrap-contact100-subsection dynamic-section" style="display: none;">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <span class="contact100-form-subsubsection"
-                                              style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
-                                Select the Entrance location in the map:
-                            </span>
-                                        <input id="clear-entrance-point" type="button" value="clear"
-                                               style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+                                              style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;"
+                                              transl-id="step.loc.entrance.text">
+                                            Select the Entrance location in the map:
+                                        </span>
+                                        <button id="clear-entrance-point" value="clear" class="btn btn-primary btn-sm"
+                                                type="button"
+                                                style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
+                                                transl-id="step.loc.clear">
+                                            clear
+                                        </button>
 
                                         <div id="entrance-point-map" class="ol-point-map"
                                              style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
                                         <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Latitude</span>
+                                            <span class="label-input100" transl-id="step.loc.entrance.lat.field">Latitude</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -732,14 +860,16 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;"
+                                                      transl-id="step.loc.entrance.lat.infoText">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
                                             </div>
                                             <input id="entrance_lat" class="input100" type="text"
                                                    name="entrance._Entrance.geo.latitude"
-                                                   placeholder="Enter the latitude">
+                                                   placeholder="Enter the latitude"
+                                                   transl-id-placeholder="step.loc.entrance.lat.placeholder">
                                         </div>
                                         <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Longitude</span>
+                                            <span class="label-input100" transl-id="step.loc.entrance.lon.field">Longitude</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -747,14 +877,17 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
+                                                <span style="display: inherit; padding-left: 15px;"
+                                                      transl-id="step.loc.entrance.lon.infoText">Indicate the entrance of the parking on the map. If there are multiple entrances, use the + symbol.</span><br>
                                             </div>
                                             <input id="entrance_lon" class="input100" type="text"
                                                    name="entrance._Entrance.geo.longitude"
-                                                   placeholder="Enter the longitude">
+                                                   placeholder="Enter the longitude"
+                                                   transl-id-placeholder="step.loc.entrance.lon.placeholder">
                                         </div>
                                         <div class="wrap-input100 bg0">
-                                            <span class="label-input100">Description</span>
+                                            <span class="label-input100"
+                                                  transl-id="step.loc.entrance.description.field">Description</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -762,93 +895,56 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i></span>
+                                                <div transl-id="step.loc.entrance.description.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <div class="translatable-free-text">
                                                     <span></span>
                                                     <textarea class="input100" name="entrance._Entrance.description"
-                                                              placeholder="Describe how to get here"></textarea>
+                                                              placeholder="Describe how to get here"
+                                                              transl-id-placeholder="step.loc.entrance.description.placeholder"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>
-                                        Add extra entrance
+                                        <span transl-id="step.loc.entrance.addExtra">Add extra entrance</span>
                                     </button>
                                 </div>
 
-                                <span class="contact100-form-subsubsection">
-                            Exit
-                        </span>
-                                <div>
+                                <span class="contact100-form-subsubsection"
+                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
+                                      transl-id="step.loc.polygon.text">
+                                    Draw the Parking Facility geometry in the map:
+                                </span>
+                                <button id="clear-polygon" value="clear" class="btn btn-primary btn-sm" type="button"
+                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
+                                        transl-id="step.loc.clear">
+                                    clear
+                                </button>
 
-                                    <div class="wrap-contact100-subsection dynamic-section">
-                                        <button type="button" class="minus_button minus_button_input"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                        <span class="contact100-form-subsubsection"
-                                              style="font-family: Montserrat-Semibold; font-size: 16px; padding-bottom: 0;">
-                                Select the Exit location in the map:
-                            </span>
-                                        <input id="clear-exit-point" type="button" value="clear"
-                                               style="position: relative; float:right; width: 54px; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;">
+                                <div id="polygon-map" class="ol-polygon-map"
+                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
 
-                                        <div id="exit-point-map" class="ol-point-map"
-                                             style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Latitude</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
-                                            </div>
-                                            <input id="exit_lat" class="input100" type="text"
-                                                   name="exit._Exit.geo.latitude"
-                                                   placeholder="Enter the latitude">
-                                        </div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Longitude</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the exit of the parking on the map. If there are multiple exits, use the + symbol.</span><br>
-                                            </div>
-                                            <input id="exit_lon" class="input100" type="text"
-                                                   name="exit._Exit.geo.longitude"
-                                                   placeholder="Enter the longitude">
-                                        </div>
-                                        <div class="wrap-input100 bg0">
-                                            <span class="label-input100">Description</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>De uitgang bevindt zich aan beide zijden van het plein. Let op: verboden om in de garage te fietsen!</i></span>
-                                            </div>
-                                            <div>
-                                                <div class="translatable-free-text">
-                                                    <span></span>
-                                                    <textarea class="input100" name="exit._Exit.description"
-                                                              placeholder="Describe how to get here"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="wrap-input100 bg1">
+                                    <span class="label-input100" transl-id="step.loc.polygon.geoPolygon.field">Geo Polygon</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <span style="display: inherit; padding-left: 15px;"
+                                              transl-id="step.loc.polygon.geoPolygon.infoText">Draw the boundaries of this section of bicycle parking on the map.</span><br>
                                     </div>
-                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra exit
-                                    </button>
+                                    <input id="poly_string" class="input100" type="text"
+                                           name="geo._GeoShape.polygon"
+                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
+                                           transl-id-placeholder="step.loc.polygon.geoPolygon.placeholder">
                                 </div>
                             </div>
                         </div>
@@ -856,10 +952,12 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-3-title">Allowed Bicycles</h3>
+            <h3 class="section-title step-facility-section-3-title">
+                <span transl-id="step.title.allowed">Allowed Bicycles</span>
+            </h3>
             <fieldset>
                 <div id="step-facility-section-3-1">
-                    <h2>Facility Section - Allowed Bicycles</h2>
+                    <h2 transl-id="step.allowed.title">Facility Section - Allowed Bicycles</h2>
 
                     <div>
                         <div parking-section="0">
@@ -867,17 +965,20 @@
                             <div class="wrap-contact100-subsection">
                                 <p class="info-text">
                                     <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                                    Here you can enter the different types of bicycles someone can store in this
-                                    facility section.
+                                    <span transl-id="step.allowed.infoAlert">
+                                        Here you can enter the different types of bicycles someone can store in this
+                                        facility section.
+                                    </span>
                                 </p>
-                                <p class="no-items-error">Please add at least one bicycle type that is allowed in this
+                                <p class="no-items-error" transl-id="step.allowed.noItemsError">Please add at least one
+                                    bicycle type that is allowed in this
                                     facility section.</p>
                                 <div>
                                     <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <div class="wrap-input100 input100-select bg1">
-                                            <span class="label-input100">Bicycle Type</span>
+                                            <span class="label-input100" transl-id="step.allowed.type.field">Bicycle Type</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -885,19 +986,23 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Select here the types of bicycles allowed in this parking section.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i></span>
+                                                <div transl-id="step.allowed.type.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Select here the types of bicycles allowed in this parking section.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <select class="js-select2" name="allows._AllowedBicycle.bicycleType"
-                                                        bike-types="true" placeholder="Select bicycle type">
+                                                        bike-types="true" placeholder="Select bicycle type"
+                                                        transl-id-placeholder="step.allowed.type.placeholder">
                                                 </select>
                                                 <div class="dropDownSelect2"></div>
                                             </div>
                                         </div>
                                         <div class="wrap-input100 validate-input bg1 rs3-wrap-input100"
-                                             data-validate="Enter a value">
-                                            <span class="label-input100">Capacity *</span>
+                                             data-validate="Enter a value"
+                                             transl-id-validate="step.allowed.capacity.validation">
+                                            <span class="label-input100" transl-id="step.allowed.capacity.field">Capacity *</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -905,15 +1010,18 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the maximum amount of bicycles of this type allowed in this section.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>250</i></span>
+                                                <div transl-id="step.allowed.capacity.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate the maximum amount of bicycles of this type allowed in this section.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>250</i></span>
+                                                </div>
                                             </div>
                                             <input class="input100" type="number"
                                                    name="allows._AllowedBicycle.bicyclesAmount"
-                                                   placeholder="Enter the allowed capacity">
+                                                   placeholder="Enter the allowed capacity"
+                                                   transl-id-placeholder="step.allowed.capacity.placeholder">
                                         </div>
                                         <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Counting System</span>
+                                            <span class="label-input100" transl-id="step.allowed.counting.field">Counting System</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -921,12 +1029,15 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Does the parking have a system to count how many bicycles of this type are parked?.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                                <div transl-id="step.allowed.counting.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Does the parking have a system to count how many bicycles of this type are parked?</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <select class="js-select2" name="allows._AllowedBicycle.countingSystem"
-                                                        placeholder="Yes/No">
+                                                        placeholder="Yes/No"
+                                                        transl-id-placeholder="step.allowed.counting.placeholder">
                                                     <option value=""></option>
                                                     <option value="true">Yes</option>
                                                     <option value="false">No</option>
@@ -936,7 +1047,7 @@
                                         </div>
                                     </div>
                                     <button class="plus_button_section">
-                                        <i class="fas fa-plus-square"></i>Add extra bicycle type
+                                        <i class="fas fa-plus-square"></i><span transl-id="step.allowed.addExtra">Add extra bicycle type</span>
                                     </button>
                                 </div>
 
@@ -946,24 +1057,29 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-4-title">Features</h3>
+            <h3 class="section-title step-facility-section-4-title">
+                <span transl-id="step.title.features">Features</span>
+            </h3>
             <fieldset>
                 <div id="step-facility-section-4-1">
-                    <h2>Facility Section - Features</h2>
+                    <h2 transl-id="step.features.title">Facility Section - Features</h2>
 
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
                                 <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                                    Here you can add special features this facility section provides. Take a look at the
-                                    available options.
+                                    <span transl-id="step.features.infoAlert">
+                                        Here you can add special features this facility section provides. Take a look at the
+                                        available options.
+                                    </span>
                                 </p>
                                 <div>
                                     <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <div class="wrap-input100 input100-select bg1">
-                                            <span class="label-input100">Feature</span>
+                                            <span class="label-input100"
+                                                  transl-id="step.features.feature.field">Feature</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -971,86 +1087,103 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
+                                                <div transl-id="step.features.feature.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <select class="js-select2" name="amenityFeature._.@type"
-                                                        feature-types="true" placeholder="Select a Feature">
+                                                        feature-types="true" placeholder="Select a Feature"
+                                                        transl-id-placeholder="step.features.feature.placeholder">
                                                     <option value=""></option>
                                                 </select>
                                                 <div class="dropDownSelect2"></div>
                                             </div>
                                         </div>
-                                        <span class="contact100-form-subsubsection" style="width: 90%;">
-                                Hours Available
-                            </span>
+                                        <span class="contact100-form-subsubsection" style="width: 90%;"
+                                              transl-id="step.features.availableHours.title">
+                                            Hours Available
+                                        </span>
                                         <div>
 
                                             <div name="amenityFeature._.hoursAvailable"
                                                  class="wrap-contact100-subsection dynamic-section">
                                                 <button type="button" class="minus_button minus_button_input"><i
                                                         class="fas fa-trash-alt"></i></button>
-                                                <div class="wrap-input100 week-day-selector">
-                                                    <span class="label-input100">Mon </span><input
-                                                        class="opening-checkbox"
-                                                        type="checkbox"
-                                                        value="http://schema.org/Monday">
-                                                    <span class="label-input100">Tue </span><input
-                                                        class="opening-checkbox"
-                                                        type="checkbox"
-                                                        value="http://schema.org/Tuesday">
-                                                    <span class="label-input100">Wed </span><input
-                                                        class="opening-checkbox"
-                                                        type="checkbox"
-                                                        value="http://schema.org/Wednesday">
-                                                    <span class="label-input100">Thu </span><input
-                                                        class="opening-checkbox"
-                                                        type="checkbox"
-                                                        value="http://schema.org/Thursday">
-                                                    <span class="label-input100">Fri </span><input
-                                                        class="opening-checkbox"
-                                                        type="checkbox"
-                                                        value="http://schema.org/Friday">
-                                                    <span class="label-input100">Sat </span><input
-                                                        class="opening-checkbox"
-                                                        type="checkbox"
-                                                        value="http://schema.org/Saturday">
-                                                    <span class="label-input100">Sun </span><input
-                                                        class="opening-checkbox"
-                                                        type="checkbox"
-                                                        value="http://schema.org/Sunday">
-                                                    <input type="image" title="about" class="info_button_div"
-                                                           src="static/images/icons/info.png">
-                                                    <div class="log-form"
-                                                         style="padding-bottom: 20px; word-wrap: break-word;">
-                                                        <h2 style="margin-bottom: 15px;"></h2>
-                                                        <input type="image" title="close" class="info_close_button"
-                                                               src="static/images/icons/close_white.png"
-                                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                        <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
-                                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                <div style="display: flex;">
+                                                    <div class="wrap-input100 week-day-selector">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[0]">Mon </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Monday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[1]">Tue </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Tuesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[2]">Wed </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Wednesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[3]">Thu </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Thursday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[4]">Fri </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Friday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[5]">Sat </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Saturday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[6]">Sun </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Sunday">
+                                                        <input type="image" title="about" class="info_button_div"
+                                                               src="static/images/icons/info.png">
+                                                        <div class="log-form"
+                                                             style="padding-bottom: 20px; word-wrap: break-word;">
+                                                            <h2 style="margin-bottom: 15px;"></h2>
+                                                            <input type="image" title="close" class="info_close_button"
+                                                                   src="static/images/icons/close_white.png"
+                                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                            <div transl-id="step.features.availableHours.infoText">
+                                                                <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
+                                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wrap-input100 always-open-selector" style="flex-grow: 0; width: initial; border: none;">
+                                                        <button class="btn" type="button"
+                                                                transl-id="step.features.availableHours.always">Open 24/7</button>
                                                     </div>
                                                 </div>
                                                 <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                                    <span class="label-input100">Opening Time</span>
+                                                    <span class="label-input100"
+                                                          transl-id="step.features.availableHours.open.field">Opening Time</span>
                                                     <input class="input100" type="time"
-                                                           placeholder="Enter the opening time">
+                                                           placeholder="Enter the opening time"
+                                                           transl-id-placeholder="step.features.availableHours.open.placeholder">
                                                 </div>
                                                 <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                                    <span class="label-input100">Closing Time</span>
+                                                    <span class="label-input100"
+                                                          transl-id="step.features.availableHours.close.field">Closing Time</span>
                                                     <input class="input100" type="time"
-                                                           placeholder="Enter the closing time">
+                                                           placeholder="Enter the closing time"
+                                                           transl-id-placeholder="step.features.availableHours.close.placeholder">
                                                 </div>
                                             </div>
-                                            <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add
-                                                extra
-                                                hours
+                                            <button class="plus_button_section">
+                                                <i class="fas fa-plus-square"></i>
+                                                <span transl-id="step.features.availableHours.addExtra">Add extra hours</span>
                                             </button>
                                         </div>
                                     </div>
-                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
-                                        feature
+                                    <button class="plus_button_section">
+                                        <i class="fas fa-plus-square"></i>
+                                        <span transl-id="step.features.addExtra">Add extra feature</span>
                                     </button>
                                 </div>
                             </div>
@@ -1060,16 +1193,19 @@
             </fieldset>
 
 
-            <h3 class="section-title step-facility-section-5-title">Cost Model</h3>
+            <h3 class="section-title step-facility-section-5-title">
+                <span transl-id="step.title.cost">Cost Model</span>
+            </h3>
             <fieldset>
                 <div id="step-facility-section-5-1">
-                    <h2>Facility Section - Cost Model</h2>
+                    <h2 transl-id="step.cost.title">Facility Section - Cost Model</h2>
 
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
                                 <div class="wrap-input100 bg1">
-                                    <span class="label-input100">Costs Description</span>
+                                    <span class="label-input100"
+                                          transl-id="step.cost.description.field">Costs Description</span>
                                     <input type="image" title="about" class="info_button"
                                            src="static/images/icons/info.png">
                                     <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1077,24 +1213,28 @@
                                         <input type="image" title="close" class="info_close_button"
                                                src="static/images/icons/close_white.png"
                                                style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;">Put here a link to a webpage that describes the costs.</span><br>
-                                        <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i></span>
+                                        <div transl-id="step.cost.description.infoText">
+                                            <span style="display: inherit; padding-left: 15px;">Put here a link to a webpage that describes the costs.</span><br>
+                                            <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i></span>
+                                        </div>
                                     </div>
                                     <input class="input100" type="url"
                                            name="priceSpecification._PriceSpecification.url"
-                                           placeholder="Enter the link to the costs description">
+                                           placeholder="Enter the link to the costs description"
+                                           transl-id-placeholder="step.cost.description.placeholder">
                                 </div>
 
-                                <span class="contact100-form-subsubsection" style="width: 89%;">
-                            Price Specification
-                        </span>
+                                <span class="contact100-form-subsubsection" style="width: 89%;"
+                                      transl-id="step.cost.spec.title">
+                                    Price Specification
+                                </span>
                                 <div>
 
                                     <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
                                         <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Free of Charge</span>
+                                            <span class="label-input100" transl-id="step.cost.spec.free.field">Free of Charge</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1102,13 +1242,16 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Is this price specification free of charge?</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                                <div transl-id="step.cost.spec.free.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Is this price specification free of charge?</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <select class="js-select2"
                                                         name="priceSpecification._PriceSpecification.freeOfCharge"
-                                                        placeholder="Yes/No">
+                                                        placeholder="Yes/No"
+                                                        transl-id-placeholder="step.cost.spec.free.placeholder">
                                                     <option value=""></option>
                                                     <option value="true">Yes</option>
                                                     <option value="false">No</option>
@@ -1117,7 +1260,8 @@
                                             </div>
                                         </div>
                                         <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Price</span>
+                                            <span class="label-input100"
+                                                  transl-id="step.cost.spec.price.field">Price</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1125,15 +1269,18 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate here the price (if any) for this price specification.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>10</i></span>
+                                                <div transl-id="step.cost.spec.price.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate here the price (if any) for this price specification.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>10</i></span>
+                                                </div>
                                             </div>
                                             <input class="input100" type="number"
                                                    name="priceSpecification._PriceSpecification.price"
-                                                   placeholder="Enter the price">
+                                                   placeholder="Enter the price"
+                                                   transl-id-placeholder="step.cost.spec.price.placeholder">
                                         </div>
                                         <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Currency</span>
+                                            <span class="label-input100" transl-id="step.cost.spec.currency.field">Currency</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1141,13 +1288,16 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the currency.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>EUR</i></span>
+                                                <div transl-id="step.cost.spec.currency.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate the currency.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>EUR</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <select class="js-select2"
                                                         name="priceSpecification._PriceSpecification.currency"
-                                                        placeholder="Select currency">
+                                                        placeholder="Select currency"
+                                                        transl-id-placeholder="step.cost.spec.currency.placeholder">
                                                     <option value=""></option>
                                                     <option value="EUR">EUR</option>
                                                     <option value="GBP">GBP</option>
@@ -1157,7 +1307,7 @@
                                             </div>
                                         </div>
                                         <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Overnight</span>
+                                            <span class="label-input100" transl-id="step.cost.spec.overnight.field">Overnight</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1165,13 +1315,16 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Does this price specification is valid from one day to the next?</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                                <div transl-id="step.cost.spec.overnight.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Does this price specification is valid from one day to the next?</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <select class="js-select2"
                                                         name="priceSpecification._PriceSpecification.dueForTime.overnight"
-                                                        placeholder="Yes/No">
+                                                        placeholder="Yes/No"
+                                                        transl-id-placeholder="step.cost.spec.overnight.placeholder">
                                                     <option value=""></option>
                                                     <option value="true">Yes</option>
                                                     <option value="false">No</option>
@@ -1180,7 +1333,7 @@
                                             </div>
                                         </div>
                                         <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Time Start Value</span>
+                                            <span class="label-input100" transl-id="step.cost.spec.timeStart.field">Time Start Value</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1188,15 +1341,18 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the start time of this price specifciation.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>0</i></span>
+                                                <div transl-id="step.cost.spec.timeStart.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate the start time of this price specifciation.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>0</i></span>
+                                                </div>
                                             </div>
                                             <input class="input100" type="number"
                                                    name="priceSpecification._PriceSpecification.dueForTime.timeStartValue"
-                                                   placeholder="Enter the start value">
+                                                   placeholder="Enter the start value"
+                                                   transl-id-placeholder="step.cost.spec.timeStart.placeholder">
                                         </div>
                                         <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100">Time End Value</span>
+                                            <span class="label-input100" transl-id="step.cost.spec.timeEnd.field">Time End Value</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1204,15 +1360,19 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Indicate the end time of this price specifciation.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>1</i></span>
+                                                <div transl-id="step.cost.spec.timeEnd.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate the end time of this price specifciation.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>1</i></span>
+                                                </div>
+
                                             </div>
                                             <input class="input100" type="number"
                                                    name="priceSpecification._PriceSpecification.dueForTime.timeEndValue"
-                                                   placeholder="Enter the end value">
+                                                   placeholder="Enter the end value"
+                                                   transl-id-placeholder="step.cost.spec.timeEnd.placeholder">
                                         </div>
                                         <div class="wrap-input100 input100-select bg1">
-                                            <span class="label-input100">Time Unit</span>
+                                            <span class="label-input100" transl-id="step.cost.spec.timeUnit.field">Time Unit</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1220,13 +1380,16 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Select the time unit (used by both start time and end time) for this price specification.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Hour</i></span>
+                                                <div transl-id="step.cost.spec.timeUnit.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Select the time unit (used by both start time and end time) for this price specification.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Hour</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <select class="js-select2"
                                                         name="priceSpecification._PriceSpecification.dueForTime.timeUnit"
-                                                        placeholder="Select time unit">
+                                                        placeholder="Select time unit"
+                                                        transl-id-placeholder="step.cost.spec.timeUnit.placeholder">
                                                     <option value=""></option>
                                                     <option value="hour">Hour</option>
                                                     <option value="minute">Minute</option>
@@ -1239,7 +1402,7 @@
                                             </div>
                                         </div>
                                         <div class="wrap-input100 bg0">
-                                            <span class="label-input100">Description</span>
+                                            <span class="label-input100" transl-id="step.cost.spec.description.field">Description</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1247,22 +1410,25 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <span style="display: inherit; padding-left: 15px;">Describe how this price specification operates.</span><br>
-                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
+                                                <div transl-id="step.cost.spec.description.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">
+                                                    Describe how this price specification operates.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
+                                                </div>
                                             </div>
                                             <div>
                                                 <div class="translatable-free-text">
                                                     <span></span>
                                                     <textarea class="input100"
                                                               name="priceSpecification._PriceSpecification.description"
-                                                              placeholder="Describe this pricing definition (e.g. free for the first hour)"></textarea>
+                                                              placeholder="Describe this pricing definition (e.g. free for the first hour)"
+                                                              transl-id-placeholder="step.cost.spec.description.placeholder"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>Add extra
-                                        price
-                                        specification
+                                    <button class="plus_button_section"><i class="fas fa-plus-square"></i>
+                                        <span transl-id="step.cost.spec.addExtra">Add extra price specification</span>
                                     </button>
                                 </div>
                             </div>
@@ -1271,57 +1437,76 @@
                 </div>
             </fieldset>
 
-            <h3 class="section-title step-facility-section-6-title">Add Extra Section</h3>
+            <h3 class="section-title step-facility-section-6-title">
+                <span transl-id="step.title.addExtra">Add Extra Section</span>
+            </h3>
             <fieldset>
                 <div id="step-facility-section-6-1">
-                    <h2>Facility Section - Add Extra Section</h2>
-                    <div class="big-text-no-title">Would you like to add another section to this bicycle parking?</div>
-                    <button class="btn btn-primary form-button" type='button' id="button-add-facility-section">Add
-                        Section
+                    <h2 transl-id="step.extraSection.title">Facility Section - Add Extra Section</h2>
+                    <div class="big-text-no-title" transl-id="step.extraSection.text">Would you like to add another
+                        section to this bicycle parking?
+                    </div>
+                    <button class="btn btn-primary form-button" type='button' id="button-add-facility-section"
+                            transl-id="step.extraSection.addExtra">
+                        Add Section
                     </button>
                 </div>
             </fieldset>
 
-            <h3 class="section-title">Data publishing</h3>
+            <h3 class="section-title">
+                <span transl-id="step.title.publish">Data Publishing</span>
+            </h3>
             <fieldset>
                 <div id="step-general-info-4">
-                    <h2>Data publishing</h2>
+                    <h2 transl-id="step.publish.title">Data Publishing</h2>
                     <div class="wrap-contact100-section general-information">
                         <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                            If you decide to publish the data generated in this tool on your website, 
-                            then enter here the URL where the information for this parking will be available.
-                            Otherwise leave this field empty.<br/><br/>
-                            ** We recommend that you publish the data on your own website **.
+                            <span transl-id="step.publish.infoText">
+                                If you decide to publish the data generated in this tool on your website,
+                                then enter here the URL where the information for this parking will be available.
+                                Otherwise leave this field empty.<br/><br/>
+                                ** We recommend that you publish the data on your own website **.
+                            </span>
                         </p>
                         <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">
-                            <span class="label-input100">Parking Facility URI</span>
+                            <span class="label-input100" transl-id="step.publish.URI.field">Parking Facility URI</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
                                 <h2 style="margin-bottom: 15px;"></h2>
                                 <input type="image" title="close" class="info_close_button"
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                <span style="display: inherit; padding-left: 15px;">The link / URL where the data about this bicycle parking will be published.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i></span><br>
-                                <span style="display: inherit; padding-left: 15px;">In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.</span><br>
-                                <span style="display: inherit; padding-left: 15px;">Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i></span><br>
-                                <span style="display: inherit; padding-left: 15px;">Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.
-                            We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (<a
-                                            style="font-family: Montserrat-SemiBold; font-size: 16px;"
-                                            href="http://velopark.be">http://velopark.be</a>) if you need assistance for this.</span><br>
+                                <div transl-id="step.publish.URI.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">The link / URL where the data about this bicycle parking will be published.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i></span><br>
+                                    <span style="display: inherit; padding-left: 15px;">In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i></span><br>
+                                    <span style="display: inherit; padding-left: 15px;">
+                                        Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.
+                                        We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (
+                                        <a style="font-family: Montserrat-SemiBold; font-size: 16px;"
+                                           href="http://velopark.be">http://velopark.be</a>
+                                        ) if you need assistance for this.
+                                    </span><br>
+                                </div>
                             </div>
                             <input class="input100" type="url" name="@id"
-                                   placeholder="For example: http://data.gent.be/parkings/fiets/35677">
+                                   placeholder="For example: http://data.gent.be/parkings/fiets/35677"
+                                   transl-id-placeholder="step.publish.URI.placeholder">
                         </div>
                     </div>
                 </div>
             </fieldset>
 
-            <h3 class="section-title">Generate Structured Data</h3>
+            <h3 class="section-title">
+                <span transl-id="step.title.generate">Generate Structured Data</span>
+            </h3>
             <fieldset>
                 <div id="step-generate-data-1">
-                    <h2>Generate Structured Data</h2>
-                    <button id="ld_generate" class="btn btn-primary form-button">Generate Linked Data</button>
+                    <h2 transl-id="step.generate.title">Generate Structured Data</h2>
+                    <button id="ld_generate" class="btn btn-primary form-button"
+                            transl-id="step.generate.buttonGenerate">Generate Linked Data
+                    </button>
                 </div>
             </fieldset>
         </form>

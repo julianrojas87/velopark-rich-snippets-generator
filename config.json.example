@@ -2,5 +2,11 @@
     "data": "/opt/data",
     "domain": "",
     "vocabulary": "",
-    "superAdmins": ["velopark@fietsberaad.be"]
+    "superAdmins": ["velopark@fietsberaad.be"],
+    "emailConfig": {
+        "NL_EMAIL_HOST": "smtp.gmail.com",
+        "NL_EMAIL_USER": "velopark.notifications@gmail.com",
+        "NL_EMAIL_PASS": "velopark",
+        "NL_EMAIL_FROM": "Velopark <velopark.notifications@gmail.com>"
+    }
 }

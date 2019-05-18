@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- head tag -->
+<% include head.html %>
+
+<body>
+    <!-- Domain name to deal with reverse proxies -->
+    <p id="domainName" style="display: none;">
+        <%= domainName %>
+    </p>
+    <!-- URI to vocabulary -->
+    <p id="vocabURI" style="display: none;">
+        <%= vocabURI %>
+    </p>
+
+    <!-- Navigation Bar -->
+    <% include navbar.html %>
+
+    <div class="container-contact100">
+        <div class="wrap-contact100" style="width: 100%;">
+            <h4><span transl-id="pswdReset.hello">Hallo</span> <%= lostusername %>!</h4>
+            <div id="password-reset-area" style="margin-top: 20px;">
+                <span transl-id="pswdReset.changeMessage">
+                    Je hebt aangegeven je wachtwoord vergeten te zijn. Op deze pagina kan je een nieuw wachtwoord instellen voor je account.
+                </span>
+                <form>
+                    <input type="hidden" autocomplete="username" id="username-pswd-reset-field" name="username" value="<%= lostusername %>"/>
+                    <input type="password" autocomplete="new-password" id="pswd-reset-field" name="pass" placeholder="Nieuw wachtwoord" transl-id-placeholder="pswdReset.password"/>
+                    <button id="pswd-reset-button" class="btn btn-primary" type="button" transl-id="pswdReset.save">Save</button>
+                </form>
+            </div>
+            <div id="pswd-reset-success-message" style="display: none; margin-top: 20px;">
+                <span transl-id="pswdReset.success">
+                    Gelukt! Je wachtwoord is aangepast. Je kan je nu aanmelden met je nieuwe credentials.
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS scripts-->
+    <% include scripts.html %>
+
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
+            });
+        });
+    </script>
+
+</body>
+
+</html>

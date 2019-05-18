@@ -4,6 +4,7 @@ const EM = require('./modules/email-dispatcher');
 const CoM = require('./modules/company-manager');
 const CiM = require('./modules/cities-manager');
 const PM = require('./modules/parkings-manager');
+const ToM = require('./modules/token-manager');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
@@ -149,7 +150,7 @@ module.exports = app => {
                             emailParkingOwner: req.session.user.email,
                             nameCompanyParkingOwner: req.session.user.companyName,
                             parkingApproved: approved,
-                            parkingCompany: company? company.name : null
+                            parkingCompany: company ? company.name : null
                         });
                     }
                 });
@@ -219,11 +220,8 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
-                        PM.listAllParkings(function (error, parkings) {
-                            if (error != null) {
-                                console.error(error);
-                                res.status(500).send();
-                            } else {
+                        PM.listAllParkings()
+                            .then(parkings => {
                                 res.render('admin-parkings.html', {
                                     domainName: domainName,
                                     vocabURI: vocabURI,
@@ -236,8 +234,11 @@ module.exports = app => {
                                     },
                                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                 });
-                            }
-                        });
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                res.status(500).send();
+                            });
                     } else {
                         res.redirect(domain + '/home');
                     }
@@ -530,13 +531,13 @@ module.exports = app => {
         }
     });
 
-    app.post('/cityrep/check-location/:lat/:lng', async function(req, res){
+    app.post('/cityrep/check-location/:lat/:lng', async function (req, res) {
         if (req.session.user == null) {
             res.status(200).send(true);
-        } else if(req.session.user.superAdmin || (req.session.user.companyName && req.session.user.companyName !== '')) {
+        } else if (req.session.user.superAdmin || (req.session.user.companyName && req.session.user.companyName !== '')) {
             res.status(200).send(true);
         } else if (req.session.user.cityNames && req.session.user.cityNames.length > 0) {
-            if(req.params.lat && req.params.lng) {
+            if (req.params.lat && req.params.lng) {
                 try {
                     CiM.isLocationWithinCities(parseFloat(req.params.lat), parseFloat(req.params.lng), req.session.user.cityNames, function (error, result) {
                         if (error != null) {
@@ -546,12 +547,33 @@ module.exports = app => {
                             res.status(200).send(result);   //result == true/false
                         }
                     });
-                } catch (e){
+                } catch (e) {
                     res.status(500).send("Could not process your request");
                 }
             }
         } else {
             res.status(401).send('Unauthorized');
+        }
+    });
+
+    app.get('/cityrep/get-regions/:lat/:lng', async function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send('Unauthorized');
+        } else {
+            if (req.params.lat && req.params.lng) {
+                try {
+                    CiM.listCitiesForLocation(parseFloat(req.params.lat), parseFloat(req.params.lng))
+                        .then(result => {
+                            res.status(200).send(result);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            res.status(500).send(error);
+                        });
+                } catch (e) {
+                    res.status(500).send("Could not process your request");
+                }
+            }
         }
     });
 
@@ -604,7 +626,7 @@ module.exports = app => {
     });
 
 
-    app.post('/parkings/toggle-parking-enabled/:parkingid', function (req, res) {
+    app.post('/parkings/toggle-parking-enabled', function (req, res) {
         if (req.session.user == null) {
             res.status(401).send();
         } else {
@@ -616,7 +638,7 @@ module.exports = app => {
                     res.status(500).send();
                 } else {
                     if (value === true) {
-                        PM.toggleParkingEnabled(encodeURIComponent(req.params.parkingid), req.body['parkingEnabled'] === "true", function (error, result) {
+                        PM.toggleParkingEnabled(encodeURIComponent(req.body['parkingId']), req.body['parkingEnabled'] === "true", function (error, result) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send();
@@ -632,7 +654,7 @@ module.exports = app => {
                         //User is not superAdmin, maybe he is cityrep for the region of this parking?
                         AM.isAccountCityRepForParkingID(req.session.user.email, encodeURIComponent(req.params.parkingid), function (error, value) {
                             if (value === true) {
-                                PM.toggleParkingEnabled(encodeURIComponent(req.params.parkingid), req.body['parkingEnabled'] === "true", function (error, result) {
+                                PM.toggleParkingEnabled(encodeURIComponent(req.body['parkingId']), req.body['parkingEnabled'] === "true", function (error, result) {
                                     if (error != null) {
                                         console.error(error);
                                         res.status(500).send();
@@ -690,7 +712,7 @@ module.exports = app => {
                 }
             } else if (user.cityNames.length > 0) {
                 //check if parking is within your regions
-                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, req.body['approved'] === 'true', req.body['parkingCompany'], function(error, result){
+                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, req.body['approved'] === 'true', req.body['parkingCompany'], function (error, result) {
                     if (error != null) {
                         console.log(error);
                         res.status(500).send(error);
@@ -810,6 +832,25 @@ module.exports = app => {
         res.status(200).json(list);
     });
 
+    app.post('/user/update-lang', function (req, res) {
+        if (req.session.user == null) {
+            res.status(401).send();
+        } else {
+            if (req.body['lang']) {
+                AM.updateLanguage(req.session.user.email, req.body['lang'])
+                    .then((result) => {
+                        req.session.user.lang = req.body['lang'];
+                        res.status(200).send("OK");
+                    })
+                    .catch((reason) => {
+                        console.error(reason);
+                        res.status(400).send("Something went wrong :(");
+                    });
+            } else {
+                res.status(400).send("No language preference given");
+            }
+        }
+    });
 
     /*
         password reset
@@ -821,6 +862,7 @@ module.exports = app => {
             if (e) {
                 res.status(400).send(e);
             } else {
+                account.passKeyToken = ToM.getTokenForString(account.passKey);
                 EM.dispatchResetPasswordLink(account, function (e, m) {
                     // TODO this callback takes a moment to return, add a loader to give user feedback //
                     if (!e) {
@@ -835,14 +877,39 @@ module.exports = app => {
     });
 
     app.get('/reset-password', function (req, res) {
-        AM.validatePasswordKey(req.query['key'], req.ip, function (e, o) {
-            if (e || o == null) {
-                res.redirect('/');
-            } else {
-                req.session.passKey = req.query['key'];
-                res.render('reset', {title: 'Reset Password'});
-            }
-        })
+        if (!req.query['key']) {
+            let domain = domainName !== '' ? '/' + domainName : '';
+            res.redirect(domain + '/');
+        } else {
+            let key = decodeURIComponent(req.query['key']);
+            ToM.getStringForToken(key, function (error, result) {
+                if (error != null) {
+                    res.status(500).send(e);
+                } else {
+                    AM.validatePasswordKey(result, req.ip, function (e, o) {
+                        if (e || o == null) {
+                            res.status(400).send('ERROR: Invalid reset-token.');
+                        } else {
+                            req.session.passKey = result;
+                            res.render('pswd-reset.html',
+                                {
+                                    title: 'Reset Password',
+                                    domainName: domainName,
+                                    username: null,
+                                    lostusername: o.email,
+                                    vocabURI: vocabURI,
+                                    superAdmin: false,
+                                    company: {
+                                        name: null,
+                                        enabled: false
+                                    },
+                                    cityrep: false,
+                                });
+                        }
+                    });
+                }
+            });
+        }
     });
 
     app.post('/reset-password', function (req, res) {

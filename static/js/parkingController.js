@@ -96,8 +96,8 @@ function processArray(path, arr, input) {
         for (let i = 0; i < arr.length; i++) {
             let obj = arr[i];
             let keys = Object.keys(obj);
+            let inputs = input || $('[name^="' + lastPath + '"]');
             if (i > 0) {
-                let inputs = input || $('[name^="' + lastPath + '"]');
                 let last = $(inputs[inputs.length - 1]);
                 if (last.is('div')) {
                     last.parent().parent().next("button").click();
@@ -106,6 +106,9 @@ function processArray(path, arr, input) {
                 }
 
                 input = $('[name^="' + lastPath + '"]');
+            } else {
+                //first element of the array, make sure its input is visible (for optional inputs that are hidden by default)
+                $(inputs[0]).closest('.dynamic-section').css('display','block');
             }
             for (let j in keys) {
                 let el = null;

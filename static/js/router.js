@@ -95,11 +95,14 @@
         $(this).hide();
         $(this).prev('.loading-icon').show();
         let domain = domainName != '' ? '/' + domainName : '';
-        let parkingid = encodeURIComponent($(this).attr('parkingid'));
+        let parkingid = $(this).attr('parkingid');
         $.ajax({
             type: "POST",
-            url: domain + '/parkings/toggle-parking-enabled/' + parkingid,
-            data: {'parkingEnabled': this.checked},
+            url: domain + '/parkings/toggle-parking-enabled',
+            data: {
+                'parkingId': parkingid,
+                'parkingEnabled': this.checked
+            },
             success: () => {
                 $(this).show();
                 $(this).prev('.loading-icon').hide();
@@ -222,6 +225,26 @@
 
     $('#transfer-parking_close_button').on('click', () => {
         $('#transfer-parking-form').toggle();
+    });
+
+    $('#pswd-reset-button').on('click', function(){
+        let domain = domainName !== '' ? '/' + domainName : '';
+        let newPass = $('#pswd-reset-field').val();
+        $.ajax({
+            type: "POST",
+            url: domain + '/reset-password',
+            data: {
+                pass: newPass
+            },
+            success: (data) => {
+                console.log("Password successfully reset! " + data);
+                $('#password-reset-area').hide();
+                $('#pswd-reset-success-message').show();
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+            }
+        });
     });
 
 })(jQuery);

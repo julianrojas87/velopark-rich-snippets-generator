@@ -1,0 +1,506 @@
+{
+  "navbar": {
+    "title": "Velopark Rich Snippets Generator",
+    "login" : "Se Connecter",
+    "logout" : "Se Déconnecter",
+    "signup" : "Enregistrer",
+    "langSelect" : "Langue",
+    "drop" : {
+      "addParkings" : "Ajouter parking",
+      "companyParkings" : "Parkings",
+      "admin" : "Tableau de Bord Admin",
+      "cityRep" : "Tableau de Bord des Régions"
+    }
+  },
+  "home" : {
+    "buttons" : {
+      "prev" : "Précédent",
+      "next" : "Suivant"
+    },
+    "logInWarning" : "AVERTISSEMENT: vous n'êtes pas connecté. Vous pouvez toujours utiliser cet outil pour générer une description JSON-LD de votre parking, mais vous ne pourrez pas l'enregistrer dans notre catalogue."
+  },
+  "step" : {
+    "title" : {
+      "lang" : "Langues",
+      "parkinfo" : "Information Parking",
+      "authinfo" : "Informations d'Autorité",
+      "photo" : "Photos",
+      "operation" : "Informations de Fonctionnement",
+      "location" : "Localisation",
+      "allowed" : "Vélos Autorisés",
+      "features" : "Caractéristiques",
+      "cost" : "Modèle de Coût",
+      "addExtra" : "Ajouter une Section Supplémentaire",
+      "publish" : "Publication de Données",
+      "generate" : "Générer des données structurées"
+    },
+    "lang" : {
+      "title" : "Langues de données",
+      "infoAlert" : "Veuillez sélectionner toutes les langues que vous souhaitez utiliser pour décrire votre parking à vélos.",
+      "warningAlert" : "Veuillez sélectionner au moins une langue",
+      "langName" : {
+        "du" : "Néerlandais",
+        "fr" : "Français",
+        "de" : "Allemand",
+        "en" : "Anglais",
+        "es" : "Espagnol"
+      }
+    },
+    "parkInfo" : {
+      "title" : "Général - Information de Stationnement",
+      "name" : {
+        "field" : "Nom *",
+        "infoText" : "Le nom du parking pour vélos tel qu'il est connu localement.\n\nExemple: parking à vélos Rector De Somerplein",
+        "placeholder" : "Nom du parking",
+        "validation" : "Entrez le nom du parking"
+      },
+      "localID" : {
+        "field" : "Identificateur Local *",
+        "infoText" : "Le code local utilisé pour le stationnement des vélos.\n\nExemple: APCOA_018",
+        "placeholder" : "Identification locale de la facilité de stationnement",
+        "validation" : "Entrez l'identifiant"
+      },
+      "openingDate" : {
+        "field" : "Date d'Ouverture Initiale *",
+        "infoText" : "La date d'ouverture du parking pour vélos (peut être utilisé aussi pour un parking temporaire).\n\nExemple: 03/25/2019",
+        "placeholder" : "Entrez la date d'ouverture"
+      },
+      "closingDate" : {
+        "field" : "Date de Clôture Finale",
+        "infoText" : "La date à laquelle le parking pour vélos a été fermé (peut être utilisé pour un parking temporaire pour vélos).\n\nExemple: 03/25/2019",
+        "placeholder" : "Date de clôture finale"
+      },
+      "regulations" : {
+        "field" : "Règlements",
+        "infoText" : "Le lien où l'information se trouve sur le parking de vélos.\n\nExemple: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
+        "placeholder" : "Entrez le lien pour le document de réglementation"
+      },
+      "description" : {
+        "field" : "Description",
+        "infoText" : "Description générale de ce parking pour vélos ou comment les utilisateurs peuvent accéder au parking pour vélos.<br><br>Exemple: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "placeholder" : "Décrivez comment arriver ici"
+      },
+      "address" :  {
+        "title" : "Adresse",
+        "street" : {
+          "field" : "Rue et numéro *",
+          "infoText" : "Le nom de la rue et le numéro du parking.<br><br>Exemple: <i>Rector De Somerplein 8</i>",
+          "placeholder" : "Entrez le nom et le numéro de la rue",
+          "validation" : "Entrez le nom de la rue"
+        },
+        "postal" : {
+          "field" : "Code Postal *",
+          "infoText" : "Code postal du parking à vélos.<br><br>Exemple: <i>3000</i>",
+          "placeholder" : "Entrez le code postal",
+          "validation" : "Entrez le code postal"
+        },
+        "country" : {
+          "field" : "Pays *",
+          "infoText" : "Pays du parking à vélos.<br><br>Exemple: <i>Belgium</i>",
+          "validation" : "Entrez le pays"
+        }
+      }
+    },
+    "authInfo" : {
+      "title" : "Général - Informations d'Autorité",
+      "owner" : {
+        "title" : "Propriétaire du parking",
+        "website": {
+          "field": "Site de l'Organisation",
+          "infoText": "Mettez ici un lien vers le site du propriétaire du parking à vélos.<br><br>Exemple: <i>https://www.leuven.be</i>",
+          "placeholder": "Entrez le site de l'organisation"
+        },
+        "name": {
+          "field": "Nom de l'Organisation *",
+          "infoText": "Indiquez ici le nom de l’organisation à laquelle appartient le parking à vélos.<br><br>Exemple: <i>Ville Louvain</i>",
+          "placeholder": "Entrez le nom de l'organisation",
+          "validation" : "Entrez le nom de l'organisation"
+        }
+      },
+      "operator" : {
+        "title" : "Exploitant d'Installations de Stationnement",
+        "website": {
+          "field": "Site de l'Organisation",
+          "infoText": "Mettez ici un lien vers le site Web de l'opérateur du parking pour vélos.<br><br>Exemple: <i>https://www.apcoa.be</i>",
+          "placeholder": "Entrez le site de l'organisation"
+        },
+        "name": {
+          "field": "Nom de l'Organisation *",
+          "infoText": "Indiquez ici le nom de l'organisation responsable des opérations quotidiennes.<br><br>Exemple: <i>APCOA PARKING</i>",
+          "placeholder": "Entrez le nom de l'organisation",
+          "validation" : "Entrez le nom de l'organisation"
+        }
+      },
+      "contact" : {
+        "title" : "Informations de contact",
+        "website": {
+          "field": "Site Internet",
+          "infoText": "Mettez ici un lien vers un formulaire de contact ou un site Web où les clients peuvent contacter l'opérateur.<br><br>Exemple: <i>https://www.apcoa.be/contact/</i>",
+          "placeholder": "Entrez le site web du service"
+        },
+        "email": {
+          "field": "Email",
+          "infoText": "Indiquez ici l'adresse e-mail à laquelle les utilisateurs peuvent envoyer des questions / remarques / demandes / plaintes.<br><br>Exemple: <i>fietsenparking.leuven@apcoa.be</i>",
+          "placeholder": "Entrez l'email du contact"
+        },
+        "phone": {
+          "field": "Numéro de Téléphone",
+          "infoText": "Mettez ici le numéro de téléphone où les utilisateurs peuvent accéder à l'opérateur.<br><br>Example: <i>016 29 93 23</i>",
+          "placeholder": "Entrez le numéro de téléphone du contact"
+        }
+      }
+    },
+    "photo" : {
+      "title" : "Général - Photos",
+      "url": {
+        "field": "URL de la photo",
+        "infoText": "Mettez ici un lien vers une image du parking pour vélos, de ses environs ou de ses installations.<br><br>Example: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg",
+        "placeholder": "Entrez l'URL de la photo"
+      },
+      "addExtra" : "Ajouter une photo supplémentaire"
+    },
+    "operation" : {
+      "title" : "Section de Stationnement - Informations sur l'opération",
+      "sectionName": {
+        "field": "Nom de la Section",
+        "infoText": "Un nom facultatif de la section de stationnement pour vélos telle qu’elle est connue localement.<br><br>Exemple: <i>Green zone</i>",
+        "placeholder": "Nom de la section de stationnement",
+        "validation" : "Entrez le nom du parking"
+      },
+      "type": {
+        "field": "Type de Stationnement",
+        "infoText": "Sélectionnez le type de stationnement pour vélos applicable à cette section.<br><br>Exemple: <i>Bicycle parking station</i>",
+        "placeholder" : "Sélectionnez le type de stationnement"
+      },
+      "levels": {
+        "field": "Nombre de Niveaux",
+        "infoText": "Entrez ici le nombre de niveaux dans le parking pour vélos.<br><br>Exemple: <i>2</i>",
+        "placeholder": "Entrez le nombre de niveaux"
+      },
+      "public": {
+        "field": "Accès Publique",
+        "infoText": "Pouvez-vous garer votre vélo ici ou avez-vous besoin d'une clé ou d'un badge?<br><br>Exemple: <i>Yes</i>",
+        "placeholder": "Yes/No"
+      },
+      "maxDur": {
+        "field": "Durée Maximale de Stationnement (jours) *",
+        "infoText": "Définissez ici le nombre maximum de jours consécutifs pendant lesquels un vélo peut rester sur le parking.<br><br>Exemple: <i>21</i>",
+        "placeholder": "Entrez le nombre de jours",
+        "validation" : "Entrez une valeur"
+      },
+      "audience": {
+        "field": "Public Cible",
+        "infoText": "Décrivez qui peut garer son vélo ici.<br><br>Exemple: <i>Tout le monde</i>",
+        "placeholder": "Entrez le public cible (e.g. grand public, résidents du quartier)"
+      },
+      "restrictions": {
+        "field": "Restrictions",
+        "infoText": "Décrivez les restrictions d'utilisation de ce garage.<br><br>Exemple: <i>Pas de cyclomoteur</i>",
+        "placeholder": "Entrez les restrictions (e.g. maximum 2 vélos par habitant)"
+      },
+      "removal": {
+        "field": "Conditions de déménagement",
+        "infoText": "Décrivez les conditions dans lesquelles un vélo sera retiré du\n  parking.<br><br>Example: <i>Les vélos entreposés de manière incorrecte ou pendant plus de 14 jours sont retirés.</i>",
+        "placeholder": "Décrivez les conditions pour retirer un vélo (e.g. dépasser la durée de stockage maximale)"
+      },
+      "postRemoval": {
+        "field": "Action après le Retrait",
+        "infoText": "Décrivez comment, quand et où les cyclistes peuvent récupérer un vélo qui a été enlevé.<br><br>Exemple: <i>Verwijderde fiertsen kunnen gedurende drie maanden opgehaald worden bij het centraal depot. Daarna worden ze verkocht of vernietigd. (zie contactgegevens voor mail / telefoon).",
+        "placeholder": "Décrire quoi faire après le retrait d'un vélo (e.g. Contact APCOA on 0473 33 89 11)"
+      },
+      "openingHours" : {
+        "title" : "Heures d'ouverture",
+        "always" : "Ouvert 24/7",
+        "infoText" : "Indiquer quand cette section est ouverte (s'il n'y a qu'un seul tronçon, cela concerne l'ensemble du parking vélo). Vous pouvez ajouter des jours avec le symbole d'ajout si les heures d'ouverture diffèrent d'un jour à l'autre.<br><br>Exemple: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
+        "noItemsError" : "Veuillez ajouter au moins une heure d'ouverture.",
+        "open": {
+          "field": "Heure d'ouverture *",
+          "placeholder": "Entrez l'heure d'ouverture",
+          "validation" : "Entrez une heure d'ouverture valide"
+        },
+        "close": {
+          "field": "Heure de fermeture *",
+          "placeholder": "Entrez l'heure de fermeture",
+          "validation" : "Entrez une heure de fermeture valide"
+        },
+        "day" : ["lun", "mar", "mer", "jeu", "ven", "sam", "di"],
+        "addExtra": "Ajouter des heures supplémentaires"
+      }
+    },
+    "loc" : {
+      "title" : "Section de Stationnement - Localisation",
+      "clear" : "effacer",
+      "point" : {
+        "title" : "Entrée Principale",
+        "text" : "Sélectionnez l'entrée principale de la section de stationnement sur la carte.:",
+        "lat" : {
+          "field": "Latitude *",
+          "infoText": "Indiquez sur la carte l'entrée principale de cette section du parking pour vélos.",
+          "placeholder": "Entrez la latitude",
+          "validation": "Entrez la latitude"
+        },
+        "lon" : {
+          "field": "Longitude *",
+          "infoText": "Indiquez sur la carte l'emplacement de cette section du parking pour vélos.",
+          "placeholder": "Entrez la longitude",
+          "validation": "Entrez la longitude"
+        }
+      },
+      "polygon" : {
+        "text" : "Dessiner la géométrie de stationnement sur la carte:",
+        "geoPolygon" : {
+          "field": "Geo Polygon",
+          "infoText": "Tracez les limites de cette section du stationnement pour vélos sur la carte.",
+          "placeholder": "Entrez les points de polygone e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
+        }
+      },
+      "entrance" : {
+        "title" : "Entrées Extra",
+        "text" : "Sélectionnez l'emplacement de l'entrée sur la carte:",
+        "lat" : {
+          "field": "Latitude",
+          "infoText": "Indiquez l'entrée du parking sur la carte. S'il y a plusieurs entrées, utilisez le symbole +.",
+          "placeholder": "Entrez la latitude"
+        },
+        "lon" : {
+          "field": "Longitude",
+          "infoText": "Indiquez l'entrée du parking sur la carte. S'il y a plusieurs entrées, utilisez le symbole +.",
+          "placeholder": "Entrez la longitude"
+        },
+        "description" : {
+          "field": "Description",
+          "infoText": "Décrivez comment les utilisateurs peuvent trouver l'entrée du parking (s'il y a plusieurs entrées, utilisez le symbole +).<br><br>Exemple: <i>L'entrée est des deux côtés de la place. Attention: interdit de faire du vélo dans le garage!</i>",
+          "placeholder": "Décrivez comment vous rendre ici"
+        },
+        "addExtra" : "Ajouter une entrée supplémentaire"
+      },
+      "exit" : {
+        "title" : "Sortie",
+        "text" : "Sélectionnez l'emplacement de sortie sur la carte:",
+        "lat" : {
+          "field": "Latitude",
+          "infoText": "Indiquez la sortie du parking sur la carte. S'il y a plusieurs issues, utilisez le symbole +.",
+          "placeholder": "Entrez la latitude"
+        },
+        "lon" : {
+          "field": "Longitude",
+          "infoText": "Indiquez la sortie du parking sur la carte. S'il y a plusieurs issues, utilisez le symbole +.",
+          "placeholder": "Entrez la longitude"
+        },
+        "description" : {
+          "field": "Description",
+          "infoText": "Décrivez comment les utilisateurs peuvent trouver la sortie du parking (s'il y a plusieurs sorties, utilisez le symbole +).<br><br>Exemple: <i>La sortie est des deux côtés de la place. Note: interdit de faire du vélo dans le garage!</i>",
+          "placeholder": "Décrivez comment vous rendre ici"
+        },
+        "addExtra" : "Ajouter une sortie supplémentaire"
+      }
+    },
+    "allowed" : {
+      "title" : "Section de Stationnement - Vélos autorisés",
+      "infoAlert" : "Vous pouvez y entrer les différents types de vélos que quelqu'un peut stocker dans cette section.",
+      "noItemsError" : "Veuillez ajouter au moins un type de vélo autorisé dans cette section.",
+      "type" : {
+        "field": "Type de vélo",
+        "infoText": "Sélectionnez ici les types de vélos autorisés dans cette section de stationnement.<br><br>Exemple: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "placeholder" : "Sélectionnez le type de vélo"
+      },
+      "capacity" : {
+        "field": "Capacité *",
+        "infoText": "Indiquez la quantité maximale de bicyclettes de ce type autorisée dans cette section.<br><br>Exemple: <i>250</i>",
+        "placeholder": "Entrez la capacité autorisée",
+        "validation" : "Entrez une valeur"
+      },
+      "counting" : {
+        "field": "Système de comptage",
+        "infoText": "Le système de stationnement dispose-t-il d’un système permettant de compter combien de vélos de ce type sont garés?<br><br>Exemple: <i>Yes / No</i>",
+        "placeholder": "Yes/No"
+      },
+      "addExtra" : "Ajouter un type de vélo supplémentaire"
+    },
+    "features" : {
+      "title" : "Section de Stationnement - Caractéristiques",
+      "infoAlert" : "Vous pouvez y ajouter des fonctionnalités spéciales. Jetez un coup d'œil aux options disponibles.",
+      "feature" : {
+        "field": "Caractéristique",
+        "infoText": "Sélectionnez les services ou les installations disponibles ou pouvant être utilisés dans cette section du garage.<br><br>Exemple: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
+        "placeholder" : "Sélectionnez une Caractéristique"
+      },
+      "availableHours" : {
+        "title" : "Heures disponibles",
+        "always" : "Ouvert 24/7",
+        "infoText": "Sélectionnez les jours et les heures pour lesquels cette fonctionnalité est disponible ou active dans la section de stationnement.<br><br>Exemple: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
+        "open": {
+          "field": "Heure d'ouverture *",
+          "placeholder": "Entrez l'heure d'ouverture"
+        },
+        "close": {
+          "field": "Heure de fermeture *",
+          "placeholder": "Entrez l'heure de fermeture"
+        },
+        "day" : ["lun", "mar", "mer", "jeu", "ven", "sam", "di"],
+        "addExtra": "Ajouter des heures supplémentaires"
+      },
+      "addExtra" : "Ajouter une Caractéristique supplémentaire"
+    },
+    "cost" : {
+      "title" : "Section de Stationnement - Modèle de Coût",
+      "description" : {
+        "field": "Description des Coûts",
+        "infoText": "Mettez ici un lien vers une page Web qui décrit les coûts.<br><br>Exemple: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
+        "placeholder" : "Entrez le lien vers la description des coûts"
+      },
+      "spec" : {
+        "title" : "Spécification de prix",
+        "free" : {
+          "field": "Gratuit",
+          "infoText": "Cette spécification de prix est-elle gratuite?<br><br>Exemple: <i>Yes / No</i>",
+          "placeholder" : "Yes/No"
+        },
+        "price" : {
+          "field": "Prix",
+          "infoText": "Indiquez ici le prix pour cette spécification de prix.<br><br>Exemple: <i>10</i>",
+          "placeholder" : "Entrez le prix"
+        },
+        "currency" : {
+          "field": "Devise",
+          "infoText": "Indiquez la devise.<br><br>Exemple: <i>EUR</i>",
+          "placeholder" : "Sélectionnez la devise"
+        },
+        "overnight" : {
+          "field": "Pendant la nuit",
+          "infoText": "Cette spécification de prix est-elle valable du jour au lendemain?<br><br>Exemple: <i>Yes / No</i>",
+          "placeholder" : "Yes/No"
+        },
+        "timeStart" : {
+          "field": "Heure de début Valeur",
+          "infoText": "Indiquez l'heure de début de cette spécification de prix.<br><br>Exmple: <i>0</i>",
+          "placeholder" : "Entrez la valeur de départ"
+        },
+        "timeEnd" : {
+          "field": "Valeur de fin du temps",
+          "infoText": "Indiquez l'heure de fin de cette spécification de prix.<br><br>Exemple: <i>1</i>",
+          "placeholder" : "Entrez la valeur de fin de temps"
+        },
+        "timeUnit" : {
+          "field": "Unité de temps",
+          "infoText": "Sélectionnez l'unité de temps (utilisée à la fois par l'heure de début et par l'heure de fin) pour cette spécification de prix.<br><br>Exemple: <i>Hour</i>",
+          "placeholder" : "Sélectionnez l'unité de temps"
+        },
+        "description" : {
+          "field": "Description",
+          "infoText": "Décrivez comment cette spécification de prix fonctionne.<br><br>Exemple: <i>Gratuit pendant la première heure</i>",
+          "placeholder" : "Décrivez cette définition de prix (e.g. Gratuit pendant la première heure)"
+        },
+        "addExtra" : "Ajouter un prix supplémentaire"
+      }
+    },
+    "extraSection" : {
+      "title" : "Section de Stationnement - Ajouter une section supplémentaire",
+      "text" : "Souhaitez-vous ajouter une autre section à ce parking à vélos?",
+      "addExtra" : "Ajouter une section"
+    },
+    "publish" : {
+      "title" : "Publication de données",
+      "infoText" : "Si vous décidez de publier les données générées dans cet outil sur votre site Web, entrez ici l'URL où les informations relatives à ce parking seront disponibles. Sinon, laissez ce champ vide.\n\n** Nous vous recommandons de publier les données sur votre propre site web. **.",
+      "URI" : {
+        "field": "URI du parking",
+        "infoText": "Le lien / URL où les données sur ce parking pour vélos seront publiées.<br><br>Exemple: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>Si vous n'en avez pas, nous le fournirons en fonction du propriétaire des données et de l'identificateur local et publierons les données à votre place.<br><br>Exemple: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i><br><br>N'oubliez pas que si vous préférez que nous publions les données pour vous, nous ne pouvons garantir qu'elles resteront en ligne indéfiniment.\n Nous vous recommandons de publier les données générées avec cet outil sur votre propre site Web et de les lier à votre système CMS afin qu'il se mette à jour automatiquement. Contactez nous (<a style=\"font-family: Montserrat-SemiBold; font-size: 16px;\" href=\"http://velopark.be\">http://velopark.be</a>) si vous avez besoin d'aide pour cela.",
+        "placeholder" : "Par exemple: http://data.gent.be/parkings/fiets/35677"
+      }
+    },
+    "generate" : {
+      "title" : "Générer des données structurées",
+      "buttonGenerate" : "Générer des données liées",
+      "titleResult" : "Données liées résultantes au format JSON-LD"
+    }
+  },
+  "logIn" : {
+    "title" : "Connectez-vous à votre compte",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Mot de passe",
+    "lostPasswd" : "Mot de passe oublié?",
+    "loginButton" : "Connexion"
+  },
+  "lostPasswd" : {
+    "title" : "Récupération de mot de passe",
+    "emailPlaceholder" : "Email",
+    "sendButton" : "Envoyer",
+    "successText" : "Un email vous a été envoyé. Nous vous avons envoyé un lien que vous pouvez utiliser pour entrer un nouveau mot de passe pour votre compte."
+  },
+  "signUp" : {
+    "title" : "Créer un nouveau compte",
+    "companyMember" : "Opérateur de Stationnement",
+    "cityRep" : "Représentant des villes",
+    "emailPlaceholder" : "Email",
+    "passwdPlaceholder" : "Mot de passe",
+    "selectCompany" : {
+      "field" : "Entreprise",
+      "placeholder" : "Sélectionner une entreprise"
+    },
+    "selectCity" : {
+      "field" : "Région",
+      "placeholder" : "Choisissez une région",
+      "addExtra" : "Ajouter une région supplémentaire"
+    },
+    "signupButton" : "S'inscrire"
+  },
+  "parkings" : {
+    "title" : "Parkings à ",
+    "th" : [
+      "URI du parking", "Nom du parking", "Approuvé", "Actions"
+    ]
+  },
+  "admin" : {
+    "title" : "Tableau de Bord Admin",
+    "manageParkings" : "Gérer les parkings",
+    "manageUsers" : "Gérer les utilisateurs",
+    "manageCompanies" : "Gérer des entreprises"
+  },
+  "adminParkings" : {
+    "title" : "Gérer les parkings",
+    "th" : [
+      "URI du parking", "Nom du parking", "Entreprise", "Région", "Approuvé", "Actions"
+    ],
+    "transfer" : {
+      "title" : "Transférer ce parking",
+      "text" : "Sélectionnez l'entreprise à laquelle vous souhaitez transférer ce parking.",
+      "companyPlaceholder" : "Sélectionner une entreprise",
+      "saveButton" : "sauvegarder"
+    }
+  },
+  "adminUsers" : {
+    "title" : "Gérer les utilisateurs",
+    "th" : [
+      "Email", "Entreprise", "Représentant régional", "Admin"
+    ]
+  },
+  "adminCompanies" : {
+    "title" : "Gérer des entreprises",
+    "th" : [
+      "Nom de l'entreprise", "Utilisateurs", "Parkings"
+    ],
+    "newCompany" : {
+      "title" : "Créer une nouvelle entreprise: ",
+      "newCompanyPlaceholder" : "Nouveau nom",
+      "saveButton" : "sauvegarder"
+    }
+  },
+  "cityRep" : {
+    "title" : "Tableau de Bord des Régions",
+    "buttonRegion" : "Gérer les parkings",
+    "warningNotApproved" : "Votre demande de gestion de cette région n'a pas encore été approuvée par l'administrateur système."
+  },
+  "cityRepParkings" : {
+    "title" : "Parkings à ",
+    "th" : [
+      "URI du parking", "Nom du parking", "Approuvé", "Actions"
+    ]
+  },
+  "pswdReset": {
+    "hello": "Bonjour",
+    "changeMessage": "Avez-vous oublié votre mot de passe? Dans cette page, vous pouvez en définir un nouveau.",
+    "password": "Nouveau mot de passe",
+    "save": "Enregistrer",
+    "success": "Votre mot de passe a été mis à jour! Vous pouvez maintenant vous connecter en utilisant vos nouvelles informations d'identification."
+  }
+}

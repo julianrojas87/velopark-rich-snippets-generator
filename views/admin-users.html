@@ -18,14 +18,20 @@
 <% include navbar.html %>
 
 <div class="container-contact100">
+    <ul class="breadcrumbs">
+        <li><a href="home">Home</a></li>
+        <li><a href="admin" transl-id="admin.title">Admin Dashboard</a></li>
+        <li><a href="admin-users" transl-id="adminUsers.title">Manage Users</a></li>
+    </ul>
     <div class="wrap-contact100 table-parkings" style="width: 100%;">
+        <h2 transl-id="adminUsers.title">Mange Users</h2>
         <table id="users-list" class="table-fill">
             <thead>
             <tr>
-                <th class="text-left">Email</th>
-                <th class="text-left">Company</th>
-                <th class="text-left">City Representative</th>
-                <th class="text-left">Admin</th>
+                <th class="text-left" transl-id="adminUsers.th[0]">Email</th>
+                <th class="text-left" transl-id="adminUsers.th[1]">Company</th>
+                <th class="text-left" transl-id="adminUsers.th[2]">City Representative</th>
+                <th class="text-left" transl-id="adminUsers.th[3]">Admin</th>
             </tr>
             </thead>
             <tbody class="table-hover">
@@ -61,7 +67,15 @@
 
 <!-- JS scripts-->
 <% include scripts.html %>
-
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
+        });
+    });
+</script>
 </body>
 
 </html>

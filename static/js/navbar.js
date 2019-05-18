@@ -26,6 +26,10 @@
         $('#drop-menu').show();
     });
 
+    $('#language-selector').hover(() => {
+        $('#drop-menu-lang').show();
+    });
+
     $('#myParkings').click(e => {
         e.stopPropagation();
     });
@@ -36,6 +40,12 @@
 
     $('body,html').click(e => {
         $('#drop-menu').hide();
+        $('#drop-menu-lang').hide();
+    });
+
+    $('.lang-selector').on('click', function() {
+        let lang = $(this).attr('lang-select');
+        translate(lang);
     });
 
     $('.plus_button_city_select').on('click', function () {
@@ -76,5 +86,26 @@
         newSelect.slideDown('slow');    //animate
         return false;
     });
+
+    $(window).on('resize', handleResize);
+
+    handleResize();
+
+    
     
 })(jQuery);
+
+$(window).on('load', function() {
+    handleResize();
+});
+
+function handleResize() {
+    // Adjust position of dropdown menus
+    var logoPos = $('#page-logo-helper').position();
+    $('#language-selector').css('float', 'left');
+    $('#language-selector').css('left', (logoPos.left + 143 + 80) + 'px');
+    var langPos = $('#language-selector').position();
+    var dropPos = $('#user-email').position();
+    $('#drop-menu-lang').css('left', (langPos.left + 10) + 'px');
+    $('#drop-menu').css('left', (dropPos.left + 20) + 'px');
+}

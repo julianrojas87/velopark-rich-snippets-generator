@@ -18,12 +18,16 @@
     <% include navbar.html %>
 
     <div class="container-contact100">
+        <ul class="breadcrumbs">
+            <li><a href="home">Home</a></li>
+            <li><a href="admin" transl-id="admin.title">Admin Dashboard</a></li>
+        </ul>
         <div class="wrap-contact100" style="width: 100%;">
-            <h2>Admin Hub</h2>
+            <h2 transl-id="admin.title">Admin Dashboard</h2>
             <div style="margin-top: 10px;">
-                <a class="btn btn-info" id="adminParkings" href="#">Manage parkings</a>
-                <a class="btn btn-info" id="adminUsers" href="#">Manage users</a>
-                <a class="btn btn-info" id="adminCompanies" href="#">Manage companies</a>
+                <a class="btn btn-info" id="adminParkings" href="#" transl-id="admin.manageParkings">Manage parkings</a>
+                <a class="btn btn-info" id="adminUsers" href="#" transl-id="admin.manageUsers">Manage users</a>
+                <a class="btn btn-info" id="adminCompanies" href="#" transl-id="admin.manageCompanies">Manage companies</a>
                 <!--<a class="btn btn-info" id="adminCities" href="#">Manage cities</a>-->
             </div>
         </div>
@@ -31,6 +35,15 @@
 
     <!-- JS scripts-->
     <% include scripts.html %>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
+            });
+        });
+    </script>
 
 </body>
 

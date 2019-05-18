@@ -18,23 +18,36 @@
 <% include navbar.html %>
 
 <div class="container-contact100">
+    <ul class="breadcrumbs">
+        <li><a href="home">Home</a></li>
+        <li><a href="cityrep" transl-id="cityRep.title">Regions Dashboard</a></li>
+    </ul>
     <div class="wrap-contact100" style="width: 100%;">
-        <h2>Region Hub</h2>
+        <h2 transl-id="cityRep.title">Regions Dashboard</h2>
         <% for (var i = 0; i < cityNames.length; i++) { %>
             <h4 class="region-title"><%= cityNames[i].name %></h4>
             <% if(!cityNames[i].enabled){ %>
             <div class="alert alert-warning" role="alert">
                 <i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                Your request for managing this region hasn't been approved by the system administrator yet.
+                <span transl-id="cityRep.warningNotApproved">Your request for managing this region hasn't been approved by the system administrator yet.</span>
             </div>
             <% } %>
-            <button class="btn btn-info cityrep-parkings-button" <%= cityNames[i].enabled ? '' : 'disabled' %> type="button" cityname="<%= cityNames[i].name %>">Manage parkings</button>
+            <button class="btn btn-info cityrep-parkings-button" transl-id="cityRep.buttonRegion" <%= cityNames[i].enabled ? '' : 'disabled' %> type="button" cityname="<%= cityNames[i].name %>">Manage parkings</button>
         <% } %>
     </div>
 </div>
 
 <!-- JS scripts-->
 <% include scripts.html %>
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
+        });
+    });
+</script>
 
 </body>
 
