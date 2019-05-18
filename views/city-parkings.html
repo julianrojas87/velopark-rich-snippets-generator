@@ -19,7 +19,7 @@
 
 <div class="container-contact100">
     <ul class="breadcrumbs">
-        <li><a href="home" transl-id="home.title">Home</a></li>
+        <li><a href="home">Home</a></li>
         <li><a href="cityrep" transl-id="cityRep.title">Region Hub</a></li>
         <li><a href="cityrep-parkings?cityname=<%= cityName %>"><span transl-id="cityRepParkings.title">Parkings in</span> <%= cityName %></a></li>
     </ul>
@@ -62,7 +62,15 @@
 
 <!-- JS scripts-->
 <% include scripts.html %>
-
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
+        });
+    });
+</script>
 </body>
 
 </html>

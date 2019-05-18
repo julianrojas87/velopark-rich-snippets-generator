@@ -12,20 +12,20 @@
 
 	<!-- Loaded data for editing -->
 	<p id="loadedParking" style="display: none;"><%= loadedParking ? loadedParking : '' %></p>
-	<script>let parkingOwner = {
-		email: "<%= emailParkingOwner %>",
-		company: "<%= nameCompanyParkingOwner %>",
-		approved: "<%= parkingApproved %>",
-		parkingCompany: "<%= parkingCompany %>"
-	}</script>
+	<script>
+		let parkingOwner = {
+			email: "<%= emailParkingOwner %>",
+			company: "<%= nameCompanyParkingOwner %>",
+			approved: "<%= parkingApproved %>",
+			parkingCompany: "<%= parkingCompany %>"
+		}
+	</script>
 
 	<!-- Resulting JSON-LD -->
 	<% include json-ld.html %>
 
 	<!-- Navigation Bar -->
 	<% include navbar.html %>
-
-
 
 	<!-- Data Input Form-->
 	<% include data-form.html %>

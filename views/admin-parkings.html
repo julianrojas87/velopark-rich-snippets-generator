@@ -37,7 +37,7 @@
 
 <div class="container-contact100">
     <ul class="breadcrumbs">
-        <li><a href="home" transl-id="home.title">Home</a></li>
+        <li><a href="home">Home</a></li>
         <li><a href="admin" transl-id="admin.title">Admin Dashboard</a></li>
         <li><a href="admin-parkings" transl-id="adminParkings.title">Manage Parkings</a></li>
     </ul>
@@ -118,6 +118,15 @@
 
 <!-- JS scripts-->
 <% include scripts.html %>
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
+        });
+    });
+</script>
 
 </body>
 
