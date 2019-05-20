@@ -77,7 +77,7 @@
       },
       "description" : {
         "field" : "Beschreibung",
-        "infoText" : "Allgemeine Beschreibung dieses Fahrradabstellplatzes oder wie Benutzer den Fahrradabstellplatz erreichen können.<br><br>Beispiel: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "infoText" : "Schreiben Sie hier einige allgemeine Informationen, die für die Besucher wichtig sind.<br><br>Beispiel: <i>Das Parken unter dem Platz ist für alle Arten von Fahrrädern möglich, maximal 1 Woche. Kein Personal vor Ort, aber Kameraüberwachung verfügbar.</i>",
         "placeholder" : "Beschreiben Sie, wie Sie hier ankommen"
       },
       "address" :  {

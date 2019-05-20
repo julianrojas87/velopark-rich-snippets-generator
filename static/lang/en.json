@@ -78,7 +78,7 @@
       },
       "description" : {
         "field" : "Description",
-        "infoText" : "General description of this bicycle parking or how users can reach the bicycle parking.<br><br>Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "infoText" : "Put here some general information that you find important for visitors to know.<br><br>Example: <i>Parking under the plaza, is open for all types of bicycles, maximum 1 week, no staff on site but camera surveillance available.</i>",
         "placeholder" : "Describe how to arrive here"
       },
       "address" :  {

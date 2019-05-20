@@ -77,7 +77,7 @@
       },
       "description" : {
         "field" : "Description",
-        "infoText" : "Description générale de ce parking pour vélos ou comment les utilisateurs peuvent accéder au parking pour vélos.<br><br>Exemple: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "infoText" : "Écrivez ici des informations générales que vous trouvez importantes pour les visiteurs.<br><br>Exemple: <i>Parking sous la place est ouvert pour tous les types de vélos, maximum 1 semaine, pas de personnel sur place mais surveillance vidéo disponible.</i>",
         "placeholder" : "Décrivez comment arriver ici"
       },
       "address" :  {

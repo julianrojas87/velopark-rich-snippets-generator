@@ -77,7 +77,7 @@
       },
       "description" : {
         "field" : "Beschrijving",
-        "infoText" : "Algemene beschrijving van deze stalling of hoe gebruikers deze stalling kunnen bereiken.<br><br>Voorbeeld: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "infoText" : "Schrijf hier wat algemene informatie die u belangrijk vindt voor bezoekers om te zien.<br><br>Voorbeeld: <i>Stalling onder het De Somerplein, staat open voor alle types fietsen (geen bromfietsen), maximum 1 week, geen personeel ter plaatse, wel camerabewaking.</i>",
         "placeholder" : "Geef een beschrijving"
       },
       "address" :  {
