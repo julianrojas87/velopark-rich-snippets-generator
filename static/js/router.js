@@ -130,7 +130,7 @@
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
 
-            if (confirm('Are you sure to delete the ' + parkingId + ' parking facility?')) {
+            if (confirm('Are you sure to delete the ' + $(this).parent().parent().find('a').text().trim() + ' parking facility?')) {
                 $.ajax({
                     type: "DELETE",
                     url: domain + '/delete-parking?parkingId=' + parkingId,

@@ -652,7 +652,7 @@ module.exports = app => {
                         });
                     } else {
                         //User is not superAdmin, maybe he is cityrep for the region of this parking?
-                        AM.isAccountCityRepForParkingID(req.session.user.email, encodeURIComponent(req.params.parkingid), function (error, value) {
+                        AM.isAccountCityRepForParkingID(req.session.user.email, encodeURIComponent(req.body['parkingId']), function (error, value) {
                             if (value === true) {
                                 PM.toggleParkingEnabled(encodeURIComponent(req.body['parkingId']), req.body['parkingEnabled'] === "true", function (error, result) {
                                     if (error != null) {
