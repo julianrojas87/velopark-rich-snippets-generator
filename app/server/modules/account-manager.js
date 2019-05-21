@@ -4,14 +4,6 @@ const utils = require('../utils/utils');
 const dbAdapter = require('./database-adapter');
 const EM = require('./email-dispatcher');
 
-const guid = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-        c => {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : r & 0x3 | 0x8;
-            return v.toString(16);
-        });
-}
-
 /*
 	login validation methods
 */
@@ -71,7 +63,7 @@ exports.manualLogin = function (email, pass, callback) {
 };
 
 exports.generateLoginKey = function (email, ipAddress, callback) {
-    let cookie = guid();
+    let cookie = utils.guid();
     dbAdapter.updateAccountCookie(email, ipAddress, cookie, callback);
 };
 
@@ -80,7 +72,7 @@ exports.validateLoginKey = function (cookie, ipAddress, callback) {
 };
 
 exports.generatePasswordKey = function (email, ipAddress, callback) {
-    let passKey = guid();
+    let passKey = utils.guid();
     dbAdapter.updateAccountPasskey(email, ipAddress, passKey, callback);
 };
 
