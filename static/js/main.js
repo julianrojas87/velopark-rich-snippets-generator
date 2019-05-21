@@ -322,20 +322,15 @@ function handleLoginFeatures() {
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
 
-        if(myParent.find('.input100[name="photos._Photograph.image"]').val().indexOf('localhost') > 0){
+        if(myParent.find('.input100[name="photos._Photograph.image"]').val().indexOf('velopark.ilabt.imec.be') > 0){    //TODO: find better way to detect local images
             //delete photo from server
             let url = myParent.find('input[name="photos._Photograph.image"]').val();
-            console.log(url);
             let filename = url.split('/')[url.split('/').length-1];
-            console.log(filename);
             let domain = domainName !== '' ? '/' + domainName : '';
             jQuery.ajax({
                 url: domain + '/photo/' + filename,
                 method: 'DELETE',
                 type: 'DELETE', // For jQuery < 1.9
-                success: function(data){
-                    console.log("deleted successfullyy");
-                }
             });
         }
 
@@ -529,7 +524,6 @@ function handleLoginFeatures() {
     });
 
     $('.always-open-selector button').on('click', function () {
-        console.log('button clicked');
         $(this).parent().siblings('.week-day-selector').find('input[type=checkbox]').prop("checked", !$(this).prop("checked"));
         $(this).parent().parent().parent().find('input[type=time]:first').val("00:00");
         $(this).parent().parent().parent().find('input[type=time]:last').val("23:59");
@@ -701,9 +695,7 @@ function removeFacilitySection(facilityNum) {
 
                 //rename following steps to keep the correct order
                 for (let itFacilityNum = facilityNum + 1; itFacilityNum <= currentNumFacilitySections; itFacilityNum++) {
-                    console.log("it: " + itFacilityNum);
                     for (let stepnum = 1; stepnum <= numStepsFacilitySection; stepnum++) {
-                        console.log("renamed " + 'step-facility-section-' + stepnum + '-' + itFacilityNum);
                         $('#step-facility-section-' + stepnum + '-' + itFacilityNum).attr('id', 'step-facility-section-' + stepnum + '-' + (itFacilityNum - 1));
                     }
                     $('.steps-overview-facility-title[facilitynum=' + itFacilityNum + ']').replaceWith(String.format(stepOverviewFacilityTitleFormat, itFacilityNum - 1));
