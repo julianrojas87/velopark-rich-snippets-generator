@@ -5,7 +5,7 @@
     $('#ld_generate').on('click', () => {
         var check = true;
         let wrongInput = null;
-        let input = $('.validate-input .input100');
+        let input = $('.validate-input .input100, .input100[type=time]');
 
         for (var i = 0; i < input.length; i++) {
             if (validate(input[i]) == false) {

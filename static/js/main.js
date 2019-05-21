@@ -511,7 +511,8 @@ function handleLoginFeatures() {
     $('.always-open-selector button').on('click', function(){
         console.log('button clicked');
         $(this).parent().siblings('.week-day-selector').find('input[type=checkbox]').prop("checked", !$(this).prop("checked"));
-        $(this).parent().parent().parent().find('input[type=time]').val("00:00");
+        $(this).parent().parent().parent().find('input[type=time]:first').val("00:00");
+        $(this).parent().parent().parent().find('input[type=time]:last').val("23:59");
     });
 
 })(jQuery);
