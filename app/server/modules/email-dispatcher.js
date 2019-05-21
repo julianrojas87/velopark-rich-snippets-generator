@@ -2,19 +2,21 @@ const dbAdapter = require('./database-adapter');
 const fs = require('fs');
 const email = require("emailjs/email");
 
-var EM = {};
+let EM = {};
+const config_secret = JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8'));
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
-var activatedAccounts = {};
+let activatedAccounts = {};
 
-var server = email.server.connect({
-    user: config.emailConfig.NL_EMAIL_USER || "velopark.notifications@gmail.com",
-    password: config.emailConfig.NL_EMAIL_PASS || "velopark",
-    host: config.emailConfig.NL_EMAIL_HOST || "smtp.gmail.com",
+let server = email.server.connect({
+    user: config_secret.NL_EMAIL_USER,
+    password: config_secret.NL_EMAIL_PASS,
+    host: config_secret.NL_EMAIL_HOST,
     ssl: true
 });
 
-setInterval(sendRecentAccountActivatedEmails, 1 * 10 * 1000);	//send mails every 10 seconds
+setInterval(sendRecentAccountActivatedEmails, 5 * 60 * 1000);	//send mails every 5 minutes
+
 function sendRecentAccountActivatedEmails() {
     if (Object.keys(activatedAccounts).length) {
         let emailsToSendTo = [];
