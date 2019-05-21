@@ -1,12 +1,16 @@
 const fs = require('fs');
+const path = require("path");
+const multer = require("multer");
 const AM = require('./modules/account-manager');
 const EM = require('./modules/email-dispatcher');
 const CoM = require('./modules/company-manager');
 const CiM = require('./modules/cities-manager');
 const PM = require('./modules/parkings-manager');
 const ToM = require('./modules/token-manager');
+const utils = require('./utils/utils');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+const data = config['data'] || './data';
 const domainName = config['domain'] || '';
 const vocabURI = config['vocabulary'] || 'https://velopark.ilabt.imec.be';
 
@@ -724,6 +728,64 @@ module.exports = app => {
                 //you cannot save parkings.
                 res.status(401).send("you cannot save parkings."); //should not happen, since this person is not allowed to log in
             }
+        }
+    });
+
+    const upload = multer({
+        dest: data + '/photo'
+        // you might also want to set some limits: https://github.com/expressjs/multer#limits
+    });
+
+    app.post('/upload-photo', upload.single("imgFile" /* name attribute of <file> element in the form */), (req, res) => {
+        const myPath = req.file.path;
+
+        // check if the user is logged in
+        if (req.session.user == null) {
+            res.status(401).send('You are not logged in.');
+            fs.unlink(myPath, err => {
+                if (err){
+                    console.error(err);
+                }
+            });
+        } else {
+            let guid = utils.guid();
+            let newPath = data + '/photo/' + guid + path.extname(req.file.originalname).toLowerCase();
+            fs.rename(myPath, newPath, err => {
+                if (err){
+                    console.error(err);
+                    res.status(500).send("Error while saving image.");
+                } else {
+                    res.status(200).send('/photo/' + guid + path.extname(req.file.originalname).toLowerCase());
+                }
+            });
+        }
+    });
+
+    app.get("/photo/:id", (req, res) => {
+        res.sendFile(path.join(data + '/photo/' + req.params.id));
+    });
+
+    app.delete("/photo/:id", function (req, res) {
+        // check if the user is logged in
+        if (req.session.user == null) {
+            res.status(401).send('You are not logged in.');
+        } else {
+            if(req.params.id.indexOf("/") > 0 || req.params.id.indexOf("\\") > 0){
+                res.status(400).send("Some characters are not allowed in this filename.");
+                return;
+            }
+            try {
+                if(fs.existsSync(data + '/photo/' + req.params.id)) {
+                    fs.unlinkSync(data + '/photo/' + req.params.id);
+                    res.status(200).send("Deleted successfully.");
+                } else {
+                    res.status(404).send('Photo not found');
+                }
+            } catch (e){
+                console.error(e);
+                res.status(500).send('Failed');
+            }
+
         }
     });
 

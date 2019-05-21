@@ -203,6 +203,7 @@ function loadParkingValue(path, value, override, inpt) {
                 let inputs = $('[name="' + name + '"]');
                 let newInput = $(inputs[inputs.length - 1]);
                 newInput.val(value);
+                newInput.change();
             }
         } else if (input.is('div')) {
             // Handle div inputs and clone if necessary

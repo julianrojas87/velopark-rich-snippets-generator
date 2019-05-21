@@ -71,6 +71,12 @@ function validate(input) {
         if ($(input).val() == '' || parseInt($(input).val()) < parseInt($(input).attr('min')) || parseInt($(input).val()) > parseInt($(input).attr('max'))) {
             return false;
         }
+    } else if($(input).attr('type') === 'time') {
+        let openInput = $(input).parent().parent().find('.input100[type=time]:first');
+        let closeInput = $(input).parent().parent().find('.input100[type=time]:last');
+        if(openInput.val() > closeInput.val()){
+            return false;
+        }
     } else {
         if ($(input).val().trim() == '') {
             return false;

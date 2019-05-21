@@ -170,8 +170,8 @@
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
                                 <div transl-id="step.parkInfo.description.infoText">
-                                    <span style="display: inherit; padding-left: 15px;">General description of this bicycle parking or how users can reach the bicycle parking.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i></span>
+                                    <span style="display: inherit; padding-left: 15px;">Put here some general information that is you find important for visitors to see.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Parking under the plaza, is open for all types of bicycles, maximum 1 week, no staff on site but camera surveillance available.</i></span>
                                 </div>
                             </div>
                             <div>
@@ -444,8 +444,10 @@
                                     </div>
                                     <input class="input100" type="url" name="photos._Photograph.image"
                                            style="width: 90%;"
-                                           placeholder="Enter the photo URL"
+                                           placeholder="Enter here the photo URL or choose a file image"
                                            transl-id-placeholder="step.photo.url.placeholder">
+                                    <input type="file" accept="image/*" class="btn btn-primary photo-selector"></input>
+                                    <img class="imgPreview" src="" height="200"/>
                                 </div>
                             </div>
                             <button class="plus_button_section">
@@ -512,9 +514,6 @@
                                     <select name="@type" parking-types="true" class="js-select2"
                                             placeholder="Select parking type"
                                             transl-id-placeholder="step.operation.type.placeholder">
-                                        <option value="http://schema.mobivoc.org/BicycleParkingStation">
-                                            Bicycle Parking Station
-                                        </option>
                                     </select>
                                     <div class="dropDownSelect2"></div>
                                 </div>
@@ -1477,17 +1476,10 @@
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
                                 <div transl-id="step.publish.URI.infoText">
-                                    <span style="display: inherit; padding-left: 15px;">The link / URL where the data about this bicycle parking will be published.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">The URL where the data about this bicycle parking will be published.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i></span><br>
-                                    <span style="display: inherit; padding-left: 15px;">In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.</span><br>
-                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i></span><br>
-                                    <span style="display: inherit; padding-left: 15px;">
-                                        Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.
-                                        We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (
-                                        <a style="font-family: Montserrat-SemiBold; font-size: 16px;"
-                                           href="http://velopark.be">http://velopark.be</a>
-                                        ) if you need assistance for this.
-                                    </span><br>
+                                    <span style="display: inherit; padding-left: 15px;">In case you don't have one we will provide it based on the Parking Owner and the Local Identifier, and publish the data for you.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Example: <i>https://velopark.ilabt.imec.be/data/APCOA_018</i></span><br>
                                 </div>
                             </div>
                             <input class="input100" type="url" name="@id"
@@ -1499,13 +1491,13 @@
             </fieldset>
 
             <h3 class="section-title">
-                <span transl-id="step.title.generate">Generate Structured Data</span>
+                <span transl-id="step.title.generate">Save Parking Information</span>
             </h3>
             <fieldset>
                 <div id="step-generate-data-1">
-                    <h2 transl-id="step.generate.title">Generate Structured Data</h2>
+                    <h2 transl-id="step.generate.title">Save Parking Information</h2>
                     <button id="ld_generate" class="btn btn-primary form-button"
-                            transl-id="step.generate.buttonGenerate">Generate Linked Data
+                            transl-id="step.generate.buttonGenerate">Save Data
                     </button>
                 </div>
             </fieldset>
