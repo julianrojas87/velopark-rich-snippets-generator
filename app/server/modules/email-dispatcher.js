@@ -15,7 +15,7 @@ let server = email.server.connect({
     ssl: true
 });
 
-setInterval(sendRecentAccountActivatedEmails, 5 * 60 * 1000);	//send mails every 5 minutes
+setInterval(sendRecentAccountActivatedEmails, 1 * 10 * 1000);	//send mails every 10 seconds
 
 function sendRecentAccountActivatedEmails() {
     if (Object.keys(activatedAccounts).length) {
@@ -48,7 +48,7 @@ function sendRecentAccountActivatedEmails() {
 
 EM.dispatchResetPasswordLink = function (account, callback) {
     server.send({
-        from: config.emailConfig.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Password Reset',
         text: 'something went wrong... :(',
@@ -75,7 +75,7 @@ EM.removeActivatedAccountToBeMailed = function (account) {
 
 EM.dispatchAccountActivated = function (account, callback) {
     server.send({
-        from: config.emailConfig.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Account activated',
         text: 'something went wrong... :(',
