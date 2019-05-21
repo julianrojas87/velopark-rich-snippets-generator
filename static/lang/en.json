@@ -405,7 +405,7 @@
       "infoText" : "If you decide to publish the data generated in this tool on your website, then enter here the URL where the information for this parking will be available. Otherwise leave this field empty.\n\n** We recommend that you publish the data on your own website **.",
       "URI" : {
         "field": "Parking Facility URI",
-        "infoText": "The link / URL where the data about this bicycle parking will be published.<br><br>Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i><br><br>Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.\n                            We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (<a style=\"font-family: Montserrat-SemiBold; font-size: 16px;\" href=\"http://velopark.be\">http://velopark.be</a>) if you need assistance for this.",
+        "infoText": "The URL where the data about this bicycle parking will be published.<br><br>Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Parking Owner and the Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA_018</i>",
         "placeholder" : "For example: http://data.gent.be/parkings/fiets/35677"
       }
     },
