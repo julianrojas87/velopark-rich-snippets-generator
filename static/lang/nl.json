@@ -32,7 +32,7 @@
       "cost" : "Kosten Model",
       "addExtra" : "Extra Sectie Toevoegen",
       "publish" : "Data Publicering",
-      "generate" : "Gestructureerde Data Genereren"
+      "generate" : "Bewaar Parkeerinformatie"
     },
     "lang" : {
       "title" : "Vertalingen",
@@ -409,8 +409,8 @@
       }
     },
     "generate" : {
-      "title" : "Genereer Gestructureerde Data",
-      "buttonGenerate" : "Genereer Linked Data",
+      "title" : "Bewaar Parkeerinformatie",
+      "buttonGenerate" : "Gegevens Opslaan",
       "titleResult" : "Resulterende Linked Data in JSON-LD"
     }
   },

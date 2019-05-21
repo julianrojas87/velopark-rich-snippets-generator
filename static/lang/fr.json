@@ -32,7 +32,7 @@
       "cost" : "Modèle de Coût",
       "addExtra" : "Ajouter une Section Supplémentaire",
       "publish" : "Publication de Données",
-      "generate" : "Générer des données structurées"
+      "generate" : "Enregistrer les Informations de Stationnement"
     },
     "lang" : {
       "title" : "Langues de données",
@@ -409,8 +409,8 @@
       }
     },
     "generate" : {
-      "title" : "Générer des données structurées",
-      "buttonGenerate" : "Générer des données liées",
+      "title" : "Enregistrer les Informations de Stationnement",
+      "buttonGenerate" : "Enregistrer des Données",
       "titleResult" : "Données liées résultantes au format JSON-LD"
     }
   },

@@ -32,7 +32,7 @@
       "cost" : "Kostenmodell",
       "addExtra" : "Zusätzlichen Abschnitt hinzufügen",
       "publish" : "Datenveröffentlichung",
-      "generate" : "Generieren Sie strukturierte Daten"
+      "generate" : "Parkinformationen Speichern"
     },
     "lang" : {
       "title" : "Datensprachen",
@@ -409,8 +409,8 @@
       }
     },
     "generate" : {
-      "title" : "Generieren Sie strukturierte Daten",
-      "buttonGenerate" : "Verknüpfte Daten generieren",
+      "title" : "Parkinformationen Speichern",
+      "buttonGenerate" : "Daten Speichern",
       "titleResult" : "Resultierende verknüpfte Daten in JSON-LD"
     }
   },

@@ -33,7 +33,7 @@
       "cost" : "Cost Model",
       "addExtra" : "Add Extra Section",
       "publish" : "Data Publishing",
-      "generate" : "Generate Structured Data"
+      "generate" : "Save Parking Information"
     },
     "lang" : {
       "title" : "Data Languages",
@@ -410,8 +410,8 @@
       }
     },
     "generate" : {
-      "title" : "Generate Structured Data",
-      "buttonGenerate" : "Generate Linked Data",
+      "title" : "Save Parking Information",
+      "buttonGenerate" : "Save Data",
       "titleResult" : "Resulting Linked Data in JSON-LD"
     }
   },
