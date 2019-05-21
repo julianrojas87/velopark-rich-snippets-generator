@@ -176,21 +176,21 @@ function handleLoginFeatures() {
         let de = 'Duits';
 
         let lang = localStorage.getItem("languagePref");
-        if(lang && lang === 'en') {
+        if (lang && lang === 'en') {
             nl = 'Dutch';
             en = 'English';
             fr = 'French';
             de = 'German';
         }
 
-        if(lang && lang === 'fr') {
+        if (lang && lang === 'fr') {
             nl = 'Néerlandais';
             en = 'Anglais';
             fr = 'Français';
             de = 'Allemand';
         }
 
-        if(lang && lang === 'de') {
+        if (lang && lang === 'de') {
             nl = 'Niederländisch';
             en = 'English';
             fr = 'Französisch';
@@ -207,16 +207,16 @@ function handleLoginFeatures() {
     $('#language-selection-container input').change(function () {
         let langDisplayMap = getLangDisplayMap();
         let oneSelected = false;
-        $('#language-selection-container input').each(function(){
-            if($(this).prop('checked')){
+        $('#language-selection-container input').each(function () {
+            if ($(this).prop('checked')) {
                 oneSelected = true;
             }
         });
-        if(parkingDataLoaded && !oneSelected){
+        if (parkingDataLoaded && !oneSelected) {
             //Not allowed, at least one needs to be selected.
             $(this).prop('checked', true);
             $('#at-least-one-language').slideDown();
-            setTimeout(function(){
+            setTimeout(function () {
                 $('#at-least-one-language').slideUp();
             }, 2000);
         } else {
@@ -321,6 +321,18 @@ function handleLoginFeatures() {
 
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
+
+        if(myParent.find('.input100[name="photos._Photograph.image"]').val().indexOf('velopark.ilabt.imec.be') > 0){    //TODO: find better way to detect local images
+            //delete photo from server
+            let url = myParent.find('input[name="photos._Photograph.image"]').val();
+            let filename = url.split('/')[url.split('/').length-1];
+            let domain = domainName !== '' ? '/' + domainName : '';
+            jQuery.ajax({
+                url: domain + '/photo/' + filename,
+                method: 'DELETE',
+                type: 'DELETE', // For jQuery < 1.9
+            });
+        }
 
         myParent.find("input, textarea").each(function () {
             if ($(this).attr('type') === 'checkbox') {
@@ -450,6 +462,9 @@ function handleLoginFeatures() {
                 }
             });
 
+            newSection.find('.imgPreview').attr("src","static/images/icons/close_white.png");
+            newSection.find('.photo-selector').show();
+
             if (parkingDataLoaded) {
                 newSection.hide();      //for animation
             }
@@ -508,11 +523,55 @@ function handleLoginFeatures() {
         $('#form-velopark-data-t-' + (startStepNumberFacilitySection + (currentNumFacilitySections - 1) * numStepsFacilitySection)).get(0).click();
     });
 
-    $('.always-open-selector button').on('click', function(){
-        console.log('button clicked');
+    $('.always-open-selector button').on('click', function () {
         $(this).parent().siblings('.week-day-selector').find('input[type=checkbox]').prop("checked", !$(this).prop("checked"));
         $(this).parent().parent().parent().find('input[type=time]:first').val("00:00");
         $(this).parent().parent().parent().find('input[type=time]:last').val("23:59");
+    });
+
+    $('input.photo-selector').on('change', function(){
+        let parent = $(this).parent();
+        /*loadPhotoFromDisk($(this)[0].files[0]).then(result => {
+            parent.find('img')[0].src = result;
+        });*/
+
+        let domain = domainName !== '' ? '/' + domainName : '';
+        var data = new FormData();
+        data.append('imgFile', $(this)[0].files[0]);
+        jQuery.ajax({
+            url: domain + '/upload-photo',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST', // For jQuery < 1.9
+            success: function(data){
+                let locationPath = location.pathname.substr(0, location.pathname.lastIndexOf('/'));
+                var url = [location.protocol, '//', location.host, locationPath].join('');
+                let uriInput = parent.find('input[name="photos._Photograph.image"]');
+                uriInput.val(url + data);
+                uriInput.prop('disabled', true);
+                parent.find('img')[0].src = url + data;
+                parent.find('input[type=file]').hide();
+            }
+        });
+    });
+
+    $('input[name="photos._Photograph.image"]').on('blur', function() {
+        let parent = $(this).parent();
+        parent.find('img')[0].src = $(this).val();
+        if($(this).val()) {
+            parent.find('.photo-selector').hide();
+        }
+    });
+
+    $('input[name="photos._Photograph.image"]').on('change', function() {
+        let parent = $(this).parent();
+        parent.find('img')[0].src = $(this).val();
+        if($(this).val()) {
+            parent.find('.photo-selector').hide();
+        }
     });
 
 })(jQuery);
@@ -636,9 +695,7 @@ function removeFacilitySection(facilityNum) {
 
                 //rename following steps to keep the correct order
                 for (let itFacilityNum = facilityNum + 1; itFacilityNum <= currentNumFacilitySections; itFacilityNum++) {
-                    console.log("it: " + itFacilityNum);
                     for (let stepnum = 1; stepnum <= numStepsFacilitySection; stepnum++) {
-                        console.log("renamed " + 'step-facility-section-' + stepnum + '-' + itFacilityNum);
                         $('#step-facility-section-' + stepnum + '-' + itFacilityNum).attr('id', 'step-facility-section-' + stepnum + '-' + (itFacilityNum - 1));
                     }
                     $('.steps-overview-facility-title[facilitynum=' + itFacilityNum + ']').replaceWith(String.format(stepOverviewFacilityTitleFormat, itFacilityNum - 1));
@@ -654,4 +711,27 @@ function removeFacilitySection(facilityNum) {
     } else {
         alert("Your bicycle parking needs at least one facility. You can not remove this one.");
     }
+}
+
+
+function loadPhotoFromDisk(file) {
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            resolve(reader.result);
+        });
+        reader.onerror = function() {
+            reject();
+        };
+        reader.onabort = function() {
+            reject();
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
+
+function uploadPhoto(imgData){
+
 }

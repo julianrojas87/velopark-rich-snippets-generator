@@ -8,9 +8,9 @@ const domainName = config['domain'] || '';
 var activatedAccounts = {};
 
 var server = email.server.connect({
-    user: config.emailConfig.NL_EMAIL_USER || "velopark.notifications@gmail.com",
-    password: config.emailConfig.NL_EMAIL_PASS || "velopark",
-    host: config.emailConfig.NL_EMAIL_HOST || "smtp.gmail.com",
+    user:  "velopark.notifications@gmail.com",
+    password:  "velopark",
+    host: "smtp.gmail.com",
     ssl: true
 });
 
@@ -46,7 +46,7 @@ function sendRecentAccountActivatedEmails() {
 
 EM.dispatchResetPasswordLink = function (account, callback) {
     server.send({
-        from: config.emailConfig.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from: 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Password Reset',
         text: 'something went wrong... :(',
@@ -73,7 +73,7 @@ EM.removeActivatedAccountToBeMailed = function (account) {
 
 EM.dispatchAccountActivated = function (account, callback) {
     server.send({
-        from: config.emailConfig.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from:  'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Account activated',
         text: 'something went wrong... :(',
