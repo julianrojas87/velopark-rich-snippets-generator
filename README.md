@@ -10,8 +10,10 @@ $ npm install
 ```
 
 ## Configuration
-The configuration of the application is made through the `config.json` file, present in the root folder. It contains 3 parameters:
+The configuration of the application is made through the `config.json` file and the `config_secret.json` file, present in the root folder. 
 
+### `config.json` 
+Contains 4 parameters:
 - **data:** Path to the folder that will be used to store the generated data. **Is a mandatory parameter**.
 - **domain:** Domain name of the application server if configured behind a reverse proxy (e.g. NGINX). It is empty by default.
 - **vocabulary:** Open Velopark vocabulary base URI. Default value is https://velopark.ilabt.imec.be. Only needed if using a different distribution of the vocabulary.
@@ -25,5 +27,23 @@ Next is an example of the configuration:
   "domain": "",
   "vocabulary": "",
   "superAdmins": ["velopark@fietsberaad.be"]
+}
+```
+
+### `config_secret.json`
+Also contains 4 parameters:
+- **NL_EMAIL_HOST:** The server that handles sending emails.
+- **NL_EMAIL_USER:** The username to connect to the email server with.
+- **NL_EMAIL_PASS:** The password that matches the username to connect to the email server.
+- **tokenSecret:** A random 64 char string used as server token to sign password reset tokens with.
+
+Example:
+
+```json
+{
+"NL_EMAIL_HOST": "smtp.gmail.com",
+"NL_EMAIL_USER": "my.email@gmail.com",
+"NL_EMAIL_PASS": "password",
+"tokenSecret": "**..."
 }
 ```
