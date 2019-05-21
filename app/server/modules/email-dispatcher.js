@@ -8,10 +8,10 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const domainName = config['domain'] || '';
 let activatedAccounts = {};
 
-let server = email.server.connect({
-    user: config_secret.NL_EMAIL_USER,
-    password: config_secret.NL_EMAIL_PASS,
-    host: config_secret.NL_EMAIL_HOST,
+var server = email.server.connect({
+    user:  "velopark.notifications@gmail.com",
+    password:  "velopark",
+    host: "smtp.gmail.com",
     ssl: true
 });
 

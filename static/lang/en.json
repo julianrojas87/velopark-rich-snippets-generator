@@ -33,7 +33,7 @@
       "cost" : "Cost Model",
       "addExtra" : "Add Extra Section",
       "publish" : "Data Publishing",
-      "generate" : "Generate Structured Data"
+      "generate" : "Save Parking Information"
     },
     "lang" : {
       "title" : "Data Languages",
@@ -78,7 +78,7 @@
       },
       "description" : {
         "field" : "Description",
-        "infoText" : "General description of this bicycle parking or how users can reach the bicycle parking.<br><br>Example: <i>Volg de wegwijzers, vanaf het plein kunt u zowel als de linkerkant als de rechterkant van het plein de fietsenstalling bereiken via de schuine helling.</i>",
+        "infoText" : "Put here some general information that you find important for visitors to know.<br><br>Example: <i>Parking under the plaza, is open for all types of bicycles, maximum 1 week, no staff on site but camera surveillance available.</i>",
         "placeholder" : "Describe how to arrive here"
       },
       "address" :  {
@@ -156,7 +156,7 @@
       "url": {
         "field": "Photo URL",
         "infoText": "Put here a link to a picture of the bicycle parking, its surroundings or facilities.<br><br>Example: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg",
-        "placeholder": "Enter the photo URL"
+        "placeholder": "Enter here the photo URL or choose a file image"
       },
       "addExtra" : "Add extra photo"
     },
@@ -405,13 +405,13 @@
       "infoText" : "If you decide to publish the data generated in this tool on your website, then enter here the URL where the information for this parking will be available. Otherwise leave this field empty.\n\n** We recommend that you publish the data on your own website **.",
       "URI" : {
         "field": "Parking Facility URI",
-        "infoText": "The link / URL where the data about this bicycle parking will be published.<br><br>Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Data Owner and Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i><br><br>Keep in mind that if you prefer us to publish the data for you, we cannot guarantee that it will remain online indefinitely.\n                            We recommend that you publish the data generated with this tool on your own website and link it to your CMS system so it updates automatically. Contact us (<a style=\"font-family: Montserrat-SemiBold; font-size: 16px;\" href=\"http://velopark.be\">http://velopark.be</a>) if you need assistance for this.",
+        "infoText": "The URL where the data about this bicycle parking will be published.<br><br>Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Parking Owner and the Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA_018</i>",
         "placeholder" : "For example: http://data.gent.be/parkings/fiets/35677"
       }
     },
     "generate" : {
-      "title" : "Generate Structured Data",
-      "buttonGenerate" : "Generate Linked Data",
+      "title" : "Save Parking Information",
+      "buttonGenerate" : "Save Data",
       "titleResult" : "Resulting Linked Data in JSON-LD"
     }
   },
