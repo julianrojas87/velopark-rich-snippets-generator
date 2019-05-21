@@ -321,8 +321,8 @@ function handleLoginFeatures() {
 
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
-
-        if(myParent.find('.input100[name="photos._Photograph.image"]').val().indexOf('velopark.ilabt.imec.be') > 0){    //TODO: find better way to detect local images
+        let photoURI = myParent.find('.input100[name="photos._Photograph.image"]').val();
+        if(photoURI.indexOf('velopark.ilabt.imec.be') > 0 || photoURI.indexOf('localhost') > 0){    //TODO: find better way to detect local images
             //delete photo from server
             let url = myParent.find('input[name="photos._Photograph.image"]').val();
             let filename = url.split('/')[url.split('/').length-1];
@@ -462,7 +462,7 @@ function handleLoginFeatures() {
                 }
             });
 
-            newSection.find('.imgPreview').attr("src","static/images/icons/close_white.png");
+            newSection.find('.imgPreview').attr("src","");
             newSection.find('.photo-selector').show();
 
             if (parkingDataLoaded) {
@@ -554,6 +554,11 @@ function handleLoginFeatures() {
                 uriInput.prop('disabled', true);
                 parent.find('img')[0].src = url + data;
                 parent.find('input[type=file]').hide();
+            },
+            error: function(e) {
+                if(e.status === 401) {
+                    alert('Please log in first before uploading photos');
+                }
             }
         });
     });

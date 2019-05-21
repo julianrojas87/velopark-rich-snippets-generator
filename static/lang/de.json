@@ -155,7 +155,7 @@
       "url": {
         "field": "Foto-URL",
         "infoText": "Fügen Sie hier einen Link zu einem Bild des Fahrradstellplatzes, seiner Umgebung oder Einrichtungen ein.<br><br>Beispiel: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg",
-        "placeholder": "Geben Sie die Foto-URL ein"
+        "placeholder": "Geben Sie hier die Foto-URL ein oder wählen Sie ein Dateibild aus"
       },
       "addExtra" : "Zusätzliches Foto hinzufügen"
     },

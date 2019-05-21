@@ -762,7 +762,7 @@ module.exports = app => {
     });
 
     app.get("/photo/:id", (req, res) => {
-        res.sendFile(path.join(__dirname, "../../" + data + '/photo/' + req.params.id));
+        res.sendFile(path.join(data + '/photo/' + req.params.id));
     });
 
     app.delete("/photo/:id", function (req, res) {
@@ -775,8 +775,12 @@ module.exports = app => {
                 return;
             }
             try {
-                fs.unlinkSync(data + '/photo/' + req.params.id);
-                res.status(200).send("Deleted successfully.");
+                if(fs.existsSync(data + '/photo/' + req.params.id)) {
+                    fs.unlinkSync(data + '/photo/' + req.params.id);
+                    res.status(200).send("Deleted successfully.");
+                } else {
+                    res.status(404).send('Photo not found');
+                }
             } catch (e){
                 console.error(e);
                 res.status(500).send('Failed');

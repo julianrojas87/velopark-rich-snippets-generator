@@ -155,7 +155,7 @@
       "url": {
         "field": "Foto URL",
         "infoText": "Geef de link op naar een foto van de fietsenparking, zijn omgeving of zijn faciliteiten.<br><br>Voorbeeld: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg",
-        "placeholder": "Geef de foto URL op"
+        "placeholder": "Voer hier de foto-URL in of kies een bestandsafbeelding"
       },
       "addExtra" : "Voeg extra foto toe"
     },

@@ -156,7 +156,7 @@
       "url": {
         "field": "Photo URL",
         "infoText": "Put here a link to a picture of the bicycle parking, its surroundings or facilities.<br><br>Example: <i>https://www.apcoa.be/fileadmin/MDMImageImport/4e35c3a7f62e2c89b9a991b9db1b7800.jpeg",
-        "placeholder": "Enter the photo URL"
+        "placeholder": "Enter here the photo URL or choose a file image"
       },
       "addExtra" : "Add extra photo"
     },
