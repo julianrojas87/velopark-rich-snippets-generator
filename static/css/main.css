@@ -1269,6 +1269,8 @@ ul.breadcrumbs {
   border-radius: 10px;
   margin-bottom: 8px;
   align-self: stretch;
+  position: sticky;
+  top: 110px;
 }
 
 /* Display list items side by side */
@@ -1303,4 +1305,16 @@ ul.breadcrumbs li a:hover {
   border: 1px solid;
   border-radius: 3px;
   padding-left: 5px;
+}
+
+@media screen and (max-width: 1370px) {
+  ul.breadcrumbs {
+    top: 160px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  ul.breadcrumbs {
+    top: 85px;
+  }
 }
