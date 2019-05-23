@@ -537,6 +537,8 @@ function handleLoginFeatures() {
         /*loadPhotoFromDisk($(this)[0].files[0]).then(result => {
             parent.find('img')[0].src = result;
         });*/
+        parent.find('input[type=file]').hide();
+        parent.find('img')[0].src = "static/images/icons/loading.gif";
 
         let domain = domainName !== '' ? '/' + domainName : '';
         var data = new FormData();
@@ -556,11 +558,13 @@ function handleLoginFeatures() {
                 uriInput.val(url + data);
                 uriInput.prop('disabled', true);
                 parent.find('img')[0].src = url + data;
-                parent.find('input[type=file]').hide();
+                //parent.find('input[type=file]').hide();
             },
             error: function(e) {
                 if(e.status === 401) {
                     alert('Please log in first before uploading photos');
+                    parent.find('img')[0].src = parent.find('input[name="photos._Photograph.image"]').val();
+                    parent.find('input[type=file]').show();
                 }
             }
         });
