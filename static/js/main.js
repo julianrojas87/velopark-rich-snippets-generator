@@ -321,7 +321,9 @@ function handleLoginFeatures() {
 
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
+
         let photoURI = myParent.find('.input100[name="photos._Photograph.image"]').val();
+        myParent.find('img.imgPreview').attr('src', '');
         if(photoURI.indexOf('velopark.ilabt.imec.be') > 0 || photoURI.indexOf('localhost') > 0){    //TODO: find better way to detect local images
             //delete photo from server
             let url = myParent.find('input[name="photos._Photograph.image"]').val();
@@ -437,6 +439,7 @@ function handleLoginFeatures() {
         if (section.css('display') === 'none') {
             newSection = section;
             section.parent().siblings('p.no-items-error').hide();
+            newSection.find('.photo-selector').show();
         } else {
 
             section.find('.js-select2').each(function () {
