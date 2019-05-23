@@ -1,5 +1,6 @@
 let signinformcompaniesloaded = false;
 let signinformcitiesloaded = false;
+let currentLang = 'nl';
 
 ($ => {
 
@@ -231,7 +232,6 @@ let signinformcitiesloaded = false;
     });
 })(jQuery);
 
-
 //if no lang parameter given, setting is loaded from localStorage
 function translate(lang){
     if(lang && user && user.name){
@@ -256,6 +256,7 @@ function translate(lang){
     }
     if (lang || (typeof(Storage) !== "undefined" && localStorage.getItem("languagePref"))) {
         lang = localStorage.getItem("languagePref");
+        currentLang = lang;
         let domain = domainName !== '' ? '/' + domainName : '';
         $.ajax({
             type: "GET",
@@ -324,10 +325,47 @@ function translate(lang){
                         console.warn("Missing translation!! (" + lang + ')', path);
                     }
                 });
+                $('[transl-id-option]').each(function() {
+                    let optionType = $(this).attr('transl-id-option');
+                    switch (optionType) {
+                        case "securityfeature":
+                            //find correct feature
+                            for(i in mySecurityFeatures){
+                                if($(this).attr('value') === mySecurityFeatures[i]['@id']){
+                                    $(this).html(mySecurityFeatures[i]['label'][lang]);
+                                }
+                            }
+                            break;
+                        case "generalfeature":
+                            //find correct feature
+                            for(i in myGeneralFeatures){
+                                if($(this).attr('value') === myGeneralFeatures[i]['@id']){
+                                    $(this).html(myGeneralFeatures[i]['label'][lang]);
+                                }
+                            }
+                            break;
+                        default:
+                            console.warn('Translation: Unknown option type "' + optionType + '"');
+                            break;
+                    }
+                });
 
                 // Trigger change on data input language to adapt languages names
                 $('#language-selection-container #dutch').trigger('change');
                 handleResize();
+
+                //fix select2
+                let select2El = $('.js-select2');
+                select2El.each(function () {
+                    $(this).select2('destroy');
+                });
+                select2El.each(function () {
+                    $(this).select2({
+                        minimumResultsForSearch: 20,
+                        dropdownParent: $(this).next('.dropDownSelect2'),
+                        placeholder: $(this).attr('placeholder')
+                    });
+                });
             },
             error: e => {
                 console.error('Error: ' + e.responseText);

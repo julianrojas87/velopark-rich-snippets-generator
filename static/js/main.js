@@ -178,7 +178,7 @@ function handleLoginFeatures() {
         myGeneralFeatures = features;
         $('select[feature-types = "true"]').each(function () {
             for (var i = 0; i < features.length; i++) {
-                $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
+                $(this).append('<option value="' + features[i]['@id'] + '" transl-id-option="generalfeature">' + features[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
             }
         });
     });
@@ -187,7 +187,7 @@ function handleLoginFeatures() {
         mySecurityFeatures = features;
         $('select[security-feature-types = "true"]').each(function () {
             for (var i = 0; i < features.length; i++) {
-                $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
+                $(this).append('<option value="' + features[i]['@id'] + '" transl-id-option="securityfeature">' + features[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
             }
         });
     });
