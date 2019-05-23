@@ -6,6 +6,8 @@ const numStepsFacilitySection = 5;
 var currentNumFacilitySections = 1;
 let myGeneralFeatures;
 let mySecurityFeatures;
+let myBikeTypes;
+let myParkingTypes;
 
 const stepOverviewFacilityTitleFormat = '<div class="steps-overview-facility-title" facilitynum="{0}"><h4 >Facility Section {0}</h4><button type="button" class="minus_button steps-overview-remove-facility-button" facilitynum="{0}"><i class="fas fa-trash-alt"></i></button></div>';
 
@@ -159,17 +161,19 @@ function handleLoginFeatures() {
     });
 
     parkingTypes.then(parkingTypes => {
+        myParkingTypes = parkingTypes;
         $('select[parking-types = "true"]').each(function () {
             for (var i = 0; i < parkingTypes.length; i++) {
-                $(this).append('<option value="' + parkingTypes[i]['@id'] + '">' + parkingTypes[i]['label'] + '</option>');
+                $(this).append('<option value="' + parkingTypes[i]['@id'] + '" transl-id-option="parkingtypes">' + parkingTypes[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
             }
         });
     });
 
     bikeTypes.then(bikeTypes => {
+        myBikeTypes = bikeTypes;
         $('select[bike-types = "true"]').each(function () {
             for (var i = 0; i < bikeTypes.length; i++) {
-                $(this).append('<option value="' + bikeTypes[i]['@id'] + '">' + bikeTypes[i]['label'] + '</option>');
+                $(this).append('<option value="' + bikeTypes[i]['@id'] + '" transl-id-option="biketypes">' + bikeTypes[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
             }
         });
     });

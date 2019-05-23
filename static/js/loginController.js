@@ -344,6 +344,22 @@ function translate(lang){
                                 }
                             }
                             break;
+                            case "biketypes":
+                                //find correct type
+                                for(i in myBikeTypes){
+                                    if($(this).attr('value') === myBikeTypes[i]['@id']){
+                                        $(this).html(myBikeTypes[i]['label'][lang]);
+                                    }
+                                }
+                                break;
+                        case "parkingtypes":
+                            //find correct type
+                            for(i in myParkingTypes){
+                                if($(this).attr('value') === myParkingTypes[i]['@id']){
+                                    $(this).html(myParkingTypes[i]['label'][lang]);
+                                }
+                            }
+                            break;
                         default:
                             console.warn('Translation: Unknown option type "' + optionType + '"');
                             break;
