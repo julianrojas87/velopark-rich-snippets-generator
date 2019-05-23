@@ -319,11 +319,25 @@
     },
     "features" : {
       "title" : "Faciliteitssectie - Voorzieningen",
-      "infoAlert" : "Hier kan je speciale voorzieningen toevoegen die aangeboden worden in deze faciliteitssectie. Neem een kijkje in de beschikbare opties.",
-      "feature" : {
-        "field": "Voorziening",
-        "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
-        "placeholder" : "Selecteer een voorziening"
+      "generalservices": {
+        "title" : "Algemene Diensten",
+        "infoAlert" : "Hier kan je speciale voorzieningen toevoegen die aangeboden worden in deze faciliteitssectie. Neem een kijkje in de beschikbare opties.",
+        "feature" : {
+          "field": "Voorziening",
+          "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Bicycle Pump</i>",
+          "placeholder" : "Selecteer een voorziening"
+        },
+        "addExtra" : "Voeg extra voorziening toe"
+      },
+      "security" : {
+        "title" : "Beveiligingsvoorzieningen",
+        "infoAlert" : "Hier kan je beveiliginsvoorzieningen toevoegen die aangeboden worden in deze faciliteitssectie. Neem een kijkje in de beschikbare opties.",
+        "feature" : {
+          "field": "Voorziening",
+          "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Camera Bewaking</i>",
+          "placeholder" : "Selecteer een Beveiligingsvoorziening"
+        },
+        "addExtra" : "Voeg extra beveiligingsvoorziening toe"
       },
       "availableHours" : {
         "title" : "Beschikbare uren",
@@ -339,8 +353,7 @@
         },
         "day" : ["Ma", "Di", "Woe", "Do", "Vr", "Za", "Zo"],
         "addExtra": "Voeg extra uren toe"
-      },
-      "addExtra" : "Voeg extra voorziening toe"
+      }
     },
     "cost" : {
       "title" : "Faciliteitssectie - Kostenmodel",

@@ -319,12 +319,27 @@
     },
     "features" : {
       "title" : "Facility-Bereich - Eigenschaften",
-      "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
-      "feature" : {
-        "field": "Merkmal",
-        "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
-        "placeholder" : "Wählen Sie eine Eigenschaft"
+      "generalservices": {
+        "title" : "Allgemeine Dienstleistungen",
+        "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
+        "feature" : {
+          "field": "Merkmal",
+          "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Bicycle Pump</i>",
+          "placeholder" : "Wählen Sie eine Eigenschaft"
+        },
+        "addExtra" : "Zusätzliche Funktion hinzufügen"
       },
+      "security" : {
+        "title" : "Sicherheitsfunktionen",
+        "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
+        "feature" : {
+          "field": "Merkmal",
+          "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Camera Surveillance</i>",
+          "placeholder" : "Wählen Sie eine Eigenschaft"
+        },
+        "addExtra" : "Zusätzliche Funktion hinzufügen"
+      },
+      "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
       "availableHours" : {
         "title" : "Stunden verfügbar",
         "always" : "24/7 Geöffnet",
@@ -339,8 +354,7 @@
         },
         "day" : ["Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],
         "addExtra": "Fügen Sie zusätzliche Stunden hinzu"
-      },
-      "addExtra" : "Zusätzliche Funktion hinzufügen"
+      }
     },
     "cost" : {
       "title" : "Facility-Bereich - Kostenmodell",

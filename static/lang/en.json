@@ -320,11 +320,25 @@
     },
     "features" : {
       "title" : "Facility Section - Features",
-      "infoAlert" : "Here you can add special features this facility section provides. Take a look at the available options.",
-      "feature" : {
-        "field": "Feature",
-        "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
-        "placeholder" : "Select a Feature"
+      "generalservices": {
+        "title" : "General Services",
+        "infoAlert" : "Here you can add special features this facility section provides. Take a look at the available options.",
+        "feature" : {
+          "field": "Feature",
+          "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Bicycle Pump</i>",
+          "placeholder" : "Select a Feature"
+        },
+        "addExtra" : "Add extra feature"
+      },
+      "security" : {
+        "title" : "Security Features",
+        "infoAlert" : "Here you can add security features this facility section provides. Take a look at the available options.",
+        "feature" : {
+          "field": "Feature",
+          "infoText": "Select the security features that are available or can be used in this section of the parking garage.<br><br>Example: <i>Camera Surveillance</i>",
+          "placeholder" : "Select a Security Feature"
+        },
+        "addExtra" : "Add extra security feature"
       },
       "availableHours" : {
         "title" : "Hours Available",
@@ -340,8 +354,7 @@
         },
         "day" : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         "addExtra": "Add extra hours"
-      },
-      "addExtra" : "Add extra feature"
+      }
     },
     "cost" : {
       "title" : "Facility Section - Cost Model",
