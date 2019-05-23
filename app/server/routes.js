@@ -762,7 +762,7 @@ module.exports = app => {
     });
 
     app.get("/photo/:id", (req, res) => {
-        res.sendFile(path.join(data + '/photo/' + req.params.id));
+        res.sendFile(path.normalize(__dirname + "/../../" + data + '/photo/' + req.params.id));
     });
 
     app.delete("/photo/:id", function (req, res) {
