@@ -463,6 +463,25 @@ exports.getFeatures = async () => {
     return types;
 };
 
+exports.getSecurityFeatures = async () => {
+    let types = [];
+    let quads = await getTermsRDF();
+
+    let filtered = quads.filter(quad => quad.object.value == 'https://velopark.ilabt.imec.be/openvelopark/vocabulary#SecurityFeature');
+
+    for (let p in filtered) {
+        let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
+        let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
+        types.push({
+            '@id': filtered[p].subject.value,
+            'label': tq_label[0].object.value,
+            'comment': tq_comment[0].object.value
+        });
+    }
+
+    return types;
+};
+
 async function getTermsRDF() {
     return new Promise((resolve, reject) => {
         try {

@@ -1066,6 +1066,7 @@
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
+                                <h4 transl-id="step.features.generalservices.title">General Services</h4>
                                 <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
                                     <span transl-id="step.features.infoAlert">
                                         Here you can add special features this facility section provides. Take a look at the
@@ -1094,7 +1095,8 @@
                                             <div>
                                                 <select class="js-select2" name="amenityFeature._.@type"
                                                         feature-types="true" placeholder="Select a Feature"
-                                                        transl-id-placeholder="step.features.feature.placeholder">
+                                                        transl-id-placeholder="step.features.feature.placeholder"
+                                                        generalfeature="true">
                                                     <option value=""></option>
                                                 </select>
                                                 <div class="dropDownSelect2"></div>
@@ -1106,7 +1108,7 @@
                                         </span>
                                         <div>
 
-                                            <div name="amenityFeature._.hoursAvailable"
+                                            <div name="amenityFeature._.hoursAvailable" generalfeature="true"
                                                  class="wrap-contact100-subsection dynamic-section">
                                                 <button type="button" class="minus_button minus_button_input"><i
                                                         class="fas fa-trash-alt"></i></button>
@@ -1183,6 +1185,130 @@
                                     <button class="plus_button_section">
                                         <i class="fas fa-plus-square"></i>
                                         <span transl-id="step.features.addExtra">Add extra feature</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="wrap-contact100-subsection">
+                                <h4 transl-id="step.features.security.title">Security Features</h4>
+                                <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                                    <span transl-id="step.features.security.infoAlert">
+                                        Here you can add special security features this facility section provides. Take a look at the
+                                        available options.
+                                    </span>
+                                </p>
+                                <div>
+                                    <div class="wrap-contact100-subsection dynamic-section">
+                                        <button type="button" class="minus_button minus_button_input"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                        <div class="wrap-input100 input100-select bg1">
+                                            <span class="label-input100"
+                                                  transl-id="step.features.security.feature.field">Feature</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <div transl-id="step.features.security.feature.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2" name="amenityFeature._.@type" generalfeature="false"
+                                                        security-feature-types="true" placeholder="Select a Feature"
+                                                        transl-id-placeholder="step.features.security.feature.placeholder">
+                                                    <option value=""></option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>
+                                        </div>
+                                        <span class="contact100-form-subsubsection" style="width: 90%;"
+                                              transl-id="step.features.availableHours.title">
+                                            Hours Available
+                                        </span>
+                                        <div>
+
+                                            <div name="amenityFeature._.hoursAvailable" generalfeature="false"
+                                                 class="wrap-contact100-subsection dynamic-section">
+                                                <button type="button" class="minus_button minus_button_input"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                                <div style="display: flex;">
+                                                    <div class="wrap-input100 week-day-selector">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[0]">Mon </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Monday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[1]">Tue </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Tuesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[2]">Wed </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Wednesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[3]">Thu </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Thursday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[4]">Fri </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Friday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[5]">Sat </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Saturday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[6]">Sun </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Sunday">
+                                                        <input type="image" title="about" class="info_button_div"
+                                                               src="static/images/icons/info.png">
+                                                        <div class="log-form"
+                                                             style="padding-bottom: 20px; word-wrap: break-word;">
+                                                            <h2 style="margin-bottom: 15px;"></h2>
+                                                            <input type="image" title="close" class="info_close_button"
+                                                                   src="static/images/icons/close_white.png"
+                                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                            <div transl-id="step.features.availableHours.infoText">
+                                                                <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
+                                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wrap-input100 always-open-selector" style="flex-grow: 0; width: initial; border: none;">
+                                                        <button class="btn" type="button"
+                                                                transl-id="step.features.availableHours.always">Open 24/7</button>
+                                                    </div>
+                                                </div>
+                                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                                    <span class="label-input100"
+                                                          transl-id="step.features.availableHours.open.field">Opening Time</span>
+                                                    <input class="input100" type="time"
+                                                           placeholder="Enter the opening time"
+                                                           transl-id-placeholder="step.features.availableHours.open.placeholder">
+                                                </div>
+                                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                                    <span class="label-input100"
+                                                          transl-id="step.features.availableHours.close.field">Closing Time</span>
+                                                    <input class="input100" type="time"
+                                                           placeholder="Enter the closing time"
+                                                           transl-id-placeholder="step.features.availableHours.close.placeholder">
+                                                </div>
+                                            </div>
+                                            <button class="plus_button_section">
+                                                <i class="fas fa-plus-square"></i>
+                                                <span transl-id="step.features.availableHours.addExtra">Add extra hours</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button class="plus_button_section">
+                                        <i class="fas fa-plus-square"></i>
+                                        <span transl-id="step.features.security.addExtra">Add extra security feature</span>
                                     </button>
                                 </div>
                             </div>

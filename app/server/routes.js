@@ -894,6 +894,11 @@ module.exports = app => {
         res.status(200).json(list);
     });
 
+    app.get('/security-features', async function (req, res) {
+        let list = await PM.getSecurityFeatures();
+        res.status(200).json(list);
+    });
+
     app.post('/user/update-lang', function (req, res) {
         if (req.session.user == null) {
             res.status(401).send();

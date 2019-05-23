@@ -4,6 +4,8 @@ var context = null;
 const startStepNumberFacilitySection = 4;
 const numStepsFacilitySection = 5;
 var currentNumFacilitySections = 1;
+let myGeneralFeatures;
+let mySecurityFeatures;
 
 const stepOverviewFacilityTitleFormat = '<div class="steps-overview-facility-title" facilitynum="{0}"><h4 >Facility Section {0}</h4><button type="button" class="minus_button steps-overview-remove-facility-button" facilitynum="{0}"><i class="fas fa-trash-alt"></i></button></div>';
 
@@ -98,6 +100,23 @@ function getFeatures(done) {
     });
 }
 
+function getSecurityFeatures(done) {
+    return new Promise((resolve, reject) => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/security-features',
+            success: data => {
+                resolve(data);
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                reject(e);
+            }
+        });
+    });
+}
+
 function handleLoginFeatures() {
     // Check if user is logged in
     let userName = $('#user-email').text();
@@ -121,12 +140,14 @@ function handleLoginFeatures() {
     let parkingTypes = getParkingTypes();
     let bikeTypes = getBikeTypes();
     let features = getFeatures();
+    let securityFeatures = getSecurityFeatures();
     let contextPromise = loadAPSkeleton();
 
     loadingPromises.push(terms);
     loadingPromises.push(parkingTypes);
     loadingPromises.push(bikeTypes);
     loadingPromises.push(features);
+    loadingPromises.push(securityFeatures);
     loadingPromises.push(contextPromise);
 
     terms.then(listOfTerms => {
@@ -154,7 +175,17 @@ function handleLoginFeatures() {
     });
 
     features.then(features => {
+        myGeneralFeatures = features;
         $('select[feature-types = "true"]').each(function () {
+            for (var i = 0; i < features.length; i++) {
+                $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
+            }
+        });
+    });
+
+    securityFeatures.then(features => {
+        mySecurityFeatures = features;
+        $('select[security-feature-types = "true"]').each(function () {
             for (var i = 0; i < features.length; i++) {
                 $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
             }
@@ -324,7 +355,7 @@ function handleLoginFeatures() {
 
         let photoURI = myParent.find('.input100[name="photos._Photograph.image"]').val();
         myParent.find('img.imgPreview').attr('src', '');
-        if(photoURI.indexOf('velopark.ilabt.imec.be') > 0 || photoURI.indexOf('localhost') > 0){    //TODO: find better way to detect local images
+        if(photoURI && (photoURI.indexOf('velopark.ilabt.imec.be') > 0 || photoURI.indexOf('localhost') > 0)){    //TODO: find better way to detect local images
             //delete photo from server
             let url = myParent.find('input[name="photos._Photograph.image"]').val();
             let filename = url.split('/')[url.split('/').length-1];
