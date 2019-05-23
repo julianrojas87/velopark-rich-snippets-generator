@@ -773,6 +773,38 @@
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
+                                <span class="contact100-form-subsubsection"
+                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
+                                      transl-id="step.loc.polygon.text">
+                                    Draw the Parking Facility geometry in the map:
+                                </span>
+                                <button id="clear-polygon" value="clear" class="btn btn-primary btn-sm" type="button"
+                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
+                                        transl-id="step.loc.clear">
+                                    clear
+                                </button>
+
+                                <div id="polygon-map" class="ol-polygon-map"
+                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+
+                                <div class="wrap-input100 bg1">
+                                    <span class="label-input100" transl-id="step.loc.polygon.geoPolygon.field">Geo Polygon</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <span style="display: inherit; padding-left: 15px;"
+                                              transl-id="step.loc.polygon.geoPolygon.infoText">Draw the boundaries of this section of bicycle parking on the map.</span><br>
+                                    </div>
+                                    <input id="poly_string" class="input100" type="text"
+                                           name="geo._GeoShape.polygon"
+                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
+                                           transl-id-placeholder="step.loc.polygon.geoPolygon.placeholder">
+                                </div>
+                                
                                 <span class="contact100-form-subsubsection" transl-id="step.loc.point.title">
                                     Main Entrance
                                 </span>
@@ -914,37 +946,7 @@
                                     </button>
                                 </div>
 
-                                <span class="contact100-form-subsubsection"
-                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
-                                      transl-id="step.loc.polygon.text">
-                                    Draw the Parking Facility geometry in the map:
-                                </span>
-                                <button id="clear-polygon" value="clear" class="btn btn-primary btn-sm" type="button"
-                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
-                                        transl-id="step.loc.clear">
-                                    clear
-                                </button>
 
-                                <div id="polygon-map" class="ol-polygon-map"
-                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-
-                                <div class="wrap-input100 bg1">
-                                    <span class="label-input100" transl-id="step.loc.polygon.geoPolygon.field">Geo Polygon</span>
-                                    <input type="image" title="about" class="info_button"
-                                           src="static/images/icons/info.png">
-                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                        <h2 style="margin-bottom: 15px;"></h2>
-                                        <input type="image" title="close" class="info_close_button"
-                                               src="static/images/icons/close_white.png"
-                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;"
-                                              transl-id="step.loc.polygon.geoPolygon.infoText">Draw the boundaries of this section of bicycle parking on the map.</span><br>
-                                    </div>
-                                    <input id="poly_string" class="input100" type="text"
-                                           name="geo._GeoShape.polygon"
-                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
-                                           transl-id-placeholder="step.loc.polygon.geoPolygon.placeholder">
-                                </div>
                             </div>
                         </div>
                     </div>
