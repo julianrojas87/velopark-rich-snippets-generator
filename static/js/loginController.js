@@ -382,6 +382,7 @@ function translate(lang){
                         placeholder: $(this).attr('placeholder')
                     });
                 });
+                select2El.change();
             },
             error: e => {
                 console.error('Error: ' + e.responseText);

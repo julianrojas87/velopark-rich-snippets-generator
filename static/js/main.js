@@ -452,6 +452,7 @@ function handleLoginFeatures() {
                     dropdownParent: $(this).next('.dropDownSelect2'),
                     placeholder: $(this).attr('placeholder')
                 });
+                $(this).change();
             });
         }
         newSelect.find('.js-select2').each(function () {
@@ -461,7 +462,9 @@ function handleLoginFeatures() {
                 val: '',
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
+        newSelect.find('.featuredescription').html('');
         newSelect.slideDown('slow');    //animate
         return false;
     });
@@ -510,12 +513,15 @@ function handleLoginFeatures() {
             $(this).before(newSection);
         }
 
+        newSection.find('.featuredescription').html('');
+
         section.parent().find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2'),
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
 
         function showMaps() {
@@ -621,6 +627,21 @@ function handleLoginFeatures() {
         }
     });
 
+    $('[name="amenityFeature._.@type"]').on('change', function(){
+        let isGeneralFeature = $(this).attr('generalfeature') === "true";
+        let features;
+        if(isGeneralFeature){
+            features = myGeneralFeatures;
+        } else {
+            features = mySecurityFeatures;
+        }
+        for(i in features){
+            if(features[i]['@id'] === $(this).val()){
+                $(this).siblings('.featuredescription').html(features[i]['comment'][currentLang]);
+            }
+        }
+    });
+
 })(jQuery);
 
 
@@ -666,6 +687,8 @@ function addFacilitySection() {
             $(this).val('');
         });
 
+        newFacilitySection.find('.featuredescription').html('');
+
 
         //re-enable select2 (original section and cloned section)
         facilitySection.find('.js-select2').each(function () {
@@ -674,6 +697,7 @@ function addFacilitySection() {
                 dropdownParent: $(this).next('.dropDownSelect2'),
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
         newFacilitySection.find('.js-select2').each(function () {
             $(this).select2({
@@ -681,6 +705,7 @@ function addFacilitySection() {
                 dropdownParent: $(this).next('.dropDownSelect2'),
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
         newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections - 1);
     }
