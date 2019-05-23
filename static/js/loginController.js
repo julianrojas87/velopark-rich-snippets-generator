@@ -4,8 +4,6 @@ let currentLang = 'nl';
 
 ($ => {
 
-    translate();
-
     if (user && user.name && user.name !== '') {
         $('#signin').hide();
         $('#login').hide();
