@@ -326,7 +326,8 @@
         "feature" : {
           "field": "Merkmal",
           "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Bicycle Pump</i>",
-          "placeholder" : "Wählen Sie eine Eigenschaft"
+          "placeholder" : "Wählen Sie eine Eigenschaft",
+          "description": "Beschreibung"
         },
         "addExtra" : "Zusätzliche Funktion hinzufügen"
       },
@@ -336,7 +337,8 @@
         "feature" : {
           "field": "Merkmal",
           "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Camera Surveillance</i>",
-          "placeholder" : "Wählen Sie eine Eigenschaft"
+          "placeholder" : "Wählen Sie eine Eigenschaft",
+          "description": "Beschreibung"
         },
         "addExtra" : "Zusätzliche Funktion hinzufügen"
       },
