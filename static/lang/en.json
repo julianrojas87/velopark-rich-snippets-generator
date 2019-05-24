@@ -415,7 +415,7 @@
     },
     "publish" : {
       "title" : "Data Publishing",
-      "infoText" : "If you decide to publish the data generated in this tool on your website, then enter here the URL where the information for this parking will be available. Otherwise leave this field empty.\n\n** We recommend that you publish the data on your own website **.",
+      "infoText" : "If you want to publish the data on your own website, enter the URL in the box below. <br>If you leave it empty the data file will be stored and published at <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.",
       "URI" : {
         "field": "Parking Facility URI",
         "infoText": "The URL where the data about this bicycle parking will be published.<br><br>Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Parking Owner and the Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA_018</i>",

@@ -415,7 +415,7 @@
     },
     "publish" : {
       "title" : "Datenveröffentlichung",
-      "infoText" : "Wenn Sie die mit diesem Tool generierten Daten auf Ihrer Website veröffentlichen möchten, geben Sie hier die URL ein, unter der die Informationen für diesen Parkplatz verfügbar sind. Ansonsten lassen Sie dieses Feld leer.\n\n** Wir empfehlen Ihnen, die Daten auf Ihrer eigenen Website zu veröffentlichen **.",
+      "infoText" : "Wenn Sie die Daten auf Ihrer eigenen Website veröffentlichen möchten, geben Sie die URL in das unten stehende Feld ein. <br>Wenn Sie das Feld leer lassen, wird die Datendatei gespeichert und in der Schriftgröße <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.",
       "URI" : {
         "field": "URI der Parkanlage",
         "infoText": "Die URL, unter der die Daten zu diesem Fahrradabstellplatz veröffentlicht werden.<br><br>Beispiel: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>Falls Sie noch keine haben, stellen wir diese auf der Grundlage des Parkbesitzers und der lokalen Kennung zur Verfügung und veröffentlichen die Daten für Sie.<br><br>Beispiel: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i>",

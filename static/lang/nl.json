@@ -414,7 +414,7 @@
     },
     "publish" : {
       "title" : "Data Publicering",
-      "infoText" : "Als je beslist de data die gegenereerd zal worden met deze tool te publiceren op je eigen website, kan je hier de URL invullen waar deze beschikbaar zal komen. Indien dit niet het geval is kan je dit veld leeg laten.\n\n** We raden sterk aan dat je deze data zelf publiceert op jouw website. **.",
+      "infoText" : "Als u de gegevens op uw eigen website wilt publiceren, voert u de URL in het onderstaande vak in. <br>Als u het leeg laat, wordt het gegevensbestand opgeslagen en gepubliceerd op <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.",
       "URI" : {
         "field": "Parkeerfaciliteit URI",
         "infoText": "De URL naar de website waar deze date gepubliceerd zal worden.<br><br>Voobeeld: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>Indien je hier niet over beschikt zullen wij een link genereren, gebaseerd op de parkeerheer en de lokale ID, en vervolgens de data voor jou publiceren.<br><br>Voobeeld: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i>",
