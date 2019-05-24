@@ -161,6 +161,7 @@
     },
     "operation" : {
       "title" : "Section de Stationnement - Informations sur l'opération",
+      "infoText": "Si le parking ne comporte qu'une seule section, les informations saisies ici seront valables pour l'ensemble de l'établissement.",
       "sectionName": {
         "field": "Nom de la Section",
         "infoText": "Un nom facultatif de la section de stationnement pour vélos telle qu’elle est connue localement.<br><br>Exemple: <i>Green zone</i>",

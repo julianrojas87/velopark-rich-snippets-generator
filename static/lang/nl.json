@@ -161,6 +161,7 @@
     },
     "operation" : {
       "title" : "Faciliteitssectie - Praktische Informatie",
+      "infoText": "Als de parkeerplaats slechts één sectie heeft, is de hier ingevoerde informatie geldig voor de hele faciliteit.",
       "sectionName": {
         "field": "Sectie Naam",
         "infoText": "Een optionele naam van deze parkingssectie.<br><br>Voorbeeld: <i>Groene zone</i>",

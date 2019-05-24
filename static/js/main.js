@@ -710,6 +710,9 @@ function addFacilitySection() {
         removeFacilitySection(facilitynum);
     });
 
+    //Delete one section only info box
+    newFacilitySection.find('#one-section-only-info').remove();
+
     //fix maps
     let locationSection = $('#step-facility-section-2-' + currentNumFacilitySections);
 

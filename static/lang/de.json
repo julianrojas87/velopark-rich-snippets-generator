@@ -161,6 +161,7 @@
     },
     "operation" : {
       "title" : "Facility-Bereich - Betriebsinformationen",
+      "infoText": "Wenn der Parkplatz nur einen Abschnitt hat, gelten die hier eingegebenen Informationen für die gesamte Einrichtung.",
       "sectionName": {
         "field": "Abteilungsname",
         "infoText": "Ein optionaler Name des Fahrradabstellbereichs, wie er lokal bekannt ist.<br><br>Beispiel: <i>Green zone</i>",
