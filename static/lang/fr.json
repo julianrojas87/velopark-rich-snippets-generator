@@ -347,11 +347,11 @@
         "always" : "Ouvert 24/7",
         "infoText": "Sélectionnez les jours et les heures pour lesquels cette fonctionnalité est disponible ou active dans la section de stationnement.<br><br>Exemple: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
-          "field": "Heure d'ouverture *",
+          "field": "Heure d'ouverture",
           "placeholder": "Entrez l'heure d'ouverture"
         },
         "close": {
-          "field": "Heure de fermeture *",
+          "field": "Heure de fermeture",
           "placeholder": "Entrez l'heure de fermeture"
         },
         "day" : ["lun", "mar", "mer", "jeu", "ven", "sam", "di"],

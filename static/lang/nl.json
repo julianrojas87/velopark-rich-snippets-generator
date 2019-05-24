@@ -347,11 +347,11 @@
         "always" : "Open 24/7",
         "infoText": "Selecteer de dage en uren waarop deze voorziening beschikbaar of actief is in deze faciliteitssectie.<br><br>Voorbeeld: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
-          "field": "Openingstijd *",
+          "field": "Openingstijd",
           "placeholder": "Vul de openingstijd in"
         },
         "close": {
-          "field": "Sluitingstijd *",
+          "field": "Sluitingstijd",
           "placeholder": "Vul de sluitingstijd in"
         },
         "day" : ["Ma", "Di", "Woe", "Do", "Vr", "Za", "Zo"],

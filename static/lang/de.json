@@ -348,11 +348,11 @@
         "always" : "24/7 Geöffnet",
         "infoText": "Wählen Sie die Tage und Stunden aus, an denen diese Funktion verfügbar oder im Parkbereich aktiv ist.<br><br>Beispiel: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
-          "field": "Öffnungszeit *",
+          "field": "Öffnungszeit",
           "placeholder": "Geben Sie die Öffnungszeit ein"
         },
         "close": {
-          "field": "Schlusszeit *",
+          "field": "Schlusszeit",
           "placeholder": "Geben Sie die Schließzeit ein"
         },
         "day" : ["Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],

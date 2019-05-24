@@ -348,11 +348,11 @@
         "always" : "Open 24/7",
         "infoText": "Select the days and hours this feature is available or active in the parking section.<br><br>Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
-          "field": "Opening Time *",
+          "field": "Opening Time",
           "placeholder": "Enter the opening time"
         },
         "close": {
-          "field": "Closing Time *",
+          "field": "Closing Time",
           "placeholder": "Enter the closing time"
         },
         "day" : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
