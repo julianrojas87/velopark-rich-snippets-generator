@@ -629,7 +629,7 @@ function handleLoginFeatures() {
         } else {
             features = mySecurityFeatures;
         }
-        for (i in features) {
+        for (let i in features) {
             if (features[i]['@id'] === $(this).val()) {
                 $(this).closest('div.wrap-input100').next().find('.featuredescription').val(features[i]['comment'][currentLang]);
             }
