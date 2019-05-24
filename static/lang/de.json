@@ -161,6 +161,7 @@
     },
     "operation" : {
       "title" : "Facility-Bereich - Betriebsinformationen",
+      "infoText": "Wenn der Parkplatz nur einen Abschnitt hat, gelten die hier eingegebenen Informationen für die gesamte Einrichtung.",
       "sectionName": {
         "field": "Abteilungsname",
         "infoText": "Ein optionaler Name des Fahrradabstellbereichs, wie er lokal bekannt ist.<br><br>Beispiel: <i>Green zone</i>",
@@ -319,28 +320,44 @@
     },
     "features" : {
       "title" : "Facility-Bereich - Eigenschaften",
-      "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
-      "feature" : {
-        "field": "Merkmal",
-        "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
-        "placeholder" : "Wählen Sie eine Eigenschaft"
+      "generalservices": {
+        "title" : "Allgemeine Dienstleistungen",
+        "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
+        "feature" : {
+          "field": "Merkmal",
+          "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Bicycle Pump</i>",
+          "placeholder" : "Wählen Sie eine Eigenschaft",
+          "description": "Beschreibung"
+        },
+        "addExtra" : "Zusätzliche Funktion hinzufügen"
       },
+      "security" : {
+        "title" : "Sicherheitsfunktionen",
+        "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
+        "feature" : {
+          "field": "Merkmal",
+          "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Camera Surveillance</i>",
+          "placeholder" : "Wählen Sie eine Eigenschaft",
+          "description": "Beschreibung"
+        },
+        "addExtra" : "Zusätzliche Funktion hinzufügen"
+      },
+      "infoAlert" : "Hier können Sie spezielle Funktionen hinzufügen, die in diesem Bereich enthalten sind. Schauen Sie sich die verfügbaren Optionen an.",
       "availableHours" : {
         "title" : "Stunden verfügbar",
         "always" : "24/7 Geöffnet",
         "infoText": "Wählen Sie die Tage und Stunden aus, an denen diese Funktion verfügbar oder im Parkbereich aktiv ist.<br><br>Beispiel: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
-          "field": "Öffnungszeit *",
+          "field": "Öffnungszeit",
           "placeholder": "Geben Sie die Öffnungszeit ein"
         },
         "close": {
-          "field": "Schlusszeit *",
+          "field": "Schlusszeit",
           "placeholder": "Geben Sie die Schließzeit ein"
         },
         "day" : ["Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],
         "addExtra": "Fügen Sie zusätzliche Stunden hinzu"
-      },
-      "addExtra" : "Zusätzliche Funktion hinzufügen"
+      }
     },
     "cost" : {
       "title" : "Facility-Bereich - Kostenmodell",
@@ -401,7 +418,7 @@
     },
     "publish" : {
       "title" : "Datenveröffentlichung",
-      "infoText" : "Wenn Sie die mit diesem Tool generierten Daten auf Ihrer Website veröffentlichen möchten, geben Sie hier die URL ein, unter der die Informationen für diesen Parkplatz verfügbar sind. Ansonsten lassen Sie dieses Feld leer.\n\n** Wir empfehlen Ihnen, die Daten auf Ihrer eigenen Website zu veröffentlichen **.",
+      "infoText" : "Wenn Sie die Daten auf Ihrer eigenen Website veröffentlichen möchten, geben Sie die URL in das unten stehende Feld ein. <br>Wenn Sie das Feld leer lassen, wird die Datendatei gespeichert und in der Schriftgröße <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.",
       "URI" : {
         "field": "URI der Parkanlage",
         "infoText": "Die URL, unter der die Daten zu diesem Fahrradabstellplatz veröffentlicht werden.<br><br>Beispiel: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>Falls Sie noch keine haben, stellen wir diese auf der Grundlage des Parkbesitzers und der lokalen Kennung zur Verfügung und veröffentlichen die Daten für Sie.<br><br>Beispiel: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i>",

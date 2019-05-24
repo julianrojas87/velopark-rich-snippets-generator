@@ -96,6 +96,15 @@
 })(jQuery);
 
 $(window).on('load', function() {
+    // Init all select2
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2'),
+            placeholder: $(this).attr('placeholder')
+        });
+    });
+    translate();
     handleResize();
 });
 

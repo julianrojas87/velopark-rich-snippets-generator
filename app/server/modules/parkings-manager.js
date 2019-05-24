@@ -17,6 +17,8 @@ dbAdapter.initDbAdapter().then(() => {
     initCatalog();
 });
 
+let availableLang = ["en", "nl", "fr", "de"];
+
 
 let returnTableData = function (parkings, callback) {
     let tableData = [];
@@ -419,11 +421,18 @@ exports.getParkingTypes = async () => {
     let filtered = quads.filter(quad => quad.object.value == 'http://schema.mobivoc.org/BicycleParkingStation');
 
     for (let p in filtered) {
-        let tq = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
-        types.push({
-            '@id': filtered[p].subject.value,
-            'label': tq[0].object.value
-        });
+        let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
+        let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
+        let obj = {
+            '@id' : filtered[p].subject.value,
+            'label' : {},
+            'comment' : {}
+        };
+        for(i in availableLang){
+            obj['label'][availableLang[i]] = tq_label[i].object.value;
+            obj['comment'][availableLang[i]] = tq_comment[i].object.value;
+        }
+        types.push(obj);
     }
 
     return types;
@@ -436,15 +445,24 @@ exports.getBikeTypes = async () => {
     let filtered = quads.filter(quad => quad.object.value == 'https://velopark.ilabt.imec.be/openvelopark/vocabulary#Bicycle');
 
     for (let p in filtered) {
-        let tq = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
-        types.push({
-            '@id': filtered[p].subject.value,
-            'label': tq[0].object.value
-        });
+        let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
+        let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
+        let obj = {
+            '@id' : filtered[p].subject.value,
+            'label' : {},
+            'comment' : {}
+        };
+        for(i in availableLang){
+            obj['label'][availableLang[i]] = tq_label[i].object.value;
+            obj['comment'][availableLang[i]] = tq_comment[i].object.value;
+        }
+        types.push(obj);
     }
 
     return types;
 };
+
+
 
 exports.getFeatures = async () => {
     let types = [];
@@ -453,11 +471,42 @@ exports.getFeatures = async () => {
     let filtered = quads.filter(quad => quad.object.value == 'https://velopark.ilabt.imec.be/openvelopark/vocabulary#BikeParkingFeature');
 
     for (let p in filtered) {
-        let tq = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
-        types.push({
-            '@id': filtered[p].subject.value,
-            'label': tq[0].object.value
-        });
+        let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
+        let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
+        let obj = {
+            '@id' : filtered[p].subject.value,
+            'label' : {},
+            'comment' : {}
+        };
+        for(i in availableLang){
+            obj['label'][availableLang[i]] = tq_label[i].object.value;
+            obj['comment'][availableLang[i]] = tq_comment[i].object.value;
+        }
+        types.push(obj);
+    }
+
+    return types;
+};
+
+exports.getSecurityFeatures = async () => {
+    let types = [];
+    let quads = await getTermsRDF();
+
+    let filtered = quads.filter(quad => quad.object.value == 'https://velopark.ilabt.imec.be/openvelopark/vocabulary#SecurityFeature');
+
+    for (let p in filtered) {
+        let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
+        let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
+        let obj = {
+            '@id' : filtered[p].subject.value,
+            'label' : {},
+            'comment' : {}
+        };
+        for(i in availableLang){
+            obj['label'][availableLang[i]] = tq_label[i].object.value;
+            obj['comment'][availableLang[i]] = tq_comment[i].object.value;
+        }
+        types.push(obj);
     }
 
     return types;

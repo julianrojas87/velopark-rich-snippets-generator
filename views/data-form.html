@@ -447,7 +447,7 @@
                                            placeholder="Enter here the photo URL or choose a file image"
                                            transl-id-placeholder="step.photo.url.placeholder">
                                     <input type="file" accept="image/*" class="btn btn-primary photo-selector"></input>
-                                    <img class="imgPreview" src="" height="200"/>
+                                    <img class="imgPreview" src="" style="max-width: 400px; max-height: 200px;"/>
                                 </div>
                             </div>
                             <button class="plus_button_section">
@@ -465,9 +465,13 @@
             <fieldset>
                 <div id="step-facility-section-1-1">
                     <h2 transl-id="step.operation.title">Facility Section - Operation Information</h2>
-
                     <div class="wrap-contact100-section">
                         <div parking-section="0" class="wrap-contact100-subsection">
+                            <p id="one-section-only-info" class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                                <span transl-id="step.operation.infoText">
+                                    If the parking has only one section, the information entered here will be valid for the entire facility.
+                                </span>
+                            </p>
                             <div class="wrap-input100 bg1"
                                  data-validate="Enter the facility name"
                                  transl-id-validate="step.operation.sectionName.validation">
@@ -773,6 +777,38 @@
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
+                                <span class="contact100-form-subsubsection"
+                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
+                                      transl-id="step.loc.polygon.text">
+                                    Draw the Parking Facility geometry in the map:
+                                </span>
+                                <button id="clear-polygon" value="clear" class="btn btn-primary btn-sm" type="button"
+                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
+                                        transl-id="step.loc.clear">
+                                    clear
+                                </button>
+
+                                <div id="polygon-map" class="ol-polygon-map"
+                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
+
+                                <div class="wrap-input100 bg1">
+                                    <span class="label-input100" transl-id="step.loc.polygon.geoPolygon.field">Geo Polygon</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <span style="display: inherit; padding-left: 15px;"
+                                              transl-id="step.loc.polygon.geoPolygon.infoText">Draw the boundaries of this section of bicycle parking on the map.</span><br>
+                                    </div>
+                                    <input id="poly_string" class="input100" type="text"
+                                           name="geo._GeoShape.polygon"
+                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
+                                           transl-id-placeholder="step.loc.polygon.geoPolygon.placeholder">
+                                </div>
+                                
                                 <span class="contact100-form-subsubsection" transl-id="step.loc.point.title">
                                     Main Entrance
                                 </span>
@@ -914,37 +950,7 @@
                                     </button>
                                 </div>
 
-                                <span class="contact100-form-subsubsection"
-                                      style="font-family: Montserrat-Semibold; font-size: 20px; padding-bottom: 0;"
-                                      transl-id="step.loc.polygon.text">
-                                    Draw the Parking Facility geometry in the map:
-                                </span>
-                                <button id="clear-polygon" value="clear" class="btn btn-primary btn-sm" type="button"
-                                        style="position: relative; float:right; bottom: 22px; font-family: Montserrat-Regular; cursor: pointer;"
-                                        transl-id="step.loc.clear">
-                                    clear
-                                </button>
 
-                                <div id="polygon-map" class="ol-polygon-map"
-                                     style="width: 100%; height: 350px; margin-bottom: 50px;"></div>
-
-                                <div class="wrap-input100 bg1">
-                                    <span class="label-input100" transl-id="step.loc.polygon.geoPolygon.field">Geo Polygon</span>
-                                    <input type="image" title="about" class="info_button"
-                                           src="static/images/icons/info.png">
-                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                        <h2 style="margin-bottom: 15px;"></h2>
-                                        <input type="image" title="close" class="info_close_button"
-                                               src="static/images/icons/close_white.png"
-                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                        <span style="display: inherit; padding-left: 15px;"
-                                              transl-id="step.loc.polygon.geoPolygon.infoText">Draw the boundaries of this section of bicycle parking on the map.</span><br>
-                                    </div>
-                                    <input id="poly_string" class="input100" type="text"
-                                           name="geo._GeoShape.polygon"
-                                           placeholder="Enter the polygon points e.g. POLYGON ((30 10, 40 40, 20 40, 10 20))"
-                                           transl-id-placeholder="step.loc.polygon.geoPolygon.placeholder">
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1066,8 +1072,9 @@
                     <div>
                         <div parking-section="0">
                             <div class="wrap-contact100-subsection">
+                                <h4 transl-id="step.features.generalservices.title">General Services</h4>
                                 <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
-                                    <span transl-id="step.features.infoAlert">
+                                    <span transl-id="step.features.generalservices.infoAlert">
                                         Here you can add special features this facility section provides. Take a look at the
                                         available options.
                                     </span>
@@ -1078,7 +1085,7 @@
                                                 class="fas fa-trash-alt"></i></button>
                                         <div class="wrap-input100 input100-select bg1">
                                             <span class="label-input100"
-                                                  transl-id="step.features.feature.field">Feature</span>
+                                                  transl-id="step.features.generalservices.feature.field">Feature</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1086,7 +1093,7 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.features.feature.infoText">
+                                                <div transl-id="step.features.generalservices.feature.infoText">
                                                     <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
                                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
                                                 </div>
@@ -1094,11 +1101,16 @@
                                             <div>
                                                 <select class="js-select2" name="amenityFeature._.@type"
                                                         feature-types="true" placeholder="Select a Feature"
-                                                        transl-id-placeholder="step.features.feature.placeholder">
+                                                        transl-id-placeholder="step.features.generalservices.feature.placeholder"
+                                                        generalfeature="true">
                                                     <option value=""></option>
                                                 </select>
                                                 <div class="dropDownSelect2"></div>
                                             </div>
+                                        </div>
+                                        <div class="wrap-input100 bg2">
+                                            <span class="label-input100" transl-id="step.features.generalservices.feature.description">Description</span>
+                                            <textarea class="featuredescription input100" type="text" disabled></textarea>
                                         </div>
                                         <span class="contact100-form-subsubsection" style="width: 90%;"
                                               transl-id="step.features.availableHours.title">
@@ -1106,7 +1118,7 @@
                                         </span>
                                         <div>
 
-                                            <div name="amenityFeature._.hoursAvailable"
+                                            <div name="amenityFeature._.hoursAvailable" generalfeature="true"
                                                  class="wrap-contact100-subsection dynamic-section">
                                                 <button type="button" class="minus_button minus_button_input"><i
                                                         class="fas fa-trash-alt"></i></button>
@@ -1182,7 +1194,135 @@
                                     </div>
                                     <button class="plus_button_section">
                                         <i class="fas fa-plus-square"></i>
-                                        <span transl-id="step.features.addExtra">Add extra feature</span>
+                                        <span transl-id="step.features.generalservices.addExtra">Add extra feature</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="wrap-contact100-subsection">
+                                <h4 transl-id="step.features.security.title">Security Features</h4>
+                                <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                                    <span transl-id="step.features.security.infoAlert">
+                                        Here you can add security features this facility section provides. Take a look at the available options.
+                                    </span>
+                                </p>
+                                <div>
+                                    <div class="wrap-contact100-subsection dynamic-section">
+                                        <button type="button" class="minus_button minus_button_input"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                        <div class="wrap-input100 input100-select bg1">
+                                            <span class="label-input100"
+                                                  transl-id="step.features.security.feature.field">Feature</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <div transl-id="step.features.security.feature.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <select class="js-select2" name="amenityFeature._.@type" generalfeature="false"
+                                                        security-feature-types="true" placeholder="Select a Feature"
+                                                        transl-id-placeholder="step.features.security.feature.placeholder">
+                                                    <option value=""></option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                                <div class="featuredescription"></div>
+                                            </div>
+                                        </div>
+                                        <div class="wrap-input100 bg2">
+                                            <span class="label-input100" transl-id="step.features.security.feature.description">Description</span>
+                                            <textarea class="featuredescription input100" type="text" disabled></textarea>
+                                        </div>
+                                        <span class="contact100-form-subsubsection" style="width: 90%;"
+                                              transl-id="step.features.availableHours.title">
+                                            Hours Available
+                                        </span>
+                                        <div>
+
+                                            <div name="amenityFeature._.hoursAvailable" generalfeature="false"
+                                                 class="wrap-contact100-subsection dynamic-section">
+                                                <button type="button" class="minus_button minus_button_input"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                                <div style="display: flex;">
+                                                    <div class="wrap-input100 week-day-selector">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[0]">Mon </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Monday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[1]">Tue </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Tuesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[2]">Wed </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Wednesday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[3]">Thu </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Thursday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[4]">Fri </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Friday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[5]">Sat </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Saturday">
+                                                        <span class="label-input100"
+                                                              transl-id="step.features.availableHours.day[6]">Sun </span>
+                                                        <input class="opening-checkbox" type="checkbox"
+                                                               value="http://schema.org/Sunday">
+                                                        <input type="image" title="about" class="info_button_div"
+                                                               src="static/images/icons/info.png">
+                                                        <div class="log-form"
+                                                             style="padding-bottom: 20px; word-wrap: break-word;">
+                                                            <h2 style="margin-bottom: 15px;"></h2>
+                                                            <input type="image" title="close" class="info_close_button"
+                                                                   src="static/images/icons/close_white.png"
+                                                                   style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                            <div transl-id="step.features.availableHours.infoText">
+                                                                <span style="display: inherit; padding-left: 15px;">Select the days and hours this feature is available or active in the parking section.</span><br>
+                                                                <span style="display: inherit; padding-left: 15px;">Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wrap-input100 always-open-selector" style="flex-grow: 0; width: initial; border: none;">
+                                                        <button class="btn" type="button"
+                                                                transl-id="step.features.availableHours.always">Open 24/7</button>
+                                                    </div>
+                                                </div>
+                                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                                    <span class="label-input100"
+                                                          transl-id="step.features.availableHours.open.field">Opening Time</span>
+                                                    <input class="input100" type="time"
+                                                           placeholder="Enter the opening time"
+                                                           transl-id-placeholder="step.features.availableHours.open.placeholder">
+                                                </div>
+                                                <div class="wrap-input100 bg1 rs3-wrap-input100">
+                                                    <span class="label-input100"
+                                                          transl-id="step.features.availableHours.close.field">Closing Time</span>
+                                                    <input class="input100" type="time"
+                                                           placeholder="Enter the closing time"
+                                                           transl-id-placeholder="step.features.availableHours.close.placeholder">
+                                                </div>
+                                            </div>
+                                            <button class="plus_button_section">
+                                                <i class="fas fa-plus-square"></i>
+                                                <span transl-id="step.features.availableHours.addExtra">Add extra hours</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button class="plus_button_section">
+                                        <i class="fas fa-plus-square"></i>
+                                        <span transl-id="step.features.security.addExtra">Add extra security feature</span>
                                     </button>
                                 </div>
                             </div>
@@ -1461,10 +1601,9 @@
                     <div class="wrap-contact100-section general-information">
                         <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
                             <span transl-id="step.publish.infoText">
-                                If you decide to publish the data generated in this tool on your website,
-                                then enter here the URL where the information for this parking will be available.
-                                Otherwise leave this field empty.<br/><br/>
-                                ** We recommend that you publish the data on your own website **.
+                                    If you want to publish the data on your own website, enter the URL in the box below. 
+                                    <br>If you leave it empty the data file will be stored and published at 
+                                    <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.
                             </span>
                         </p>
                         <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">

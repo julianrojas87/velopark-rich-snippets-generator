@@ -162,6 +162,7 @@
     },
     "operation" : {
       "title" : "Facility Section - Operation Information",
+      "infoText": "If the parking has only one section, the information entered here will be valid for the entire facility.",
       "sectionName": {
         "field": "Section Name",
         "infoText": "An optional name of the bicycle parking section as it is locally known.<br><br>Example: <i>Green zone</i>",
@@ -320,28 +321,43 @@
     },
     "features" : {
       "title" : "Facility Section - Features",
-      "infoAlert" : "Here you can add special features this facility section provides. Take a look at the available options.",
-      "feature" : {
-        "field": "Feature",
-        "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
-        "placeholder" : "Select a Feature"
+      "generalservices": {
+        "title" : "General Services",
+        "infoAlert" : "Here you can add special features this facility section provides. Take a look at the available options.",
+        "feature" : {
+          "field": "Feature",
+          "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Bicycle Pump</i>",
+          "placeholder" : "Select a Feature",
+          "description": "Description"
+        },
+        "addExtra" : "Add extra feature"
+      },
+      "security" : {
+        "title" : "Security Features",
+        "infoAlert" : "Here you can add security features this facility section provides. Take a look at the available options.",
+        "feature" : {
+          "field": "Feature",
+          "infoText": "Select the security features that are available or can be used in this section of the parking garage.<br><br>Example: <i>Camera Surveillance</i>",
+          "placeholder" : "Select a Security Feature",
+          "description": "Description"
+        },
+        "addExtra" : "Add extra security feature"
       },
       "availableHours" : {
         "title" : "Hours Available",
         "always" : "Open 24/7",
         "infoText": "Select the days and hours this feature is available or active in the parking section.<br><br>Example: <i>Maintenance Service: Mon, Wed, Fri 09:00 - 12:00.</i>",
         "open": {
-          "field": "Opening Time *",
+          "field": "Opening Time",
           "placeholder": "Enter the opening time"
         },
         "close": {
-          "field": "Closing Time *",
+          "field": "Closing Time",
           "placeholder": "Enter the closing time"
         },
         "day" : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         "addExtra": "Add extra hours"
-      },
-      "addExtra" : "Add extra feature"
+      }
     },
     "cost" : {
       "title" : "Facility Section - Cost Model",
@@ -402,7 +418,7 @@
     },
     "publish" : {
       "title" : "Data Publishing",
-      "infoText" : "If you decide to publish the data generated in this tool on your website, then enter here the URL where the information for this parking will be available. Otherwise leave this field empty.\n\n** We recommend that you publish the data on your own website **.",
+      "infoText" : "If you want to publish the data on your own website, enter the URL in the box below. <br>If you leave it empty the data file will be stored and published at <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.",
       "URI" : {
         "field": "Parking Facility URI",
         "infoText": "The URL where the data about this bicycle parking will be published.<br><br>Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Parking Owner and the Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA_018</i>",
