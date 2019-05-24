@@ -212,14 +212,6 @@ function fillAutomaticData(jsonld) {
         }
         jsonld['@graph'][i]['totalCapacity'] = tc;
 
-        // Set amenityFeature names
-        for (let j = 0; j < jsonld['@graph'][i]['amenityFeature'].length; j++) {
-            let currObj = jsonld['@graph'][i]['amenityFeature'][j];
-            if (currObj['@type']) {
-                currObj['value'] = true;
-                currObj['name'] = $('option[value="' + currObj['@type'] + '"]')[0].innerHTML.trim();
-            }
-        }
     }
     let lonlat = [jsonld['@graph'][0]['geo'][0]['longitude'], jsonld['@graph'][0]['geo'][0]['latitude']];
     jsonld['hasMap'] = {

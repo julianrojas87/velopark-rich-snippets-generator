@@ -27,8 +27,8 @@
       "photo" : "Foto's",
       "operation" : "Werkings Informatie",
       "location" : "Locatie",
-      "allowed" : "Toegestane Fietsen",
-      "features" : "Eienschappen",
+      "allowed" : "Toegelaten Fietsen",
+      "features" : "Eigenschappen",
       "cost" : "Kosten Model",
       "addExtra" : "Extra Sectie Toevoegen",
       "publish" : "Data Publicering",
@@ -161,6 +161,7 @@
     },
     "operation" : {
       "title" : "Faciliteitssectie - Praktische Informatie",
+      "infoText": "Als de parkeerplaats slechts één sectie heeft, is de hier ingevoerde informatie geldig voor de hele faciliteit.",
       "sectionName": {
         "field": "Sectie Naam",
         "infoText": "Een optionele naam van deze parkingssectie.<br><br>Voorbeeld: <i>Groene zone</i>",
@@ -319,11 +320,25 @@
     },
     "features" : {
       "title" : "Faciliteitssectie - Voorzieningen",
-      "infoAlert" : "Hier kan je speciale voorzieningen toevoegen die aangeboden worden in deze faciliteitssectie. Neem een kijkje in de beschikbare opties.",
-      "feature" : {
-        "field": "Voorziening",
-        "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i>",
-        "placeholder" : "Selecteer een voorziening"
+      "generalservices": {
+        "title" : "Algemene Diensten",
+        "infoAlert" : "Hier kan je speciale voorzieningen toevoegen die aangeboden worden in deze faciliteitssectie. Neem een kijkje in de beschikbare opties.",
+        "feature" : {
+          "field": "Voorziening",
+          "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Bicycle Pump</i>",
+          "placeholder" : "Selecteer een voorziening"
+        },
+        "addExtra" : "Voeg extra voorziening toe"
+      },
+      "security" : {
+        "title" : "Beveiligingsvoorzieningen",
+        "infoAlert" : "Hier kan je beveiliginsvoorzieningen toevoegen die aangeboden worden in deze faciliteitssectie. Neem een kijkje in de beschikbare opties.",
+        "feature" : {
+          "field": "Voorziening",
+          "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Camera Bewaking</i>",
+          "placeholder" : "Selecteer een Beveiligingsvoorziening"
+        },
+        "addExtra" : "Voeg extra beveiligingsvoorziening toe"
       },
       "availableHours" : {
         "title" : "Beschikbare uren",
@@ -339,8 +354,7 @@
         },
         "day" : ["Ma", "Di", "Woe", "Do", "Vr", "Za", "Zo"],
         "addExtra": "Voeg extra uren toe"
-      },
-      "addExtra" : "Voeg extra voorziening toe"
+      }
     },
     "cost" : {
       "title" : "Faciliteitssectie - Kostenmodel",
@@ -401,7 +415,7 @@
     },
     "publish" : {
       "title" : "Data Publicering",
-      "infoText" : "Als je beslist de data die gegenereerd zal worden met deze tool te publiceren op je eigen website, kan je hier de URL invullen waar deze beschikbaar zal komen. Indien dit niet het geval is kan je dit veld leeg laten.\n\n** We raden sterk aan dat je deze data zelf publiceert op jouw website. **.",
+      "infoText" : "Als u de gegevens op uw eigen website wilt publiceren, voert u de URL in het onderstaande vak in. <br>Als u het leeg laat, wordt het gegevensbestand opgeslagen en gepubliceerd op <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.",
       "URI" : {
         "field": "Parkeerfaciliteit URI",
         "infoText": "De URL naar de website waar deze date gepubliceerd zal worden.<br><br>Voobeeld: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>Indien je hier niet over beschikt zullen wij een link genereren, gebaseerd op de parkeerheer en de lokale ID, en vervolgens de data voor jou publiceren.<br><br>Voobeeld: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i>",

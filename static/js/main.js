@@ -4,6 +4,10 @@ var context = null;
 const startStepNumberFacilitySection = 4;
 const numStepsFacilitySection = 5;
 var currentNumFacilitySections = 1;
+let myGeneralFeatures;
+let mySecurityFeatures;
+let myBikeTypes;
+let myParkingTypes;
 
 const stepOverviewFacilityTitleFormat = '<div class="steps-overview-facility-title" facilitynum="{0}"><h4 >Facility Section {0}</h4><button type="button" class="minus_button steps-overview-remove-facility-button" facilitynum="{0}"><i class="fas fa-trash-alt"></i></button></div>';
 
@@ -98,6 +102,23 @@ function getFeatures(done) {
     });
 }
 
+function getSecurityFeatures(done) {
+    return new Promise((resolve, reject) => {
+        let domain = domainName != '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/security-features',
+            success: data => {
+                resolve(data);
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+                reject(e);
+            }
+        });
+    });
+}
+
 function handleLoginFeatures() {
     // Check if user is logged in
     let userName = $('#user-email').text();
@@ -121,12 +142,14 @@ function handleLoginFeatures() {
     let parkingTypes = getParkingTypes();
     let bikeTypes = getBikeTypes();
     let features = getFeatures();
+    let securityFeatures = getSecurityFeatures();
     let contextPromise = loadAPSkeleton();
 
     loadingPromises.push(terms);
     loadingPromises.push(parkingTypes);
     loadingPromises.push(bikeTypes);
     loadingPromises.push(features);
+    loadingPromises.push(securityFeatures);
     loadingPromises.push(contextPromise);
 
     terms.then(listOfTerms => {
@@ -138,25 +161,37 @@ function handleLoginFeatures() {
     });
 
     parkingTypes.then(parkingTypes => {
+        myParkingTypes = parkingTypes;
         $('select[parking-types = "true"]').each(function () {
             for (var i = 0; i < parkingTypes.length; i++) {
-                $(this).append('<option value="' + parkingTypes[i]['@id'] + '">' + parkingTypes[i]['label'] + '</option>');
+                $(this).append('<option value="' + parkingTypes[i]['@id'] + '" transl-id-option="parkingtypes">' + parkingTypes[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
             }
         });
     });
 
     bikeTypes.then(bikeTypes => {
+        myBikeTypes = bikeTypes;
         $('select[bike-types = "true"]').each(function () {
             for (var i = 0; i < bikeTypes.length; i++) {
-                $(this).append('<option value="' + bikeTypes[i]['@id'] + '">' + bikeTypes[i]['label'] + '</option>');
+                $(this).append('<option value="' + bikeTypes[i]['@id'] + '" transl-id-option="biketypes">' + bikeTypes[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
             }
         });
     });
 
     features.then(features => {
+        myGeneralFeatures = features;
         $('select[feature-types = "true"]').each(function () {
             for (var i = 0; i < features.length; i++) {
-                $(this).append('<option value="' + features[i]['@id'] + '">' + features[i]['label'] + '</option>');
+                $(this).append('<option value="' + features[i]['@id'] + '" transl-id-option="generalfeature">' + features[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
+            }
+        });
+    });
+
+    securityFeatures.then(features => {
+        mySecurityFeatures = features;
+        $('select[security-feature-types = "true"]').each(function () {
+            for (var i = 0; i < features.length; i++) {
+                $(this).append('<option value="' + features[i]['@id'] + '" transl-id-option="securityfeature">' + features[i]['label'][currentLang ? currentLang : 'nl'] + '</option>');
             }
         });
     });
@@ -299,14 +334,6 @@ function handleLoginFeatures() {
     //Default language
     $('#language-selection-container #dutch').prop('checked', true).trigger("change");
 
-    $(".js-select2").each(function () {
-        $(this).select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $(this).next('.dropDownSelect2'),
-            placeholder: $(this).attr('placeholder')
-        });
-    });
-
     $('.js-select2[name="priceSpecification._PriceSpecification.freeOfCharge"]').change(function () {
         let priceField = $(this).parent().parent().next().find('input[name="priceSpecification._PriceSpecification.price"]');
         let free = $(this).val() === "true";
@@ -324,10 +351,10 @@ function handleLoginFeatures() {
 
         let photoURI = myParent.find('.input100[name="photos._Photograph.image"]').val();
         myParent.find('img.imgPreview').attr('src', '');
-        if(photoURI.indexOf('velopark.ilabt.imec.be') > 0 || photoURI.indexOf('localhost') > 0){    //TODO: find better way to detect local images
+        if (photoURI && (photoURI.indexOf('velopark.ilabt.imec.be') > 0 || photoURI.indexOf('localhost') > 0)) {    //TODO: find better way to detect local images
             //delete photo from server
             let url = myParent.find('input[name="photos._Photograph.image"]').val();
-            let filename = url.split('/')[url.split('/').length-1];
+            let filename = url.split('/')[url.split('/').length - 1];
             let domain = domainName !== '' ? '/' + domainName : '';
             jQuery.ajax({
                 url: domain + '/photo/' + filename,
@@ -417,16 +444,19 @@ function handleLoginFeatures() {
                     dropdownParent: $(this).next('.dropDownSelect2'),
                     placeholder: $(this).attr('placeholder')
                 });
+                $(this).change();
             });
         }
         newSelect.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2',),
+                dropdownParent: $(this).next('.dropDownSelect2'),
                 val: '',
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
+        newSelect.find('.featuredescription').html('');
         newSelect.slideDown('slow');    //animate
         return false;
     });
@@ -465,7 +495,7 @@ function handleLoginFeatures() {
                 }
             });
 
-            newSection.find('.imgPreview').attr("src","");
+            newSection.find('.imgPreview').attr("src", "");
             newSection.find('.photo-selector').show();
 
             if (parkingDataLoaded) {
@@ -475,15 +505,31 @@ function handleLoginFeatures() {
             $(this).before(newSection);
         }
 
+        newSection.find('.featuredescription').html('');
+
         section.parent().find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2'),
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
 
         function showMaps() {
+            newSection.find('.ol-polygon-map').each(function () {
+                $(this).empty();
+                let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).attr('id', newMap);
+                let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).prev().attr('id', newClear);
+                $(this).prev().off('click');
+                let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+                $(this).next().find('input.input100').attr('id', newPoly);
+
+                initPolygonMap(newMap, newPoly, newClear);
+            });
+
             newSection.find('.ol-point-map').each(function () {
                 $(this).empty();
                 let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
@@ -497,19 +543,6 @@ function handleLoginFeatures() {
                 $(this).next().next().find('input.input100').attr('id', newLon);
 
                 initPointMap(newMap, newLat, newLon, newClear);
-            });
-
-            newSection.find('.ol-polygon-map').each(function () {
-                $(this).empty();
-                let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-                $(this).attr('id', newMap);
-                let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-                $(this).prev().attr('id', newClear);
-                $(this).prev().off('click');
-                let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-                $(this).next().find('input.input100').attr('id', newPoly);
-
-                initPolygonMap(newMap, newPoly, newClear);
             });
         }
 
@@ -532,11 +565,13 @@ function handleLoginFeatures() {
         $(this).parent().parent().parent().find('input[type=time]:last').val("23:59");
     });
 
-    $('input.photo-selector').on('change', function(){
+    $('input.photo-selector').on('change', function () {
         let parent = $(this).parent();
         /*loadPhotoFromDisk($(this)[0].files[0]).then(result => {
             parent.find('img')[0].src = result;
         });*/
+        parent.find('input[type=file]').hide();
+        parent.find('img')[0].src = "static/images/icons/loading.gif";
 
         let domain = domainName !== '' ? '/' + domainName : '';
         var data = new FormData();
@@ -549,36 +584,53 @@ function handleLoginFeatures() {
             processData: false,
             method: 'POST',
             type: 'POST', // For jQuery < 1.9
-            success: function(data){
+            success: function (data) {
                 let locationPath = location.pathname.substr(0, location.pathname.lastIndexOf('/'));
                 var url = [location.protocol, '//', location.host, locationPath].join('');
                 let uriInput = parent.find('input[name="photos._Photograph.image"]');
                 uriInput.val(url + data);
                 uriInput.prop('disabled', true);
                 parent.find('img')[0].src = url + data;
-                parent.find('input[type=file]').hide();
+                //parent.find('input[type=file]').hide();
             },
-            error: function(e) {
-                if(e.status === 401) {
+            error: function (e) {
+                if (e.status === 401) {
                     alert('Please log in first before uploading photos');
+                    parent.find('img')[0].src = parent.find('input[name="photos._Photograph.image"]').val();
+                    parent.find('input[type=file]').show();
                 }
             }
         });
     });
 
-    $('input[name="photos._Photograph.image"]').on('blur', function() {
+    $('input[name="photos._Photograph.image"]').on('blur', function () {
         let parent = $(this).parent();
         parent.find('img')[0].src = $(this).val();
-        if($(this).val()) {
+        if ($(this).val()) {
             parent.find('.photo-selector').hide();
         }
     });
 
-    $('input[name="photos._Photograph.image"]').on('change', function() {
+    $('input[name="photos._Photograph.image"]').on('change', function () {
         let parent = $(this).parent();
         parent.find('img')[0].src = $(this).val();
-        if($(this).val()) {
+        if ($(this).val()) {
             parent.find('.photo-selector').hide();
+        }
+    });
+
+    $('[name="amenityFeature._.@type"]').on('change', function () {
+        let isGeneralFeature = $(this).attr('generalfeature') === "true";
+        let features;
+        if (isGeneralFeature) {
+            features = myGeneralFeatures;
+        } else {
+            features = mySecurityFeatures;
+        }
+        for (i in features) {
+            if (features[i]['@id'] === $(this).val()) {
+                $(this).siblings('.featuredescription').html(features[i]['comment'][currentLang]);
+            }
         }
     });
 
@@ -627,6 +679,8 @@ function addFacilitySection() {
             $(this).val('');
         });
 
+        newFacilitySection.find('.featuredescription').html('');
+
 
         //re-enable select2 (original section and cloned section)
         facilitySection.find('.js-select2').each(function () {
@@ -635,6 +689,7 @@ function addFacilitySection() {
                 dropdownParent: $(this).next('.dropDownSelect2'),
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
         newFacilitySection.find('.js-select2').each(function () {
             $(this).select2({
@@ -642,6 +697,7 @@ function addFacilitySection() {
                 dropdownParent: $(this).next('.dropDownSelect2'),
                 placeholder: $(this).attr('placeholder')
             });
+            $(this).change();
         });
         newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections - 1);
     }
@@ -654,8 +710,25 @@ function addFacilitySection() {
         removeFacilitySection(facilitynum);
     });
 
+    //Delete one section only info box
+    newFacilitySection.find('#one-section-only-info').remove();
+
     //fix maps
     let locationSection = $('#step-facility-section-2-' + currentNumFacilitySections);
+
+    locationSection.find('.ol-polygon-map').each(function () {
+        $(this).empty();
+        let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).attr('id', newMap);
+        let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).prev().attr('id', newClear);
+        $(this).prev().off('click');
+        let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
+        $(this).next().find('input.input100').attr('id', newPoly);
+
+        initPolygonMap(newMap, newPoly, newClear, true);
+    });
+
     locationSection.find('.ol-point-map').each(function () {
         $(this).empty();
         let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
@@ -669,19 +742,6 @@ function addFacilitySection() {
         $(this).parent().find('input[name*="longitude"]').attr('id', newLon);
 
         initPointMap(newMap, newLat, newLon, newClear);
-    });
-
-    locationSection.find('.ol-polygon-map').each(function () {
-        $(this).empty();
-        let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-        $(this).attr('id', newMap);
-        let newClear = $(this).prev().attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-        $(this).prev().attr('id', newClear);
-        $(this).prev().off('click');
-        let newPoly = $(this).next().find('input.input100').attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);
-        $(this).next().find('input.input100').attr('id', newPoly);
-
-        initPolygonMap(newMap, newPoly, newClear);
     });
 
 }
@@ -729,10 +789,10 @@ function loadPhotoFromDisk(file) {
         reader.addEventListener("load", function () {
             resolve(reader.result);
         });
-        reader.onerror = function() {
+        reader.onerror = function () {
             reject();
         };
-        reader.onabort = function() {
+        reader.onabort = function () {
             reject();
         };
 
@@ -740,6 +800,6 @@ function loadPhotoFromDisk(file) {
     });
 }
 
-function uploadPhoto(imgData){
+function uploadPhoto(imgData) {
 
 }

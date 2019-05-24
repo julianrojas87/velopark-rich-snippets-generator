@@ -18,9 +18,95 @@ let myZoomedInView = new ol.View({
 });
 
 
-var raster = new TileLayer({
-    source: new OSM()
-});
+var raster = new TileLayer({source: new OSM()});
+
+var polygonVector = null;
+var pointVectors = [];
+
+function initPolygonMap(target, polyid, clear, reset) {
+    if(reset) {
+        myZoomedInView = new ol.View({
+            center: ol.proj.fromLonLat([4.30, 50.85]),
+            zoom: 8
+        });
+        polygonVector = null;
+        pointVectors = [];
+    }
+
+    var polygonSource = new VectorSource({ wrapX: false });
+    var polVector = new VectorLayer({
+        source: polygonSource,
+        style: new Style({
+            fill: new Fill({
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new Stroke({
+                color: '#2912bc',
+                width: 4
+            }),
+        })
+    });
+
+    polygonVector = polVector;
+
+    var polygonMap = new Map({
+        target: target,
+        layers: [raster, polVector],
+        view: myZoomedInView
+    });
+
+    $('#' + target).data('openlayers-map', polygonMap);
+
+    var polygon = new Draw({
+        source: polygonSource,
+        type: 'Polygon'
+    });
+    polygonMap.addInteraction(polygon);
+
+    polygonSource.on('addfeature', event => {
+        if (polygonSource.getFeatures().length > 1) {
+            polygonSource.removeFeature(polygonSource.getFeatures()[0]);
+        }
+
+        let coordinates = event.feature.getGeometry().getCoordinates()[0];
+        let polygonString = 'POLYGON ((';
+
+
+        for (let i = 0; i < coordinates.length; i++) {
+            let coord = ol.proj.toLonLat(coordinates[i]);
+            let lat = coord[1];
+            let long = coord[0];
+
+            polygonString += long + ' ' + lat + ', ';
+        }
+
+        polygonString = polygonString.slice(0, -2) + '))';
+
+        $('#' + polyid).val(polygonString);
+    });
+
+    $('#' + polyid).off('change');
+
+    $('#' + polyid).change(function () {
+        let polygonArr = $(this).val().substring(10, $(this).val().length - 3).split(',');
+        polygonArr = polygonArr.map(cs => {
+            let stArr = cs.trim().split(' ');
+            return ol.proj.fromLonLat([parseFloat(stArr[0]), parseFloat(stArr[1])]);
+        });
+
+        let polygon = new Polygon([polygonArr]);
+        let featurePolygon = new ol.Feature({
+            geometry: polygon,
+        });
+        polygonSource.addFeature(featurePolygon);
+        polygonMap.getView().fit(polygon);
+    });
+
+    $('#' + clear).click(() => {
+        polygonSource.clear();
+        $('#' + polyid).val('');
+    });
+}
 
 function initPointMap(target, latid, lonid, clear) {
     var pointSource = new VectorSource({ wrapX: false });
@@ -39,9 +125,11 @@ function initPointMap(target, latid, lonid, clear) {
         })
     });
 
+    pointVectors.push(pointVector);
+
     var pointMap = new Map({
         target: target,
-        layers: [raster, pointVector],
+        layers: [raster].concat(pointVectors).concat([polygonVector]),
         view: myZoomedInView
     });
 
@@ -53,7 +141,7 @@ function initPointMap(target, latid, lonid, clear) {
     });
     pointMap.addInteraction(point);
 
-    if((user && (user.cityrep || user.cityrep === "true")) && target.startsWith('point-map')){
+    if ((user && (user.cityrep || user.cityrep === "true")) && target.startsWith('point-map')) {
         let domain = domainName !== '' ? '/' + domainName : '';
         pointSource.on('addfeature', event => {
             $('.city-rep-location-loading-icon').css('visibility', 'visible');
@@ -67,7 +155,7 @@ function initPointMap(target, latid, lonid, clear) {
                 type: "POST",
                 url: domain + '/cityrep/check-location/' + lat + '/' + long,
                 success: data => {
-                    if(data){
+                    if (data) {
                         $('.city-rep-location-loading-icon').css('visibility', 'hidden');
                         let latInput = $('#' + latid);
                         let lonInput = $('#' + lonid);
@@ -92,7 +180,7 @@ function initPointMap(target, latid, lonid, clear) {
                         $('#' + lonid).val('');
                         hideValidate($('#' + lonid));
 
-                        setTimeout(function(){  //To give UI time to update
+                        setTimeout(function () {  //To give UI time to update
                             alert("You are not allowed to create a parking in this area.");
                         }, 10);
 
@@ -172,85 +260,8 @@ function initPointMap(target, latid, lonid, clear) {
     });
 }
 
-function initPolygonMap(target, polyid, clear) {
-    var polygonSource = new VectorSource({ wrapX: false });
-    var polygonVector = new VectorLayer({
-        source: polygonSource,
-        style: new Style({
-            fill: new Fill({
-                color: 'rgba(255, 255, 255, 0.2)'
-            }),
-            stroke: new Stroke({
-                color: '#2912bc',
-                width: 4
-            }),
-        })
-    });
-
-    var polygonMap = new Map({
-        target: target,
-        layers: [raster, polygonVector],
-        view: myZoomedInView
-    });
-
-    $('#' + target).data('openlayers-map', polygonMap);
-
-    var polygon = new Draw({
-        source: polygonSource,
-        type: 'Polygon'
-    });
-    polygonMap.addInteraction(polygon);
-
-    polygonSource.on('addfeature', event => {
-        if (polygonSource.getFeatures().length > 1) {
-            polygonSource.removeFeature(polygonSource.getFeatures()[0]);
-        }
-
-        let coordinates = event.feature.getGeometry().getCoordinates()[0];
-        let polygonString = 'POLYGON ((';
-
-
-        for (let i = 0; i < coordinates.length; i++) {
-            let coord = ol.proj.toLonLat(coordinates[i]);
-            let lat = coord[1];
-            let long = coord[0];
-
-            polygonString += long + ' ' + lat + ', ';
-        }
-
-        polygonString = polygonString.slice(0, -2) + '))';
-
-        $('#' + polyid).val(polygonString);
-    });
-
-    $('#' + polyid).off('change');
-
-    $('#' + polyid).change(function () {
-        let polygonArr = $(this).val().substring(10, $(this).val().length - 3).split(',');
-        polygonArr = polygonArr.map(cs => {
-            let stArr = cs.trim().split(' ');
-            return ol.proj.fromLonLat([parseFloat(stArr[0]), parseFloat(stArr[1])]);
-        });
-
-        let polygon = new Polygon([polygonArr]);
-        let featurePolygon = new ol.Feature({
-            geometry: polygon,
-        });
-        polygonSource.addFeature(featurePolygon);
-        polygonMap.getView().fit(polygon);
-    });
-
-    $('#' + clear).click(() => {
-        polygonSource.clear();
-        $('#' + polyid).val('');
-    });
-}
-
 ($ => {
+    initPolygonMap('polygon-map', 'poly_string', 'clear-polygon');
     initPointMap('point-map', 'point_lat', 'point_lon', 'clear-point');
     initPointMap('entrance-point-map', 'entrance_lat', 'entrance_lon', 'clear-entrance-point');
-    initPointMap('exit-point-map', 'exit_lat', 'exit_lon', 'clear-exit-point');
-
-    initPolygonMap('polygon-map', 'poly_string', 'clear-polygon')
-
 })(jQuery);

@@ -49,7 +49,7 @@ function processObject(obj, oldPath, input) {
             }
         }
     } catch (e) {
-        console.error("Processing of object failed.", oldPath.toString(), ": ", obj);
+        console.error("Processing of object failed.", e, oldPath ? oldPath.toString() : "null", ": ", obj);
     }
 }
 
@@ -79,6 +79,9 @@ function loadSections(graph) {
     }
 }
 
+let numGeneralFeatures = 0;
+let numSecurityFeatures = 0;
+
 function processArray(path, arr, input) {
     //console.log(path);
     let lastPath = path[path.length - 1];
@@ -96,8 +99,30 @@ function processArray(path, arr, input) {
         for (let i = 0; i < arr.length; i++) {
             let obj = arr[i];
             let keys = Object.keys(obj);
-            let inputs = input || $('[name^="' + lastPath + '"]');
-            if (i > 0) {
+            let inputs;
+            let isFeature = false;
+            let isGeneralFeature = false;
+            if(path.join('.') === "amenityFeature._" ){
+                isFeature = true;
+                //split security features and general services
+                isGeneralFeature = false;
+                for(j in myGeneralFeatures){
+                    if(myGeneralFeatures[j]['@id'] === obj['@type']){
+                        isGeneralFeature = true;
+                        break;
+                    }
+                }
+                if(isGeneralFeature){
+                    numGeneralFeatures++;
+                } else {
+                    numSecurityFeatures++;
+                }
+                input = $('[name^="' + lastPath + '"][generalfeature="' + (isGeneralFeature ? "true" : "false") + '"]');
+                inputs = input;
+            } else {
+                inputs = input || $('[name^="' + lastPath + '"]');
+            }
+            if (!isFeature && i > 0 || isFeature && isGeneralFeature && numGeneralFeatures > 1 || isFeature && !isGeneralFeature && numSecurityFeatures > 1) {
                 let last = $(inputs[inputs.length - 1]);
                 if (last.is('div')) {
                     last.parent().parent().next("button").click();
@@ -105,7 +130,21 @@ function processArray(path, arr, input) {
                     last.closest('.wrap-contact100-subsection').next("button").click();
                 }
 
-                input = $('[name^="' + lastPath + '"]');
+                //input = $('[name^="' + lastPath + '"]');
+                if(path.join('.') === "amenityFeature._" ){
+                    //split security features and general services
+                    let isGeneralFeature = false;
+                    for(j in myGeneralFeatures){
+                        if(myGeneralFeatures[j]['@id'] === obj['@type']){
+                            isGeneralFeature = true;
+                            break;
+                        }
+                    }
+                    input = $('[name^="' + lastPath + '."][generalfeature="' + (isGeneralFeature ? "true" : "false") + '"]');
+                    inputs = input;
+                } else {
+                    inputs = $('[name^="' + lastPath + '"]');
+                }
             } else {
                 //first element of the array, make sure its input is visible (for optional inputs that are hidden by default)
                 $(inputs[0]).closest('.dynamic-section').css('display','block');
@@ -221,7 +260,7 @@ function loadParkingValue(path, value, override, inpt) {
                     || (lastCloses && currentDay['closes'] !== lastCloses)) {
                     usedDays.clear();
                     input.next().click();
-                    let inputs = $('[name="' + name + '"]');
+                    let inputs = input.parent().find('[name="' + name + '"]');
                     input = $(inputs[inputs.length - 1]);
                     input.find('input[type="checkbox"]').each(function () {
                         $(this).prop('checked', false);

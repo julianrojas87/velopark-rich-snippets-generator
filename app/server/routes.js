@@ -762,7 +762,7 @@ module.exports = app => {
     });
 
     app.get("/photo/:id", (req, res) => {
-        res.sendFile(path.join(data + '/photo/' + req.params.id));
+        res.sendFile(path.normalize(data + '/photo/' + req.params.id));
     });
 
     app.delete("/photo/:id", function (req, res) {
@@ -891,6 +891,11 @@ module.exports = app => {
 
     app.get('/features', async function (req, res) {
         let list = await PM.getFeatures();
+        res.status(200).json(list);
+    });
+
+    app.get('/security-features', async function (req, res) {
+        let list = await PM.getSecurityFeatures();
         res.status(200).json(list);
     });
 
