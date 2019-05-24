@@ -326,7 +326,8 @@
         "feature" : {
           "field": "Caractéristique",
           "infoText": "Sélectionnez les services ou les installations disponibles ou pouvant être utilisés dans cette section du garage.<br><br>Exemple: <i>Bicycle Pump</i>",
-          "placeholder" : "Sélectionnez une Caractéristique"
+          "placeholder" : "Sélectionnez une Caractéristique",
+          "description": "La Description"
         },
         "addExtra" : "Ajouter une Caractéristique supplémentaire"
       },
@@ -336,7 +337,8 @@
         "feature" : {
           "field": "Caractéristique",
           "infoText": "Sélectionnez les services ou les installations de sécurité disponibles ou pouvant être utilisés dans cette section du garage.<br><br>Exemple: <i>Camera Surveillance</i>",
-          "placeholder" : "Sélectionnez une Caractéristique de Sécurité"
+          "placeholder" : "Sélectionnez une Caractéristique de Sécurité",
+          "description": "La Description"
         },
         "addExtra" : "Ajouter une Caractéristique de sécurité supplémentaire"
       },

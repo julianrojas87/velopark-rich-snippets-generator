@@ -326,7 +326,8 @@
         "feature" : {
           "field": "Voorziening",
           "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Bicycle Pump</i>",
-          "placeholder" : "Selecteer een voorziening"
+          "placeholder" : "Selecteer een voorziening",
+          "description": "Omschrijving"
         },
         "addExtra" : "Voeg extra voorziening toe"
       },
@@ -336,7 +337,8 @@
         "feature" : {
           "field": "Voorziening",
           "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Camera Bewaking</i>",
-          "placeholder" : "Selecteer een Beveiligingsvoorziening"
+          "placeholder" : "Selecteer een Beveiligingsvoorziening",
+          "description": "Omschrijving"
         },
         "addExtra" : "Voeg extra beveiligingsvoorziening toe"
       },
