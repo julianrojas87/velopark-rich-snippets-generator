@@ -228,7 +228,7 @@
         "addExtra": "Voeg extra uren toe",
         "extrainfo" : {
           "field" : "Extra Informatie",
-          "infotext" : "<span style=\"display: inherit; padding-left: 15px;\">Beschrijf extra onregelmatigheden in de openingsuren</span><br><span style=\"display: inherit; padding-left: 15px;\">Bijvoorbeeld: <i>Elke eerste zondag van de maand geopend</i> or <i>Gesloten op administratieve feestdagen</i></span>",
+          "infoText" : "<span style=\"display: inherit; padding-left: 15px;\">Beschrijf extra onregelmatigheden in de openingsuren</span><br><span style=\"display: inherit; padding-left: 15px;\">Bijvoorbeeld: <i>Elke eerste zondag van de maand geopend</i> or <i>Gesloten op administratieve feestdagen</i></span>",
           "placeholder" : "Beschrijf uitzonderingen in de openingsuren zoals feestdagen"
         }
       }

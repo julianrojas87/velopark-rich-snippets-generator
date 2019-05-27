@@ -229,7 +229,7 @@
         "addExtra": "Add extra hours",
         "extrainfo" : {
           "field" : "Extra Information",
-          "infotext" : "<span style=\"display: inherit; padding-left: 15px;\">Describe extra irregularities for the opening hours.</span><br><span style=\"display: inherit; padding-left: 15px;\">Example: <i>Open every first Sunday of the month</i> or <i>closed on bank holidays</i></span>",
+          "infoText" : "<span style=\"display: inherit; padding-left: 15px;\">Describe extra irregularities for the opening hours.</span><br><span style=\"display: inherit; padding-left: 15px;\">Example: <i>Open every first Sunday of the month</i> or <i>closed on bank holidays</i></span>",
           "placeholder" : "Describe special cases like holidays or special openings"
         }
       }
