@@ -2,7 +2,9 @@ const MongoClient = require('mongodb').MongoClient;
 const dookie = require('dookie');
 const fs = require('fs');
 const utils = require('../utils/utils');
+const nazka = require('./nazka');
 
+const USE_NAZKA = true;
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
 var db, accounts, parkings, companies, cities;
@@ -52,10 +54,16 @@ async function initDB() {
     }
 
     // Init geocities collection
-    if ((await cities.estimatedDocumentCount({})) < 5) {
+    if (!USE_NAZKA && (await cities.estimatedDocumentCount({})) < 5) {
         const data = JSON.parse(fs.readFileSync('./geocities.json', 'utf8'));
         dookie.push('mongodb://localhost:27017/node-login', data).then(function () {
             console.log('Importing geocities done!');
+        });
+    }
+
+    if (USE_NAZKA && (await cities.estimatedDocumentCount({})) < 5) {
+        nazka.loadNazka().then(() => {
+            console.log('Loading Nazka done');
         });
     }
 }
@@ -891,6 +899,10 @@ exports.findCitiesByLocation = function (lat, lng, callback) {
     }, function (error) {
         callback(error, cityNames);
     });
+};
+
+exports.insertCity = function(json){
+    return cities.insertOne(json);
 };
 
 
