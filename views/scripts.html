@@ -20,6 +20,7 @@
 <!--===============================================================================================-->
 <script src="static/vendor/momentjs/js/moment.js"></script>
 <!--===============================================================================================-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script>
     const domainName = "<%= domainName %>";
     const vocabURI = "<%= vocabURI %>";
@@ -27,3 +28,17 @@
 <script src="static/js/loginController.js"></script>
 <script src="static/js/router.js"></script>
 <script src="static/js/navbar.js"></script>
+<script>
+    (function(proxied) {
+        window.alert = function() {
+            // do something here
+            Swal.fire({
+                title: arguments[1] || 'Error!',
+                text: arguments[0],
+                type: arguments[2] || 'error',
+                confirmButtonText: 'OK'
+            })
+            //return proxied.apply(this, arguments);
+        };
+    })(window.alert);
+</script>

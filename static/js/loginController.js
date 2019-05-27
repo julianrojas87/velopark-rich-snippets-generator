@@ -146,7 +146,7 @@ let currentLang = 'nl';
             url: domain + '/signup',
             data: { 'email': email, 'pass': pass, 'company': company, 'cities': cities },
             success: () => {
-                alert('Your account request has been sent! Once the admins approve it you can login with your credentials.');
+                alert('Your account request has been sent! Once the admins approve it you can login with your credentials.', 'Success!', 'success');
                 $('#signin-form').toggle();
             },
             error: e => {
