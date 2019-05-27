@@ -53,6 +53,16 @@ async function initDB() {
         });
     }
 
+    //detect if command line flag is used to force repopulation of geocities
+    process.argv.forEach(function (val, index, array) {
+        if(val === '--reload-regions'){
+            cities.drop(function(err, delOK) {
+                if (err) console.error(err);
+                if (delOK) console.log("geocities deleted");
+            });
+        }
+    });
+
     // Init geocities collection
     if (!USE_NAZKA && (await cities.estimatedDocumentCount({})) < 5) {
         const data = JSON.parse(fs.readFileSync('./geocities.json', 'utf8'));
@@ -61,9 +71,12 @@ async function initDB() {
         });
     }
 
+    var hrstart = process.hrtime();
     if (USE_NAZKA && (await cities.estimatedDocumentCount({})) < 5) {
         nazka.loadNazka().then(() => {
+            var hrend = process.hrtime(hrstart);
             console.log('Loading Nazka done');
+            console.info('Nazka job execution time: %ds %dms', hrend[0], hrend[1] / 1000000)
         });
     }
 }
