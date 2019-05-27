@@ -913,7 +913,19 @@ exports.findParkingsByCityName = function (cityName, callback) {
     });
 };
 
-exports.findCitiesByLocation = function (lat, lng, callback) {
+exports.findCitiesByLocation = function (lat, lng, lang, callback) {
+    let propertyName;
+    if(lang === 'en'){
+        propertyName = 'name_EN';
+    } else if(lang === 'fr'){
+        propertyName = 'name_FR';
+    } else if(lang === 'de'){
+        propertyName = 'name_DE';
+    } else if(lang === 'nl'){
+        propertyName = 'name_NL'
+    } else {
+        propertyName = "cityname";
+    }
     let cityNames = [];
     cities.find({
         'geometry': {
@@ -924,8 +936,8 @@ exports.findCitiesByLocation = function (lat, lng, callback) {
                 }
             }
         }
-    }, {projection: {"properties.cityname": 1}}).forEach(function (res) {
-        cityNames.push(res.properties.cityname);
+    }, {projection: {"properties": 1}}).forEach(function (res) {
+        cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
     }, function (error) {
         callback(error, cityNames);
     });

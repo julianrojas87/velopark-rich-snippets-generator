@@ -5,7 +5,7 @@ exports.listAllCities = function(callback){
 };
 
 exports.isLocationWithinCities = function (lat, lon, cityNames, callback) {
-    dbAdapter.findCitiesByLocation(lat, lon,function (error, res) {
+    dbAdapter.findCitiesByLocation(lat, lon, null,function (error, res) {
         if (error != null) {
             callback(error);
         } else if(res) {
@@ -22,9 +22,9 @@ exports.isLocationWithinCities = function (lat, lon, cityNames, callback) {
     });
 };
 
-exports.listCitiesForLocation = function(lat, lon){
+exports.listCitiesForLocation = function(lat, lon, lang){
     return new Promise((resolve, reject) => {
-        dbAdapter.findCitiesByLocation(lat, lon, function(error, res){
+        dbAdapter.findCitiesByLocation(lat, lon, lang, function(error, res){
             if(error != null){
                 reject(error);
             } else {
