@@ -55,8 +55,8 @@ async function initDB() {
 
     //detect if command line flag is used to force repopulation of geocities
     process.argv.forEach(function (val, index, array) {
-        if(val === '--reload-regions'){
-            cities.drop(function(err, delOK) {
+        if (val === '--reload-regions') {
+            cities.drop(function (err, delOK) {
                 if (err) console.error(err);
                 if (delOK) console.log("geocities deleted");
             });
@@ -132,10 +132,10 @@ exports.findAccounts = function (callback) {
     });
 };
 
-exports.findAccountsByEmails = function(emails){
+exports.findAccountsByEmails = function (emails) {
     return new Promise((resolve, reject) => {
         accounts.find({
-            email: { $in : emails }
+            email: {$in: emails}
         }).toArray(function (e, res) {
             if (e) {
                 reject(e);
@@ -153,6 +153,23 @@ exports.findAllEmails = function (callback) {
         emails.push(res.email);
     }, function (error) {
         callback(error, emails);
+    });
+};
+
+exports.findSuperAdminEmailsAndLang = function () {
+    return new Promise((resolve, reject) => {
+        let emails = [];
+        accounts.find({
+            superAdmin: true
+        }, {projection: {_id: 0, "email": 1, 'lang' : 1}}).forEach(function (res) {
+            emails.push({email: res.email, lang: res.lang});
+        }, function (error) {
+            if(error){
+                reject(error);
+            } else {
+                resolve(emails);
+            }
+        });
     });
 };
 
@@ -253,16 +270,16 @@ exports.updateAccountEnableCity = function (email, cityName, enabled) {
     );
 };
 
-exports.updateAccountLanguage = function(email, lang){
+exports.updateAccountLanguage = function (email, lang) {
     return accounts.findOneAndUpdate(
         {
             email: email
         },
         {
-        $set: {
-            lang: lang
-        }
-    });
+            $set: {
+                lang: lang
+            }
+        });
 };
 
 /*
@@ -914,7 +931,7 @@ exports.findCitiesByLocation = function (lat, lng, callback) {
     });
 };
 
-exports.insertCity = function(json){
+exports.insertCity = function (json) {
     return cities.insertOne(json);
 };
 

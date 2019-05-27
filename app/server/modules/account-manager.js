@@ -140,6 +140,10 @@ exports.getAllEmails = function (callback) {
     dbAdapter.findAllEmails(callback);
 };
 
+exports.getAllSuperAdminEmails = function(){
+    return dbAdapter.findSuperAdminEmailsAndLang();
+};
+
 /*
 	record insertion, update & deletion methods
 */
@@ -176,7 +180,15 @@ exports.addNewAccount = function (newData, callback) {
                     cityNames: cityNames,
                     superAdmin: false
                 };
-                dbAdapter.insertAccount(insertData, callback);
+                dbAdapter.insertAccount(insertData, function(error, res){
+                    callback(error, res);
+                    exports.getAllSuperAdminEmails().then(adminEmails => {
+                        EM.dispatchUserSignedUp(adminEmails);
+                    }).catch(error => {
+                        console.error("Could not get SuperAdmin emails to send new user email.", error);
+                    })
+
+                });
             }
         });
     }
