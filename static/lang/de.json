@@ -225,7 +225,12 @@
           "validation" : "Geben Sie eine gültige Schließzeit ein"
         },
         "day" : ["Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],
-        "addExtra": "Fügen Sie zusätzliche Stunden hinzu"
+        "addExtra": "Fügen Sie zusätzliche Stunden hinzu",
+        "extrainfo" : {
+          "field" : "Zusatzinformation",
+          "infotext" : "<span style=\"display: inherit; padding-left: 15px;\">Beschreiben Sie zusätzliche Unregelmäßigkeiten für die Öffnungszeiten.</span><br><span style=\"display: inherit; padding-left: 15px;\">Beispiel: <i>Jeden ersten Sonntag im Monat geöffnet</i> oder <i>an Feiertagen geschlossen</i></span>",
+          "placeholder" : "Beschreiben Sie Sonderfälle wie Feiertage oder Sonderöffnungen"
+        }
       }
     },
     "loc" : {
