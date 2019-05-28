@@ -943,6 +943,38 @@ exports.findCitiesByLocation = function (lat, lng, lang, callback) {
     });
 };
 
+exports.findMunicipalityByLocation = function (lat, lng, lang, callback) {
+    let propertyName;
+    if(lang === 'en'){
+        propertyName = 'name_EN';
+    } else if(lang === 'fr'){
+        propertyName = 'name_FR';
+    } else if(lang === 'de'){
+        propertyName = 'name_DE';
+    } else if(lang === 'nl'){
+        propertyName = 'name_NL'
+    } else {
+        propertyName = "cityname";
+    }
+    let cityNames = [];
+    cities.find({
+        'geometry': {
+            '$geoIntersects': {
+                '$geometry': {
+                    type: "Point",
+                    coordinates: [lng, lat]
+                }
+            }
+        }
+    }, {projection: {"properties": 1}}).forEach(function (res) {
+        if(res.properties['adminLevel'] === 4) {
+            cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
+        }
+    }, function (error) {
+        callback(error, cityNames);
+    });
+};
+
 exports.insertCity = function (json) {
     return cities.insertOne(json);
 };

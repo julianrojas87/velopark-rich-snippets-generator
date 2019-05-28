@@ -566,7 +566,7 @@ module.exports = app => {
         } else {
             if (req.params.lat && req.params.lng) {
                 try {
-                    CiM.listCitiesForLocation(parseFloat(req.params.lat), parseFloat(req.params.lng), req.session.user.lang)
+                    CiM.getMunicipalityForLocation(parseFloat(req.params.lat), parseFloat(req.params.lng), req.session.user.lang)
                         .then(result => {
                             res.status(200).send(result);
                         })

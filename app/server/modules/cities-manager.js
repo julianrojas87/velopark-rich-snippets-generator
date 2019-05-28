@@ -22,6 +22,18 @@ exports.isLocationWithinCities = function (lat, lon, cityNames, callback) {
     });
 };
 
+exports.getMunicipalityForLocation = function(lat, lon, lang) {
+    return new Promise((resolve, reject) => {
+        dbAdapter.findMunicipalityByLocation(lat, lon, lang, function(error, res){
+            if(error != null){
+                reject(error);
+            } else {
+                resolve(res);
+            }
+        });
+    }); 
+}
+
 exports.listCitiesForLocation = function(lat, lon, lang){
     return new Promise((resolve, reject) => {
         dbAdapter.findCitiesByLocation(lat, lon, lang, function(error, res){
