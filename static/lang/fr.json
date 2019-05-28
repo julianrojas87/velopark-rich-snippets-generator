@@ -225,7 +225,12 @@
           "validation" : "Entrez une heure de fermeture valide"
         },
         "day" : ["lun", "mar", "mer", "jeu", "ven", "sam", "di"],
-        "addExtra": "Ajouter des heures supplémentaires"
+        "addExtra": "Ajouter des heures supplémentaires",
+        "extrainfo" : {
+          "field" : "Informations supplémentaires",
+          "infoText" : "<span style=\"display: inherit; padding-left: 15px;\">Décrivez des irrégularités supplémentaires pour les heures d'ouverture.</span><br><span style=\"display: inherit; padding-left: 15px;\">Exemple: <i>Ouvert tous les premiers dimanches du mois</i> ou <i>fermé les jours fériés</i></span>",
+          "placeholder" : "Décrire des cas spéciaux comme des vacances ou des ouvertures spéciales"
+        }
       }
     },
     "loc" : {

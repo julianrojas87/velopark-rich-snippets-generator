@@ -1,9 +1,13 @@
-($ => {
-
+$(window).on('load', function () {
     Promise.all(loadingPromises).then(() => {
-        loadParkingValues();
-        parkingDataLoaded = true;
+        Promise.resolve(select2Promise).then(() => {
+            loadParkingValues();
+            parkingDataLoaded = true;
+        });
     });
+});
+
+($ => {
 
 })(jQuery);
 
@@ -18,7 +22,7 @@ function loadParkingValues() {
         $('#language-selection-container input[type="checkbox"]').prop('checked', false).trigger("change");
         processObject(parking);
         // leave Parking Facility URI empty if @id was set automatically
-        if(parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
+        if (parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
             $('input[name="@id"]').val('');
         }
     }
@@ -102,17 +106,17 @@ function processArray(path, arr, input) {
             let inputs;
             let isFeature = false;
             let isGeneralFeature = false;
-            if(path.join('.') === "amenityFeature._" ){
+            if (path.join('.') === "amenityFeature._") {
                 isFeature = true;
                 //split security features and general services
                 isGeneralFeature = false;
-                for(j in myGeneralFeatures){
-                    if(myGeneralFeatures[j]['@id'] === obj['@type']){
+                for (j in myGeneralFeatures) {
+                    if (myGeneralFeatures[j]['@id'] === obj['@type']) {
                         isGeneralFeature = true;
                         break;
                     }
                 }
-                if(isGeneralFeature){
+                if (isGeneralFeature) {
                     numGeneralFeatures++;
                 } else {
                     numSecurityFeatures++;
@@ -131,11 +135,11 @@ function processArray(path, arr, input) {
                 }
 
                 //input = $('[name^="' + lastPath + '"]');
-                if(path.join('.') === "amenityFeature._" ){
+                if (path.join('.') === "amenityFeature._") {
                     //split security features and general services
                     let isGeneralFeature = false;
-                    for(j in myGeneralFeatures){
-                        if(myGeneralFeatures[j]['@id'] === obj['@type']){
+                    for (j in myGeneralFeatures) {
+                        if (myGeneralFeatures[j]['@id'] === obj['@type']) {
                             isGeneralFeature = true;
                             break;
                         }
@@ -147,7 +151,7 @@ function processArray(path, arr, input) {
                 }
             } else {
                 //first element of the array, make sure its input is visible (for optional inputs that are hidden by default)
-                $(inputs[0]).closest('.dynamic-section').css('display','block');
+                $(inputs[0]).closest('.dynamic-section').css('display', 'block');
             }
             for (let j in keys) {
                 let el = null;

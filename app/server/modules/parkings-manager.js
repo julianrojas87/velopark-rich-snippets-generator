@@ -257,7 +257,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
 
 let getCitiesOfParking = function (parking, callback) {
     lnglat = extractLocationFromJsonld(parking);
-    dbAdapter.findCitiesByLocation(lnglat[1], lnglat[0], callback);
+    dbAdapter.findCitiesByLocation(lnglat[1], lnglat[0], null, callback);
 };
 
 let extractLocationFromJsonld = function (jsonld) {

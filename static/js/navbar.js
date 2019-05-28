@@ -1,3 +1,5 @@
+var select2Promise = null;
+
 ($ => {
 
     /*==================================================================
@@ -43,7 +45,7 @@
         $('#drop-menu-lang').hide();
     });
 
-    $('.lang-selector').on('click', function() {
+    $('.lang-selector').on('click', function () {
         let lang = $(this).attr('lang-select');
         translate(lang);
     });
@@ -78,7 +80,7 @@
         newSelect.find('.js-select2').each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2',),
+                dropdownParent: $(this).next('.dropDownSelect2'),
                 val: '',
                 placeholder: $(this).attr('placeholder')
             });
@@ -91,22 +93,29 @@
 
     handleResize();
 
-    
-    
 })(jQuery);
 
-$(window).on('load', function() {
-    // Init all select2
-    $(".js-select2").each(function () {
-        $(this).select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $(this).next('.dropDownSelect2'),
-            placeholder: $(this).attr('placeholder')
-        });
+$(window).on('load', function () {
+    select2Promise = initSelect2();
+    select2Promise.then(() => {
+        translate();
+        handleResize();
     });
-    translate();
-    handleResize();
 });
+
+function initSelect2() {
+    return new Promise((resolve, reject) => {
+        // Init all select2
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2'),
+                placeholder: $(this).attr('placeholder')
+            });
+        });
+        resolve();
+    });
+}
 
 function handleResize() {
     // Adjust position of dropdown menus

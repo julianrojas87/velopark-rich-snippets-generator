@@ -9,9 +9,9 @@ const domainName = config['domain'] || '';
 let activatedAccounts = {};
 
 var server = email.server.connect({
-    user:  "velopark.notifications@gmail.com",
-    password:  "velopark",
-    host: "smtp.gmail.com",
+    user:  config_secret.NL_EMAIL_USER,
+    password:  config_secret.NL_EMAIL_PASS,
+    host: config_secret.NL_EMAIL_HOST,
     ssl: true
 });
 
@@ -81,6 +81,25 @@ EM.dispatchAccountActivated = function (account, callback) {
         text: 'something went wrong... :(',
         attachment: EM.composeAccountEnabledEmail(account.email, account.lang)
     }, callback);
+};
+
+EM.dispatchUserSignedUp = function(adminEmails){
+    for(i in adminEmails) {
+        server.send({
+            from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+            to: adminEmails[i].email,
+            subject: 'New User Registration',
+            text: 'something went wrong... :(',
+            attachment: EM.composeUserSignedUp(adminEmails[i].email, adminEmails[i].lang)
+        }, function (e, m) {
+            if (!e) {
+                console.log("Mail sent to SuperAdmin: new account registered", m.header.to);
+            } else {
+                for (k in e) console.error('ERROR : ', k, e[k]);
+                console.error(e);
+            }
+        });
+    }
 };
 
 EM.composePasswordResetEmail = function (passKey, lang) {
@@ -175,6 +194,53 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html += "Hallo!<br><br>";
         html += "We zijn blij je te kunnen meedelen dat de registratie van je Velopark account geactiveerd werd.<br>";
         html += "Je kan je nu <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>aanmelden in je account</a> door gebruik te maken van  <b>" + email + "</b> als je email adres en het wachtwoord dat je tijdens het registratieprocess hebt opgegeven.<br><br>";
+        html += "Vriendelijke groeten,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    }
+    return [{data: html, alternative: true}];
+};
+
+EM.composeUserSignedUp = function (email, lang) {
+    let html;
+    if (lang === 'en') {
+        html = "<html><body>";
+        html += "Hello!<br><br>";
+        html += "A new user just signed up on Velopark!<br>";
+        html += "You can review his membership through the <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>admin console</a>.<br><br>";
+        html += "Greetings,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'de') {
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "Ein neuer Benutzer hat sich gerade bei Velopark angemeldet!<br>";
+        html += "Sie können seine Mitgliedschaft über die <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>Administratorkonsole überprüfen</a>.<br><br>";
+        html += "Schöne Grüße,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'fr') {
+        html = "<html><body>";
+        html += "Bonjour!<br><br>";
+        html += "Un nouvel utilisateur vient de s'inscrire sur Velopark!<br>";
+        html += "Vous pouvez consulter son abonnement via <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>la console d'administration</a>.<br><br>";
+        html += "Salutations,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'es') {
+        html = "<html><body>";
+        html += "¡Hola!<br><br>";
+        html += "Un nuevo usuario acaba de registrarse en Velopark!<br>";
+        html += "Puede revisar su membresía a través de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>la consola de administración</a>.<br><br>";
+        html += "Saludos,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else {
+        //Dutch is default
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "Een nieuwe gebruiker heeft zonet een account aangemaakt bij Velopark!<br>";
+        html += "U kunt zijn lidmaatschap bekijken via de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>beheerdersconsole</a>.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
