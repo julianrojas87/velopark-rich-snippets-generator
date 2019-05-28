@@ -13,7 +13,9 @@ exports.loadNazka = function () {
                 new Promise((resolve, reject) => {
                     try {
                         request('http://belgium.geo.nazkamapps.com/list/level/' + levels[i], (err, res, body) => {
-                            console.log('REQ: ' + res.request.uri.href);
+                            if(res) {
+                                console.log('REQ: ' + res.request.uri.href);
+                            }
                             try {
                                 if (err) {
                                     console.error('Error loading Nazka areas', err);
@@ -59,7 +61,9 @@ function requestGeo(NIS, retries, areas, promises){
         new Promise((resolve, reject) => {
             try {
                 request('http://belgium.geo.nazkamapps.com/geometry/nis/' + NIS + "?simplify=1", (err, res, body) => {
-                    console.log('REQ: ' + res.request.uri.href);
+                    if(res) {
+                        console.log('REQ: ' + res.request.uri.href);
+                    }
                     try {
                         if (err) {
                             console.error('Error loading Nazka geometry for area.', NIS, err);
