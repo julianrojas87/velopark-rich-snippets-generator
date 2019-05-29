@@ -544,11 +544,12 @@ async function addParkingToCatalog(id) {
     let catalog = JSON.parse(await readFile(data + '/public/catalog.jsonld', 'utf8'));
     let dists = catalog['dcat:dataset']['dcat:distribution'];
     let found = false;
+    let modificationDate = new Date().toISOString();
 
     for (let i in dists) {
         if (dists[i]['@id'] === 'https://velopark.ilabt.imec.be/data/' + localId || dists[i]['@id'] === parking['@id']) {
             found = true;
-            dists[i]['dct:modified'] = new Date().toISOString();
+            dists[i]['dct:modified'] = modificationDate;
             break;
         }
     }
@@ -560,10 +561,12 @@ async function addParkingToCatalog(id) {
             "dcat:accessURL": getParkingAccessURLs(parking, localId),
             "dct:license": "http://creativecommons.org/publicdomain/zero/1.0/",
             "dcat:mediaType": "application/ld+json",
-            "dct:issued": new Date().toISOString(),
-            "dct:modified": new Date().toISOString()
+            "dct:issued": modificationDate,
+            "dct:modified": modificationDate
         });
     }
+
+    catalog['dct:modified'] = modificationDate;
 
     await writeFile(data + '/public/catalog.jsonld', JSON.stringify(catalog), 'utf8');
 }
@@ -584,6 +587,7 @@ async function removeParkingFromCatalog(id) {
 
     if (index != null) {
         dists.splice(index, 1);
+        catalog['dct:modified'] = new Date().toISOString();
         await writeFile(data + '/public/catalog.jsonld', JSON.stringify(catalog), 'utf8');
     }
 }
@@ -600,6 +604,7 @@ function initFolders() {
 
 async function initCatalog() {
     let parkings = new Map();
+    let modificationDate = new Date().toISOString();
 
     await Promise.all((await readdir(data + '/public')).map(async p => {
         if (p.indexOf('catalog.jsonld') < 0) {
@@ -614,8 +619,6 @@ async function initCatalog() {
     if (fs.existsSync(data + '/public/catalog.jsonld')) {
         let catalog = JSON.parse(await readFile(data + '/public/catalog.jsonld'));
         let dists = catalog['dcat:dataset']['dcat:distribution'];
-
-        catalog['dct:modified'] = new Date().toISOString();
 
         for (let p of parkings) {
             let found = false;
@@ -636,6 +639,8 @@ async function initCatalog() {
                     "dct:issued": getLastModified(p[1]),
                     "dct:modified": getLastModified(p[1])
                 });
+
+                catalog['dct:modified'] = modificationDate;
             }
         }
 
@@ -672,8 +677,8 @@ async function initCatalog() {
             "@type": "dcat:Catalog",
             "dct:title": "Catalog of Bicycle Parking Facilities in Belgium",
             "dct:description": "List of Linked Open Data documents describing bicycle parking facilities in Belgium",
-            "dct:issued": new Date().toISOString(),
-            "dct:modified": new Date().toISOString(),
+            "dct:issued": modificationDate,
+            "dct:modified": modificationDate,
             "dct:license": "http://creativecommons.org/publicdomain/zero/1.0/",
             "dct:rights": "public",
             "dct:publisher": {
