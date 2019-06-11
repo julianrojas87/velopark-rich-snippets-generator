@@ -899,7 +899,7 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback) {
+exports.findParkingsByCityName = function (cityName, callback, skip=0, limit=0 ) {
     cities.findOne({'properties.cityname': cityName}, {}, function (error, city) {
         if (error != null) {
             callback(error);
@@ -910,7 +910,7 @@ exports.findParkingsByCityName = function (cityName, callback) {
                         '$geometry': city.geometry
                     }
                 }
-            }).toArray(function (error, result) {
+            }).skip(skip).limit(limit).toArray(function (error, result) {
                 if (error != null) {
                     callback(error);
                 } else {

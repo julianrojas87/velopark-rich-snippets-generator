@@ -212,6 +212,7 @@
 })(jQuery);
 
 function registerParkingListButtons(){
+    
     $('.pageButton').on('click', function(){
         console.log('clicked');
         $('.paginationContainer').html('<div class="loading-icon">' +
@@ -229,7 +230,7 @@ function registerParkingListButtons(){
             '                </svg>\n' +
             '            </div>');
         $.ajax({
-            url: 'parkings',
+            url: window.location.href,
             headers: { 'Range': 'pages=' + $(this).attr('rangeStart') + '-' + $(this).attr('rangeEnd') },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
