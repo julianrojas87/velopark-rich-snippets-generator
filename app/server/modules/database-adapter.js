@@ -376,7 +376,7 @@ exports.findParkingByID = id => {
     return parkings.findOne({parkingID: id});
 };
 
-exports.findParkingsByEmail = function (email, callback) {
+exports.findParkingsByEmail = function (email, skip, limit, callback) {
     accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
         if (o != null) {
             if (o.companyName != null) {
@@ -391,6 +391,8 @@ exports.findParkingsByEmail = function (email, callback) {
                         {
                             $unwind: "$parkingIDs"
                         },
+                        { $skip : skip },
+                        { $limit : limit },
                         {
                             $lookup:
                                 {

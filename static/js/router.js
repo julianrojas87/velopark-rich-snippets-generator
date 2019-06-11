@@ -116,46 +116,7 @@
         });
     });
 
-    $('#parking-list input[title=Edit]').each(function () {
-        $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
-            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
-            console.log(parkingId);
-            window.location.href = domain + '/home?parkingId=' + parkingId;
-        });
-    });
 
-    $('#parking-list input[title=Delete]').each(function () {
-        $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
-            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
-
-            if (confirm('Are you sure to delete the ' + $(this).parent().parent().find('a').text().trim() + ' parking facility?')) {
-                $.ajax({
-                    type: "DELETE",
-                    url: domain + '/delete-parking?parkingId=' + parkingId,
-                    success: () => {
-                        if(user.superAdmin === 'true') {
-                            window.location.href = domain + '/admin-parkings';
-                        } else {
-                            window.location.href = domain + '/parkings';
-                        }
-                    },
-                    error: e => {
-                        alert('Error: ' + e.responseText);
-                    }
-                });
-            }
-        });
-    });
-
-    $('#parking-list input[title=Download]').each(function () {
-        $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
-            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
-            window.location.href = domain + '/download?parkingId=' + parkingId;
-        });
-    });
 
     $('#button-create-new-company').on('click', function () {
         $(this).hide();
@@ -247,4 +208,74 @@
         });
     });
 
+    registerParkingListButtons();
 })(jQuery);
+
+function registerParkingListButtons(){
+    $('.pageButton').on('click', function(){
+        console.log('clicked');
+        $('.paginationContainer').html('<div class="loading-icon">' +
+            '                <svg class="lds-dual-ring" width="24px"\n' +
+            '                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">\n' +
+            '                    <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"\n' +
+            '                            ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"\n' +
+            '                            fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"\n' +
+            '                            stroke-dasharray="62.83185307179586 62.83185307179586"\n' +
+            '                            transform="rotate(244.478 50 50)">\n' +
+            '                        <animateTransform attributeName="transform" type="rotate" calcMode="linear"\n' +
+            '                                          values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"\n' +
+            '                                          repeatCount="indefinite"></animateTransform>\n' +
+            '                    </circle>\n' +
+            '                </svg>\n' +
+            '            </div>');
+        $.ajax({
+            url: 'parkings',
+            headers: { 'Range': 'pages=' + $(this).attr('rangeStart') + '-' + $(this).attr('rangeEnd') },
+            success: function (data) {
+                $('#parkingsContainer').replaceWith(data);
+                registerParkingListButtons();
+            }
+        });
+    });
+
+    $('#parking-list input[title=Edit]').each(function () {
+        $(this).on('click', function () {
+            let domain = domainName !== '' ? '/' + domainName : '';
+            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
+            console.log(parkingId);
+            window.location.href = domain + '/home?parkingId=' + parkingId;
+        });
+    });
+
+    $('#parking-list input[title=Delete]').each(function () {
+        $(this).on('click', function () {
+            let domain = domainName !== '' ? '/' + domainName : '';
+            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
+
+            if (confirm('Are you sure to delete the ' + $(this).parent().parent().find('a').text().trim() + ' parking facility?')) {
+                $.ajax({
+                    type: "DELETE",
+                    url: domain + '/delete-parking?parkingId=' + parkingId,
+                    success: () => {
+                        if(user.superAdmin === 'true') {
+                            window.location.href = domain + '/admin-parkings';
+                        } else {
+                            window.location.href = domain + '/parkings';
+                        }
+                    },
+                    error: e => {
+                        alert('Error: ' + e.responseText);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#parking-list input[title=Download]').each(function () {
+        $(this).on('click', function () {
+            let domain = domainName !== '' ? '/' + domainName : '';
+            let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
+            window.location.href = domain + '/download?parkingId=' + parkingId;
+        });
+    });
+}
