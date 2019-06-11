@@ -384,31 +384,15 @@ exports.findParkingsByEmail = function (email, callback) {
                         if (e) {
                             callback(e);
                         } else {
-                            let processNextParking = function (parkings, o) {
-                                o.next(function (error, res) {
-                                    if (error != null) {
-                                        callback(error);
-                                    } else {
-                                        parkings.push(res.parking);
-                                        o.hasNext(function (error, res) {
-                                            if (res) {
-                                                processNextParking(parkings, o);
-                                            } else {
-                                                callback(null, [].concat.apply([], parkings));
-                                            }
-                                        });
-                                        //callback(null, res ? res.parking : {});
-                                    }
-                                });
-                            };
-                            o.hasNext(function (error, res) {
-                                if (error != null) {
-                                    callback(error);
-                                } else if (res) {
-                                    processNextParking([], o);
-                                } else {
-                                    callback(null, []);
+                            let parkingArray;
+                            o.toArray().then(res => {
+                                parkingArray = res;
+                                for(i in parkingArray){
+                                    parkingArray[i] = parkingArray[i].parking[0];
                                 }
+                                callback(null, parkingArray);
+                            }).catch(err => {
+                                callback(err);
                             });
                         }
                     }
