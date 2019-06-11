@@ -470,7 +470,7 @@ module.exports = app => {
         } else {
             //check if user is cityrep
             AM.getAccountCityNamesByEmail(req.session.user.email, function (error, result) {
-                if (result.length > 0) {
+                if (result && result.length > 0) {
                     res.render('city-home.html', {
                         domainName: domainName,
                         vocabURI: vocabURI,
