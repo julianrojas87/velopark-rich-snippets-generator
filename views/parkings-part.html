@@ -41,12 +41,13 @@
             </tbody>
         </table>
         <div class="paginationContainer">
-            <button class="pageButton btn btn-primary" rangeStart="0" rangeEnd="50">first</button>
+            <span>Parking <%= rangeStart %> - <%= rangeEnd %></span>
+            <button class="pageButton btn btn-primary" rangeStart="0" rangeEnd="50">First</button>
             <% if(rangeStart > 0){ %>
-                <button class="pageButton btn btn-primary" rangeStart="<%= rangeStart-(rangeEnd-rangeStart) %>" rangeEnd="<%= rangeStart %>">previous</button>
+                <button class="pageButton btn btn-primary" rangeStart="<%= rangeStart-(rangeEnd-rangeStart) %>" rangeEnd="<%= rangeStart %>">Previous</button>
             <% } %>
             <% if(parkings.length >= rangeEnd-rangeStart){ %>
-                <button class="pageButton btn btn-primary" rangeStart="<%= rangeEnd %>" rangeEnd="<%= rangeEnd+(rangeEnd-rangeStart) %>">next</button>
+                <button class="pageButton btn btn-primary" rangeStart="<%= rangeEnd %>" rangeEnd="<%= rangeEnd+(rangeEnd-rangeStart) %>">Next</button>
             <% } %>
         </div>
     </div>

@@ -621,9 +621,7 @@ module.exports = app => {
                     rangeStart = 0;
                 }
                 rangeEnd = parseInt(matches[3], 10);
-                console.log(rangeHeader, rangeStart, '-', rangeEnd);
             }
-
 
             PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd-rangeStart, function (error, parkings) {
                 if (error != null) {
