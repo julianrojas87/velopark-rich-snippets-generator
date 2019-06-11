@@ -11,6 +11,9 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const data = config['data'] || './data';
 const dbAdapter = require('./database-adapter');
 const AM = require('./account-manager');
+const EM = require('./email-dispatcher');
+
+let recentlyDeletedParkingIds = new Set();
 
 dbAdapter.initDbAdapter().then(() => {
     initFolders();
@@ -138,7 +141,23 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
                 if (approved) {
                     await addParkingToCatalog(localId);
                 }
-                callback(null, res);
+                callback();
+                if(!recentlyDeletedParkingIds.has(parkingID)){
+                    //Parking did not exist before. A company user has created a new parking. Send email to region representatives.
+                    dbAdapter.findCitiesByLocation(location.coordinates[1], location.coordinates[0], null, function(error, result){
+                        if(error){
+                            console.log("ERROR: Cannot notify region reps of new parking.", error);
+                        } else if(result){
+                            dbAdapter.findCityRepsForRegions(result).then( reps => {
+                                EM.dispatchNewParkingToRegionReps(reps, parkingID);
+                            }).catch( error => {
+                                console.error("ERROR: Cannot send new parking notification to region reps.", error);
+                            });
+                        } else {
+                            console.error("No regions for new parking location found.");
+                        }
+                    });
+                }
             }
         });
     }
@@ -379,6 +398,8 @@ exports.deleteParking = async (user, parkingId, callback) => {
                     }
                 }
             });
+            recentlyDeletedParkingIds.add(parkingId);
+            setTimeout(function(){recentlyDeletedParkingIds.delete(parkingId)}, 5000);
         } else {
             callback('Parking file does not exist in disk')
         }
