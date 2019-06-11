@@ -1,0 +1,90 @@
+<div id="parkingsContainer" class="container-contact100">
+    <ul class="breadcrumbs">
+        <li><a href="home">Home</a></li>
+        <li><a href="admin" transl-id="admin.title">Admin Dashboard</a></li>
+        <li><a href="admin-parkings" transl-id="adminParkings.title">Manage Parkings</a></li>
+    </ul>
+    <div class="wrap-contact100 table-parkings-scroll-helper" style="width: 100%;">
+        <h2 transl-id="adminParkings.title">Manage Parkings</h2>
+        <table id="parking-list" class="table-fill">
+            <thead>
+            <tr>
+                <th class="text-left" transl-id="adminParkings.th[0]">Parking Facility URI</th>
+                <th class="text-left" transl-id="adminParkings.th[1]">Parking Name</th>
+                <th class="text-left" transl-id="adminParkings.th[2]">Company</th>
+                <th class="text-left" transl-id="adminParkings.th[3]">Region</th>
+                <th class="text-left" transl-id="adminParkings.th[4]">Approved</th>
+                <th class="text-left" transl-id="adminParkings.th[5]">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            <% for (var i = 0; i < parkings.length; i++) { %>
+            <tr>
+                <td class="text-left" style="max-width: 25vw;">
+                    <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold; overflow-wrap: break-word;"
+                       href="<%= parkings[i]['@id'] %>">
+                        <%= parkings[i]['@id'] %></a>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <%= parkings[i]['name'][0]['@value'] ? parkings[i]['name'][0]['@value'] : parkings[i]['name'] %>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <%= parkings[i]['account-company'] %>
+                    <button class="btn btn-secondary transfer-parking" parkingid="<%= parkings[i]['@id'] %>"><i class="far fa-edit"></i></button>
+                </td>
+                <td>
+                    <div class="parking-region-dummy" data-long="<%= parkings[i]['location']['lon'] %>" data-lat="<%= parkings[i]['location']['lat'] %>">
+                        <svg class="loading-icon lds-dual-ring" width="15px"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"
+                                    ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"
+                                    fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"
+                                    stroke-dasharray="62.83185307179586 62.83185307179586"
+                                    transform="rotate(244.478 50 50)">
+                                <animateTransform attributeName="transform" type="rotate" calcMode="linear"
+                                                  values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"
+                                                  repeatCount="indefinite"></animateTransform>
+                            </circle>
+                        </svg>
+                    </div>
+                </td>
+                <td class="text-left" style="font-size: 20px;">
+                    <svg class="loading-icon lds-dual-ring" width="15px" style="display:none"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"
+                                ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"
+                                fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"
+                                stroke-dasharray="62.83185307179586 62.83185307179586"
+                                transform="rotate(244.478 50 50)">
+                            <animateTransform attributeName="transform" type="rotate" calcMode="linear"
+                                              values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"
+                                              repeatCount="indefinite"></animateTransform>
+                        </circle>
+                    </svg>
+                    <input class="checkbox-parkingEnabled" type="checkbox" <%= parkings[i]['approvedstatus'] ? 'checked'
+                    : '' %> parkingid="<%= parkings[i]['@id'] %>" >
+                </td>
+                <td class="text-left">
+                    <input title="Edit" type="image" src="static/images/icons/edit.png"
+                           style="float: left; width: 40px;">
+                    <input title="Delete" type="image" src="static/images/icons/delete.png"
+                           style="position: relative; left: 10px; bottom: 2px; float: left; width: 40px;">
+                    <input title="Download" type="image" src="static/images/icons/download.png"
+                           style="position: relative; left: 16px; bottom: 2px; float: left; width: 40px;">
+                </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+        <div class="paginationContainer">
+            <span>Parking <%= rangeStart %> - <%= rangeEnd %></span>
+            <button class="pageButton btn btn-primary" rangeStart="0" rangeEnd="0">First</button>
+            <% if(rangeStart > 0){ %>
+            <button class="pageButton btn btn-primary" rangeStart="<%= rangeStart-(rangeEnd-rangeStart) %>" rangeEnd="<%= rangeStart %>">Previous</button>
+            <% } %>
+            <% if(parkings.length >= rangeEnd-rangeStart){ %>
+            <button class="pageButton btn btn-primary" rangeStart="<%= rangeEnd %>" rangeEnd="<%= rangeEnd+(rangeEnd-rangeStart) %>">Next</button>
+            <% } %>
+        </div>
+    </div>
+</div>

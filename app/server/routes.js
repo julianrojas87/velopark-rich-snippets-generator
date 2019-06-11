@@ -224,20 +224,56 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
-                        PM.listAllParkings()
+
+                        let rangeHeader = req.header("range");
+                        let rangeStart = 0;
+                        let rangeEnd = 50;
+                        if(rangeHeader) {
+                            let matches = rangeHeader.match(/(.*)=(\d*)-(\d*)/);
+                            rangeStart = parseInt(matches[2], 10);
+                            if(rangeStart<0){
+                                rangeStart = 0;
+                            }
+                            rangeEnd = parseInt(matches[3], 10);
+                            if(rangeEnd <= 0){
+                                rangeEnd = 50;
+                            }
+                        }
+
+                        PM.listAllParkings(rangeStart, rangeEnd-rangeStart)
                             .then(parkings => {
-                                res.render('admin-parkings.html', {
-                                    domainName: domainName,
-                                    vocabURI: vocabURI,
-                                    username: req.session.user.email,
-                                    parkings: parkings ? parkings : {},
-                                    superAdmin: req.session.user.superAdmin,
-                                    company: {
-                                        name: req.session.user.companyName,
-                                        enabled: req.session.user.companyEnabled
-                                    },
-                                    cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
-                                });
+
+                                if(!rangeHeader) {
+                                    res.render('admin-parkings.html', {
+                                        domainName: domainName,
+                                        vocabURI: vocabURI,
+                                        username: req.session.user.email,
+                                        parkings: parkings ? parkings : {},
+                                        superAdmin: req.session.user.superAdmin,
+                                        company: {
+                                            name: req.session.user.companyName,
+                                            enabled: req.session.user.companyEnabled
+                                        },
+                                        cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
+                                        rangeStart: rangeStart,
+                                        rangeEnd: rangeEnd
+                                    });
+                                } else {
+                                    res.render('admin-parkings-part.html', {
+                                        domainName: domainName,
+                                        vocabURI: vocabURI,
+                                        username: req.session.user.email,
+                                        parkings: parkings ? parkings : {},
+                                        superAdmin: req.session.user.superAdmin,
+                                        company: {
+                                            name: req.session.user.companyName,
+                                            enabled: req.session.user.companyEnabled
+                                        },
+                                        cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
+                                        rangeStart: rangeStart,
+                                        rangeEnd: rangeEnd
+                                    });
+                                }
                             })
                             .catch(error => {
                                 console.error(error);

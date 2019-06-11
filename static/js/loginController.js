@@ -212,22 +212,7 @@ let currentLang = 'nl';
     });
 
 
-    //insert regions in admin parking overview
-    let domain = domainName !== '' ? '/' + domainName : '';
-    $('.parking-region-dummy').each(function(){
-        let lat = $(this).attr('data-lat');
-        let lon = $(this).attr('data-long');
-        $.ajax({
-            type: "GET",
-            url: domain + '/cityrep/get-regions/' + lat + '/' + lon,
-            success: data => {
-                $(this).parent().html(data.toString());
-            },
-            error: e => {
-                $(this).html("[Error]");
-            }
-        });
-    });
+
 })(jQuery);
 
 //if no lang parameter given, setting is loaded from localStorage
