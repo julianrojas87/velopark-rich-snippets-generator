@@ -255,6 +255,75 @@ let currentLang = 'nl';
         return false;
     });
 
+    let regionTrees = $('.region-tree[state="flat"]');
+    if (regionTrees.length) {
+        let domain = domainName !== '' ? '/' + domainName : '';
+        $.ajax({
+            type: "GET",
+            url: domain + '/regionhierarchy',
+            success: data => {
+                regionTrees.each(function () {
+                    let regions = [];
+                    $(this).find('.region-allowed-to-represent').each(function () {
+                        regions.push($(this).attr('region'));
+                    });
+                    console.log(regions);
+                    function isPresent(object){
+                        let returnObject = {};
+                        let children = [];
+                        //Ask your children
+                        if(object.childAreas){
+                            for(let i in object.childAreas){
+                                let child = isPresent(object.childAreas[i]);
+                                if(!child.name_NL && child.children && child.children.length){
+                                    children = children.concat(child.children);
+                                } else if(!jQuery.isEmptyObject(child)){
+                                    children.push(child);
+                                }
+                            }
+                        }
+                        if(children.length){
+                            returnObject.children = children;
+                        }
+                        //Am I part of the list?
+                        if(regions.includes(object['name_NL'])){
+                            returnObject['name_NL'] = object['name_NL'];
+                            returnObject['adminLevel'] = object['adminLevel'];
+
+                        }
+                        return returnObject;
+                    }
+                    let globalChildren = [];
+                    for(let k in data) {
+                        globalChildren = globalChildren.concat(isPresent(data[k]));
+                    }
+                    console.log(globalChildren);
+
+                    function visitTreeTopDown(tableCell, object, element){
+                        if(object.name_NL){
+                            let elementToMove = tableCell.find('.region-allowed-to-represent[region="' + object.name_NL + '"]');
+                            elementToMove.addClass("admin-level-"+object.adminLevel);
+                            element.append(elementToMove);
+                        }
+                        if(object.children){
+                            let newElement = tableCell.find('.region-allowed-to-represent[region="' + object.name_NL + '"]');
+                            for( let i in object.children) {
+                                visitTreeTopDown(tableCell, object.children[i], newElement);
+                            }
+                        }
+                    }
+                    for( let h in globalChildren) {
+                        visitTreeTopDown($(this), globalChildren[h], $(this));
+                    }
+
+                });
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
+            }
+        });
+    }
+
 
 
 })(jQuery);

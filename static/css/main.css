@@ -1318,3 +1318,40 @@ ul.breadcrumbs li a:hover {
     top: 85px;
   }
 }
+
+.region-allowed-to-represent {
+  margin-top: 10px;
+}
+
+.region-allowed-to-represent:first-of-type {
+  margin-top: 0;
+}
+
+.region-allowed-to-represent {
+  padding-left: 10px;
+  border-top-left-radius: 10px;
+}
+
+.region-allowed-to-represent>.region-allowed-to-represent {
+  margin-left: 20px;
+}
+
+.admin-level-0 {
+  background-color: dodgerblue;
+}
+
+.admin-level-1 {
+  background-color: cornflowerblue;
+}
+
+.admin-level-2 {
+  background-color: lightskyblue;
+}
+
+.admin-level-3 {
+  background-color: lightblue;
+}
+
+.admin-level-4 {
+  background-color: aliceblue;
+}
