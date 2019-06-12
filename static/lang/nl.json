@@ -521,7 +521,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Acties"
     ]
   },
   "pswdReset": {

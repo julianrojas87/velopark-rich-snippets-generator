@@ -522,7 +522,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Actions"
     ]
   },
   "pswdReset": {

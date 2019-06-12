@@ -521,7 +521,7 @@
   "cityRepParkings" : {
     "title" : "Parkings à ",
     "th" : [
-      "URI du parking", "Nom du parking", "Approuvé", "Actions"
+      "URI du parking", "Nom du parking", "Commune", "Approuvé", "Actions"
     ]
   },
   "pswdReset": {

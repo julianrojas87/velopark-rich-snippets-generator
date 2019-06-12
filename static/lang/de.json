@@ -522,7 +522,7 @@
   "cityRepParkings" : {
     "title" : "Parkplätze in ",
     "th" : [
-      "URI der Parkanlage", "Parkname", "Genehmigt", "Aktionen"
+      "URI der Parkanlage", "Parkname", "Gemeinde", "Genehmigt", "Aktionen"
     ]
   },
   "pswdReset": {
