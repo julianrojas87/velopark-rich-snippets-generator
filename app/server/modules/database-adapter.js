@@ -7,7 +7,7 @@ const nazka = require('./nazka');
 const USE_NAZKA = true;
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
-var db, accounts, parkings, companies, cities;
+var db, accounts, parkings, companies, cities, regionHierarchy;
 
 exports.initDbAdapter = function () {
     return new Promise((resolve, reject) => {
@@ -20,6 +20,7 @@ exports.initDbAdapter = function () {
                 parkings = db.collection('parkings');
                 companies = db.collection('companies');
                 cities = db.collection('geocities');
+                regionHierarchy = db.collection('regionHierarchy');
 
                 accounts.createIndex({location: "2dsphere"});
                 cities.createIndex({geometry: "2dsphere"});
@@ -60,6 +61,10 @@ async function initDB() {
                 if (err) console.error(err);
                 if (delOK) console.log("geocities deleted");
             });
+            regionHierarchy.drop(function (err, delOK) {
+                if (err) console.error(err);
+                if (delOK) console.log("regionHierarchy deleted");
+            });
         }
     });
 
@@ -97,6 +102,9 @@ async function initDB() {
         * update
     - Cities
         * lookup
+    - regionHierarchy
+        * lookup
+        * insert
     - Mixed
         * lookup
 =======================
@@ -177,7 +185,7 @@ exports.findCityRepsForRegions = function (regions) {
     return new Promise((resolve, reject) => {
         accounts.find(
             {
-                cityNames : {
+                cityNames: {
                     $elemMatch: {
                         name: {
                             $in: regions
@@ -332,12 +340,12 @@ exports.deleteAccounts = function (callback) {
     Parkings: lookup
 */
 
-exports.findParkingsWithCompanies = function (skip=0, limit=Number.MAX_SAFE_INTEGER) {
+exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER) {
     return new Promise((resolve, reject) => {
         parkings.aggregate(
             [
-                { $skip: skip },
-                { $limit: limit },
+                {$skip: skip},
+                {$limit: limit},
                 {
                     $lookup:
                         {
@@ -393,8 +401,8 @@ exports.findParkingsByEmail = function (email, skip, limit, callback) {
                         {
                             $unwind: "$parkingIDs"
                         },
-                        { $skip : skip },
-                        { $limit : limit },
+                        {$skip: skip},
+                        {$limit: limit},
                         {
                             $lookup:
                                 {
@@ -901,7 +909,7 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback, skip=0, limit=0 ) {
+exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = 0) {
     cities.findOne({'properties.cityname': cityName}, {}, function (error, city) {
         if (error != null) {
             callback(error);
@@ -987,6 +995,26 @@ exports.findMunicipalityByLocation = function (lat, lng, lang, callback) {
 
 exports.insertCity = function (json) {
     return cities.insertOne(json);
+};
+
+/*
+    ==== regionHierachy ====
+*/
+
+/*
+    regionHierarchy: lookup
+*/
+
+exports.getRegionHierarchy = function () {
+    return regionHierarchy.find().toArray();
+};
+
+/*
+    regionHierarchy: insert
+*/
+
+exports.insertRegionHierarchy = function (hierarchy) {
+    regionHierarchy.insertOne(hierarchy);
 };
 
 

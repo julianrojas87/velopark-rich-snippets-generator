@@ -959,6 +959,15 @@ module.exports = app => {
         });
     });
 
+    app.get('/regionhierarchy', async function (req, res) {
+        CiM.listRegionHierarchy().then(result => {
+            res.status(200).json(result);
+        }).catch(error => {
+            console.error(error);
+            res.status(500).send('failed');
+        });
+    });
+
     /*
         list of terms
     */

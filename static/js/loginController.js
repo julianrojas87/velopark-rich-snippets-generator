@@ -74,25 +74,33 @@ let currentLang = 'nl';
                 },
                 error: e => {
                     alert('Error: ' + e.responseText);
-                    reject(e);
+                    //reject(e);
                 }
             });
         }
         if (!signinformcitiesloaded) {
             $.ajax({
                 type: "GET",
-                url: domain + '/citynames',
+                url: domain + '/regionhierarchy',
                 success: data => {
                     signinformcitiesloaded = true;
-                    $('select[city-names="true"]').each(function () {
-                        for (let i in data) {
-                            $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+
+                    function addChildLevel(select, childObject){
+                        select.each(function() {
+                            $(this).append('<option value="' + childObject['name_NL'] + '">' + "&nbsp;&nbsp;".repeat(Number(childObject['adminLevel'])) + childObject['name_NL'] + '</option>');
+                        });
+                        for(let i in childObject.childAreas){
+                            addChildLevel(select, childObject.childAreas[i]);
                         }
-                    });
+                    }
+
+                    for(let j in data) {
+                        addChildLevel($('select[city-names="true"]'), data[j]);
+                    }
                 },
                 error: e => {
                     alert('Error: ' + e.responseText);
-                    reject(e);
+                    //reject(e);
                 }
             });
         }

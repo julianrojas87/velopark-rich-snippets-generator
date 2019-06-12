@@ -4,6 +4,10 @@ exports.listAllCities = function(callback){
     dbAdapter.findAllCityNames(callback);
 };
 
+exports.listRegionHierarchy = function(){
+    return dbAdapter.getRegionHierarchy();
+};
+
 exports.isLocationWithinCities = function (lat, lon, cityNames, callback) {
     dbAdapter.findCitiesByLocation(lat, lon, null,function (error, res) {
         if (error != null) {
