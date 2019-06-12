@@ -93,6 +93,7 @@ function registerParkingListButtons(){
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
                 registerParkingListButtons();
+                translate();
             }
         });
     });

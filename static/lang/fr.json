@@ -1,4 +1,11 @@
 {
+  "general" : {
+    "buttons": {
+      "first" : "Première",
+      "previous" : "Précédente",
+      "next" : "Suivante"
+    }
+  },
   "navbar": {
     "title": "Velopark Rich Snippets Generator",
     "login" : "Se Connecter",
