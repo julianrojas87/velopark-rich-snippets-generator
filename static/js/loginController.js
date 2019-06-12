@@ -85,10 +85,45 @@ let currentLang = 'nl';
                 success: data => {
                     signinformcitiesloaded = true;
 
+                    var style = document.createElement('style');
+                    style.type = 'text/css';
+                    style.innerHTML = 'content';
+
+
+
                     function addChildLevel(select, childObject){
+
+                        function getColorForAdminLevel(level){
+                            switch (level) {
+                                case "0":
+                                case 0:
+                                    return "dodgerblue";
+                                    break;
+                                case "1":
+                                case 1:
+                                    return "cornflowerblue";
+                                    break;
+                                case "2":
+                                case 2:
+                                    return "lightskyblue";
+                                    break;
+                                case "3":
+                                case 3:
+                                    return "lightblue";
+                                    break;
+                                case "4":
+                                case 4:
+                                    return "aliceblue";
+                                    break;
+                            }
+                        }
                         select.each(function() {
-                            $(this).append('<option value="' + childObject['name_NL'] + '">' + "&nbsp;&nbsp;".repeat(Number(childObject['adminLevel'])) + childObject['name_NL'] + '</option>');
+                            $(this).append('<option class="region-level-' + childObject['adminLevel'] +'" value="' + childObject['name_NL'] + '">' + "&nbsp;&nbsp;&nbsp;".repeat(Number(childObject['adminLevel'])) + childObject['name_NL'] + '</option>');
                         });
+                        style.innerHTML = '.select2-results__option[id*="-' + childObject['name_NL'] + '"] {' +
+                            ' background-color: ' + getColorForAdminLevel(childObject['adminLevel']) + ";" +
+                            '}' + style.innerHTML;
+                        console.log(childObject['adminLevel']);
                         for(let i in childObject.childAreas){
                             addChildLevel(select, childObject.childAreas[i]);
                         }
@@ -97,6 +132,7 @@ let currentLang = 'nl';
                     for(let j in data) {
                         addChildLevel($('select[city-names="true"]'), data[j]);
                     }
+                    document.getElementsByTagName('head')[0].appendChild(style);
                 },
                 error: e => {
                     alert('Error: ' + e.responseText);
