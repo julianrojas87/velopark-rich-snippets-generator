@@ -4,8 +4,9 @@
     [ Validate after type ]*/
     $('.validate-input .input100').each(function () {
         $(this).on('blur', function () {
-            if (validate(this) == false) {
-                showValidate(this);
+            if (validate(this, false) === false) {
+                if(!$(this).attr('type') === 'time')
+                    showValidate(this);
             }
             else {
                 $(this).parent().addClass('true-validate');
@@ -58,7 +59,7 @@ function fullValidation(input) {
     }
 }
 
-function validate(input) {
+function validate(input, finalValidation=true) {
     if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
         if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
             return false;
