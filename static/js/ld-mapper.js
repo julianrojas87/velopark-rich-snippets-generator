@@ -85,7 +85,7 @@ function saveJSONLD() {
     if (originalId !== null) {
         $.ajax({
             type: "DELETE",
-            url: domain + '/delete-parking?username=' + username + '&parkingId=' + originalId,
+            url: domain + '/delete-parking?username=' + username + '&parkingId=' + encodeURIComponent(originalId),
             success: () => {
                 originalId = null;
                 $.ajax({

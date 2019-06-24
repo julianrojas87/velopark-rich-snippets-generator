@@ -119,7 +119,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
         callback("Cannot save parking as a company user without a company");
     } else {
         let park_obj = JSON.parse(parking);
-        let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+        let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
         let parkingID = encodeURIComponent(park_obj['@id']);
         let location;
         try {
@@ -168,7 +168,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
  */
 exports.saveParkingAsCityRep = async (parking, userCities, approved, company, callback) => {
     let park_obj = JSON.parse(parking);
-    let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+    let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
     let parkingID = encodeURIComponent(park_obj['@id']);
     let location;
     try {
@@ -230,7 +230,7 @@ function promisifyUpdateCompanyParkingIDs(company, parkingId) {
  */
 exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callback) => {
     let park_obj = JSON.parse(parking);
-    let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+    let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
     let parkingID = encodeURIComponent(park_obj['@id']);
     let location;
     try {
