@@ -94,6 +94,9 @@ function registerParkingListButtons(){
                 $('#parkingsContainer').replaceWith(data);
                 registerParkingListButtons();
                 translate();
+            },
+            error: e => {
+                alert('Error: ' + e.responseText);
             }
         });
     });

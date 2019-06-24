@@ -693,7 +693,9 @@ module.exports = app => {
                 if(rangeStart<0){
                     rangeStart = 0;
                 }
-                rangeEnd = parseInt(matches[3], 10);
+                if(matches[3] !== "0") {
+                    rangeEnd = parseInt(matches[3], 10);
+                }
             }
 
             PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd-rangeStart, function (error, parkings) {
