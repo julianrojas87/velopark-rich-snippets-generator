@@ -3,6 +3,7 @@
     overflow: hidden;
     background-color: #1072ba;
     z-index: 9000;
+    max-height: 180px;
   }
   
   /* Navbar links */
