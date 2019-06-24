@@ -156,13 +156,8 @@ function processArray(path, arr, input) {
             for (let j in keys) {
                 let el = null;
                 path.push(keys[j]);
-                if (input) {
-                    for (let k = input.length - 1; k >= 0; k--) {
-                        if ($(input[k]).attr('name') == path.join('.')) {
-                            el = $(input[k]);
-                            break;
-                        }
-                    }
+                if (inputs) {
+                    el = $(inputs.filter('[name="' + path.join('.') + '"]').last());
                 }
                 if (Array.isArray(obj[keys[j]])) {
                     processArray(path, obj[keys[j]], input);
