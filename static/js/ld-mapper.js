@@ -41,7 +41,7 @@
                     $('#ld-script').html(JSON.stringify(jsonld, null, 4));
                     hljs.highlightBlock(document.querySelectorAll('pre code')[0]);
                     $('.overlay').toggle();
-                    $('.jsonld').toggle();
+                    $('.jsonld').css("display", "flex");
 
                     let userName = $('#user-email').text();
                     if (userName && userName !== '') {
