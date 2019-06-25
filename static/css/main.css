@@ -1373,3 +1373,15 @@ ul.breadcrumbs li a:hover {
 .admin-level-4 {
   background-color: aliceblue;
 }
+
+.price-spec-container {
+  counter-reset: intervalnumber;
+}
+
+.price-spec-container div.dynamic-section {
+  counter-increment: intervalnumber;
+}
+
+.price-spec-container div.dynamic-section:before {
+  content : "Interval " counter(intervalnumber);
+}
