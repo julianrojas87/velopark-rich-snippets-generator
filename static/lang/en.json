@@ -374,7 +374,7 @@
     "cost" : {
       "title" : "Facility Section - Cost Model",
       "description" : {
-        "field": "Costs Description",
+        "field": "Costs Description Link",
         "infoText": "Put here a link to a webpage that describes the costs.<br><br>Example: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Enter the link to the costs description"
       },
@@ -410,9 +410,14 @@
           "infoText": "Indicate the end time of this price specification.<br><br>Example: <i>1</i>",
           "placeholder" : "Enter the end value"
         },
+        "intervalDuration" : {
+          "field": "Interval Duration",
+          "infoText": "Indicate the duration of this price specification interval.<br><br>Example: <i>1</i>",
+          "placeholder" : "Enter the duration of the interval (in the unit selected above)"
+        },
         "timeUnit" : {
           "field": "Time Unit",
-          "infoText": "Select the time unit (used by both start time and end time) for this price specification.<br><br>Example: <i>Hour</i>",
+          "infoText": "Select the time unit used to specify the pricing intervals.<br><br>Example: <i>Hour</i>",
           "placeholder" : "Select time unit"
         },
         "description" : {

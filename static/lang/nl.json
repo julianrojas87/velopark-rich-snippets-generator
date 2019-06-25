@@ -373,7 +373,7 @@
     "cost" : {
       "title" : "Faciliteitssectie - Kostenmodel",
       "description" : {
-        "field": "Kosten beschrijving",
+        "field": "Link Kostenbeschrijving",
         "infoText": "Vul hier een link in naar de webpagina die het kostenmodel beschrijjft voor deze feciliteitssectie.<br><br>Voorbeeld: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Vul een link in naar de kostenbeschrijving voor deze faciliteitssectie"
       },
@@ -409,9 +409,14 @@
           "infoText": "Geef de eindtijd van deze prijsspecificatie op.<br><br>Voobeeld: <i>1</i>",
           "placeholder" : "Geef de eindtijd op"
         },
+        "intervalDuration" : {
+          "field": "Interval duur",
+          "infoText": "Geef de duur van dit prijsspecificatie-interval aan.<br><br>Voorbeeld: <i>1</i>",
+          "placeholder" : "Voer de duur van het interval in (in de hierboven geselecteerde eenheid)"
+        },
         "timeUnit" : {
           "field": "Tijdseenheid",
-          "infoText": "Selecteer de tijdseenheid (gebruikt voor zowel start- als eindtijd) voor deze prijsspecificatie.<br><br>Voobeeld: <i>Hour</i>",
+          "infoText": "Selecteer de tijdseenheid die wordt gebruikt om de prijsintervallen op te geven.<br><br>Voobeeld: <i>Hour</i>",
           "placeholder" : "Select time unit"
         },
         "description" : {

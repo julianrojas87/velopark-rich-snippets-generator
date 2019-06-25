@@ -373,12 +373,12 @@
     "cost" : {
       "title" : "Section de Stationnement - Modèle de Coût",
       "description" : {
-        "field": "Description des Coûts",
+        "field": "Lien Description des Coûts",
         "infoText": "Mettez ici un lien vers une page Web qui décrit les coûts.<br><br>Exemple: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Entrez le lien vers la description des coûts"
       },
       "spec" : {
-        "title" : "Spécification de prix",
+        "title" : "Spécification de Prix",
         "free" : {
           "field": "Gratuit",
           "infoText": "Cette spécification de prix est-elle gratuite?<br><br>Exemple: <i>Yes / No</i>",
@@ -409,9 +409,14 @@
           "infoText": "Indiquez l'heure de fin de cette spécification de prix.<br><br>Exemple: <i>1</i>",
           "placeholder" : "Entrez la valeur de fin de temps"
         },
+        "intervalDuration" : {
+          "field": "Durée de l'intervalle",
+          "infoText": "Indiquez la durée de cet intervalle de spécification de prix.<br><br>Exemple: <i>1</i>",
+          "placeholder" : "Entrez la durée de l'intervalle (dans l'unité sélectionnée ci-dessus)"
+        },
         "timeUnit" : {
           "field": "Unité de temps",
-          "infoText": "Sélectionnez l'unité de temps (utilisée à la fois par l'heure de début et par l'heure de fin) pour cette spécification de prix.<br><br>Exemple: <i>Hour</i>",
+          "infoText": "Sélectionnez l'unité de temps utilisée pour spécifier les intervalles de prix.<br><br>Exemple: <i>Hour</i>",
           "placeholder" : "Sélectionnez l'unité de temps"
         },
         "description" : {

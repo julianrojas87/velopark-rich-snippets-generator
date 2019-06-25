@@ -374,7 +374,7 @@
     "cost" : {
       "title" : "Facility-Bereich - Kostenmodell",
       "description" : {
-        "field": "Kostenbeschreibung",
+        "field": "Kostenbeschreibung Link",
         "infoText": "Setzen Sie hier einen Link zu einer Webseite, die die Kosten beschreibt.<br><br>Beispiel: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Geben Sie den Link zur Kostenbeschreibung ein"
       },
@@ -410,9 +410,14 @@
           "infoText": "Geben Sie die Endzeit dieser Preisangabe an.<br><br>Example: <i>1</i>",
           "placeholder" : "Geben Sie den Endwert ein"
         },
+        "intervalDuration" : {
+          "field": "Intervalldauer",
+          "infoText": "Geben Sie die Dauer dieses Preisspezifikationsintervalls an.<br><br>Beispiel: <i>1</i>",
+          "placeholder" : "Geben Sie die Dauer des Intervalls ein (in der oben ausgewählten Einheit)"
+        },
         "timeUnit" : {
           "field": "Zeiteinheit",
-          "infoText": "Wählen Sie die Zeiteinheit (sowohl für die Start- als auch für die Endzeit) für diese Preisangabe aus.<br><br>Beispiel: <i>Hour</i>",
+          "infoText": "Wählen Sie die Zeiteinheit aus, in der die Preisintervalle angegeben werden.<br><br>Beispiel: <i>Hour</i>",
           "placeholder" : "Zeiteinheit auswählen"
         },
         "description" : {
