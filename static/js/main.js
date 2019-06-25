@@ -335,7 +335,7 @@ function handleLoginFeatures() {
     $('#language-selection-container #dutch').prop('checked', true).trigger("change");
 
     $('.js-select2[name="priceSpecification._PriceSpecification.freeOfCharge"]').change(function () {
-        let priceField = $(this).parent().parent().next().find('input[name="priceSpecification._PriceSpecification.price"]');
+        let priceField = $(this).parent().parent().next().next().find('input[name="priceSpecification._PriceSpecification.price"]');
         let free = $(this).val() === "true";
         priceField.prop('disabled', free);
         if (free) {
