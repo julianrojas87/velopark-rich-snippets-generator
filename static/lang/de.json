@@ -380,6 +380,7 @@
       },
       "spec" : {
         "title" : "Preis Spezifikation",
+        "infoAlert" : "In diesem Abschnitt können Sie die Kosten pro Zeitintervall angeben, die die Kunden für die Aufbewahrung ihrer Fahrräder zahlen müssen. Beispiel: Wenn die erste Stunde kostenlos ist und danach 1 € pro 2 Stunden kostet, müssen Sie 2 Zeitintervalle hinzufügen: <br>&nbsp&nbsp- die erste mit einer kostenlosen Dauer von einer Stunde und <br>&nbsp&nbsp- eine zweite mit einer Dauer von 2 Stunden, die 1 € kostet. <br><br> WICHTIG! Der letzte Abschnitt, den Sie hinzufügen, wird für Parkzeiten wiederholt, die länger sind als die Summe der angegebenen Intervallzeiten.",
         "free" : {
           "field": "Kostenlos",
           "infoText": "Ist diese Preisangabe kostenlos?<br><br>Beispiel: <i>Yes / No</i>",
@@ -425,7 +426,7 @@
           "infoText": "Beschreiben Sie, wie diese Preisspezifikation funktioniert.<br><br>Beispiel: <i>Gratis voor het eerste uur</i>",
           "placeholder" : "Beschreiben Sie diese Preisdefinition (z. B. kostenlos für die erste Stunde)."
         },
-        "addExtra" : "Zusätzliche Preisangabe hinzufügen"
+        "addExtra" : "Zusätzliches Preisspezifikationsintervall hinzufügen"
       }
     },
     "extraSection" : {
