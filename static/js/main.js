@@ -346,6 +346,10 @@ function handleLoginFeatures() {
         }
     });
 
+    $('[name="priceSpecification._PriceSpecification.dueForTime.timeUnit"]').on('change', function(event){
+        $(this).closest(".wrap-contact100-subsection").find('.timeUnitDisplayer').html(this.selectedOptions[0].text);
+    });
+
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
 
@@ -701,6 +705,9 @@ function addFacilitySection() {
                 placeholder: $(this).attr('placeholder')
             });
             $(this).change();
+        });
+        newFacilitySection.find('[name="priceSpecification._PriceSpecification.dueForTime.timeUnit"]').on('select2:select', function(event){
+            $(this).closest(".wrap-contact100-subsection").find('.timeUnitDisplayer').html(event.params.data.text);
         });
         newFacilitySection.find("[parking-section]").attr("parking-section", currentNumFacilitySections - 1);
     }

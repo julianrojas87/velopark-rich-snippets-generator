@@ -1437,12 +1437,12 @@
                                                 placeholder="Select time unit"
                                                 transl-id-placeholder="step.cost.spec.timeUnit.placeholder">
                                             <option value=""></option>
-                                            <option value="hour">Hour</option>
-                                            <option value="minute">Minute</option>
-                                            <option value="second">Second</option>
-                                            <option value="day">Day</option>
-                                            <option value="week">Week</option>
-                                            <option value="month">Month</option>
+                                            <option value="hour">Hours</option>
+                                            <option value="minute">Minutes</option>
+                                            <option value="second">Seconds</option>
+                                            <option value="day">Days</option>
+                                            <option value="week">Weeks</option>
+                                            <option value="month">Months</option>
                                         </select>
                                         <div class="dropDownSelect2"></div>
                                     </div>
@@ -1470,10 +1470,13 @@
                                                     <span style="display: inherit; padding-left: 15px;">Example: <i>2</i></span>
                                                 </div>
                                             </div>
-                                            <input class="input100" type="number"
-                                                   name="priceSpecification._PriceSpecification.dueForTime.timeIntervalDuration"
-                                                   placeholder="Enter the duration of this interval"
-                                                   transl-id-placeholder="step.cost.spec.intervalDuration.placeholder">
+                                            <div style="display: flex;">
+                                                <input class="input100" type="number" style="flex-grow: 1;"
+                                                       name="priceSpecification._PriceSpecification.dueForTime.timeIntervalDuration"
+                                                       placeholder="Enter the duration of this interval"
+                                                       transl-id-placeholder="step.cost.spec.intervalDuration.placeholder">
+                                                <span style="flex-grow: 0; align-self: center;" class="timeUnitDisplayer"></span>
+                                            </div>
                                         </div>
 
                                         <div class="wrap-input100 input100-select bg1 rs2-wrap-input100">
@@ -1540,7 +1543,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>
                                         <span transl-id="step.cost.spec.addExtra">Add extra price specification</span>
