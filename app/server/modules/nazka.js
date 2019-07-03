@@ -3,106 +3,66 @@ const dbAdapter = require('./database-adapter');
 
 let levels = ['country', 'region', 'province', 'district', 'municipality'];
 
-exports.loadNazka = function () {
-    return new Promise((resolveAll, rejectAll) => {
-        let areas = {};
-        let promises = [];
-        //get NIS and name of each possible area
-        for (i in levels) {
-            promises.push(
-                new Promise((resolve, reject) => {
-                    try {
-                        request('http://belgium.geo.nazkamapps.com/list/level/' + levels[i], (err, res, body) => {
-                            if(res) {
-                                console.log('REQ: ' + res.request.uri.href);
-                            }
-                            try {
-                                if (err) {
-                                    console.error('Error loading Nazka areas', err);
-                                    resolve();
-                                } else {
-                                    let levelAreas = JSON.parse(body);
-                                    for (j in levelAreas) {
-                                        areas[levelAreas[j].NIS_CODE] = levelAreas[j];
-                                    }
-                                    resolve();
-                                }
-                            } catch (e) {
-                                console.error("Error loading Nazka areas.", levels[i]);
-                                console.error(e);
-                                resolve();
-                            }
-                        });
-                    } catch (e) {
-                        console.error("Error loading Nazka data.");
-                        console.error(e);
-                        resolve();
-                    }
-                })
-            );
-        }
+exports.loadNazka = async function () {
+    let areas = {};
 
-        Promise.all(promises).then(() => {
-            promises = [];
-            //get geometry of each area
-            for (i in areas) {
-                //console.log(i);
-                requestGeo(i, 3, areas, promises);
-            }
-            Promise.all(promises).then(() => {
-                resolveAll();
-            });
-        });
-    });
+    //get NIS and name of each possible area
+    await Promise.all(levels.map(async level => {
+        let levelAreas = JSON.parse(await doLevelRequest(level));
+        for (j in levelAreas) {
+            areas[levelAreas[j].NIS_CODE] = levelAreas[j];
+        }
+    }));
+
+    //get geometry of each area
+    await requestGeo(areas);
 };
 
-function requestGeo(NIS, retries, areas, promises){
-    promises.push(
-        new Promise((resolve, reject) => {
-            try {
-                request('http://belgium.geo.nazkamapps.com/geometry/nis/' + NIS + "?simplify=1", (err, res, body) => {
-                    if(res) {
-                        console.log('REQ: ' + res.request.uri.href);
-                    }
-                    try {
-                        if (err) {
-                            console.error('Error loading Nazka geometry for area.', NIS, err);
-                            if(retries > 0) {
-                                console.log('Trying again for NIS ', NIS);
-                                requestGeo(NIS, --retries, areas, promises);
-                            }
-                            resolve();
-                        } else {
-                            let geo = JSON.parse(body);
-                            let area = areas[geo.properties.NIS_CODE];
-                            for (j in area) {
-                                geo.properties[j] = area[j];
-                                geo.properties.cityname = area.name_NL;
-                            }
-                            dbAdapter.insertCity(geo).then((res) => {
-                                resolve();
-                            }).catch((error) => {
-                                console.error('Error loading Nazka geometry for area.', error);
-                                resolve();
-                            });
-                        }
-                    } catch (e) {
-                        console.error('Error loading Nazka geometry for area.', e);
-                        if(retries > 0) {
-                            console.log('Trying again for NIS ', NIS);
-                            requestGeo(NIS, --retries, areas, promises);
-                        }
-                        resolve();
-                    }
-                });
-            } catch (e) {
-                console.error('Error loading Nazka geometry for area.', e);
-                if(retries > 0) {
-                    console.log('Trying again for NIS ', NIS);
-                    requestGeo(NIS, --retries, areas, promises);
-                }
-                resolve();
+async function requestGeo(areas) {
+    Promise.all(Object.keys(areas).map(async NIS => {
+        let geo = JSON.parse(await doGeometryRequest(NIS, 3));
+        let area = areas[geo.properties.NIS_CODE];
+        for (j in area) {
+            geo.properties[j] = area[j];
+            geo.properties.cityname = area.name_NL;
+        }
+        dbAdapter.insertCity(geo).catch((error) => {
+            console.error('Error loading Nazka geometry for area.', error);
+        });
+    }));
+}
+
+function doLevelRequest(level) {
+    return new Promise((resolve, reject) => {
+        request('http://belgium.geo.nazkamapps.com/list/level/' + level, (err, res, body) => {
+            if (res) {
+                //console.log('REQ: ' + res.request.uri.href);
             }
-        })
-    );
+            if (err) {
+                console.error('Error loading Nazka areas', err);
+                reject();
+            } else {
+                resolve(body);
+            }
+        });
+    });
+}
+
+function doGeometryRequest(NIS, retries) {
+    return new Promise((resolve, reject) => {
+        request('http://belgium.geo.nazkamapps.com/geometry/nis/' + NIS + "?simplify=1", async (err, res, body) => {
+            if (res) {
+                //console.log('REQ: ' + res.request.uri.href);
+            }
+            if (err) {
+                console.error('Error loading Nazka geometry for area.', NIS, err);
+                if (retries > 0) {
+                    console.log('Trying again for NIS ', NIS);
+                    resolve(doGeometryRequest(NIS, --retries));
+                }
+            } else {
+                resolve(body);
+            }
+        });
+    });
 }
