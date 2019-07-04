@@ -41,7 +41,7 @@
                     $('#ld-script').html(JSON.stringify(jsonld, null, 4));
                     hljs.highlightBlock(document.querySelectorAll('pre code')[0]);
                     $('.overlay').toggle();
-                    $('.jsonld').toggle();
+                    $('.jsonld').css("display", "flex");
 
                     let userName = $('#user-email').text();
                     if (userName && userName !== '') {
@@ -85,7 +85,7 @@ function saveJSONLD() {
     if (originalId !== null) {
         $.ajax({
             type: "DELETE",
-            url: domain + '/delete-parking?username=' + username + '&parkingId=' + originalId,
+            url: domain + '/delete-parking?username=' + username + '&parkingId=' + encodeURIComponent(originalId),
             success: () => {
                 originalId = null;
                 $.ajax({
@@ -172,8 +172,11 @@ function processGeneral(jsonld, general) {
     }
 }
 
+let last_price_spec_inverval_end = 0;
+
 async function processSections(jsonld, sections) {
     for (let i = 0; i < sections.length; i++) {
+        last_price_spec_inverval_end = 0;
         let inputs = $(sections[i]).find('[name]');
         if (i > 0) {
             jsonld['@graph'].push((await loadAPSkeleton())['@graph'][0]);
@@ -269,6 +272,7 @@ function processElement(jsonld, element) {
         }
     } else {
         let temp_obj = jsonld;
+        let timeUnit;
 
         for (let i = 0; i < dName.length; i++) {
             // If last element of dName proceed to assign value
@@ -308,7 +312,18 @@ function processElement(jsonld, element) {
                     }
                 } else {
                     //Is not an array. Add value to referenced object
-                    temp_obj[`${dName[i]}`] = setElementValue(element, temp_obj[`${dName[i]}`], dName[i]);
+                    if(dName[i] === "timeIntervalDuration"){
+                        console.log("Hier?", dName);
+                        temp_obj[`timeStartValue`] = last_price_spec_inverval_end;
+                        temp_obj[`timeEndValue`] = last_price_spec_inverval_end + Number(element.val());
+                        if(timeUnit){
+                            temp_obj["timeUnit"] = timeUnit;
+                        }
+                        last_price_spec_inverval_end = last_price_spec_inverval_end + Number(element.val());
+                    } else {
+                        temp_obj[`${dName[i]}`] = setElementValue(element, temp_obj[`${dName[i]}`], dName[i]);
+                    }
+
                 }
             } else {
                 // Ignore if current name starts with _
@@ -332,15 +347,21 @@ function processElement(jsonld, element) {
                     if (i > 0 && dName[i - 1].startsWith('_')) {
                         let x = temp_obj[temp_obj.length - 1][`${dName[i]}`];
                         if (x) {
-                            if (x[`${dName[i + 1]}`] && x[`${dName[i + 1]}`] !== '') {
+                            let nextName = `${dName[i + 1]}`;
+                            if(nextName === "timeIntervalDuration"){
+                                nextName = "timeEndValue";
+                            }
+                            if (x[nextName] && x[nextName] !== '') {
                                 let type = temp_obj[temp_obj.length - 1][`${dName[i]}`]['@type'];
                                 temp_obj.push({
                                     '@type': dName[i - 1].substring(1),
                                     [dName[i]]: {
                                         "@type": type
                                     }
-                                })
-
+                                });
+                                if(x["timeUnit"]){
+                                    timeUnit = x["timeUnit"];
+                                }
                             }
                             temp_obj = temp_obj[temp_obj.length - 1][`${dName[i]}`];
                         } else {

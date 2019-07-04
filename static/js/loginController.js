@@ -74,25 +74,69 @@ let currentLang = 'nl';
                 },
                 error: e => {
                     alert('Error: ' + e.responseText);
-                    reject(e);
+                    //reject(e);
                 }
             });
         }
         if (!signinformcitiesloaded) {
             $.ajax({
                 type: "GET",
-                url: domain + '/citynames',
+                url: domain + '/regionhierarchy',
                 success: data => {
                     signinformcitiesloaded = true;
-                    $('select[city-names="true"]').each(function () {
-                        for (let i in data) {
-                            $(this).append('<option value="' + data[i] + '">' + data[i] + '</option>');
+
+                    var style = document.createElement('style');
+                    style.type = 'text/css';
+                    style.innerHTML = 'content';
+
+
+
+                    function addChildLevel(select, childObject){
+
+                        function getColorForAdminLevel(level){
+                            switch (level) {
+                                case "0":
+                                case 0:
+                                    return "dodgerblue";
+                                    break;
+                                case "1":
+                                case 1:
+                                    return "cornflowerblue";
+                                    break;
+                                case "2":
+                                case 2:
+                                    return "lightskyblue";
+                                    break;
+                                case "3":
+                                case 3:
+                                    return "lightblue";
+                                    break;
+                                case "4":
+                                case 4:
+                                    return "aliceblue";
+                                    break;
+                            }
                         }
-                    });
+                        select.each(function() {
+                            $(this).append('<option class="region-level-' + childObject['adminLevel'] +'" value="' + childObject['name_NL'] + '">' + "&nbsp;&nbsp;&nbsp;".repeat(Number(childObject['adminLevel'])) + childObject['name_NL'] + '</option>');
+                        });
+                        style.innerHTML = '.select2-results__option[id*="-' + childObject['name_NL'] + '"] {' +
+                            ' background-color: ' + getColorForAdminLevel(childObject['adminLevel']) + ";" +
+                            '}' + style.innerHTML;
+                        console.log(childObject['adminLevel']);
+                        for(let i in childObject.childAreas){
+                            addChildLevel(select, childObject.childAreas[i]);
+                        }
+                    }
+
+                    for(let j in data) {
+                        addChildLevel($('select[city-names="true"]'), data[j]);
+                    }
+                    document.getElementsByTagName('head')[0].appendChild(style);
                 },
                 error: e => {
                     alert('Error: ' + e.responseText);
-                    reject(e);
+                    //reject(e);
                 }
             });
         }
@@ -211,23 +255,77 @@ let currentLang = 'nl';
         return false;
     });
 
-
-    //insert regions in admin parking overview
-    let domain = domainName !== '' ? '/' + domainName : '';
-    $('.parking-region-dummy').each(function(){
-        let lat = $(this).attr('data-lat');
-        let lon = $(this).attr('data-long');
+    let regionTrees = $('.region-tree[state="flat"]');
+    if (regionTrees.length) {
+        let domain = domainName !== '' ? '/' + domainName : '';
         $.ajax({
             type: "GET",
-            url: domain + '/cityrep/get-regions/' + lat + '/' + lon,
+            url: domain + '/regionhierarchy',
             success: data => {
-                $(this).parent().html(data.toString());
+                regionTrees.each(function () {
+                    let regions = [];
+                    $(this).find('.region-allowed-to-represent').each(function () {
+                        regions.push($(this).attr('region'));
+                    });
+                    console.log(regions);
+                    function isPresent(object){
+                        let returnObject = {};
+                        let children = [];
+                        //Ask your children
+                        if(object.childAreas){
+                            for(let i in object.childAreas){
+                                let child = isPresent(object.childAreas[i]);
+                                if(!child.name_NL && child.children && child.children.length){
+                                    children = children.concat(child.children);
+                                } else if(!jQuery.isEmptyObject(child)){
+                                    children.push(child);
+                                }
+                            }
+                        }
+                        if(children.length){
+                            returnObject.children = children;
+                        }
+                        //Am I part of the list?
+                        if(regions.includes(object['name_NL'])){
+                            returnObject['name_NL'] = object['name_NL'];
+                            returnObject['adminLevel'] = object['adminLevel'];
+
+                        }
+                        return returnObject;
+                    }
+                    let globalChildren = [];
+                    for(let k in data) {
+                        globalChildren = globalChildren.concat(isPresent(data[k]));
+                    }
+                    console.log(globalChildren);
+
+                    function visitTreeTopDown(tableCell, object, element){
+                        if(object.name_NL){
+                            let elementToMove = tableCell.find('.region-allowed-to-represent[region="' + object.name_NL + '"]');
+                            elementToMove.addClass("admin-level-"+object.adminLevel);
+                            element.append(elementToMove);
+                        }
+                        if(object.children){
+                            let newElement = tableCell.find('.region-allowed-to-represent[region="' + object.name_NL + '"]');
+                            for( let i in object.children) {
+                                visitTreeTopDown(tableCell, object.children[i], newElement);
+                            }
+                        }
+                    }
+                    for( let h in globalChildren) {
+                        visitTreeTopDown($(this), globalChildren[h], $(this));
+                    }
+
+                });
             },
             error: e => {
-                $(this).html("[Error]");
+                alert('Error: ' + e.responseText);
             }
         });
-    });
+    }
+
+
+
 })(jQuery);
 
 //if no lang parameter given, setting is loaded from localStorage

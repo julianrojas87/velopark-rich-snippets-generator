@@ -1,4 +1,11 @@
 {
+  "general" : {
+    "buttons": {
+      "first" : "Première",
+      "previous" : "Précédente",
+      "next" : "Suivante"
+    }
+  },
   "navbar": {
     "title": "Velopark Rich Snippets Generator",
     "login" : "Se Connecter",
@@ -366,12 +373,13 @@
     "cost" : {
       "title" : "Section de Stationnement - Modèle de Coût",
       "description" : {
-        "field": "Description des Coûts",
+        "field": "Lien Description des Coûts",
         "infoText": "Mettez ici un lien vers une page Web qui décrit les coûts.<br><br>Exemple: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Entrez le lien vers la description des coûts"
       },
       "spec" : {
-        "title" : "Spécification de prix",
+        "title" : "Spécification de Prix",
+        "infoAlert" : "Dans cette section, vous pouvez spécifier le coût par intervalle de temps que les gens doivent payer pour ranger leurs vélos. Par exemple: si la première heure est gratuite et qu’elle coûte ensuite 1 € toutes les 2 heures, cela signifie que vous devez ajouter 2 intervalles de temps: <br>&nbsp&nbsp - le premier d'une durée d'une heure gratuite et <br>&nbsp&nbsp - d'une seconde d'une durée de 2 heures qui coûte 1 €. <br><br> IMPORTANT! La dernière section que vous ajoutez est répétée pour les temps de stationnement plus longs que la somme des temps d'intervalle fournis.",
         "free" : {
           "field": "Gratuit",
           "infoText": "Cette spécification de prix est-elle gratuite?<br><br>Exemple: <i>Yes / No</i>",
@@ -402,9 +410,14 @@
           "infoText": "Indiquez l'heure de fin de cette spécification de prix.<br><br>Exemple: <i>1</i>",
           "placeholder" : "Entrez la valeur de fin de temps"
         },
+        "intervalDuration" : {
+          "field": "Durée de l'intervalle",
+          "infoText": "Indiquez la durée de cet intervalle de spécification de prix.<br><br>Exemple: <i>1</i>",
+          "placeholder" : "Entrez la durée de l'intervalle (dans l'unité sélectionnée ci-dessus)"
+        },
         "timeUnit" : {
           "field": "Unité de temps",
-          "infoText": "Sélectionnez l'unité de temps (utilisée à la fois par l'heure de début et par l'heure de fin) pour cette spécification de prix.<br><br>Exemple: <i>Hour</i>",
+          "infoText": "Sélectionnez l'unité de temps utilisée pour spécifier les intervalles de prix.<br><br>Exemple: <i>Hour</i>",
           "placeholder" : "Sélectionnez l'unité de temps"
         },
         "description" : {
@@ -412,7 +425,7 @@
           "infoText": "Décrivez comment cette spécification de prix fonctionne.<br><br>Exemple: <i>Gratuit pendant la première heure</i>",
           "placeholder" : "Décrivez cette définition de prix (e.g. Gratuit pendant la première heure)"
         },
-        "addExtra" : "Ajouter un prix supplémentaire"
+        "addExtra" : "Ajouter un intervalle de spécification de prix supplémentaire"
       }
     },
     "extraSection" : {
@@ -514,7 +527,7 @@
   "cityRepParkings" : {
     "title" : "Parkings à ",
     "th" : [
-      "URI du parking", "Nom du parking", "Approuvé", "Actions"
+      "URI du parking", "Nom du parking", "Commune", "Approuvé", "Actions"
     ]
   },
   "pswdReset": {

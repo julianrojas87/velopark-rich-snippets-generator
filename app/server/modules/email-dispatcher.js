@@ -102,6 +102,25 @@ EM.dispatchUserSignedUp = function(newUser, adminEmails){
     }
 };
 
+EM.dispatchNewParkingToRegionReps = function(regionReps, parkingId){
+    for(i in regionReps) {
+        server.send({
+            from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+            to: regionReps[i].email,
+            subject: 'New Bicycle Parking',
+            text: 'something went wrong... :(',
+            attachment: EM.composeNewParkingEmail(parkingId, regionReps[i].lang)
+        }, function (e, m) {
+            if (!e) {
+                console.log("Mail sent to Region rep: new parking added", m.header.to);
+            } else {
+                for (k in e) console.error('ERROR : ', k, e[k]);
+                console.error(e);
+            }
+        });
+    }
+};
+
 EM.composePasswordResetEmail = function (passKey, lang) {
     let html;
     if (lang === 'en') {
@@ -241,6 +260,54 @@ EM.composeUserSignedUp = function (email, lang) {
         html += "Hallo!<br><br>";
         html += "Een nieuwe gebruiker (" + email + ") heeft zonet een account aangemaakt bij Velopark!<br>";
         html += "U kunt zijn lidmaatschap bekijken via de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>beheerdersconsole</a>.<br><br>";
+        html += "Vriendelijke groeten,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    }
+    return [{data: html, alternative: true}];
+};
+
+
+EM.composeNewParkingEmail = function (parkingId, lang) {
+    let html;
+    if (lang === 'en') {
+        html = "<html><body>";
+        html += "Hello!<br><br>";
+        html += "We would like you to know that a new parking has been added in a region you are managing.<br>";
+        html += "The URI of this new parking is <b>" + decodeURIComponent(parkingId) + "</b></b>. You can find it in the <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>Regions Dashboard</a></i> where you can edit or approve this parking.<br><br>";
+        html += "Greetings,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'de') {
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "Wir möchten Sie darüber informieren, dass in der von Ihnen verwalteten Region ein neuer Parkplatz hinzugefügt wurde.<br>";
+        html += "Die URI dieses neuen Parkplatzes lautet <b>" + decodeURIComponent(parkingId) + "</b></b>. Sie finden es im <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>Regions-Dashboard</a></i>, in dem Sie diesen Parkplatz bearbeiten oder genehmigen können.<br><br>";
+        html += "Schöne Grüße,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'fr') {
+        html = "<html><body>";
+        html += "Bonjour!<br><br>";
+        html += "Nous aimerions que vous sachiez qu'un nouveau parking a été ajouté dans une région que vous gérez.<br>";
+        html += "L'URI de ce nouveau parking est <b>" + decodeURIComponent(parkingId) + "</b></b>. Vous pouvez le trouver dans <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>le Tableau de Bord Régions</a></i> où vous pouvez éditer ou approuver ce parking.<br><br>";
+        html += "Salutations,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'es') {
+        html = "<html><body>";
+        html += "¡Hola!<br><br>";
+        html += "Nos gustaría que sepa que se agregó un nuevo estacionamiento en la región que está administrando.<br>";
+        html += "La URI de este nuevo aparcamiento es <b>" + decodeURIComponent(parkingId) + "</b></b>. Puede encontrarlo en <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>el Panel de Regiones</a></i> donde puede editar o aprobar este estacionamiento.<br><br>";
+        html += "Saludos,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else {
+        //Dutch is default
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "We willen u graag laten weten dat er een nieuwe parking is toegevoegd in een regio die u beheert.<br>";
+        html += "De URI van deze nieuwe parking is <b>" + decodeURIComponent(parkingId) + "</b></b>. U kan ze terugvinden in het <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>Regio's Dashboard</a></i> waar u de parking kan aanpassen en goedkeuren.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";

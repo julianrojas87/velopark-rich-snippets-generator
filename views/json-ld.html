@@ -1,10 +1,7 @@
 <div class="overlay"></div>
 <div class="jsonld">
-    <div style="position: fixed; width: inherit; height: 67px; background-color: white;">
-        <span class="contact100-form-section" style="width: auto; display: inline-block; margin: 0.75em;"
-              transl-id="step.generate.titleResult">
-            Resulting Linked Data in JSON-LD
-        </span>
+    <div style="width: 100%; max-width: inherit; background-color: white;">
+
         <input title="close" type="image" id="close_button" src="static/images/icons/close_black.png"
                style="position: relative; top: 20px; right: 18px; float: right; width: 25px;">
         <svg title="Save JSON-LD script" id="save_button" style="cursor: pointer; position: relative; top: 20px; right: 18px; float: right; width: 25px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16 11h5l-9 10-9-10h5v-11h8v11zm3 8v3h-14v-3h-2v5h18v-5h-2z"/></svg>
@@ -35,8 +32,12 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path stroke="red" fill="red" d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg>
             </div>
         </div>
+        <span class="contact100-form-section" style="width: auto; max-width: inherit; display: inline-block; margin: 0.75em;"
+              transl-id="step.generate.titleResult">
+            Resulting Linked Data in JSON-LD
+        </span>
     </div>
-    <pre style="float: left; margin-top: 43px;">
+    <pre style="width: 100%; max-width: inherit; display: flex">
 			<code id="ld-script" class="JSON"></code>
 	</pre>
 </div>

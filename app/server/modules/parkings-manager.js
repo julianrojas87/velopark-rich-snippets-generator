@@ -11,6 +11,9 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const data = config['data'] || './data';
 const dbAdapter = require('./database-adapter');
 const AM = require('./account-manager');
+const EM = require('./email-dispatcher');
+
+let recentlyDeletedParkingIds = new Set();
 
 dbAdapter.initDbAdapter().then(() => {
     initFolders();
@@ -41,9 +44,9 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = async () => {
+exports.listAllParkings = async (skip, limit) => {
     return new Promise((resolve, reject) => {
-        dbAdapter.findParkingsWithCompanies()
+        dbAdapter.findParkingsWithCompanies(skip, limit)
             .then(res => {
                 returnTableData(res, function(error, result){
                     if(error != null){
@@ -60,8 +63,8 @@ exports.listAllParkings = async () => {
 
 };
 
-exports.listParkingsByEmail = async (username, callback) => {
-    dbAdapter.findParkingsByEmail(username, function (error, res) {
+exports.listParkingsByEmail = async (username, skip, limit, callback) => {
+    dbAdapter.findParkingsByEmail(username, skip, limit,function (error, res) {
         if (error != null) {
             console.error("Error: " + error);
             callback(error);
@@ -71,7 +74,7 @@ exports.listParkingsByEmail = async (username, callback) => {
     });
 };
 
-exports.listParkingsInCity = function (cityName, callback) {
+exports.listParkingsInCity = function (cityName, skip, limit, callback) {
     dbAdapter.findParkingsByCityName(cityName, (error, res) => {
         if (error != null) {
             console.error("Error: " + error);
@@ -79,7 +82,7 @@ exports.listParkingsInCity = function (cityName, callback) {
         } else {
             returnTableData(res, callback);
         }
-    });
+    }, skip, limit);
 };
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
@@ -116,7 +119,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
         callback("Cannot save parking as a company user without a company");
     } else {
         let park_obj = JSON.parse(parking);
-        let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+        let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
         let parkingID = encodeURIComponent(park_obj['@id']);
         let location;
         try {
@@ -138,7 +141,23 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
                 if (approved) {
                     await addParkingToCatalog(localId);
                 }
-                callback(null, res);
+                callback();
+                if(!recentlyDeletedParkingIds.has(parkingID)){
+                    //Parking did not exist before. A company user has created a new parking. Send email to region representatives.
+                    dbAdapter.findCitiesByLocation(location.coordinates[1], location.coordinates[0], null, function(error, result){
+                        if(error){
+                            console.log("ERROR: Cannot notify region reps of new parking.", error);
+                        } else if(result){
+                            dbAdapter.findCityRepsForRegions(result).then( reps => {
+                                EM.dispatchNewParkingToRegionReps(reps, parkingID);
+                            }).catch( error => {
+                                console.error("ERROR: Cannot send new parking notification to region reps.", error);
+                            });
+                        } else {
+                            console.error("No regions for new parking location found.");
+                        }
+                    });
+                }
             }
         });
     }
@@ -149,7 +168,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
  */
 exports.saveParkingAsCityRep = async (parking, userCities, approved, company, callback) => {
     let park_obj = JSON.parse(parking);
-    let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+    let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
     let parkingID = encodeURIComponent(park_obj['@id']);
     let location;
     try {
@@ -211,7 +230,7 @@ function promisifyUpdateCompanyParkingIDs(company, parkingId) {
  */
 exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callback) => {
     let park_obj = JSON.parse(parking);
-    let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+    let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
     let parkingID = encodeURIComponent(park_obj['@id']);
     let location;
     try {
@@ -379,6 +398,8 @@ exports.deleteParking = async (user, parkingId, callback) => {
                     }
                 }
             });
+            recentlyDeletedParkingIds.add(parkingId);
+            setTimeout(function(){recentlyDeletedParkingIds.delete(parkingId)}, 5000);
         } else {
             callback('Parking file does not exist in disk')
         }

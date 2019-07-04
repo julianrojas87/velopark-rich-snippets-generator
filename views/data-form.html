@@ -1367,7 +1367,7 @@
                             <div class="wrap-contact100-subsection">
                                 <div class="wrap-input100 bg1">
                                     <span class="label-input100"
-                                          transl-id="step.cost.description.field">Costs Description</span>
+                                          transl-id="step.cost.description.field">Costs Description Link</span>
                                     <input type="image" title="about" class="info_button"
                                            src="static/images/icons/info.png">
                                     <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1386,16 +1386,111 @@
                                            transl-id-placeholder="step.cost.description.placeholder">
                                 </div>
 
+                                <div class="wrap-input100 bg0">
+                                    <span class="label-input100" transl-id="step.cost.spec.description.field">Description</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <div transl-id="step.cost.spec.description.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">
+                                                    Describe how this price specification operates.</span><br>
+                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="translatable-free-text">
+                                            <span></span>
+                                            <textarea class="input100"
+                                                      name="priceSpecification._PriceSpecification.description"
+                                                      placeholder="Describe this pricing definition (e.g. free for the first hour)"
+                                                      transl-id-placeholder="step.cost.spec.description.placeholder"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <span class="contact100-form-subsubsection" style="width: 89%;"
                                       transl-id="step.cost.spec.title">
                                     Price Specification
                                 </span>
-                                <div>
+
+                                <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                                    <span transl-id="step.cost.spec.infoAlert">
+                                        In this section you can specify the cost per time interval people have to pay to store their bikes.
+                                        For example: if the first hour is free, and afterwards it costs €1 for every 2 hours
+                                        this means you need to add 2 time intervals:<br>
+                                        &nbsp&nbsp- the first one with a duration of one hour that is free, and<br>
+                                        &nbsp&nbsp- a second one with a duration of 2 hours that costs €1.<br>
+                                        IMPORTANT! The last section you add is repeated for parking times longer than the sum of the provided interval times
+                                    </span>
+                                </p>
+
+                                <div class="wrap-input100 input100-select bg1">
+                                    <span class="label-input100" transl-id="step.cost.spec.timeUnit.field">Time Unit</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <div transl-id="step.cost.spec.timeUnit.infoText">
+                                            <span style="display: inherit; padding-left: 15px;">Select the time unit (used by both start time and end time) for this price specification.</span><br>
+                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Hour</i></span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <select class="js-select2"
+                                                name="priceSpecification._PriceSpecification.dueForTime.timeUnit"
+                                                placeholder="Select time unit"
+                                                transl-id-placeholder="step.cost.spec.timeUnit.placeholder">
+                                            <option value=""></option>
+                                            <option value="hour">Hours</option>
+                                            <option value="minute">Minutes</option>
+                                            <option value="second">Seconds</option>
+                                            <option value="day">Days</option>
+                                            <option value="week">Weeks</option>
+                                            <option value="month">Months</option>
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+                                </div>
+
+                                <div class="price-spec-container">
+
+
 
                                     <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
-                                        <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
+
+                                        <div class="wrap-input100 bg1">
+                                            <span class="label-input100" transl-id="step.cost.spec.intervalDuration.field">Interval Duration</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <div transl-id="step.cost.spec.intervalDuration.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Indicate the duration of this price specifciation interval.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>2</i></span>
+                                                </div>
+                                            </div>
+                                            <div style="display: flex;">
+                                                <input class="input100" type="number" style="flex-grow: 1;"
+                                                       name="priceSpecification._PriceSpecification.dueForTime.timeIntervalDuration"
+                                                       placeholder="Enter the duration of this interval"
+                                                       transl-id-placeholder="step.cost.spec.intervalDuration.placeholder">
+                                                <span style="flex-grow: 0; align-self: center;" class="timeUnitDisplayer"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="wrap-input100 input100-select bg1 rs2-wrap-input100">
                                             <span class="label-input100" transl-id="step.cost.spec.free.field">Free of Charge</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
@@ -1421,7 +1516,10 @@
                                                 <div class="dropDownSelect2"></div>
                                             </div>
                                         </div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
+
+                                        <div class="spacer"></div>
+
+                                        <div class="wrap-input100 bg1 rs2-wrap-input100">
                                             <span class="label-input100"
                                                   transl-id="step.cost.spec.price.field">Price</span>
                                             <input type="image" title="about" class="info_button"
@@ -1436,158 +1534,27 @@
                                                     <span style="display: inherit; padding-left: 15px;">Example: <i>10</i></span>
                                                 </div>
                                             </div>
-                                            <input class="input100" type="number"
-                                                   name="priceSpecification._PriceSpecification.price"
-                                                   placeholder="Enter the price"
-                                                   transl-id-placeholder="step.cost.spec.price.placeholder">
-                                        </div>
-                                        <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                            <span class="label-input100" transl-id="step.cost.spec.currency.field">Currency</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.cost.spec.currency.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">Indicate the currency.</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>EUR</i></span>
+                                            <div style="display: flex;">
+                                                <input class="input100" type="number"
+                                                       style="flex-grow: 1;"
+                                                       name="priceSpecification._PriceSpecification.price"
+                                                       placeholder="Enter the price"
+                                                       transl-id-placeholder="step.cost.spec.price.placeholder">
+                                                <div style="flex-grow: 0;">
+                                                    <select class="js-select2"
+                                                            name="priceSpecification._PriceSpecification.currency"
+                                                            placeholder="Select currency"
+                                                            transl-id-placeholder="step.cost.spec.currency.placeholder">
+                                                        <option value=""></option>
+                                                        <option value="EUR" selected>EUR</option>
+                                                        <option value="GBP">GBP</option>
+                                                        <option value="USD">USD</option>
+                                                    </select>
+                                                    <div class="dropDownSelect2"></div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <select class="js-select2"
-                                                        name="priceSpecification._PriceSpecification.currency"
-                                                        placeholder="Select currency"
-                                                        transl-id-placeholder="step.cost.spec.currency.placeholder">
-                                                    <option value=""></option>
-                                                    <option value="EUR">EUR</option>
-                                                    <option value="GBP">GBP</option>
-                                                    <option value="USD">USD</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
                                         </div>
-                                        <div class="wrap-input100 input100-select bg1 rs3-wrap-input100">
-                                            <span class="label-input100" transl-id="step.cost.spec.overnight.field">Overnight</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.cost.spec.overnight.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">Does this price specification is valid from one day to the next?</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Yes / No</i></span>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <select class="js-select2"
-                                                        name="priceSpecification._PriceSpecification.dueForTime.overnight"
-                                                        placeholder="Yes/No"
-                                                        transl-id-placeholder="step.cost.spec.overnight.placeholder">
-                                                    <option value=""></option>
-                                                    <option value="true">Yes</option>
-                                                    <option value="false">No</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                        </div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100" transl-id="step.cost.spec.timeStart.field">Time Start Value</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.cost.spec.timeStart.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">Indicate the start time of this price specifciation.</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>0</i></span>
-                                                </div>
-                                            </div>
-                                            <input class="input100" type="number"
-                                                   name="priceSpecification._PriceSpecification.dueForTime.timeStartValue"
-                                                   placeholder="Enter the start value"
-                                                   transl-id-placeholder="step.cost.spec.timeStart.placeholder">
-                                        </div>
-                                        <div class="wrap-input100 bg1 rs3-wrap-input100">
-                                            <span class="label-input100" transl-id="step.cost.spec.timeEnd.field">Time End Value</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.cost.spec.timeEnd.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">Indicate the end time of this price specifciation.</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>1</i></span>
-                                                </div>
 
-                                            </div>
-                                            <input class="input100" type="number"
-                                                   name="priceSpecification._PriceSpecification.dueForTime.timeEndValue"
-                                                   placeholder="Enter the end value"
-                                                   transl-id-placeholder="step.cost.spec.timeEnd.placeholder">
-                                        </div>
-                                        <div class="wrap-input100 input100-select bg1">
-                                            <span class="label-input100" transl-id="step.cost.spec.timeUnit.field">Time Unit</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.cost.spec.timeUnit.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">Select the time unit (used by both start time and end time) for this price specification.</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Hour</i></span>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <select class="js-select2"
-                                                        name="priceSpecification._PriceSpecification.dueForTime.timeUnit"
-                                                        placeholder="Select time unit"
-                                                        transl-id-placeholder="step.cost.spec.timeUnit.placeholder">
-                                                    <option value=""></option>
-                                                    <option value="hour">Hour</option>
-                                                    <option value="minute">Minute</option>
-                                                    <option value="second">Second</option>
-                                                    <option value="day">Day</option>
-                                                    <option value="week">Week</option>
-                                                    <option value="month">Month</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                        </div>
-                                        <div class="wrap-input100 bg0">
-                                            <span class="label-input100" transl-id="step.cost.spec.description.field">Description</span>
-                                            <input type="image" title="about" class="info_button"
-                                                   src="static/images/icons/info.png">
-                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
-                                                <h2 style="margin-bottom: 15px;"></h2>
-                                                <input type="image" title="close" class="info_close_button"
-                                                       src="static/images/icons/close_white.png"
-                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.cost.spec.description.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">
-                                                    Describe how this price specification operates.</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Gratis voor het eerste uur</i></span>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="translatable-free-text">
-                                                    <span></span>
-                                                    <textarea class="input100"
-                                                              name="priceSpecification._PriceSpecification.description"
-                                                              placeholder="Describe this pricing definition (e.g. free for the first hour)"
-                                                              transl-id-placeholder="step.cost.spec.description.placeholder"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <button class="plus_button_section"><i class="fas fa-plus-square"></i>
                                         <span transl-id="step.cost.spec.addExtra">Add extra price specification</span>

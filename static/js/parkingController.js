@@ -35,21 +35,33 @@ function processObject(obj, oldPath, input) {
     }
     try {
         let keys = Object.keys(obj);
-        for (let i in keys) {
-            if (keys[i] !== '@context') {
-                path.push(keys[i]);
-                if (Array.isArray(obj[keys[i]])) {
-                    if (keys[i] === '@graph') {
-                        loadSections(obj[keys[i]]);
-                    } else {
-                        processArray(path, obj[keys[i]], input);
-                    }
-                } else if (typeof obj[keys[i]] == 'object') {
-                    processObject(obj[keys[i]], path);
-                } else {
-                    loadParkingValue(path, obj[keys[i]], false, input);
-                }
+        if(obj["@type"] === "TimeSpecification"){
+            //timeStartValue and timeEndValue need to be converted to an interval and should therefore be passed together
+            path.push("timeIntervalDuration");
+            loadParkingValue(path, [ obj["timeStartValue"], obj["timeEndValue"] ], false, input);
+            path.pop();
+            if(obj["timeUnit"]){
+                path.push("timeUnit");
+                loadParkingValue(path, obj["timeUnit"], false, input);
                 path.pop();
+            }
+        } else {
+            for (let i in keys) {
+                if (keys[i] !== '@context') {
+                    path.push(keys[i]);
+                    if (Array.isArray(obj[keys[i]])) {
+                        if (keys[i] === '@graph') {
+                            loadSections(obj[keys[i]]);
+                        } else {
+                            processArray(path, obj[keys[i]], input);
+                        }
+                    } else if (typeof obj[keys[i]] == 'object') {
+                        processObject(obj[keys[i]], path);
+                    } else {
+                        loadParkingValue(path, obj[keys[i]], false, input);
+                    }
+                    path.pop();
+                }
             }
         }
     } catch (e) {
@@ -156,13 +168,8 @@ function processArray(path, arr, input) {
             for (let j in keys) {
                 let el = null;
                 path.push(keys[j]);
-                if (input) {
-                    for (let k = input.length - 1; k >= 0; k--) {
-                        if ($(input[k]).attr('name') == path.join('.')) {
-                            el = $(input[k]);
-                            break;
-                        }
-                    }
+                if (inputs) {
+                    el = $(inputs.filter('[name="' + path.join('.') + '"]').last());
                 }
                 if (Array.isArray(obj[keys[j]])) {
                     processArray(path, obj[keys[j]], input);
@@ -297,7 +304,11 @@ function valueToString(value) {
 }
 
 function reverseFormatValue(name, value) {
-    if (context[`${name}`]) {
+    if(name === "timeIntervalDuration"){
+        if(value && value.length === 2) {
+            return value[1] - value[0];
+        }
+    } else if (context[`${name}`]) {
         let type = context[`${name}`]['@type'];
         if (type) {
             if (type === 'xsd:dateTime') {

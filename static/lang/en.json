@@ -1,4 +1,11 @@
 {
+  "general" : {
+    "buttons": {
+      "first" : "First",
+      "previous" : "Previous",
+      "next" : "Next"
+    }
+  },
   "navbar": {
     "title": "Velopark Rich Snippets Generator",
     "login" : "Log In",
@@ -367,12 +374,13 @@
     "cost" : {
       "title" : "Facility Section - Cost Model",
       "description" : {
-        "field": "Costs Description",
+        "field": "Costs Description Link",
         "infoText": "Put here a link to a webpage that describes the costs.<br><br>Example: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Enter the link to the costs description"
       },
       "spec" : {
         "title" : "Price Specification",
+        "infoAlert" : "In this section you can specify the cost per time interval people have to pay to store their bikes.For example: if the first hour is free, and afterwards it costs €1 for every 2 hours\n                                        this means you need to add 2 time intervals:<br>&nbsp&nbsp- the first one with a duration of one hour that is free, and<br>&nbsp&nbsp- a second one with a duration of 2 hours that costs €1.<br><br>IMPORTANT! The last section you add is repeated for parking times longer than the sum of the provided interval times.",
         "free" : {
           "field": "Free of Charge",
           "infoText": "Is this price specification free of charge?<br><br>Example: <i>Yes / No</i>",
@@ -403,9 +411,14 @@
           "infoText": "Indicate the end time of this price specification.<br><br>Example: <i>1</i>",
           "placeholder" : "Enter the end value"
         },
+        "intervalDuration" : {
+          "field": "Interval Duration",
+          "infoText": "Indicate the duration of this price specification interval.<br><br>Example: <i>1</i>",
+          "placeholder" : "Enter the duration of the interval (in the unit selected above)"
+        },
         "timeUnit" : {
           "field": "Time Unit",
-          "infoText": "Select the time unit (used by both start time and end time) for this price specification.<br><br>Example: <i>Hour</i>",
+          "infoText": "Select the time unit used to specify the pricing intervals.<br><br>Example: <i>Hour</i>",
           "placeholder" : "Select time unit"
         },
         "description" : {
@@ -413,7 +426,7 @@
           "infoText": "Describe how this price specification operates.<br><br>Example: <i>Gratis voor het eerste uur</i>",
           "placeholder" : "Describe this pricing definition (e.g. free for the first hour)"
         },
-        "addExtra" : "Add extra price specification"
+        "addExtra" : "Add extra price specification interval"
       }
   },
     "extraSection" : {
@@ -515,7 +528,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Actions"
     ]
   },
   "pswdReset": {

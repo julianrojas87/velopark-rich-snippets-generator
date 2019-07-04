@@ -17,50 +17,7 @@
     <!-- Navigation Bar -->
     <% include navbar.html %>
 
-    <div class="container-contact100">
-        <ul class="breadcrumbs">
-            <li><a href="home">Home</a></li>
-            <li><a href="parkings"><span transl-id="parkings.title">Parkings in</span> <%= company.name %></a></li>
-        </ul>
-        <div class="wrap-contact100" style="width: 100%;">
-            <h2><span transl-id="parkings.title">Parkings in</span> <%= company.name %></h2>
-            <table id="parking-list" class="table-fill">
-                <thead>
-                    <tr>
-                        <th class="text-left" transl-id="parkings.th[0]">Parking Facility URI</th>
-                        <th class="text-left" transl-id="parkings.th[1]">Parking Name</th>
-                        <th class="text-left" transl-id="parkings.th[2]">Approved</th>
-                        <th class="text-left" transl-id="parkings.th[3]">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-hover">
-                    <% for (var i = 0; i < parkings.length; i++) { %>
-                    <tr>
-                        <td class="text-left">
-                            <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold;" href="<%= parkings[i]['@id'] %>">
-                                <%= parkings[i]['@id'] %></a>
-                        </td>
-                        <td class="text-left" style="font-size: 20px;">
-                            <%= parkings[i]['name'][0]['@value'] ? parkings[i]['name'][0]['@value'] : parkings[i]['name'] %>
-                        </td>
-                        <td class="text-left" style="font-size: 20px;">
-                            <% if(parkings[i]['approvedstatus']){ %>
-                                <i class="far fa-check-circle" style="color:#00b417"></i>
-                            <% } else { %>
-                                <i class="fas fa-times" style="color:red"></i>
-                            <% } %>
-                        </td>
-                        <td class="text-left">
-                            <input title="Edit" type="image" src="static/images/icons/edit.png" style="float: left; width: 40px;">
-                            <input title="Delete" type="image" src="static/images/icons/delete.png" style="position: relative; left: 10px; bottom: 2px; float: left; width: 40px;">
-                            <input title="Download" type="image" src="static/images/icons/download.png" style="position: relative; left: 16px; bottom: 2px; float: left; width: 40px;">
-                        </td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <% include parkings-part.html %>
 
     <!-- JS scripts-->
     <% include scripts.html %>
