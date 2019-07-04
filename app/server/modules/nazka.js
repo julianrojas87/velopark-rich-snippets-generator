@@ -19,7 +19,7 @@ exports.loadNazka = async function () {
 };
 
 async function requestGeo(areas) {
-    Promise.all(Object.keys(areas).map(async NIS => {
+    await Promise.all(Object.keys(areas).map(async NIS => {
         let geo = JSON.parse(await doGeometryRequest(NIS, 3));
         let area = areas[geo.properties.NIS_CODE];
         for (j in area) {
@@ -36,7 +36,7 @@ function doLevelRequest(level) {
     return new Promise((resolve, reject) => {
         request('http://belgium.geo.nazkamapps.com/list/level/' + level, (err, res, body) => {
             if (res) {
-                //console.log('REQ: ' + res.request.uri.href);
+                console.log('REQ: ' + res.request.uri.href);
             }
             if (err) {
                 console.error('Error loading Nazka areas', err);
@@ -52,7 +52,7 @@ function doGeometryRequest(NIS, retries) {
     return new Promise((resolve, reject) => {
         request('http://belgium.geo.nazkamapps.com/geometry/nis/' + NIS + "?simplify=1", async (err, res, body) => {
             if (res) {
-                //console.log('REQ: ' + res.request.uri.href);
+                console.log('REQ: ' + res.request.uri.href);
             }
             if (err) {
                 console.error('Error loading Nazka geometry for area.', NIS, err);
