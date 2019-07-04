@@ -49,6 +49,11 @@ exports.loadNazka = function () {
                 });
             }
         }
+        dbAdapter.insertCity(geo).catch((error) => {
+            console.error('Error loading Nazka geometry for area.', error);
+        });
+    }));
+}
 
         Promise.all(promises).then(() => {
             newPromises = [];
@@ -65,7 +70,7 @@ exports.loadNazka = function () {
             });
         });
     });
-};
+}
 
 function requestGeo(NIS, retries, areas, promises) {
     promises.push(
@@ -110,9 +115,10 @@ function requestGeo(NIS, retries, areas, promises) {
                 console.error('Error loading Nazka geometry for area.', e);
                 if (retries > 0) {
                     console.log('Trying again for NIS ', NIS);
-                    requestGeo(NIS, --retries, areas, promises);
+                    resolve(doGeometryRequest(NIS, --retries));
                 }
-                resolve();
+            } else {
+                resolve(body);
             }
         })
     );
