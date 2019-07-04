@@ -83,14 +83,14 @@ EM.dispatchAccountActivated = function (account, callback) {
     }, callback);
 };
 
-EM.dispatchUserSignedUp = function(adminEmails){
+EM.dispatchUserSignedUp = function(newUser, adminEmails){
     for(i in adminEmails) {
         server.send({
             from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
             to: adminEmails[i].email,
             subject: 'New User Registration',
             text: 'something went wrong... :(',
-            attachment: EM.composeUserSignedUp(adminEmails[i].email, adminEmails[i].lang)
+            attachment: EM.composeUserSignedUp(newUser, adminEmails[i].lang)
         }, function (e, m) {
             if (!e) {
                 console.log("Mail sent to SuperAdmin: new account registered", m.header.to);
@@ -225,7 +225,7 @@ EM.composeUserSignedUp = function (email, lang) {
     if (lang === 'en') {
         html = "<html><body>";
         html += "Hello!<br><br>";
-        html += "A new user just signed up on Velopark!<br>";
+        html += "A new user (" + email + ") just signed up on Velopark!<br>";
         html += "You can review his membership through the <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>admin console</a>.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -233,7 +233,7 @@ EM.composeUserSignedUp = function (email, lang) {
     } else if (lang === 'de') {
         html = "<html><body>";
         html += "Hallo!<br><br>";
-        html += "Ein neuer Benutzer hat sich gerade bei Velopark angemeldet!<br>";
+        html += "Ein neuer Benutzer (" + email + ") hat sich gerade bei Velopark angemeldet!<br>";
         html += "Sie können seine Mitgliedschaft über die <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>Administratorkonsole überprüfen</a>.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -241,7 +241,7 @@ EM.composeUserSignedUp = function (email, lang) {
     } else if (lang === 'fr') {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
-        html += "Un nouvel utilisateur vient de s'inscrire sur Velopark!<br>";
+        html += "Un nouvel utilisateur (" + email + ") vient de s'inscrire sur Velopark!<br>";
         html += "Vous pouvez consulter son abonnement via <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>la console d'administration</a>.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
@@ -249,7 +249,7 @@ EM.composeUserSignedUp = function (email, lang) {
     } else if (lang === 'es') {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
-        html += "Un nuevo usuario acaba de registrarse en Velopark!<br>";
+        html += "Un nuevo usuario (" + email + ") acaba de registrarse en Velopark!<br>";
         html += "Puede revisar su membresía a través de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>la consola de administración</a>.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -258,7 +258,7 @@ EM.composeUserSignedUp = function (email, lang) {
         //Dutch is default
         html = "<html><body>";
         html += "Hallo!<br><br>";
-        html += "Een nieuwe gebruiker heeft zonet een account aangemaakt bij Velopark!<br>";
+        html += "Een nieuwe gebruiker (" + email + ") heeft zonet een account aangemaakt bij Velopark!<br>";
         html += "U kunt zijn lidmaatschap bekijken via de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>beheerdersconsole</a>.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
