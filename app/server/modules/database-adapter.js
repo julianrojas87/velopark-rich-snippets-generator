@@ -76,12 +76,12 @@ async function initDB() {
         });
     }
 
-    var hrstart = process.hrtime();
+    var hrstart = new Date();
     if (USE_NAZKA && (await cities.estimatedDocumentCount({})) < 5) {
         nazka.loadNazka().then(() => {
-            var hrend = process.hrtime(hrstart);
+            var hrend = new Date();
             console.log('Loading Nazka done');
-            console.info('Nazka job execution time: %ds %dms', hrend[0], hrend[1] / 1000000)
+            console.info('Nazka job execution time: ' + (hrend.getTime() - hrstart.getTime()) + ' ms');
         });
     }
 }
