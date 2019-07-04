@@ -183,7 +183,7 @@ exports.addNewAccount = function (newData, callback) {
                 dbAdapter.insertAccount(insertData, function(error, res){
                     callback(error, res);
                     exports.getAllSuperAdminEmails().then(adminEmails => {
-                        EM.dispatchUserSignedUp(adminEmails);
+                        EM.dispatchUserSignedUp(email, adminEmails);
                     }).catch(error => {
                         console.error("Could not get SuperAdmin emails to send new user email.", error);
                     })
