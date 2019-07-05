@@ -5,11 +5,12 @@
     $('.validate-input .input100').each(function () {
         $(this).on('blur', function () {
             if (validate(this, false) === false) {
-                if(!$(this).attr('type') === 'time')
-                    showValidate(this);
+                showValidate(this);
             }
             else {
-                $(this).parent().addClass('true-validate');
+                if($(this).val() != '') {
+                    $(this).parent().addClass('true-validate');
+                }
             }
         })
     });
@@ -75,7 +76,8 @@ function validate(input, finalValidation=true) {
     } else if($(input).attr('type') === 'time') {
         let openInput = $(input).parent().parent().find('.input100[type=time]:first');
         let closeInput = $(input).parent().parent().find('.input100[type=time]:last');
-        if(openInput.val() > closeInput.val()){
+        
+        if(openInput.val() != '' && closeInput.val() != '' && openInput.val() > closeInput.val()) {
             return false;
         }
     } else {

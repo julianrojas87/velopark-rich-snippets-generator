@@ -313,7 +313,6 @@ function processElement(jsonld, element) {
                 } else {
                     //Is not an array. Add value to referenced object
                     if(dName[i] === "timeIntervalDuration"){
-                        console.log("Hier?", dName);
                         temp_obj[`timeStartValue`] = last_price_spec_inverval_end;
                         temp_obj[`timeEndValue`] = last_price_spec_inverval_end + Number(element.val());
                         if(timeUnit){
