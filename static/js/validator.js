@@ -4,11 +4,13 @@
     [ Validate after type ]*/
     $('.validate-input .input100').each(function () {
         $(this).on('blur', function () {
-            if (validate(this) == false) {
+            if (validate(this, false) === false) {
                 showValidate(this);
             }
             else {
-                $(this).parent().addClass('true-validate');
+                if($(this).val() != '') {
+                    $(this).parent().addClass('true-validate');
+                }
             }
         })
     });
@@ -58,7 +60,7 @@ function fullValidation(input) {
     }
 }
 
-function validate(input) {
+function validate(input, finalValidation=true) {
     if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
         if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
             return false;
@@ -74,7 +76,8 @@ function validate(input) {
     } else if($(input).attr('type') === 'time') {
         let openInput = $(input).parent().parent().find('.input100[type=time]:first');
         let closeInput = $(input).parent().parent().find('.input100[type=time]:last');
-        if(openInput.val() > closeInput.val()){
+        
+        if(openInput.val() != '' && closeInput.val() != '' && openInput.val() > closeInput.val()) {
             return false;
         }
     } else {

@@ -11,6 +11,9 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const data = config['data'] || './data';
 const dbAdapter = require('./database-adapter');
 const AM = require('./account-manager');
+const EM = require('./email-dispatcher');
+
+let recentlyDeletedParkingIds = new Set();
 
 dbAdapter.initDbAdapter().then(() => {
     initFolders();
@@ -41,9 +44,9 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = async () => {
+exports.listAllParkings = async (skip, limit) => {
     return new Promise((resolve, reject) => {
-        dbAdapter.findParkingsWithCompanies()
+        dbAdapter.findParkingsWithCompanies(skip, limit)
             .then(res => {
                 returnTableData(res, function(error, result){
                     if(error != null){
@@ -60,8 +63,8 @@ exports.listAllParkings = async () => {
 
 };
 
-exports.listParkingsByEmail = async (username, callback) => {
-    dbAdapter.findParkingsByEmail(username, function (error, res) {
+exports.listParkingsByEmail = async (username, skip, limit, callback) => {
+    dbAdapter.findParkingsByEmail(username, skip, limit,function (error, res) {
         if (error != null) {
             console.error("Error: " + error);
             callback(error);
@@ -71,7 +74,7 @@ exports.listParkingsByEmail = async (username, callback) => {
     });
 };
 
-exports.listParkingsInCity = function (cityName, callback) {
+exports.listParkingsInCity = function (cityName, skip, limit, callback) {
     dbAdapter.findParkingsByCityName(cityName, (error, res) => {
         if (error != null) {
             console.error("Error: " + error);
@@ -79,7 +82,7 @@ exports.listParkingsInCity = function (cityName, callback) {
         } else {
             returnTableData(res, callback);
         }
-    });
+    }, skip, limit);
 };
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
@@ -116,7 +119,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
         callback("Cannot save parking as a company user without a company");
     } else {
         let park_obj = JSON.parse(parking);
-        let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+        let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
         let parkingID = encodeURIComponent(park_obj['@id']);
         let location;
         try {
@@ -138,7 +141,23 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
                 if (approved) {
                     await addParkingToCatalog(localId);
                 }
-                callback(null, res);
+                callback();
+                if(!recentlyDeletedParkingIds.has(parkingID)){
+                    //Parking did not exist before. A company user has created a new parking. Send email to region representatives.
+                    dbAdapter.findCitiesByLocation(location.coordinates[1], location.coordinates[0], null, function(error, result){
+                        if(error){
+                            console.log("ERROR: Cannot notify region reps of new parking.", error);
+                        } else if(result){
+                            dbAdapter.findCityRepsForRegions(result).then( reps => {
+                                EM.dispatchNewParkingToRegionReps(reps, parkingID);
+                            }).catch( error => {
+                                console.error("ERROR: Cannot send new parking notification to region reps.", error);
+                            });
+                        } else {
+                            console.error("No regions for new parking location found.");
+                        }
+                    });
+                }
             }
         });
     }
@@ -149,7 +168,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
  */
 exports.saveParkingAsCityRep = async (parking, userCities, approved, company, callback) => {
     let park_obj = JSON.parse(parking);
-    let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+    let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
     let parkingID = encodeURIComponent(park_obj['@id']);
     let location;
     try {
@@ -211,7 +230,7 @@ function promisifyUpdateCompanyParkingIDs(company, parkingId) {
  */
 exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callback) => {
     let park_obj = JSON.parse(parking);
-    let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/\s/g, '-');
+    let localId = encodeURIComponent((park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-'));
     let parkingID = encodeURIComponent(park_obj['@id']);
     let location;
     try {
@@ -257,7 +276,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
 
 let getCitiesOfParking = function (parking, callback) {
     lnglat = extractLocationFromJsonld(parking);
-    dbAdapter.findCitiesByLocation(lnglat[1], lnglat[0], callback);
+    dbAdapter.findCitiesByLocation(lnglat[1], lnglat[0], null, callback);
 };
 
 let extractLocationFromJsonld = function (jsonld) {
@@ -379,6 +398,8 @@ exports.deleteParking = async (user, parkingId, callback) => {
                     }
                 }
             });
+            recentlyDeletedParkingIds.add(parkingId);
+            setTimeout(function(){recentlyDeletedParkingIds.delete(parkingId)}, 5000);
         } else {
             callback('Parking file does not exist in disk')
         }
@@ -544,11 +565,12 @@ async function addParkingToCatalog(id) {
     let catalog = JSON.parse(await readFile(data + '/public/catalog.jsonld', 'utf8'));
     let dists = catalog['dcat:dataset']['dcat:distribution'];
     let found = false;
+    let modificationDate = new Date().toISOString();
 
     for (let i in dists) {
         if (dists[i]['@id'] === 'https://velopark.ilabt.imec.be/data/' + localId || dists[i]['@id'] === parking['@id']) {
             found = true;
-            dists[i]['dct:modified'] = new Date().toISOString();
+            dists[i]['dct:modified'] = modificationDate;
             break;
         }
     }
@@ -560,10 +582,12 @@ async function addParkingToCatalog(id) {
             "dcat:accessURL": getParkingAccessURLs(parking, localId),
             "dct:license": "http://creativecommons.org/publicdomain/zero/1.0/",
             "dcat:mediaType": "application/ld+json",
-            "dct:issued": new Date().toISOString(),
-            "dct:modified": new Date().toISOString()
+            "dct:issued": modificationDate,
+            "dct:modified": modificationDate
         });
     }
+
+    catalog['dct:modified'] = modificationDate;
 
     await writeFile(data + '/public/catalog.jsonld', JSON.stringify(catalog), 'utf8');
 }
@@ -584,6 +608,7 @@ async function removeParkingFromCatalog(id) {
 
     if (index != null) {
         dists.splice(index, 1);
+        catalog['dct:modified'] = new Date().toISOString();
         await writeFile(data + '/public/catalog.jsonld', JSON.stringify(catalog), 'utf8');
     }
 }
@@ -600,6 +625,7 @@ function initFolders() {
 
 async function initCatalog() {
     let parkings = new Map();
+    let modificationDate = new Date().toISOString();
 
     await Promise.all((await readdir(data + '/public')).map(async p => {
         if (p.indexOf('catalog.jsonld') < 0) {
@@ -614,8 +640,6 @@ async function initCatalog() {
     if (fs.existsSync(data + '/public/catalog.jsonld')) {
         let catalog = JSON.parse(await readFile(data + '/public/catalog.jsonld'));
         let dists = catalog['dcat:dataset']['dcat:distribution'];
-
-        catalog['dct:modified'] = new Date().toISOString();
 
         for (let p of parkings) {
             let found = false;
@@ -636,6 +660,8 @@ async function initCatalog() {
                     "dct:issued": getLastModified(p[1]),
                     "dct:modified": getLastModified(p[1])
                 });
+
+                catalog['dct:modified'] = modificationDate;
             }
         }
 
@@ -672,8 +698,8 @@ async function initCatalog() {
             "@type": "dcat:Catalog",
             "dct:title": "Catalog of Bicycle Parking Facilities in Belgium",
             "dct:description": "List of Linked Open Data documents describing bicycle parking facilities in Belgium",
-            "dct:issued": new Date().toISOString(),
-            "dct:modified": new Date().toISOString(),
+            "dct:issued": modificationDate,
+            "dct:modified": modificationDate,
             "dct:license": "http://creativecommons.org/publicdomain/zero/1.0/",
             "dct:rights": "public",
             "dct:publisher": {

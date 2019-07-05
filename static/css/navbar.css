@@ -2,7 +2,8 @@
 #navbar {
     overflow: hidden;
     background-color: #1072ba;
-    z-index: 9999;
+    z-index: 9000;
+    max-height: 180px;
   }
   
   /* Navbar links */
@@ -66,3 +67,7 @@
   .dropdown:hover .dropdown-content {display: block;}
   
   .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+  #signup-cities .select2-container {
+    width: 90% !important;
+  }

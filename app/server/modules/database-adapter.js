@@ -2,10 +2,12 @@ const MongoClient = require('mongodb').MongoClient;
 const dookie = require('dookie');
 const fs = require('fs');
 const utils = require('../utils/utils');
+const nazka = require('./nazka');
 
+const USE_NAZKA = true;
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
-var db, accounts, parkings, companies, cities;
+var db, accounts, parkings, companies, cities, regionHierarchy;
 
 exports.initDbAdapter = function () {
     return new Promise((resolve, reject) => {
@@ -18,6 +20,7 @@ exports.initDbAdapter = function () {
                 parkings = db.collection('parkings');
                 companies = db.collection('companies');
                 cities = db.collection('geocities');
+                regionHierarchy = db.collection('regionHierarchy');
 
                 accounts.createIndex({location: "2dsphere"});
                 cities.createIndex({geometry: "2dsphere"});
@@ -51,11 +54,34 @@ async function initDB() {
         });
     }
 
+    //detect if command line flag is used to force repopulation of geocities
+    process.argv.forEach(function (val, index, array) {
+        if (val === '--reload-regions') {
+            cities.drop(function (err, delOK) {
+                if (err) console.error(err);
+                if (delOK) console.log("geocities deleted");
+            });
+            regionHierarchy.drop(function (err, delOK) {
+                if (err) console.error(err);
+                if (delOK) console.log("regionHierarchy deleted");
+            });
+        }
+    });
+
     // Init geocities collection
-    if ((await cities.estimatedDocumentCount({})) < 5) {
+    if (!USE_NAZKA && (await cities.estimatedDocumentCount({})) < 5) {
         const data = JSON.parse(fs.readFileSync('./geocities.json', 'utf8'));
         dookie.push('mongodb://localhost:27017/node-login', data).then(function () {
             console.log('Importing geocities done!');
+        });
+    }
+
+    var hrstart = new Date();
+    if (USE_NAZKA && (await cities.estimatedDocumentCount({})) < 5) {
+        nazka.loadNazka().then(() => {
+            var hrend = new Date();
+            console.log('Loading Nazka done');
+            console.info('Nazka job execution time: ' + (hrend.getTime() - hrstart.getTime()) + ' ms');
         });
     }
 }
@@ -76,6 +102,9 @@ async function initDB() {
         * update
     - Cities
         * lookup
+    - regionHierarchy
+        * lookup
+        * insert
     - Mixed
         * lookup
 =======================
@@ -111,10 +140,10 @@ exports.findAccounts = function (callback) {
     });
 };
 
-exports.findAccountsByEmails = function(emails){
+exports.findAccountsByEmails = function (emails) {
     return new Promise((resolve, reject) => {
         accounts.find({
-            email: { $in : emails }
+            email: {$in: emails}
         }).toArray(function (e, res) {
             if (e) {
                 reject(e);
@@ -132,6 +161,45 @@ exports.findAllEmails = function (callback) {
         emails.push(res.email);
     }, function (error) {
         callback(error, emails);
+    });
+};
+
+exports.findSuperAdminEmailsAndLang = function () {
+    return new Promise((resolve, reject) => {
+        let emails = [];
+        accounts.find({
+            superAdmin: true
+        }, {projection: {_id: 0, "email": 1, 'lang': 1}}).forEach(function (res) {
+            emails.push({email: res.email, lang: res.lang});
+        }, function (error) {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(emails);
+            }
+        });
+    });
+};
+
+exports.findCityRepsForRegions = function (regions) {
+    return new Promise((resolve, reject) => {
+        accounts.find(
+            {
+                cityNames: {
+                    $elemMatch: {
+                        name: {
+                            $in: regions
+                        },
+                        enabled: true
+                    }
+                }
+            },
+            {}
+        ).toArray().then(res => {
+            resolve(res);
+        }).catch(error => {
+            reject(error);
+        });
     });
 };
 
@@ -232,16 +300,16 @@ exports.updateAccountEnableCity = function (email, cityName, enabled) {
     );
 };
 
-exports.updateAccountLanguage = function(email, lang){
+exports.updateAccountLanguage = function (email, lang) {
     return accounts.findOneAndUpdate(
         {
             email: email
         },
         {
-        $set: {
-            lang: lang
-        }
-    });
+            $set: {
+                lang: lang
+            }
+        });
 };
 
 /*
@@ -272,10 +340,12 @@ exports.deleteAccounts = function (callback) {
     Parkings: lookup
 */
 
-exports.findParkingsWithCompanies = function () {
+exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER) {
     return new Promise((resolve, reject) => {
         parkings.aggregate(
             [
+                {$skip: skip},
+                {$limit: limit},
                 {
                     $lookup:
                         {
@@ -316,7 +386,7 @@ exports.findParkingByID = id => {
     return parkings.findOne({parkingID: id});
 };
 
-exports.findParkingsByEmail = function (email, callback) {
+exports.findParkingsByEmail = function (email, skip, limit, callback) {
     accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
         if (o != null) {
             if (o.companyName != null) {
@@ -331,6 +401,8 @@ exports.findParkingsByEmail = function (email, callback) {
                         {
                             $unwind: "$parkingIDs"
                         },
+                        {$skip: skip},
+                        {$limit: limit},
                         {
                             $lookup:
                                 {
@@ -346,31 +418,15 @@ exports.findParkingsByEmail = function (email, callback) {
                         if (e) {
                             callback(e);
                         } else {
-                            let processNextParking = function (parkings, o) {
-                                o.next(function (error, res) {
-                                    if (error != null) {
-                                        callback(error);
-                                    } else {
-                                        parkings.push(res.parking);
-                                        o.hasNext(function (error, res) {
-                                            if (res) {
-                                                processNextParking(parkings, o);
-                                            } else {
-                                                callback(null, [].concat.apply([], parkings));
-                                            }
-                                        });
-                                        //callback(null, res ? res.parking : {});
-                                    }
-                                });
-                            };
-                            o.hasNext(function (error, res) {
-                                if (error != null) {
-                                    callback(error);
-                                } else if (res) {
-                                    processNextParking([], o);
-                                } else {
-                                    callback(null, []);
+                            let parkingArray;
+                            o.toArray().then(res => {
+                                parkingArray = res;
+                                for (i in parkingArray) {
+                                    parkingArray[i] = parkingArray[i].parking[0];
                                 }
+                                callback(null, parkingArray);
+                            }).catch(err => {
+                                callback(err);
                             });
                         }
                     }
@@ -478,12 +534,12 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
             },
         },
         {
-            returnOriginal: false,
+            returnOriginal: true,
             upsert: true
         },
         function (e, o) {
-            if (o.value != null) {
-                callback(null, o.value);
+            if (!e) {
+                callback(null, o.value ? "updated" : "inserted");
             } else {
                 callback(e);
             }
@@ -853,7 +909,7 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback) {
+exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = 0) {
     cities.findOne({'properties.cityname': cityName}, {}, function (error, city) {
         if (error != null) {
             callback(error);
@@ -864,7 +920,7 @@ exports.findParkingsByCityName = function (cityName, callback) {
                         '$geometry': city.geometry
                     }
                 }
-            }).toArray(function (error, result) {
+            }).skip(skip).limit(limit).toArray(function (error, result) {
                 if (error != null) {
                     callback(error);
                 } else {
@@ -875,7 +931,19 @@ exports.findParkingsByCityName = function (cityName, callback) {
     });
 };
 
-exports.findCitiesByLocation = function (lat, lng, callback) {
+exports.findCitiesByLocation = function (lat, lng, lang, callback) {
+    let propertyName;
+    if (lang === 'en') {
+        propertyName = 'name_EN';
+    } else if (lang === 'fr') {
+        propertyName = 'name_FR';
+    } else if (lang === 'de') {
+        propertyName = 'name_DE';
+    } else if (lang === 'nl') {
+        propertyName = 'name_NL'
+    } else {
+        propertyName = "cityname";
+    }
     let cityNames = [];
     cities.find({
         'geometry': {
@@ -886,11 +954,67 @@ exports.findCitiesByLocation = function (lat, lng, callback) {
                 }
             }
         }
-    }, {projection: {"properties.cityname": 1}}).forEach(function (res) {
-        cityNames.push(res.properties.cityname);
+    }, {projection: {"properties": 1}}).forEach(function (res) {
+        cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
     }, function (error) {
         callback(error, cityNames);
     });
+};
+
+exports.findMunicipalityByLocation = function (lat, lng, lang, callback) {
+    let propertyName;
+    if (lang === 'en') {
+        propertyName = 'name_EN';
+    } else if (lang === 'fr') {
+        propertyName = 'name_FR';
+    } else if (lang === 'de') {
+        propertyName = 'name_DE';
+    } else if (lang === 'nl') {
+        propertyName = 'name_NL'
+    } else {
+        propertyName = "cityname";
+    }
+    let cityNames = [];
+    cities.find({
+        'geometry': {
+            '$geoIntersects': {
+                '$geometry': {
+                    type: "Point",
+                    coordinates: [lng, lat]
+                }
+            }
+        }
+    }, {projection: {"properties": 1}}).forEach(function (res) {
+        if (res.properties['adminLevel'] === 4) {
+            cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
+        }
+    }, function (error) {
+        callback(error, cityNames);
+    });
+};
+
+exports.insertCity = function (json) {
+    return cities.insertOne(json);
+};
+
+/*
+    ==== regionHierachy ====
+*/
+
+/*
+    regionHierarchy: lookup
+*/
+
+exports.getRegionHierarchy = function () {
+    return regionHierarchy.find().toArray();
+};
+
+/*
+    regionHierarchy: insert
+*/
+
+exports.insertRegionHierarchy = function (hierarchy) {
+    regionHierarchy.insertOne(hierarchy);
 };
 
 

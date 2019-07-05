@@ -1,9 +1,13 @@
-($ => {
-
+$(window).on('load', function () {
     Promise.all(loadingPromises).then(() => {
-        loadParkingValues();
-        parkingDataLoaded = true;
+        Promise.resolve(select2Promise).then(() => {
+            loadParkingValues();
+            parkingDataLoaded = true;
+        });
     });
+});
+
+($ => {
 
 })(jQuery);
 
@@ -18,7 +22,7 @@ function loadParkingValues() {
         $('#language-selection-container input[type="checkbox"]').prop('checked', false).trigger("change");
         processObject(parking);
         // leave Parking Facility URI empty if @id was set automatically
-        if(parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
+        if (parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
             $('input[name="@id"]').val('');
         }
     }
@@ -31,21 +35,33 @@ function processObject(obj, oldPath, input) {
     }
     try {
         let keys = Object.keys(obj);
-        for (let i in keys) {
-            if (keys[i] !== '@context') {
-                path.push(keys[i]);
-                if (Array.isArray(obj[keys[i]])) {
-                    if (keys[i] === '@graph') {
-                        loadSections(obj[keys[i]]);
-                    } else {
-                        processArray(path, obj[keys[i]], input);
-                    }
-                } else if (typeof obj[keys[i]] == 'object') {
-                    processObject(obj[keys[i]], path);
-                } else {
-                    loadParkingValue(path, obj[keys[i]], false, input);
-                }
+        if(obj["@type"] === "TimeSpecification"){
+            //timeStartValue and timeEndValue need to be converted to an interval and should therefore be passed together
+            path.push("timeIntervalDuration");
+            loadParkingValue(path, [ obj["timeStartValue"], obj["timeEndValue"] ], false, input);
+            path.pop();
+            if(obj["timeUnit"]){
+                path.push("timeUnit");
+                loadParkingValue(path, obj["timeUnit"], false, input);
                 path.pop();
+            }
+        } else {
+            for (let i in keys) {
+                if (keys[i] !== '@context') {
+                    path.push(keys[i]);
+                    if (Array.isArray(obj[keys[i]])) {
+                        if (keys[i] === '@graph') {
+                            loadSections(obj[keys[i]]);
+                        } else {
+                            processArray(path, obj[keys[i]], input);
+                        }
+                    } else if (typeof obj[keys[i]] == 'object') {
+                        processObject(obj[keys[i]], path);
+                    } else {
+                        loadParkingValue(path, obj[keys[i]], false, input);
+                    }
+                    path.pop();
+                }
             }
         }
     } catch (e) {
@@ -102,17 +118,17 @@ function processArray(path, arr, input) {
             let inputs;
             let isFeature = false;
             let isGeneralFeature = false;
-            if(path.join('.') === "amenityFeature._" ){
+            if (path.join('.') === "amenityFeature._") {
                 isFeature = true;
                 //split security features and general services
                 isGeneralFeature = false;
-                for(j in myGeneralFeatures){
-                    if(myGeneralFeatures[j]['@id'] === obj['@type']){
+                for (j in myGeneralFeatures) {
+                    if (myGeneralFeatures[j]['@id'] === obj['@type']) {
                         isGeneralFeature = true;
                         break;
                     }
                 }
-                if(isGeneralFeature){
+                if (isGeneralFeature) {
                     numGeneralFeatures++;
                 } else {
                     numSecurityFeatures++;
@@ -120,9 +136,11 @@ function processArray(path, arr, input) {
                 input = $('[name^="' + lastPath + '"][generalfeature="' + (isGeneralFeature ? "true" : "false") + '"]');
                 inputs = input;
             } else {
-                inputs = input || $('[name^="' + lastPath + '"]');
+                inputs = $('[name^="' + lastPath + '"]') || input;
             }
-            if (!isFeature && i > 0 || isFeature && isGeneralFeature && numGeneralFeatures > 1 || isFeature && !isGeneralFeature && numSecurityFeatures > 1) {
+            if ((!isFeature && i > 0) 
+                || (isFeature && isGeneralFeature && numGeneralFeatures > 1) 
+                || (isFeature && !isGeneralFeature && numSecurityFeatures > 1)) {
                 let last = $(inputs[inputs.length - 1]);
                 if (last.is('div')) {
                     last.parent().parent().next("button").click();
@@ -131,11 +149,11 @@ function processArray(path, arr, input) {
                 }
 
                 //input = $('[name^="' + lastPath + '"]');
-                if(path.join('.') === "amenityFeature._" ){
+                if (path.join('.') === "amenityFeature._") {
                     //split security features and general services
                     let isGeneralFeature = false;
-                    for(j in myGeneralFeatures){
-                        if(myGeneralFeatures[j]['@id'] === obj['@type']){
+                    for (j in myGeneralFeatures) {
+                        if (myGeneralFeatures[j]['@id'] === obj['@type']) {
                             isGeneralFeature = true;
                             break;
                         }
@@ -147,18 +165,13 @@ function processArray(path, arr, input) {
                 }
             } else {
                 //first element of the array, make sure its input is visible (for optional inputs that are hidden by default)
-                $(inputs[0]).closest('.dynamic-section').css('display','block');
+                $(inputs[0]).closest('.dynamic-section').css('display', 'block');
             }
             for (let j in keys) {
                 let el = null;
                 path.push(keys[j]);
-                if (input) {
-                    for (let k = input.length - 1; k >= 0; k--) {
-                        if ($(input[k]).attr('name') == path.join('.')) {
-                            el = $(input[k]);
-                            break;
-                        }
-                    }
+                if (inputs) {
+                    el = $(inputs.filter('[name="' + path.join('.') + '"]').last());
                 }
                 if (Array.isArray(obj[keys[j]])) {
                     processArray(path, obj[keys[j]], input);
@@ -293,7 +306,11 @@ function valueToString(value) {
 }
 
 function reverseFormatValue(name, value) {
-    if (context[`${name}`]) {
+    if(name === "timeIntervalDuration"){
+        if(value && value.length === 2) {
+            return value[1] - value[0];
+        }
+    } else if (context[`${name}`]) {
         let type = context[`${name}`]['@type'];
         if (type) {
             if (type === 'xsd:dateTime') {

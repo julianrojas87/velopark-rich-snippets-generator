@@ -1,4 +1,11 @@
 {
+  "general" : {
+    "buttons": {
+      "first" : "Eerste",
+      "previous" : "Vorige",
+      "next" : "Volgende"
+    }
+  },
   "navbar": {
     "title": "Velopark Rich Snippets Generator",
     "login" : "Aanmelden",
@@ -225,7 +232,12 @@
           "validation" : "Vul een geldige sluitingstijd in"
         },
         "day" : ["Ma", "Di", "Woe", "Do", "Vr", "Za", "Zo"],
-        "addExtra": "Voeg extra uren toe"
+        "addExtra": "Voeg extra uren toe",
+        "extrainfo" : {
+          "field" : "Extra Informatie",
+          "infoText" : "<span style=\"display: inherit; padding-left: 15px;\">Beschrijf extra onregelmatigheden in de openingsuren</span><br><span style=\"display: inherit; padding-left: 15px;\">Bijvoorbeeld: <i>Elke eerste zondag van de maand geopend</i> or <i>Gesloten op administratieve feestdagen</i></span>",
+          "placeholder" : "Beschrijf uitzonderingen in de openingsuren zoals feestdagen"
+        }
       }
     },
     "loc" : {
@@ -361,12 +373,13 @@
     "cost" : {
       "title" : "Faciliteitssectie - Kostenmodel",
       "description" : {
-        "field": "Kosten beschrijving",
+        "field": "Link Kostenbeschrijving",
         "infoText": "Vul hier een link in naar de webpagina die het kostenmodel beschrijjft voor deze feciliteitssectie.<br><br>Voorbeeld: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Vul een link in naar de kostenbeschrijving voor deze faciliteitssectie"
       },
       "spec" : {
         "title" : "Prijsspecificatie",
+        "infoAlert" : "In dit gedeelte kunt u de kosten per tijdsinterval opgeven die gebruikers moeten betalen om hun fietsen te parkeren. Als het eerste uur bijvoorbeeld gratis is en daarna €1 per 2 uur kost, moet u twee tijdsintervallen toevoegen:<br><br>&nbsp&nbsp- de eerste met een duur van één uur die gratis is, en<br>&nbsp&nbsp- een tweede met een duur van 2 uur die €1 kost.<br><br>BELANGRIJK! De laatste sectie die u toevoegt, wordt voor onbepaalde tijd herhaald. Volgens het vorige voorbeeld betekent dit dat de gebruikers €1 moeten betalen voor elke extra 2 uur parkeren.",
         "free" : {
           "field": "Gratis",
           "infoText": "Is deze faciliteitssectie gratis te gebruiken?<br><br>Voobeeld: <i>Yes / No</i>",
@@ -397,9 +410,14 @@
           "infoText": "Geef de eindtijd van deze prijsspecificatie op.<br><br>Voobeeld: <i>1</i>",
           "placeholder" : "Geef de eindtijd op"
         },
+        "intervalDuration" : {
+          "field": "Interval duur",
+          "infoText": "Geef de duur van dit prijsspecificatie-interval aan.<br><br>Voorbeeld: <i>1</i>",
+          "placeholder" : "Voer de duur van het interval in (in de hierboven geselecteerde eenheid)"
+        },
         "timeUnit" : {
           "field": "Tijdseenheid",
-          "infoText": "Selecteer de tijdseenheid (gebruikt voor zowel start- als eindtijd) voor deze prijsspecificatie.<br><br>Voobeeld: <i>Hour</i>",
+          "infoText": "Selecteer de tijdseenheid die wordt gebruikt om de prijsintervallen op te geven.<br><br>Voobeeld: <i>Hour</i>",
           "placeholder" : "Select time unit"
         },
         "description" : {
@@ -407,7 +425,7 @@
           "infoText": "Beschrijf hoe deze prijsspecificatie werkt.<br><br>Voobeeld: <i>Gratis voor het eerste uur</i>",
           "placeholder" : "Beschrijf deze prijsspecificatie (bv. Gratis voor het eerste uur)"
         },
-        "addExtra" : "Voeg extra prijsspecificatie toe"
+        "addExtra" : "Voeg extra prijsspecificatie interval toe"
       }
   },
     "extraSection" : {
@@ -509,7 +527,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Acties"
     ]
   },
   "pswdReset": {

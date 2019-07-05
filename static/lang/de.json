@@ -1,4 +1,11 @@
 {
+  "general" : {
+    "buttons": {
+      "first" : "Erste",
+      "previous" : "Vorherige",
+      "next" : "Nächste"
+    }
+  },
   "navbar": {
     "title": "Velopark Rich Snippets Generator",
     "login" : "Einloggen",
@@ -225,7 +232,12 @@
           "validation" : "Geben Sie eine gültige Schließzeit ein"
         },
         "day" : ["Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],
-        "addExtra": "Fügen Sie zusätzliche Stunden hinzu"
+        "addExtra": "Fügen Sie zusätzliche Stunden hinzu",
+        "extrainfo" : {
+          "field" : "Zusatzinformation",
+          "infoText" : "<span style=\"display: inherit; padding-left: 15px;\">Beschreiben Sie zusätzliche Unregelmäßigkeiten für die Öffnungszeiten.</span><br><span style=\"display: inherit; padding-left: 15px;\">Beispiel: <i>Jeden ersten Sonntag im Monat geöffnet</i> oder <i>an Feiertagen geschlossen</i></span>",
+          "placeholder" : "Beschreiben Sie Sonderfälle wie Feiertage oder Sonderöffnungen"
+        }
       }
     },
     "loc" : {
@@ -362,12 +374,13 @@
     "cost" : {
       "title" : "Facility-Bereich - Kostenmodell",
       "description" : {
-        "field": "Kostenbeschreibung",
+        "field": "Kostenbeschreibung Link",
         "infoText": "Setzen Sie hier einen Link zu einer Webseite, die die Kosten beschreibt.<br><br>Beispiel: <i>https://www.antwerpen.be/nl/info/5a7315bdb4ce55c720254e2f/ontdek-twee-nieuwe-buurtfietsenstallingen</i>",
         "placeholder" : "Geben Sie den Link zur Kostenbeschreibung ein"
       },
       "spec" : {
         "title" : "Preis Spezifikation",
+        "infoAlert" : "In diesem Abschnitt können Sie die Kosten pro Zeitintervall angeben, die Benutzer für das Abstellen ihrer Fahrräder zahlen müssen. Wenn zum Beispiel die erste Stunde kostenlos ist und danach 1€ pro 2 Stunden kostet, müssen Sie 2 Zeitintervalle hinzufügen:<br><br>&nbsp&nbsp- die erste Stunde mit einer kostenlosen Dauer von einer Stunde, und<br>&nbsp&nbsp- eine zweite mit einer Dauer von 2 Stunden, die 1€ kostet.<br><br>WICHTIG! Der letzte Abschnitt, den Sie hinzufügen, wird auf unbestimmte Zeit wiederholt. In Anlehnung an das vorige Beispiel bedeutet dies, dass die Benutzer für jeweils 2 zusätzliche Parkstunden 1€ zahlen müssen.",
         "free" : {
           "field": "Kostenlos",
           "infoText": "Ist diese Preisangabe kostenlos?<br><br>Beispiel: <i>Yes / No</i>",
@@ -398,9 +411,14 @@
           "infoText": "Geben Sie die Endzeit dieser Preisangabe an.<br><br>Example: <i>1</i>",
           "placeholder" : "Geben Sie den Endwert ein"
         },
+        "intervalDuration" : {
+          "field": "Intervalldauer",
+          "infoText": "Geben Sie die Dauer dieses Preisspezifikationsintervalls an.<br><br>Beispiel: <i>1</i>",
+          "placeholder" : "Geben Sie die Dauer des Intervalls ein (in der oben ausgewählten Einheit)"
+        },
         "timeUnit" : {
           "field": "Zeiteinheit",
-          "infoText": "Wählen Sie die Zeiteinheit (sowohl für die Start- als auch für die Endzeit) für diese Preisangabe aus.<br><br>Beispiel: <i>Hour</i>",
+          "infoText": "Wählen Sie die Zeiteinheit aus, in der die Preisintervalle angegeben werden.<br><br>Beispiel: <i>Hour</i>",
           "placeholder" : "Zeiteinheit auswählen"
         },
         "description" : {
@@ -408,7 +426,7 @@
           "infoText": "Beschreiben Sie, wie diese Preisspezifikation funktioniert.<br><br>Beispiel: <i>Gratis voor het eerste uur</i>",
           "placeholder" : "Beschreiben Sie diese Preisdefinition (z. B. kostenlos für die erste Stunde)."
         },
-        "addExtra" : "Zusätzliche Preisangabe hinzufügen"
+        "addExtra" : "Zusätzliches Preisspezifikationsintervall hinzufügen"
       }
     },
     "extraSection" : {
@@ -510,7 +528,7 @@
   "cityRepParkings" : {
     "title" : "Parkplätze in ",
     "th" : [
-      "URI der Parkanlage", "Parkname", "Genehmigt", "Aktionen"
+      "URI der Parkanlage", "Parkname", "Gemeinde", "Genehmigt", "Aktionen"
     ]
   },
   "pswdReset": {
