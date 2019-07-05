@@ -136,9 +136,11 @@ function processArray(path, arr, input) {
                 input = $('[name^="' + lastPath + '"][generalfeature="' + (isGeneralFeature ? "true" : "false") + '"]');
                 inputs = input;
             } else {
-                inputs = input || $('[name^="' + lastPath + '"]');
+                inputs = $('[name^="' + lastPath + '"]') || input;
             }
-            if (!isFeature && i > 0 || isFeature && isGeneralFeature && numGeneralFeatures > 1 || isFeature && !isGeneralFeature && numSecurityFeatures > 1) {
+            if ((!isFeature && i > 0) 
+                || (isFeature && isGeneralFeature && numGeneralFeatures > 1) 
+                || (isFeature && !isGeneralFeature && numSecurityFeatures > 1)) {
                 let last = $(inputs[inputs.length - 1]);
                 if (last.is('div')) {
                     last.parent().parent().next("button").click();
