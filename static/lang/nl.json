@@ -379,7 +379,7 @@
       },
       "spec" : {
         "title" : "Prijsspecificatie",
-        "infoAlert" : "In dit gedeelte kunt u de kosten per tijdsinterval opgeven die mensen moeten betalen om hun fietsen op te slaan. Bijvoorbeeld: als het eerste uur gratis is, en daarna kost het € 1 voor elke 2 uur, betekent dit dat u twee tijdsintervallen moet toevoegen: <br> &nbsp&nbsp- de eerste met een duur van één uur die gratis is, en <br>&nbsp&nbsp- een tweede met een duur van 2 uur die € 1 kost. <br><br>BELANGRIJK! Het laatste gedeelte dat u toevoegt, wordt herhaald voor parkeertijden die langer zijn dan de som van de opgegeven intervaltijden.",
+        "infoAlert" : "In dit gedeelte kunt u de kosten per tijdsinterval opgeven die gebruikers moeten betalen om hun fietsen te parkeren. Als het eerste uur bijvoorbeeld gratis is en daarna €1 per 2 uur kost, moet u twee tijdsintervallen toevoegen:<br><br>&nbsp&nbsp- de eerste met een duur van één uur die gratis is, en<br>&nbsp&nbsp- een tweede met een duur van 2 uur die €1 kost.<br><br>BELANGRIJK! De laatste sectie die u toevoegt, wordt voor onbepaalde tijd herhaald. Volgens het vorige voorbeeld betekent dit dat de gebruikers €1 moeten betalen voor elke extra 2 uur parkeren.",
         "free" : {
           "field": "Gratis",
           "infoText": "Is deze faciliteitssectie gratis te gebruiken?<br><br>Voobeeld: <i>Yes / No</i>",

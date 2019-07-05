@@ -380,7 +380,7 @@
       },
       "spec" : {
         "title" : "Price Specification",
-        "infoAlert" : "In this section you can specify the cost per time interval people have to pay to store their bikes.For example: if the first hour is free, and afterwards it costs €1 for every 2 hours\n                                        this means you need to add 2 time intervals:<br>&nbsp&nbsp- the first one with a duration of one hour that is free, and<br>&nbsp&nbsp- a second one with a duration of 2 hours that costs €1.<br><br>IMPORTANT! The last section you add is repeated for parking times longer than the sum of the provided interval times.",
+        "infoAlert" : "In this section you can specify the cost per time interval that users have to pay to park their bikes. For example, if the first hour is free and afterwards it costs €1 for every 2 hours this means you need to add 2 time intervals:<br><br>&nbsp&nbsp- the first one with a duration of one hour that is free, and<br>&nbsp&nbsp- a second one with a duration of 2 hours that costs €1.<br><br>IMPORTANT! The last section you add gets repeated indefinitely. Following the previous example, this means that the users need to pay €1 for every extra 2 hours of parking.",
         "free" : {
           "field": "Free of Charge",
           "infoText": "Is this price specification free of charge?<br><br>Example: <i>Yes / No</i>",

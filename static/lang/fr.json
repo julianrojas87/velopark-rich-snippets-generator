@@ -379,7 +379,7 @@
       },
       "spec" : {
         "title" : "Spécification de Prix",
-        "infoAlert" : "Dans cette section, vous pouvez spécifier le coût par intervalle de temps que les gens doivent payer pour ranger leurs vélos. Par exemple: si la première heure est gratuite et qu’elle coûte ensuite 1 € toutes les 2 heures, cela signifie que vous devez ajouter 2 intervalles de temps: <br>&nbsp&nbsp - le premier d'une durée d'une heure gratuite et <br>&nbsp&nbsp - d'une seconde d'une durée de 2 heures qui coûte 1 €. <br><br> IMPORTANT! La dernière section que vous ajoutez est répétée pour les temps de stationnement plus longs que la somme des temps d'intervalle fournis.",
+        "infoAlert" : "Dans cette section, vous pouvez spécifier le coût par intervalle de temps que les utilisateurs doivent payer pour garer leur vélo. Par exemple, si la première heure est gratuite et qu'elle coûte ensuite 1€ toutes les 2 heures, cela signifie que vous devez ajouter 2 intervalles de temps:<br><br>&nbsp&nbsp- le premier d'une durée d'une heure gratuite. et<br>&nbsp&nbsp- un deuxième d'une durée de 2 heures qui coûte 1€.<br><br>IMPORTANT! La dernière section que vous ajoutez se répète indéfiniment. Suivant l'exemple précédent, cela signifie que les utilisateurs doivent payer 1€ pour chaque heure supplémentaire de stationnement.",
         "free" : {
           "field": "Gratuit",
           "infoText": "Cette spécification de prix est-elle gratuite?<br><br>Exemple: <i>Yes / No</i>",
