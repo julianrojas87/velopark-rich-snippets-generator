@@ -752,7 +752,7 @@ function getParkingAccessURLs(parking, id) {
 
 function getAccessURLs(p) {
     if (p[0].indexOf('velopark.ilabt.imec.be/data') >= 0) {
-        return p[0];
+        return [p[0]];
     } else {
         let localUrl = 'https://velopark.ilabt.imec.be/data/' + p[1];
         return [p[0], localUrl];
