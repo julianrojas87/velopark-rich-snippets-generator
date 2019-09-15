@@ -217,7 +217,7 @@
         "placeholder": "Beschrijf wat te doen wanneer je fiets verwijderd werd (bv. Contacteer APCOA op het nummer 0473 33 89 11)"
       },
       "openingHours" : {
-        "title" : "Opening Hours",
+        "title" : "Openingstijden",
         "always" : "Open 24/7",
         "infoText": "Geef aan wanneer deze sectie open is (als er slechts één sectie is, geldt dit voor de gehele fietsenparking). Je kan verschillende uren toevoegen via de \"Voeg extra uren toe\"-knop, als de openingsuren verschillen van dag tot dag.<br><br>Voorbeeld: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Vul aub tenminste één openingsuur in.",
@@ -500,7 +500,7 @@
   "adminParkings" : {
     "title" : "Beheer Parkings",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
     ],
     "transfer" : {
       "title" : "Parking Overdragen",

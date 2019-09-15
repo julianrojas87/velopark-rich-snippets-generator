@@ -500,7 +500,7 @@
   "adminParkings" : {
     "title" : "Gérer les parkings",
     "th" : [
-      "URI du parking", "Nom du parking", "Entreprise", "Région", "Approuvé", "Actions"
+      "URI du parking", "Nom du parking", "Entreprise", "Région", "Approuvé", "Dernière Modification", "Actions"
     ],
     "transfer" : {
       "title" : "Transférer ce parking",

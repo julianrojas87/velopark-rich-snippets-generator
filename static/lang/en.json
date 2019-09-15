@@ -501,7 +501,7 @@
   "adminParkings" : {
     "title" : "Manage Parkings",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Last Modified", "Actions"
     ],
     "transfer" : {
       "title" : "Transfer parking",

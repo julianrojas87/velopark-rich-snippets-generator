@@ -32,6 +32,7 @@ let returnTableData = function (parkings, callback) {
             tdata['@id'] = decodeURIComponent(parking.parkingID);
             tdata['name'] = parkingData['name'] || '';
             tdata['approvedstatus'] = parking.approvedstatus;
+            tdata['dateModified'] = new Date(parkingData['dateModified']).toUTCString();
             if (parking.company && parking.company.length > 0) {
                 tdata['account-company'] = parking.company[0].name;
             }

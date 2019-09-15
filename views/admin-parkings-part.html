@@ -14,7 +14,8 @@
                 <th class="text-left" transl-id="adminParkings.th[2]">Company</th>
                 <th class="text-left" transl-id="adminParkings.th[3]">Region</th>
                 <th class="text-left" transl-id="adminParkings.th[4]">Approved</th>
-                <th class="text-left" transl-id="adminParkings.th[5]">Actions</th>
+                <th class="text-left" transl-id="adminParkings.th[5]">Last Modified</th>
+                <th class="text-left" transl-id="adminParkings.th[6]">Actions</th>
             </tr>
             </thead>
             <tbody class="table-hover">
@@ -63,6 +64,9 @@
                     </svg>
                     <input class="checkbox-parkingEnabled" type="checkbox" <%= parkings[i]['approvedstatus'] ? 'checked'
                     : '' %> parkingid="<%= parkings[i]['@id'] %>" >
+                </td>
+                <td class="text-left" style="font-size: 15px;">
+                    <%= parkings[i]['dateModified'] %>
                 </td>
                 <td class="text-left">
                     <input title="Edit" type="image" src="static/images/icons/edit.png"
