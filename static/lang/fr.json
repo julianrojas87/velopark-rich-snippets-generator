@@ -398,7 +398,7 @@
         "overnight" : {
           "field": "Pendant la nuit",
           "infoText": "Cette spécification de prix est-elle valable du jour au lendemain?<br><br>Exemple: <i>Yes / No</i>",
-          "placeholder" : "Yes/No"
+          "placeholder" : "Oui/Non"
         },
         "timeStart" : {
           "field": "Heure de début Valeur",
@@ -418,7 +418,14 @@
         "timeUnit" : {
           "field": "Unité de temps",
           "infoText": "Sélectionnez l'unité de temps utilisée pour spécifier les intervalles de prix.<br><br>Exemple: <i>Hour</i>",
-          "placeholder" : "Sélectionnez l'unité de temps"
+          "placeholder" : "Sélectionnez l'unité de temps",
+          "second": "Seconde",
+          "minute": "Minute",
+          "hour": "Heure",
+          "day": "Jour",
+          "week": "Semaine",
+          "month": "Mois",
+          "year": "An"
         },
         "description" : {
           "field": "Description",

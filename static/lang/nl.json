@@ -398,7 +398,7 @@
         "overnight" : {
           "field": "Overnachting",
           "infoText": "Staat dit kostenmodel overnachting toe?<br><br>Voobeeld: <i>Yes / No</i>",
-          "placeholder" : "Yes/No"
+          "placeholder" : "Ja/Nee"
         },
         "timeStart" : {
           "field": "Starttijd",
@@ -418,7 +418,14 @@
         "timeUnit" : {
           "field": "Tijdseenheid",
           "infoText": "Selecteer de tijdseenheid die wordt gebruikt om de prijsintervallen op te geven.<br><br>Voobeeld: <i>Hour</i>",
-          "placeholder" : "Select time unit"
+          "placeholder" : "selecteer tijdseenheid",
+          "second": "Seconde",
+          "minute": "Minuut",
+          "hour": "Uur",
+          "day": "Dag",
+          "week": "Week",
+          "month": "Maand",
+          "year": "Jaar"
         },
         "description" : {
           "field": "Beschrijving",

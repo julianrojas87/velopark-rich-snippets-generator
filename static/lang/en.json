@@ -419,7 +419,14 @@
         "timeUnit" : {
           "field": "Time Unit",
           "infoText": "Select the time unit used to specify the pricing intervals.<br><br>Example: <i>Hour</i>",
-          "placeholder" : "Select time unit"
+          "placeholder" : "Select time unit",
+          "second": "Second",
+          "minute": "Minute",
+          "hour": "Hour",
+          "day": "Day",
+          "week": "Week",
+          "month": "Month",
+          "year": "Year"
         },
         "description" : {
           "field": "Description",

@@ -399,7 +399,7 @@
         "overnight" : {
           "field": "Über Nacht",
           "infoText": "Ist diese Preisangabe von einem Tag zum nächsten gültig?<br><br>Beispiel: <i>Yes / No</i>",
-          "placeholder" : "Yes/No"
+          "placeholder" : "Ja/Nein"
         },
         "timeStart" : {
           "field": "Zeit Startwert",
@@ -419,7 +419,14 @@
         "timeUnit" : {
           "field": "Zeiteinheit",
           "infoText": "Wählen Sie die Zeiteinheit aus, in der die Preisintervalle angegeben werden.<br><br>Beispiel: <i>Hour</i>",
-          "placeholder" : "Zeiteinheit auswählen"
+          "placeholder" : "Zeiteinheit auswählen",
+          "second": "Sekunde",
+          "minute": "Minute",
+          "hour": "Stunde",
+          "day": "Tag",
+          "week": "Woche",
+          "month": "Monat",
+          "year": "Jahr"
         },
         "description" : {
           "field": "Beschreibung",
