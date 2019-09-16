@@ -68,7 +68,7 @@
         "validation" : "Vul de ID in"
       },
       "openingDate" : {
-        "field" : "Eerste Openingsdag *",
+        "field" : "Eerste Openingsdag",
         "infoText" : "De datum waarop deze stalling geopend werd/wordt (Kan ook voor tijdelijke stallingen gebruikt worden).\n\nVoorbeeld: 03/25/2019",
         "placeholder" : "Vul de openingsdatum in"
       },

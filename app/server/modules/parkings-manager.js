@@ -45,12 +45,12 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = async (skip, limit) => {
-    return new Promise((resolve, reject) => {
-        dbAdapter.findParkingsWithCompanies(skip, limit)
+exports.listAllParkings = (skip, limit, filter) => {
+    return new Promise(async (resolve, reject) => {
+        dbAdapter.findParkingsWithCompanies(skip, limit, filter)
             .then(res => {
-                returnTableData(res, function(error, result){
-                    if(error != null){
+                returnTableData(res, function (error, result) {
+                    if (error != null) {
                         reject(error);
                     } else {
                         resolve(result);
@@ -65,7 +65,7 @@ exports.listAllParkings = async (skip, limit) => {
 };
 
 exports.listParkingsByEmail = async (username, skip, limit, callback) => {
-    dbAdapter.findParkingsByEmail(username, skip, limit,function (error, res) {
+    dbAdapter.findParkingsByEmail(username, skip, limit, function (error, res) {
         if (error != null) {
             console.error("Error: " + error);
             callback(error);
@@ -143,15 +143,15 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
                     await addParkingToCatalog(localId);
                 }
                 callback();
-                if(!recentlyDeletedParkingIds.has(parkingID)){
+                if (!recentlyDeletedParkingIds.has(parkingID)) {
                     //Parking did not exist before. A company user has created a new parking. Send email to region representatives.
-                    dbAdapter.findCitiesByLocation(location.coordinates[1], location.coordinates[0], null, function(error, result){
-                        if(error){
+                    dbAdapter.findCitiesByLocation(location.coordinates[1], location.coordinates[0], null, function (error, result) {
+                        if (error) {
                             console.log("ERROR: Cannot notify region reps of new parking.", error);
-                        } else if(result){
-                            dbAdapter.findCityRepsForRegions(result).then( reps => {
+                        } else if (result) {
+                            dbAdapter.findCityRepsForRegions(result).then(reps => {
                                 EM.dispatchNewParkingToRegionReps(reps, parkingID);
-                            }).catch( error => {
+                            }).catch(error => {
                                 console.error("ERROR: Cannot send new parking notification to region reps.", error);
                             });
                         } else {
@@ -400,7 +400,7 @@ exports.deleteParking = async (user, parkingId, callback) => {
                 }
             });
             recentlyDeletedParkingIds.add(parkingId);
-            setTimeout(function(){recentlyDeletedParkingIds.delete(parkingId)}, 5000);
+            setTimeout(function () { recentlyDeletedParkingIds.delete(parkingId) }, 5000);
         } else {
             callback('Parking file does not exist in disk')
         }
@@ -446,11 +446,11 @@ exports.getParkingTypes = async () => {
         let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
         let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
         let obj = {
-            '@id' : filtered[p].subject.value,
-            'label' : {},
-            'comment' : {}
+            '@id': filtered[p].subject.value,
+            'label': {},
+            'comment': {}
         };
-        for(i in availableLang){
+        for (i in availableLang) {
             obj['label'][availableLang[i]] = tq_label[i].object.value;
             obj['comment'][availableLang[i]] = tq_comment[i].object.value;
         }
@@ -470,11 +470,11 @@ exports.getBikeTypes = async () => {
         let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
         let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
         let obj = {
-            '@id' : filtered[p].subject.value,
-            'label' : {},
-            'comment' : {}
+            '@id': filtered[p].subject.value,
+            'label': {},
+            'comment': {}
         };
-        for(i in availableLang){
+        for (i in availableLang) {
             obj['label'][availableLang[i]] = tq_label[i].object.value;
             obj['comment'][availableLang[i]] = tq_comment[i].object.value;
         }
@@ -496,11 +496,11 @@ exports.getFeatures = async () => {
         let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
         let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
         let obj = {
-            '@id' : filtered[p].subject.value,
-            'label' : {},
-            'comment' : {}
+            '@id': filtered[p].subject.value,
+            'label': {},
+            'comment': {}
         };
-        for(i in availableLang){
+        for (i in availableLang) {
             obj['label'][availableLang[i]] = tq_label[i].object.value;
             obj['comment'][availableLang[i]] = tq_comment[i].object.value;
         }
@@ -520,11 +520,11 @@ exports.getSecurityFeatures = async () => {
         let tq_label = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#label');
         let tq_comment = quads.filter(quad => quad.subject.value == filtered[p].subject.value && quad.predicate.value == 'http://www.w3.org/2000/01/rdf-schema#comment');
         let obj = {
-            '@id' : filtered[p].subject.value,
-            'label' : {},
-            'comment' : {}
+            '@id': filtered[p].subject.value,
+            'label': {},
+            'comment': {}
         };
-        for(i in availableLang){
+        for (i in availableLang) {
             obj['label'][availableLang[i]] = tq_label[i].object.value;
             obj['comment'][availableLang[i]] = tq_comment[i].object.value;
         }

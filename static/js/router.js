@@ -72,7 +72,6 @@
 function registerParkingListButtons(){
 
     $('.pageButton').on('click', function(){
-        console.log('clicked');
         $('.paginationContainer').html('<div class="loading-icon">' +
             '                <svg class="lds-dual-ring" width="24px"\n' +
             '                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">\n' +
@@ -87,11 +86,15 @@ function registerParkingListButtons(){
             '                    </circle>\n' +
             '                </svg>\n' +
             '            </div>');
+        
+        let filter = $('#filterById').val();
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=' + $(this).attr('rangeStart') + '-' + $(this).attr('rangeEnd') },
+            data: { filter: filter },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
+                registerFilters();
                 registerParkingListButtons();
                 translate();
             },

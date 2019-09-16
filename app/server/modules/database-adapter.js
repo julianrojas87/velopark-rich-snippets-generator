@@ -11,7 +11,7 @@ var db, accounts, parkings, companies, cities, regionHierarchy;
 
 exports.initDbAdapter = function () {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(process.env.DB_URL, {useNewUrlParser: true}, function (e, client) {
+        MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (e, client) {
             if (e) {
                 console.error(e);
             } else {
@@ -22,10 +22,10 @@ exports.initDbAdapter = function () {
                 cities = db.collection('geocities');
                 regionHierarchy = db.collection('regionHierarchy');
 
-                accounts.createIndex({location: "2dsphere"});
-                cities.createIndex({geometry: "2dsphere"});
+                accounts.createIndex({ location: "2dsphere" });
+                cities.createIndex({ geometry: "2dsphere" });
                 // index fields 'user' & 'email' for faster new account validation //
-                accounts.createIndex({user: 1, email: 1});
+                accounts.createIndex({ user: 1, email: 1 });
                 console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
 
                 initDB();
@@ -43,7 +43,7 @@ async function initDB() {
     // Create Super Admin accounts
     if (config['superAdmins']) {
         config['superAdmins'].forEach(async sa => {
-            if (!(await accounts.findOne({email: sa}))) {
+            if (!(await accounts.findOne({ email: sa }))) {
                 accounts.insertOne({
                     email: sa,
                     pass: utils.saltAndHash('velopark'),
@@ -119,15 +119,15 @@ async function initDB() {
 */
 
 exports.findAccountByEmail = function (email, callback) {
-    accounts.findOne({email: email}, callback);
+    accounts.findOne({ email: email }, callback);
 };
 
 exports.findAccountByCookie = function (cookie, callback) {
-    accounts.findOne({cookie: cookie}, callback);
+    accounts.findOne({ cookie: cookie }, callback);
 };
 
 exports.findAccountByPasskey = function (passKey, ipAddress, callback) {
-    accounts.findOne({passKey: passKey}, callback);
+    accounts.findOne({ passKey: passKey }, callback);
 };
 
 exports.findAccounts = function (callback) {
@@ -143,7 +143,7 @@ exports.findAccounts = function (callback) {
 exports.findAccountsByEmails = function (emails) {
     return new Promise((resolve, reject) => {
         accounts.find({
-            email: {$in: emails}
+            email: { $in: emails }
         }).toArray(function (e, res) {
             if (e) {
                 reject(e);
@@ -157,7 +157,7 @@ exports.findAccountsByEmails = function (emails) {
 
 exports.findAllEmails = function (callback) {
     let emails = [];
-    accounts.find().project({email: 1, _id: 0}).forEach(function (res) {
+    accounts.find().project({ email: 1, _id: 0 }).forEach(function (res) {
         emails.push(res.email);
     }, function (error) {
         callback(error, emails);
@@ -169,8 +169,8 @@ exports.findSuperAdminEmailsAndLang = function () {
         let emails = [];
         accounts.find({
             superAdmin: true
-        }, {projection: {_id: 0, "email": 1, 'lang': 1}}).forEach(function (res) {
-            emails.push({email: res.email, lang: res.lang});
+        }, { projection: { _id: 0, "email": 1, 'lang': 1 } }).forEach(function (res) {
+            emails.push({ email: res.email, lang: res.lang });
         }, function (error) {
             if (error) {
                 reject(error);
@@ -208,23 +208,23 @@ exports.findCityRepsForRegions = function (regions) {
 */
 
 exports.updateAccountCookie = function (email, ipAddress, cookie, callback) {
-    accounts.findOneAndUpdate({email: email}, {
+    accounts.findOneAndUpdate({ email: email }, {
         $set: {
             ip: ipAddress,
             cookie: cookie
         }
-    }, {returnOriginal: false}, function (e, o) {
+    }, { returnOriginal: false }, function (e, o) {
         callback(cookie);
     });
 };
 
 exports.updateAccountPasskey = function (email, ipAddress, passKey, callback) {
-    accounts.findOneAndUpdate({email: email}, {
+    accounts.findOneAndUpdate({ email: email }, {
         $set: {
             ip: ipAddress,
             passKey: passKey
-        }, $unset: {cookie: ''}
-    }, {returnOriginal: false}, function (e, o) {
+        }, $unset: { cookie: '' }
+    }, { returnOriginal: false }, function (e, o) {
         if (o.value != null) {
             callback(null, o.value);
         } else {
@@ -234,10 +234,10 @@ exports.updateAccountPasskey = function (email, ipAddress, passKey, callback) {
 };
 
 exports.updateAccountPassByPasskey = function (passKey, newPass, callback) {
-    accounts.findOneAndUpdate({passKey: passKey}, {
-        $set: {pass: newPass},
-        $unset: {passKey: ''}
-    }, {returnOriginal: false}, callback);
+    accounts.findOneAndUpdate({ passKey: passKey }, {
+        $set: { pass: newPass },
+        $unset: { passKey: '' }
+    }, { returnOriginal: false }, callback);
 };
 
 exports.updateAccount = function (data, callback) {
@@ -248,7 +248,7 @@ exports.updateAccount = function (data, callback) {
         lang: data.lang
     };
     if (data.pass) o.pass = data.pass;
-    accounts.findOneAndUpdate({_id: getObjectId(data.id)}, {$set: o}, {returnOriginal: false}, callback);
+    accounts.findOneAndUpdate({ _id: getObjectId(data.id) }, { $set: o }, { returnOriginal: false }, callback);
 };
 
 exports.updateAccountParkingIDs = function (email, parkingID, callback) {
@@ -272,10 +272,10 @@ exports.updateAccountEnableCompany = function (email, enabled) {
     return accounts.findOneAndUpdate(
         {
             email: email,
-            companyName: {$not: {$type: 10}, $exists: true} //can't enable/disable company if user does not have one
+            companyName: { $not: { $type: 10 }, $exists: true } //can't enable/disable company if user does not have one
         },
         {
-            $set: {companyEnabled: enabled}
+            $set: { companyEnabled: enabled }
         },
         {
             returnOriginal: false
@@ -324,7 +324,7 @@ exports.insertAccount = function (data, callback) {
 */
 
 exports.deleteAccount = function (id, callback) {
-    accounts.deleteOne({_id: getObjectId(id)}, callback);
+    accounts.deleteOne({ _id: getObjectId(id) }, callback);
 };
 
 exports.deleteAccounts = function (callback) {
@@ -340,20 +340,21 @@ exports.deleteAccounts = function (callback) {
     Parkings: lookup
 */
 
-exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER) {
+exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '') {
     return new Promise((resolve, reject) => {
         parkings.aggregate(
             [
-                {$skip: skip},
-                {$limit: limit},
+                { $match: { "parkingID": { $regex: ".*" + filter + ".*" } } },
+                { $skip: skip },
+                { $limit: limit },
                 {
                     $lookup:
-                        {
-                            from: "companies",
-                            localField: "parkingID",
-                            foreignField: "parkingIDs",
-                            as: "company"
-                        }
+                    {
+                        from: "companies",
+                        localField: "parkingID",
+                        foreignField: "parkingIDs",
+                        as: "company"
+                    }
                 }
             ],
             {},
@@ -378,16 +379,16 @@ exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_
     });
 };
 
-exports.findParkings = function (callback) {
-    parkings.find().toArray(callback);
+exports.findParkings = (skip, limit) => {
+    return parkings.find().skip(skip).limit(limit).toArray();
 };
 
 exports.findParkingByID = id => {
-    return parkings.findOne({parkingID: id});
+    return parkings.findOne({ parkingID: id });
 };
 
 exports.findParkingsByEmail = function (email, skip, limit, callback) {
-    accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
+    accounts.findOne({ email: email, companyEnabled: true }, function (e, o) {
         if (o != null) {
             if (o.companyName != null) {
                 //User is part of a company, the parkings of this company are to be returned
@@ -401,16 +402,16 @@ exports.findParkingsByEmail = function (email, skip, limit, callback) {
                         {
                             $unwind: "$parkingIDs"
                         },
-                        {$skip: skip},
-                        {$limit: limit},
+                        { $skip: skip },
+                        { $limit: limit },
                         {
                             $lookup:
-                                {
-                                    from: "parkings",
-                                    localField: "parkingIDs",
-                                    foreignField: "parkingID",
-                                    as: "parking"
-                                }
+                            {
+                                from: "parkings",
+                                localField: "parkingIDs",
+                                foreignField: "parkingID",
+                                as: "parking"
+                            }
                         }
                     ],
                     {},
@@ -441,7 +442,7 @@ exports.findParkingsByEmail = function (email, skip, limit, callback) {
 };
 
 exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
-    accounts.findOne({email: email, companyEnabled: true}, function (e, o) {
+    accounts.findOne({ email: email, companyEnabled: true }, function (e, o) {
         if (e != null) {
             callback(e);
         } else if (o != null) {
@@ -459,12 +460,12 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
                         },
                         {
                             $lookup:
-                                {
-                                    from: "parkings",
-                                    localField: "parkingIDs",
-                                    foreignField: "parkingID",
-                                    as: "parking"
-                                }
+                            {
+                                from: "parkings",
+                                localField: "parkingIDs",
+                                foreignField: "parkingID",
+                                as: "parking"
+                            }
                         },
                         {
                             $match: {
@@ -605,7 +606,7 @@ exports.updateParkingApproved = function (parkingid, enabled, callback) {
             parkingID: parkingid,
         },
         {
-            $set: {approvedstatus: enabled}
+            $set: { approvedstatus: enabled }
         },
         {
             returnOriginal: false
@@ -619,7 +620,7 @@ exports.updateParkingApproved = function (parkingid, enabled, callback) {
 */
 
 let deleteParkingFromParkingsTable = function (id, callback) {
-    parkings.deleteOne({parkingID: id}, {}, callback);
+    parkings.deleteOne({ parkingID: id }, {}, callback);
 };
 
 exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
@@ -632,10 +633,10 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
             } else {
                 //looking for a company now
                 companies.findOneAndUpdate({
-                        parkingIDs: parkingId,
-                        name: res.companyName
-                    }, {
-                        $pull: {parkingIDs: parkingId}
+                    parkingIDs: parkingId,
+                    name: res.companyName
+                }, {
+                        $pull: { parkingIDs: parkingId }
                     },
                     {},
                     function (error, res) {
@@ -663,9 +664,9 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
 
 exports.deleteParkingById = function (parkingId, callback) {
     companies.findOneAndUpdate({
-            parkingIDs: parkingId
-        }, {
-            $pull: {parkingIDs: parkingId}
+        parkingIDs: parkingId
+    }, {
+            $pull: { parkingIDs: parkingId }
         },
         {},
         function (error, res) {
@@ -708,15 +709,15 @@ exports.findAllCompanies = function (callback) {
 
 exports.findAllCompaniesWithUsers = function (callback) {
     companies.aggregate([
-            {
-                $lookup: {
-                    from: "accounts",
-                    localField: "name",
-                    foreignField: "companyName",
-                    as: "users"
-                }
+        {
+            $lookup: {
+                from: "accounts",
+                localField: "name",
+                foreignField: "companyName",
+                as: "users"
             }
-        ],
+        }
+    ],
         {},
         function (error, cursor) {
             if (error != null) {
@@ -729,7 +730,7 @@ exports.findAllCompaniesWithUsers = function (callback) {
 
 exports.findAllCompanyNames = function (callback) {
     companieNames = [];
-    companies.find().project({name: 1, _id: 0}).forEach(function (res) {
+    companies.find().project({ name: 1, _id: 0 }).forEach(function (res) {
         companieNames.push(res.name);
     }, function (error) {
         callback(error, companieNames);
@@ -738,7 +739,7 @@ exports.findAllCompanyNames = function (callback) {
 
 exports.findCompanyByParkingId = function (parkingId, callback) {
     companies.findOne(
-        {parkingIDs: parkingId},
+        { parkingIDs: parkingId },
         {},
         function (error, res) {
             if (error != null) {
@@ -777,17 +778,17 @@ exports.updateCompanyParkingIDs = function (companyName, parkingID, callback) {
 
 exports.transferParkingToCompany = function (newCompany, parkingID, callback) {
     if (!newCompany) {
-        companies.findOneAndUpdate({parkingIDs: parkingID}, {
-            $pull: {parkingIDs: parkingID}
+        companies.findOneAndUpdate({ parkingIDs: parkingID }, {
+            $pull: { parkingIDs: parkingID }
         }).then(result => {
             callback(null, result);
         });
     } else {
         companies.findOneAndUpdate({
-                parkingIDs: parkingID
-            },
+            parkingIDs: parkingID
+        },
             {
-                $pull: {parkingIDs: {$in: [parkingID,]}}
+                $pull: { parkingIDs: { $in: [parkingID,] } }
             },
             {
                 returnOriginal: false
@@ -840,11 +841,11 @@ exports.transferParkingToCompany = function (newCompany, parkingID, callback) {
     Existing parkings owned by this user will be transferred to this company.
 */
 exports.addAccountToCompany = function (email, companyName, callback) {
-    accounts.findOneAndUpdate({email: email}, {
+    accounts.findOneAndUpdate({ email: email }, {
         $set: {
             companyName: companyName,
         }
-    }, {returnOriginal: true}, function (e, o) {
+    }, { returnOriginal: true }, function (e, o) {
         if (e != null) {
             callback(e);
         } else {
@@ -861,7 +862,7 @@ exports.addAccountToCompany = function (email, companyName, callback) {
                         email: email
                     }*/
                 },
-                {returnOriginal: false},
+                { returnOriginal: false },
                 callback
             )
         }
@@ -874,13 +875,13 @@ exports.addAccountToCompany = function (email, companyName, callback) {
 
 exports.insertCompany = function (companyName, callback) {
     companies.findOneAndUpdate(
-        {name: companyName},
+        { name: companyName },
         {
             $set: {
                 name: companyName
             }
         },
-        {upsert: true},
+        { upsert: true },
         function (error, result) {
             if (error != null) {
                 callback(error);
@@ -902,15 +903,16 @@ exports.insertCompany = function (companyName, callback) {
 
 exports.findAllCityNames = function (callback) {
     let citynames = [];
-    cities.find().project({'properties.cityname': 1, _id: 0}).forEach(function (res) {
+    cities.find().project({ 'properties.cityname': 1, _id: 0 }).forEach(function (res) {
         citynames.push(res.properties.cityname);
     }, function (error) {
         callback(error, citynames);
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = 0) {
-    cities.findOne({'properties.cityname': cityName}, {}, function (error, city) {
+exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = Number.MAX_SAFE_INTEGER) {
+    cities.findOne({ 'properties.cityname': cityName }, {}, function (error, city) {
+        console.log(city);
         if (error != null) {
             callback(error);
         } else {
@@ -921,6 +923,7 @@ exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit =
                     }
                 }
             }).skip(skip).limit(limit).toArray(function (error, result) {
+                console.log(result);
                 if (error != null) {
                     callback(error);
                 } else {
@@ -954,7 +957,7 @@ exports.findCitiesByLocation = function (lat, lng, lang, callback) {
                 }
             }
         }
-    }, {projection: {"properties": 1}}).forEach(function (res) {
+    }, { projection: { "properties": 1 } }).forEach(function (res) {
         cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
     }, function (error) {
         callback(error, cityNames);
@@ -984,7 +987,7 @@ exports.findMunicipalityByLocation = function (lat, lng, lang, callback) {
                 }
             }
         }
-    }, {projection: {"properties": 1}}).forEach(function (res) {
+    }, { projection: { "properties": 1 } }).forEach(function (res) {
         if (res.properties['adminLevel'] === 4) {
             cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
         }
@@ -1028,24 +1031,24 @@ exports.insertRegionHierarchy = function (hierarchy) {
 
 exports.isAccountCityRepForParkingID = function (email, parkingID, callback) {
     accounts.aggregate([
-            {
-                $match: {email: email}
-            },
-            {
-                $unwind: "$cityNames"
-            },
-            {
-                $match: {"cityNames.enabled": true}
-            },
-            {
-                $lookup: {
-                    from: "geocities",
-                    localField: "cityNames.name",
-                    foreignField: "properties.cityname",
-                    as: "city"
-                }
+        {
+            $match: { email: email }
+        },
+        {
+            $unwind: "$cityNames"
+        },
+        {
+            $match: { "cityNames.enabled": true }
+        },
+        {
+            $lookup: {
+                from: "geocities",
+                localField: "cityNames.name",
+                foreignField: "properties.cityname",
+                as: "city"
             }
-        ],
+        }
+    ],
         {},
         function (error, cursor) {
             cursor.toArray(function (error, accountcities) {

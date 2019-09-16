@@ -223,15 +223,15 @@ module.exports = app => {
                     console.error(error);
                     res.redirect(domain + '/home');
                 } else {
+                    let filter = req.query.filter;
                     if (value === true) {
-
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
                         if(rangeHeader) {
                             let matches = rangeHeader.match(/(.*)=(\d*)-(\d*)/);
                             rangeStart = parseInt(matches[2], 10);
-                            if(rangeStart<0){
+                            if(rangeStart < 0){
                                 rangeStart = 0;
                             }
                             rangeEnd = parseInt(matches[3], 10);
@@ -240,9 +240,8 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd-rangeStart)
+                        PM.listAllParkings(rangeStart, rangeEnd-rangeStart, filter)
                             .then(parkings => {
-
                                 if(!rangeHeader) {
                                     res.render('admin-parkings.html', {
                                         domainName: domainName,
@@ -256,7 +255,8 @@ module.exports = app => {
                                         },
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
-                                        rangeEnd: rangeEnd
+                                        rangeEnd: rangeEnd,
+                                        filter: ''
                                     });
                                 } else {
                                     res.render('admin-parkings-part.html', {
@@ -271,7 +271,8 @@ module.exports = app => {
                                         },
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
-                                        rangeEnd: rangeEnd
+                                        rangeEnd: rangeEnd,
+                                        filter: filter
                                     });
                                 }
                             })
@@ -542,7 +543,6 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
-
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
@@ -557,7 +557,6 @@ module.exports = app => {
                                 rangeEnd = 50;
                             }
                         }
-
 
                         PM.listParkingsInCity(cityname, rangeStart, rangeEnd-rangeStart, function (error, parkings) {
                             if (error != null) {
@@ -690,7 +689,7 @@ module.exports = app => {
             if(rangeHeader) {
                 let matches = rangeHeader.match(/(.*)=(\d*)-(\d*)/);
                 rangeStart = parseInt(matches[2], 10);
-                if(rangeStart<0){
+                if(rangeStart < 0){
                     rangeStart = 0;
                 }
                 if(matches[3] !== "0") {

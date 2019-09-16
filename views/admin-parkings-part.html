@@ -9,7 +9,10 @@
         <table id="parking-list" class="table-fill">
             <thead>
             <tr>
-                <th class="text-left" transl-id="adminParkings.th[0]">Parking Facility URI</th>
+                <th class="text-left">
+                    <span transl-id="adminParkings.th[0]">Parking Facility URI</span>
+                    <input id="filterById" value="<%= filter %>" class="searchbar" type="text" placeholder="Search for URI...">
+                </th>
                 <th class="text-left" transl-id="adminParkings.th[1]">Parking Name</th>
                 <th class="text-left" transl-id="adminParkings.th[2]">Company</th>
                 <th class="text-left" transl-id="adminParkings.th[3]">Region</th>
@@ -22,14 +25,14 @@
             <% for (var i = 0; i < parkings.length; i++) { %>
             <tr>
                 <td class="text-left" style="max-width: 25vw;">
-                    <a target="_blank" style="font-size: 20px; font-family: Montserrat-SemiBold; overflow-wrap: break-word;"
+                    <a target="_blank" style="font-size: 15px; font-family: Montserrat-SemiBold; overflow-wrap: break-word;"
                        href="<%= parkings[i]['@id'] %>">
                         <%= parkings[i]['@id'] %></a>
                 </td>
-                <td class="text-left" style="font-size: 20px;">
+                <td class="text-left" style="font-size: 15px;">
                     <%= parkings[i]['name'][0]['@value'] ? parkings[i]['name'][0]['@value'] : parkings[i]['name'] %>
                 </td>
-                <td class="text-left" style="font-size: 20px;">
+                <td class="text-left" style="font-size: 15px;">
                     <%= parkings[i]['account-company'] %>
                     <button class="btn btn-secondary transfer-parking" parkingid="<%= parkings[i]['@id'] %>"><i class="far fa-edit"></i></button>
                 </td>
@@ -49,7 +52,7 @@
                         </svg>
                     </div>
                 </td>
-                <td class="text-left" style="font-size: 20px;">
+                <td class="text-left" style="font-size: 15px;">
                     <svg class="loading-icon lds-dual-ring" width="15px" style="display:none"
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                         <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"
@@ -70,11 +73,11 @@
                 </td>
                 <td class="text-left">
                     <input title="Edit" type="image" src="static/images/icons/edit.png"
-                           style="float: left; width: 40px;">
+                           style="float: left; width: 30px;">
                     <input title="Delete" type="image" src="static/images/icons/delete.png"
-                           style="position: relative; left: 10px; bottom: 2px; float: left; width: 40px;">
+                           style="position: relative; left: 10px; bottom: 2px; float: left; width: 30px;">
                     <input title="Download" type="image" src="static/images/icons/download.png"
-                           style="position: relative; left: 16px; bottom: 2px; float: left; width: 40px;">
+                           style="position: relative; left: 16px; bottom: 2px; float: left; width: 30px;">
                 </td>
             </tr>
             <% } %>

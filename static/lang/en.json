@@ -69,7 +69,7 @@
         "validation" : "Enter the identifier"
       },
       "openingDate" : {
-        "field" : "Initial Opening Date *",
+        "field" : "Initial Opening Date",
         "infoText" : "The date the bicycle parking was opened / will open (can also be used for temporary bicycle parkings).\n\nExample: 03/25/2019",
         "placeholder" : "Enter the opening date"
       },

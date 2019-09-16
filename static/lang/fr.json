@@ -68,7 +68,7 @@
         "validation" : "Entrez l'identifiant"
       },
       "openingDate" : {
-        "field" : "Date d'Ouverture Initiale *",
+        "field" : "Date d'Ouverture Initiale",
         "infoText" : "La date d'ouverture du parking pour vélos (peut être utilisé aussi pour un parking temporaire).\n\nExemple: 03/25/2019",
         "placeholder" : "Entrez la date d'ouverture"
       },

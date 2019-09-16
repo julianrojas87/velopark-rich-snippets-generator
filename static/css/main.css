@@ -1385,3 +1385,14 @@ ul.breadcrumbs li a:hover {
 .price-spec-container div.dynamic-section:before {
   content : "Interval " counter(intervalnumber);
 }
+
+.searchbar {
+  background-image: url('/static/images/icons/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  font-size: small;
+  width: 100%;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}

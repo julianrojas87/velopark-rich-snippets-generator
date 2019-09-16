@@ -68,7 +68,7 @@
         "validation" : "Geben Sie die Kennung ein"
       },
       "openingDate" : {
-        "field" : "Eröffnungsdatum *",
+        "field" : "Eröffnungsdatum",
         "infoText" : "Das Datum, an dem der Fahrradabstellplatz geöffnet wurde / wird (kann auch für temporäre Fahrradabstellplätze verwendet werden).\n\nBeispiel: 03/25/2019",
         "placeholder" : "Geben Sie das Eröffnungsdatum ein"
       },
