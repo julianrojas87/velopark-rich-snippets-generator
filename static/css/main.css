@@ -164,7 +164,7 @@ iframe {
   height: 100%;
   width: 100%;
   background-color: rgba(0,0,0,0.5);
-  z-index: 9000;
+  z-index: 900;
 }
 
 /* just some content with arbitrary styles for explanation purposes */
@@ -185,7 +185,7 @@ iframe {
   margin-right: auto;
   background-color: #f7f7f7;
   border-radius: 5px;
-  z-index: 9001; /* 1px higher than the overlay layer */
+  z-index: 901; /* 1px higher than the overlay layer */
 }
 
 
@@ -1384,4 +1384,15 @@ ul.breadcrumbs li a:hover {
 
 .price-spec-container div.dynamic-section:before {
   content : "Interval " counter(intervalnumber);
+}
+
+.searchbar {
+  background-image: url('/static/images/icons/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  font-size: small;
+  width: 100%;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
 }

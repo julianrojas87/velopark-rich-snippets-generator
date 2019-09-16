@@ -100,7 +100,7 @@ function saveJSONLD() {
                     },
                     success: () => {
                         originalId = resultingObject['@id'];
-                        //alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
+                        alert('Parking Facility \n' + resultingObject['@id'] + ' \nupdated successfully', 'Success!', 'success');
                         $('#json-ld-saved-status>.saved-icon, #save_button').show();
                         $('#json-ld-saved-status>.loading-icon').hide();
                         $('#json-ld-saved-status>.error-icon').hide();
@@ -131,7 +131,7 @@ function saveJSONLD() {
             },
             success: () => {
                 originalId = resultingObject['@id'];
-                //alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully!!');
+                alert('Parking Facility \n' + resultingObject['@id'] + ' \nstored successfully', 'Success!', 'success');
                 $('#json-ld-saved-status>.saved-icon, #save_button').show();
                 $('#json-ld-saved-status>.loading-icon').hide();
                 $('#json-ld-saved-status>.error-icon').hide();

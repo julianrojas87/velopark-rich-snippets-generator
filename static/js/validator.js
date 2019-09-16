@@ -35,7 +35,7 @@
 
     $('.info_button_div').click(function() {
         let infobox = $(this).next();
-        infobox.find('h2').text($(this).parent().parent().parent().siblings('span:last').text().trim());
+        infobox.find('h2').text($(this).parent().parent().parent().parent().siblings('span:last').text().trim());
         infobox.toggle();
         return false;
     });

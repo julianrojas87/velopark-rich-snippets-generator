@@ -69,7 +69,7 @@
         "validation" : "Enter the identifier"
       },
       "openingDate" : {
-        "field" : "Initial Opening Date *",
+        "field" : "Initial Opening Date",
         "infoText" : "The date the bicycle parking was opened / will open (can also be used for temporary bicycle parkings).\n\nExample: 03/25/2019",
         "placeholder" : "Enter the opening date"
       },
@@ -419,7 +419,14 @@
         "timeUnit" : {
           "field": "Time Unit",
           "infoText": "Select the time unit used to specify the pricing intervals.<br><br>Example: <i>Hour</i>",
-          "placeholder" : "Select time unit"
+          "placeholder" : "Select time unit",
+          "second": "Second",
+          "minute": "Minute",
+          "hour": "Hour",
+          "day": "Day",
+          "week": "Week",
+          "month": "Month",
+          "year": "Year"
         },
         "description" : {
           "field": "Description",
@@ -494,7 +501,7 @@
   "adminParkings" : {
     "title" : "Manage Parkings",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Last Modified", "Actions"
     ],
     "transfer" : {
       "title" : "Transfer parking",

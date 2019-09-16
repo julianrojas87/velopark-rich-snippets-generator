@@ -68,7 +68,7 @@
         "validation" : "Entrez l'identifiant"
       },
       "openingDate" : {
-        "field" : "Date d'Ouverture Initiale *",
+        "field" : "Date d'Ouverture Initiale",
         "infoText" : "La date d'ouverture du parking pour vélos (peut être utilisé aussi pour un parking temporaire).\n\nExemple: 03/25/2019",
         "placeholder" : "Entrez la date d'ouverture"
       },
@@ -398,7 +398,7 @@
         "overnight" : {
           "field": "Pendant la nuit",
           "infoText": "Cette spécification de prix est-elle valable du jour au lendemain?<br><br>Exemple: <i>Yes / No</i>",
-          "placeholder" : "Yes/No"
+          "placeholder" : "Oui/Non"
         },
         "timeStart" : {
           "field": "Heure de début Valeur",
@@ -418,7 +418,14 @@
         "timeUnit" : {
           "field": "Unité de temps",
           "infoText": "Sélectionnez l'unité de temps utilisée pour spécifier les intervalles de prix.<br><br>Exemple: <i>Hour</i>",
-          "placeholder" : "Sélectionnez l'unité de temps"
+          "placeholder" : "Sélectionnez l'unité de temps",
+          "second": "Seconde",
+          "minute": "Minute",
+          "hour": "Heure",
+          "day": "Jour",
+          "week": "Semaine",
+          "month": "Mois",
+          "year": "An"
         },
         "description" : {
           "field": "Description",
@@ -493,7 +500,7 @@
   "adminParkings" : {
     "title" : "Gérer les parkings",
     "th" : [
-      "URI du parking", "Nom du parking", "Entreprise", "Région", "Approuvé", "Actions"
+      "URI du parking", "Nom du parking", "Entreprise", "Région", "Approuvé", "Dernière Modification", "Actions"
     ],
     "transfer" : {
       "title" : "Transférer ce parking",
