@@ -210,10 +210,9 @@ iframe {
 }
 
 .wrap-contact100 {
-  width: 80vw;
   background: #fff;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: visible;
   padding: 62px 55px 90px 55px;
   flex-grow: 1;
 }
@@ -264,13 +263,12 @@ iframe {
 
 .contact100-form-title {
   display: block;
-  width: 100%;
   font-family: Montserrat-Black;
   font-size: 39px;
   color: #333333;
   line-height: 1.2;
   text-align: center;
-  padding-bottom: 59px;
+  padding-top: 25px;
 }
 
 .contact100-form-section {
@@ -765,17 +763,17 @@ textarea.input100 {
   }
 }
 
-@media screen and (max-width: 1370px) {
-  .container-contact100 {
-    margin-top: 150px;
-    min-height: calc(100vh - 150px);
-  }
-}
-
 @media screen and (max-width: 800px) {
   .container-contact100 {
     margin-top: 75px;
     min-height: calc(100vh - 75px);
+  }
+}
+
+@media screen and (max-width: 704px) {
+  .container-contact100 {
+    margin-top: 150px;
+    min-height: calc(100vh - 150px);
   }
 }
 
@@ -1011,9 +1009,9 @@ textarea::-webkit-scrollbar-thumb {
   text-rendering: optimizeLegibility;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1226px) {
   #main-title {
-    font-size: 22px;
+    font-size: 28px;
     padding-bottom: 10px;
     margin-bottom: 15px;
   }
@@ -1034,9 +1032,10 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 #page-logo-helper {
-  position: absolute;
-  left: 20px;
+  display: inline-block;
+  float: left;
   padding-top: 23px;
+  padding-bottom: 17px;
   height: 100%;
   text-align: center;
   vertical-align: middle;

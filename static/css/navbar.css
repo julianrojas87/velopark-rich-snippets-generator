@@ -1,5 +1,7 @@
 /* Style the navbar */
 #navbar {
+    display: table;
+    text-align: center;
     overflow: hidden;
     background-color: #1072ba;
     z-index: 9000;
@@ -8,8 +10,8 @@
   
   /* Navbar links */
   #navbar a {
-    float: right;
     display: none;
+    float: right;
     color: #f2f2f2;
     font-family: Montserrat-SemiBold;
     font-size: 20px;

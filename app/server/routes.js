@@ -543,6 +543,7 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
+                        let filter = req.query.filter;
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
@@ -558,7 +559,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd-rangeStart, function (error, parkings) {
+                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd-rangeStart, filter, function (error, parkings) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send('failed');
@@ -577,7 +578,8 @@ module.exports = app => {
                                         },
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
-                                        rangeEnd: rangeEnd
+                                        rangeEnd: rangeEnd,
+                                        filter: ''
                                     });
                                 } else {
                                     res.render('city-parkings-part.html', {
@@ -593,7 +595,8 @@ module.exports = app => {
                                         },
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
-                                        rangeEnd: rangeEnd
+                                        rangeEnd: rangeEnd,
+                                        filter: filter
                                     });
                                 }
                             }
@@ -683,6 +686,7 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
+            let filter = req.query.filter;
             let rangeHeader = req.header("range");
             let rangeStart = 0;
             let rangeEnd = 50;
@@ -697,7 +701,7 @@ module.exports = app => {
                 }
             }
 
-            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd-rangeStart, function (error, parkings) {
+            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd-rangeStart, filter, function (error, parkings) {
                 if (error != null) {
                     res.status(500).send("Could not get parkings for this user.");
                 } else {
@@ -711,7 +715,8 @@ module.exports = app => {
                             company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
-                            rangeEnd: rangeEnd
+                            rangeEnd: rangeEnd,
+                            filter: ''
                         });
                     } else {
                         res.render('parkings-part.html', {
@@ -723,7 +728,8 @@ module.exports = app => {
                             company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
-                            rangeEnd: rangeEnd
+                            rangeEnd: rangeEnd,
+                            filter: filter
                         });
                     }
                 }

@@ -26,10 +26,12 @@ var select2Promise = null;
     // Hover function for user dropdown menu
     $('#user-email').hover(() => {
         $('#drop-menu').show();
+        $('#drop-menu-lang').hide();
     });
 
     $('#language-selector').hover(() => {
         $('#drop-menu-lang').show();
+        $('#drop-menu').hide();
     });
 
     $('#myParkings').click(e => {
@@ -120,8 +122,9 @@ function initSelect2() {
 function handleResize() {
     // Adjust position of dropdown menus
     var logoPos = $('#page-logo-helper').position();
-    $('#language-selector').css('float', 'left');
-    $('#language-selector').css('left', (logoPos.left + 143 + 80) + 'px');
+    $('#language-selector').css('display', 'inline-block');
+    //$('#language-selector').css('float', 'left');
+    //$('#language-selector').css('left', (logoPos.left + 143 + 80) + 'px');
     var langPos = $('#language-selector').position();
     var dropPos = $('#user-email').position();
     $('#drop-menu-lang').css('left', (langPos.left + 10) + 'px');
