@@ -425,7 +425,6 @@ exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE
                         } else {
                             let parkingArray;
                             o.toArray().then(res => {
-                                console.log(res);
                                 parkingArray = res;
                                 for (i in parkingArray) {
                                     parkingArray[i] = parkingArray[i].parking[0];
