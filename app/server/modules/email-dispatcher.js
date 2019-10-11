@@ -437,7 +437,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "<ul>";
         html += '<li>Bike parking: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestion: <em>" + freeText + "</em></li>";
-        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         html += "</ul><br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -449,7 +449,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "<ul>";
         html += '<li>Fahrradabstellplatz: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Vorschlag: <em>" + freeText + "</em></li>";
-        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         html += "</ul><br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -461,7 +461,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "<ul>";
         html += '<li>Parking à vélos: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestion: <em>" + freeText + "</em></li>";
-        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         html += "</ul><br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -473,7 +473,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "<ul>";
         html += '<li>Parqueadero: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Sugerencia: <em>" + freeText + "</em></li>";
-        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         html += "</ul><br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -486,7 +486,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "<ul>";
         html += '<li>Fietsenstalling: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestie: <em>" + freeText + "</em></li>";
-        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         html += "</ul><br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
