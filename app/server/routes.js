@@ -29,7 +29,7 @@ module.exports = app => {
                 vocabURI: vocabURI,
                 username: null,
                 superAdmin: false,
-                company: {name: null, enabled: false},
+                company: { name: null, enabled: false },
                 cityrep: false
             });
         } else {
@@ -47,7 +47,7 @@ module.exports = app => {
                         vocabURI: vocabURI,
                         username: null,
                         superAdmin: false,
-                        company: {name: null, enabled: false},
+                        company: { name: null, enabled: false },
                         cityrep: false
                     });
                 }
@@ -111,7 +111,7 @@ module.exports = app => {
                 delete o.pass;
                 req.session.user = o;
                 AM.generateLoginKey(o.email, req.ip, function (key) {
-                    res.cookie('login', key, {maxAge: 90000000});
+                    res.cookie('login', key, { maxAge: 90000000 });
                     res.status(200).send(o);
                 });
             }
@@ -131,8 +131,8 @@ module.exports = app => {
 
     app.get('/home', async function (req, res) {
         // check if the user is logged in
+        let domain = domainName != '' ? '/' + domainName : '';
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
             let parkingData = null;
@@ -140,7 +140,7 @@ module.exports = app => {
                 PM.getParking(req.session.user.email, encodeURIComponent(req.query.parkingId), (error, result, approved, company) => {
                     if (error != null) {
                         console.error(error);
-                        res.status(500).send();
+                        res.status(401).redirect(domain + '/');
                     } else {
                         parkingData = result;
                         res.render('home.html', {
@@ -149,7 +149,7 @@ module.exports = app => {
                             username: req.session.user.email,
                             loadedParking: parkingData,
                             superAdmin: req.session.user.superAdmin,
-                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             emailParkingOwner: req.session.user.email,
                             nameCompanyParkingOwner: req.session.user.companyName,
@@ -165,7 +165,7 @@ module.exports = app => {
                     username: req.session.user.email,
                     loadedParking: '',
                     superAdmin: req.session.user.superAdmin,
-                    company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                    company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                     cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     emailParkingOwner: req.session.user.email,
                     nameCompanyParkingOwner: req.session.user.companyName,
@@ -194,7 +194,7 @@ module.exports = app => {
                             vocabURI: vocabURI,
                             username: req.session.user.email,
                             superAdmin: req.session.user.superAdmin,
-                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                         });
                     } else {
@@ -228,21 +228,21 @@ module.exports = app => {
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
-                        if(rangeHeader) {
+                        if (rangeHeader) {
                             let matches = rangeHeader.match(/(.*)=(\d*)-(\d*)/);
                             rangeStart = parseInt(matches[2], 10);
-                            if(rangeStart < 0){
+                            if (rangeStart < 0) {
                                 rangeStart = 0;
                             }
                             rangeEnd = parseInt(matches[3], 10);
-                            if(rangeEnd <= 0){
+                            if (rangeEnd <= 0) {
                                 rangeEnd = 50;
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd-rangeStart, filter)
+                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, filter)
                             .then(parkings => {
-                                if(!rangeHeader) {
+                                if (!rangeHeader) {
                                     res.render('admin-parkings.html', {
                                         domainName: domainName,
                                         vocabURI: vocabURI,
@@ -514,7 +514,7 @@ module.exports = app => {
                         username: req.session.user.email,
                         cityNames: result,
                         superAdmin: req.session.user.superAdmin,
-                        company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                        company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 } else {
@@ -547,24 +547,24 @@ module.exports = app => {
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
-                        if(rangeHeader) {
+                        if (rangeHeader) {
                             let matches = rangeHeader.match(/(.*)=(\d*)-(\d*)/);
                             rangeStart = parseInt(matches[2], 10);
-                            if(rangeStart<0){
+                            if (rangeStart < 0) {
                                 rangeStart = 0;
                             }
                             rangeEnd = parseInt(matches[3], 10);
-                            if(rangeEnd <= 0){
+                            if (rangeEnd <= 0) {
                                 rangeEnd = 50;
                             }
                         }
 
-                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd-rangeStart, filter, function (error, parkings) {
+                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, filter, function (error, parkings) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send('failed');
                             } else {
-                                if(!rangeHeader) {
+                                if (!rangeHeader) {
                                     res.render('city-parkings.html', {
                                         domainName: domainName,
                                         vocabURI: vocabURI,
@@ -690,29 +690,29 @@ module.exports = app => {
             let rangeHeader = req.header("range");
             let rangeStart = 0;
             let rangeEnd = 50;
-            if(rangeHeader) {
+            if (rangeHeader) {
                 let matches = rangeHeader.match(/(.*)=(\d*)-(\d*)/);
                 rangeStart = parseInt(matches[2], 10);
-                if(rangeStart < 0){
+                if (rangeStart < 0) {
                     rangeStart = 0;
                 }
-                if(matches[3] !== "0") {
+                if (matches[3] !== "0") {
                     rangeEnd = parseInt(matches[3], 10);
                 }
             }
 
-            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd-rangeStart, filter, function (error, parkings) {
+            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, filter, function (error, parkings) {
                 if (error != null) {
                     res.status(500).send("Could not get parkings for this user.");
                 } else {
-                    if(!rangeHeader) {
+                    if (!rangeHeader) {
                         res.render('parkings.html', {
                             domainName: domainName,
                             vocabURI: vocabURI,
                             username: req.session.user.email,
                             parkings: parkings ? parkings : {},
                             superAdmin: req.session.user.superAdmin,
-                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
@@ -725,7 +725,7 @@ module.exports = app => {
                             username: req.session.user.email,
                             parkings: parkings ? parkings : {},
                             superAdmin: req.session.user.superAdmin,
-                            company: {name: req.session.user.companyName, enabled: req.session.user.companyEnabled},
+                            company: { name: req.session.user.companyName, enabled: req.session.user.companyEnabled },
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
@@ -851,7 +851,7 @@ module.exports = app => {
         if (req.session.user == null) {
             res.status(401).send('You are not logged in.');
             fs.unlink(myPath, err => {
-                if (err){
+                if (err) {
                     console.error(err);
                 }
             });
@@ -859,7 +859,7 @@ module.exports = app => {
             let guid = utils.guid();
             let newPath = data + '/photo/' + guid + path.extname(req.file.originalname).toLowerCase();
             fs.rename(myPath, newPath, err => {
-                if (err){
+                if (err) {
                     console.error(err);
                     res.status(500).send("Error while saving image.");
                 } else {
@@ -878,18 +878,18 @@ module.exports = app => {
         if (req.session.user == null) {
             res.status(401).send('You are not logged in.');
         } else {
-            if(req.params.id.indexOf("/") > 0 || req.params.id.indexOf("\\") > 0){
+            if (req.params.id.indexOf("/") > 0 || req.params.id.indexOf("\\") > 0) {
                 res.status(400).send("Some characters are not allowed in this filename.");
                 return;
             }
             try {
-                if(fs.existsSync(data + '/photo/' + req.params.id)) {
+                if (fs.existsSync(data + '/photo/' + req.params.id)) {
                     fs.unlinkSync(data + '/photo/' + req.params.id);
                     res.status(200).send("Deleted successfully.");
                 } else {
                     res.status(404).send('Photo not found');
                 }
-            } catch (e){
+            } catch (e) {
                 console.error(e);
                 res.status(500).send('Failed');
             }
@@ -1111,12 +1111,52 @@ module.exports = app => {
     });
 
     /*
+        Email API for new parking and parking correction suggestions
+    */
+
+    app.post('/email/new-parking-suggestion', async (req, res) => {
+        res.set('accept', 'application/json');
+        if (req.header('Content-Type') === 'application/json') {
+            let reps = await PM.newParkingSuggestion(req.body.lat, req.body.lon, req.body.description);
+            if (reps) {
+                if (reps[0]) {
+                    res.status(200).json({ msg: 'Email notification sent!', recipients: reps });
+                } else {
+                    res.status(500).json({ error: 'No registered Velopark users available for this region' });
+                }
+            } else {
+                res.status(404).json({ error: 'This region is not supported yet by Velopark' });
+            }
+        } else {
+            res.status('415').send();
+        }
+    });
+
+    app.post('/email/parking-correction', async (req, res) => {
+        res.set('accept', 'application/json');
+        if (req.header('Content-Type') === 'application/json') {
+            let reps = await PM.parkingCorrectionSuggestion(req.body.parkingId, req.body.correction);
+            if (reps) {
+                if (reps[0]) {
+                    res.status(200).json({ msg: 'Email notification sent!', recipients: reps });
+                } else {
+                    res.status(500).json({ error: 'No registered Velopark users available for this parking' });
+                }
+            } else {
+                res.status(404).json({ error: 'Parking ' + req.body.parkingId + ' not found' });
+            }
+        } else {
+            res.status('415').send();
+        }
+    });
+
+    /*
         view, delete & reset accounts
     */
 
     app.get('/print', function (req, res) {
         AM.getAllRecords(function (e, accounts) {
-            res.render('print', {title: 'Account List', accts: accounts});
+            res.render('print', { title: 'Account List', accts: accounts });
         })
     });
 

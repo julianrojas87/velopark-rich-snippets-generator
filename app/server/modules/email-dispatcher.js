@@ -9,8 +9,8 @@ const domainName = config['domain'] || '';
 let activatedAccounts = {};
 
 var server = email.server.connect({
-    user:  config_secret.NL_EMAIL_USER,
-    password:  config_secret.NL_EMAIL_PASS,
+    user: config_secret.NL_EMAIL_USER,
+    password: config_secret.NL_EMAIL_PASS,
     host: config_secret.NL_EMAIL_HOST,
     ssl: true
 });
@@ -59,7 +59,7 @@ EM.dispatchResetPasswordLink = function (account, callback) {
 EM.addActivatedAccountToBeMailed = function (account) {
     if (!activatedAccounts[account.email]) {
         //If the email is not in the list yet, it means we are about to enable an account that was previously disabled.
-        activatedAccounts[account.email] = { initialStateEnabled : false };
+        activatedAccounts[account.email] = { initialStateEnabled: false };
     }
     activatedAccounts[account.email].mail = true;
 };
@@ -68,7 +68,7 @@ EM.removeActivatedAccountToBeMailed = function (account) {
     if (!activatedAccounts[account.email]) {
         //If the email is not in the list yet, it means we are about to disable an account that was previously enabled.
         //In no case an email will be sent to this person, even not after re-enabling the account (as long as it is done within the scheduler period)
-        activatedAccounts[account.email] = { initialStateEnabled : true };
+        activatedAccounts[account.email] = { initialStateEnabled: true };
     }
     activatedAccounts[account.email].mail = false;
 };
@@ -83,8 +83,8 @@ EM.dispatchAccountActivated = function (account, callback) {
     }, callback);
 };
 
-EM.dispatchUserSignedUp = function(newUser, adminEmails){
-    for(i in adminEmails) {
+EM.dispatchUserSignedUp = function (newUser, adminEmails) {
+    for (i in adminEmails) {
         server.send({
             from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
             to: adminEmails[i].email,
@@ -102,8 +102,8 @@ EM.dispatchUserSignedUp = function(newUser, adminEmails){
     }
 };
 
-EM.dispatchNewParkingToRegionReps = function(regionReps, parkingId){
-    for(i in regionReps) {
+EM.dispatchNewParkingToRegionReps = function (regionReps, parkingId) {
+    for (i in regionReps) {
         server.send({
             from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
             to: regionReps[i].email,
@@ -121,13 +121,59 @@ EM.dispatchNewParkingToRegionReps = function(regionReps, parkingId){
     }
 };
 
+EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, freeText) {
+    return new Promise((resolve, reject) => {
+        for (i in reps) {
+            server.send({
+                from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+                to: reps[i].email,
+                subject: 'New Bicycle Parking suggestion',
+                text: 'something went wrong... :(',
+                attachment: EM.composeNewParkingSuggestionEmail(location, region, freeText, reps[i].lang)
+            }, function (e, m) {
+                if (!e) {
+                    console.log("Mail sent to Region rep: new parking suggestion", m.header.to);
+                    resolve();
+                } else {
+                    for (k in e) console.error('ERROR : ', k, e[k]);
+                    console.error(e);
+                    reject();
+                }
+            });
+        }
+    });
+};
+
+EM.dispatchParkingCorrectionSuggestion = (reps, parkingUri, localId, freeText) => {
+    return new Promise((resolve, reject) => {
+        for (i in reps) {
+            server.send({
+                from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+                to: reps[i].email,
+                subject: 'New Bicycle Parking suggestion',
+                text: 'something went wrong... :(',
+                attachment: EM.composeParkingCorrectionEmail(parkingUri, localId, freeText, reps[i].lang)
+            }, function (e, m) {
+                if (!e) {
+                    console.log("Mail sent to Region rep: new parking suggestion", m.header.to);
+                    resolve();
+                } else {
+                    for (k in e) console.error('ERROR : ', k, e[k]);
+                    console.error(e);
+                    reject();
+                }
+            });
+        }
+    });
+};
+
 EM.composePasswordResetEmail = function (passKey, lang) {
     let html;
     if (lang === 'en') {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "You requested a password reset for your Velopark account.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Click here to reset your password</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Click here to reset your password</a><br><br>";
         html += "If you did not request a password reset, you can safely ignore this email.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -136,7 +182,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Sie haben ein Zurücksetzen des Passworts für Ihr Velopark-Konto angefordert.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
         html += "Wenn Sie kein Zurücksetzen des Kennworts angefordert haben, können Sie diese E-Mail ignorieren.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -145,7 +191,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Vous avez demandé une réinitialisation du mot de passe pour votre compte Velopark.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
         html += "Si vous n'avez pas demandé de réinitialisation de mot de passe, vous pouvez ignorer cet email en toute sécurité.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
@@ -154,7 +200,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Usted solicitó un restablecimiento de contraseña para su cuenta Velopark.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
         html += "Si no solicitó un restablecimiento de contraseña, puede ignorar este correo electrónico de forma segura.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -164,13 +210,13 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Je hebt een wachtwoordreset aangevraagd voor je Velopark account.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" +  passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
+        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
         html += "Indien je deze reset niet zelf hebt aangevraagd kan je deze mail gewoon negeren.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
     }
-    return [{data: html, alternative: true}];
+    return [{ data: html, alternative: true }];
 };
 
 EM.composeAccountEnabledEmail = function (email, lang) {
@@ -217,7 +263,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html += "Velopark Team<br>";
         html += "</body></html>";
     }
-    return [{data: html, alternative: true}];
+    return [{ data: html, alternative: true }];
 };
 
 EM.composeUserSignedUp = function (email, lang) {
@@ -264,7 +310,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html += "Velopark Team<br>";
         html += "</body></html>";
     }
-    return [{data: html, alternative: true}];
+    return [{ data: html, alternative: true }];
 };
 
 
@@ -312,7 +358,141 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
         html += "Velopark Team<br>";
         html += "</body></html>";
     }
-    return [{data: html, alternative: true}];
+    return [{ data: html, alternative: true }];
+};
+
+EM.composeNewParkingSuggestionEmail = function (location, region, freeText, lang) {
+    let html;
+    if (lang === 'en') {
+        html = "<html><body>";
+        html += "Hello!<br><br>";
+        html += "A user has suggested to include a new bike parking in one of the regions you are managing.<br><br>";
+        html += "<ul>";
+        html += "<li>Region: " + region + "</li>";
+        html += '<li>Suggested Location: <a href="' + location + '" target="_blank">See in OpenStreetMap</a></li>';
+        html += "<li>Description: <em>" + freeText + "</em></li>";
+        html += "</ul><br><br>";
+        html += "Greetings,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'de') {
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "Ein Benutzer hat vorgeschlagen, in eine der von Ihnen verwalteten Regionen einen neuen Fahrradparkplatz aufzunehmen.<br><br>";
+        html += "<ul>";
+        html += "<li>Regio: " + region + "</li>";
+        html += '<li>Vorgeschlagener Standort: <a href="' + location + '" target="_blank">Siehe in OpenStreetMap</a></li>';
+        html += "<li>Beschreibung: <em>" + freeText + "</em></li>";
+        html += "</ul><br><br>";
+        html += "Schöne Grüße,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'fr') {
+        html = "<html><body>";
+        html += "Bonjour!<br><br>";
+        html += "Un utilisateur a suggéré d’inclure un nouveau parking pour vélos dans l’une des régions que vous gérez.<br><br>";
+        html += "<ul>";
+        html += "<li>Region: " + region + "</li>";
+        html += '<li>Suggested Location: <a href="' + location + '" target="_blank">Voir dans OpenStreetMap</a></li>';
+        html += "<li>Description: <em>" + freeText + "</em></li>";
+        html += "</ul><br><br>";
+        html += "Greetings,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'es') {
+        html = "<html><body>";
+        html += "¡Hola!<br><br>";
+        html += "Un usuario ha sugerido incluir un nuevo parqueadero de bicicletas en una de las regiones que administras.<br><br>";
+        html += "<ul>";
+        html += "<li>Región: " + region + "</li>";
+        html += '<li>Ubicación sugerida: <a href="' + location + '" target="_blank">Ver en OpenStreetMap</a></li>';
+        html += "<li>Descripción: <em>" + freeText + "</em></li>";
+        html += "</ul><br><br>";
+        html += "Saludos,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else {
+        //Dutch is default
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "Een gebruiker heeft voorgesteld om een ​​nieuwe fietsenstalling op te nemen in een van de regio's die u beheert.<br><br>";
+        html += "<ul>";
+        html += "<li>Regio: " + region + "</li>";
+        html += '<li>Voorgestelde locatie: <a href="' + location + '" target="_blank">Zie in OpenStreetMap</a></li>';
+        html += "<li>Omschrijving: <em>" + freeText + "</em></li>";
+        html += "</ul><br><br>";
+        html += "Vriendelijke groeten,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    }
+    return [{ data: html, alternative: true }];
+};
+
+EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeText, lang) {
+    let html;
+    if (lang === 'en') {
+        html = "<html><body>";
+        html += "Hello!<br><br>";
+        html += "A user has suggested a correction/addition to the information about a bike parking you are managing:<br><br>";
+        html += "<ul>";
+        html += '<li>Bike parking: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += "<li>Suggestion: <em>" + freeText + "</em></li>";
+        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += "</ul><br><br>";
+        html += "Greetings,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'de') {
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "Ein Benutzer hat eine Korrektur/Ergänzung der Informationen zu einem von Ihnen verwalteten Fahrradparkplatz vorgeschlagen:<br><br>";
+        html += "<ul>";
+        html += '<li>Fahrradabstellplatz: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += "<li>Vorschlag: <em>" + freeText + "</em></li>";
+        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += "</ul><br><br>";
+        html += "Schöne Grüße,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'fr') {
+        html = "<html><body>";
+        html += "Bonjour!<br><br>";
+        html += "Un utilisateur a suggéré une correction/un ajout aux informations sur un parking pour vélo que vous gérez:<br><br>";
+        html += "<ul>";
+        html += '<li>Parking à vélos: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += "<li>Suggestion: <em>" + freeText + "</em></li>";
+        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += "</ul><br><br>";
+        html += "Greetings,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else if (lang === 'es') {
+        html = "<html><body>";
+        html += "¡Hola!<br><br>";
+        html += "Un usuario ha sugerido una correción/adición a la información acerca de uno de los parqueaderos de bicicletas que estan a tu cargo:<br><br>";
+        html += "<ul>";
+        html += '<li>Parqueadero: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += "<li>Sugerencia: <em>" + freeText + "</em></li>";
+        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += "</ul><br><br>";
+        html += "Saludos,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    } else {
+        //Dutch is default
+        html = "<html><body>";
+        html += "Hallo!<br><br>";
+        html += "Een gebruiker heeft een correctie/aanvulling voorgesteld op de informatie over een fietsenstalling die u beheert:<br><br>";
+        html += "<ul>";
+        html += '<li>Fietsenstalling: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += "<li>Suggestie: <em>" + freeText + "</em></li>";
+        html += '<li><a href="http://localhost:3000/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += "</ul><br><br>";
+        html += "Vriendelijke groeten,<br>";
+        html += "Velopark Team<br>";
+        html += "</body></html>";
+    }
+    return [{ data: html, alternative: true }];
 };
 
 module.exports = EM;

@@ -152,7 +152,10 @@ exports.findAccountsByEmails = function (emails) {
             }
         });
     });
+};
 
+exports.findAccountsByCompany = companyName => {
+    return accounts.find({ companyName: companyName }).toArray();
 };
 
 exports.findAllEmails = function (callback) {
@@ -959,16 +962,21 @@ exports.findCitiesByLocation = function (lat, lng, lang, callback) {
                     }
                 }
             }
-        }, { projection: { "properties": 1 } }).forEach(function (res) {
-            cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
-        }, function (error) {
-            callback(error, cityNames);
-            if (error) {
-                reject(error);
-            } else {
-                resolve(cityNames);
-            }
-        });
+        }, {
+                sort: { "properties.adminLevel": 1 },
+                projection: { "properties": 1 }
+            }).forEach(function (res) {
+                cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
+            }, function (error) {
+                if (callback) {
+                    callback(error, cityNames);
+                }
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(cityNames);
+                }
+            });
     });
 };
 
