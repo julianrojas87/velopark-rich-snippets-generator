@@ -152,7 +152,10 @@ exports.findAccountsByEmails = function (emails) {
             }
         });
     });
+};
 
+exports.findAccountsByCompany = companyName => {
+    return accounts.find({ companyName: companyName }).toArray();
 };
 
 exports.findAllEmails = function (callback) {
@@ -387,7 +390,7 @@ exports.findParkingByID = id => {
     return parkings.findOne({ parkingID: id });
 };
 
-exports.findParkingsByEmail = function (email, skip, limit, callback) {
+exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '', callback) {
     accounts.findOne({ email: email, companyEnabled: true }, function (e, o) {
         if (o != null) {
             if (o.companyName != null) {
@@ -404,6 +407,7 @@ exports.findParkingsByEmail = function (email, skip, limit, callback) {
                         },
                         { $skip: skip },
                         { $limit: limit },
+                        { $match: { "parkingIDs": { $regex: ".*" + filter + ".*" } } },
                         {
                             $lookup:
                             {
@@ -421,6 +425,7 @@ exports.findParkingsByEmail = function (email, skip, limit, callback) {
                         } else {
                             let parkingArray;
                             o.toArray().then(res => {
+                                console.log(res);
                                 parkingArray = res;
                                 for (i in parkingArray) {
                                     parkingArray[i] = parkingArray[i].parking[0];
@@ -910,20 +915,19 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = Number.MAX_SAFE_INTEGER) {
+exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '') {
     cities.findOne({ 'properties.cityname': cityName }, {}, function (error, city) {
-        console.log(city);
         if (error != null) {
             callback(error);
         } else {
             parkings.find({
+                "parkingID": { $regex: ".*" + filter + ".*" },
                 'location': {
                     '$geoWithin': {
                         '$geometry': city.geometry
                     }
                 }
             }).skip(skip).limit(limit).toArray(function (error, result) {
-                console.log(result);
                 if (error != null) {
                     callback(error);
                 } else {
@@ -935,32 +939,44 @@ exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit =
 };
 
 exports.findCitiesByLocation = function (lat, lng, lang, callback) {
-    let propertyName;
-    if (lang === 'en') {
-        propertyName = 'name_EN';
-    } else if (lang === 'fr') {
-        propertyName = 'name_FR';
-    } else if (lang === 'de') {
-        propertyName = 'name_DE';
-    } else if (lang === 'nl') {
-        propertyName = 'name_NL'
-    } else {
-        propertyName = "cityname";
-    }
-    let cityNames = [];
-    cities.find({
-        'geometry': {
-            '$geoIntersects': {
-                '$geometry': {
-                    type: "Point",
-                    coordinates: [lng, lat]
+    return new Promise((resolve, reject) => {
+        let propertyName;
+        if (lang === 'en') {
+            propertyName = 'name_EN';
+        } else if (lang === 'fr') {
+            propertyName = 'name_FR';
+        } else if (lang === 'de') {
+            propertyName = 'name_DE';
+        } else if (lang === 'nl') {
+            propertyName = 'name_NL'
+        } else {
+            propertyName = "cityname";
+        }
+        let cityNames = [];
+        cities.find({
+            'geometry': {
+                '$geoIntersects': {
+                    '$geometry': {
+                        type: "Point",
+                        coordinates: [lng, lat]
+                    }
                 }
             }
-        }
-    }, { projection: { "properties": 1 } }).forEach(function (res) {
-        cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
-    }, function (error) {
-        callback(error, cityNames);
+        }, {
+                sort: { "properties.adminLevel": 1 },
+                projection: { "properties": 1 }
+            }).forEach(function (res) {
+                cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
+            }, function (error) {
+                if (callback) {
+                    callback(error, cityNames);
+                }
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(cityNames);
+                }
+            });
     });
 };
 

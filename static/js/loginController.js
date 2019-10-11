@@ -7,13 +7,13 @@ let currentLang = 'nl';
     if (user && user.name && user.name !== '') {
         $('#signin').hide();
         $('#login').hide();
-        $('#logout').show();
-        $('#user-email').text(user.name).show();
+        $('#logout').css('display', 'inline-block');
+        $('#user-email').text(user.name).css('display', 'inline-block');
     } else {
         $('#logout').hide();
         $('#user-email').hide();
-        $('#signin').show();
-        $('#login').show();
+        $('#signin').css('display', 'inline-block');
+        $('#login').css('display', 'inline-block');
     }
 
     if (!user || user.superAdmin !== "true") {
