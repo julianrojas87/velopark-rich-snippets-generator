@@ -1124,7 +1124,11 @@ module.exports = app => {
     */
 
     app.post('/email/new-parking-suggestion', async (req, res) => {
-        res.set('accept', 'application/json');
+        res.set({
+            'accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*'
+        });
         if (req.header('Content-Type') === 'application/json') {
             let reps = await PM.newParkingSuggestion(req.body.lat, req.body.lon, req.body.description);
             if (reps) {
@@ -1142,7 +1146,11 @@ module.exports = app => {
     });
 
     app.post('/email/parking-correction', async (req, res) => {
-        res.set('accept', 'application/json');
+        res.set({
+            'accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*'
+        });
         if (req.header('Content-Type') === 'application/json') {
             let reps = await PM.parkingCorrectionSuggestion(req.body.parkingId, req.body.correction);
             if (reps) {
