@@ -27,6 +27,7 @@ module.exports = app => {
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
         });
+        res.send(200);
     });
 
     app.get('/', function (req, res) {
