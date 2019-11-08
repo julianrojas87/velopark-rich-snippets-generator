@@ -232,7 +232,9 @@ module.exports = app => {
                     console.error(error);
                     res.redirect(domain + '/home');
                 } else {
-                    let filter = req.query.filter;
+                    // Parkings filters
+                    let idFilter = req.query.idFilter;
+                    let nameFilter = req.query.nameFilter;
                     if (value === true) {
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
@@ -249,7 +251,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, filter)
+                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter)
                             .then(parkings => {
                                 if (!rangeHeader) {
                                     res.render('admin-parkings.html', {
@@ -265,7 +267,8 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: ''
+                                        idFilter: '',
+                                        nameFilter: ''
                                     });
                                 } else {
                                     res.render('admin-parkings-part.html', {
@@ -281,7 +284,8 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: filter
+                                        idFilter: idFilter,
+                                        nameFilter: nameFilter
                                     });
                                 }
                             })
