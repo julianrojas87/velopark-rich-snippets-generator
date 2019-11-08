@@ -45,9 +45,9 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = (skip, limit, filter) => {
+exports.listAllParkings = (skip, limit, idFilter) => {
     return new Promise(async (resolve, reject) => {
-        dbAdapter.findParkingsWithCompanies(skip, limit, filter)
+        dbAdapter.findParkingsWithCompanies(skip, limit, idFilter)
             .then(res => {
                 returnTableData(res, function (error, result) {
                     if (error != null) {
@@ -122,6 +122,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
         let park_obj = JSON.parse(parking);
         let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-');
         let parkingID = encodeURIComponent(park_obj['@id']);
+        let name = park_obj['name'][0]['@value'];
         let location;
         try {
             location = {
@@ -132,7 +133,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
             console.error("Could not extract location from parking. " + e);
         }
 
-        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, companyName, async function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, companyName, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -279,6 +280,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
     let park_obj = JSON.parse(parking);
     let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-');
     let parkingID = encodeURIComponent(park_obj['@id']);
+    let name = park_obj['name'][0]['@value'];
     let location;
     try {
         location = {
@@ -290,7 +292,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
     }
 
     if (companyName) {
-        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, companyName, async function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, companyName, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -304,7 +306,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
             }
         });
     } else {
-        dbAdapter.saveParkingAsAdmin(parkingID, localId + '.jsonld', approved, location, async function (e, res) {
+        dbAdapter.saveParkingAsAdmin(parkingID, localId + '.jsonld', approved, location, name, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -678,8 +680,18 @@ async function initCatalog() {
         if (p.indexOf('catalog.jsonld') < 0) {
             let d = JSON.parse(await readFile(data + '/public/' + p));
             let localId = (d['ownedBy']['companyName'] + '_' + d['identifier']).replace(/\s/g, '-');
-            if ((await dbAdapter.findParkingByID(encodeURIComponent(d['@id']))).approvedstatus) {
+            let dbParking = await dbAdapter.findParkingByID(encodeURIComponent(d['@id']));
+
+            if (dbParking.approvedstatus) {
                 parkings.set(d['@id'], localId);
+            }
+
+            // Hack to add the name of the parking to the DB. Only meant to be run once.
+            if(!dbParking.name) {
+                let name = d['name'][0]['@value'];
+                dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, () => {
+                    console.log('Parking ' + localId + ' name added to DB');
+                });
             }
         }
     }));

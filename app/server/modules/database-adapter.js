@@ -526,7 +526,7 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
     Parkings: save
 */
 
-let updateOrCreateParking = function (id, filename, approvedStatus, location, callback) {
+let updateOrCreateParking = function (id, filename, approvedStatus, location, name, callback) {
     parkings.findOneAndUpdate(
         {
             parkingID: id
@@ -535,7 +535,8 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
             $set: {
                 filename: filename,
                 approvedstatus: approvedStatus,
-                location: location
+                location: location,
+                name: name
             },
         },
         {
@@ -581,17 +582,17 @@ exports.updateParkingAsCityRep = function (id, filename, location, approved, cal
         });
 };
 
-exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, callback) {
-    updateOrCreateParking(id, filename, approvedStatus, location, callback);
+exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, name, callback) {
+    updateOrCreateParking(id, filename, approvedStatus, location, name, callback);
 };
 
-exports.saveParkingToCompany = function (id, filename, approvedStatus, location, companyName, callback) {
+exports.saveParkingToCompany = function (id, filename, approvedStatus, location, name, companyName, callback) {
     exports.updateCompanyParkingIDs(companyName, id, function (error, result) {
         if (error != null) {
             callback(error);
         } else {
             if (result != null) {
-                updateOrCreateParking(id, filename, approvedStatus, location, callback);
+                updateOrCreateParking(id, filename, approvedStatus, location, name, callback);
             } else {
                 //Company not found
                 callback("This company does not exist");
