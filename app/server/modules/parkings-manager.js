@@ -64,8 +64,8 @@ exports.listAllParkings = (skip, limit, idFilter, nameFilter) => {
 
 };
 
-exports.listParkingsByEmail = async (username, skip, limit, filter, callback) => {
-    dbAdapter.findParkingsByEmail(username, skip, limit, filter, function (error, res) {
+exports.listParkingsByEmail = async (username, skip, limit, idFilter, nameFilter, callback) => {
+    dbAdapter.findParkingsByEmail(username, skip, limit, idFilter, nameFilter, function (error, res) {
         if (error != null) {
             console.error("Error: " + error);
             callback(error);

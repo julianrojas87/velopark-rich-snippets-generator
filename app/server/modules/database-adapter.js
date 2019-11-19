@@ -395,7 +395,7 @@ exports.findParkingByID = id => {
     return parkings.findOne({ parkingID: id });
 };
 
-exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '', callback) {
+exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', callback) {
     accounts.findOne({ email: email, companyEnabled: true }, function (e, o) {
         if (o != null) {
             if (o.companyName != null) {
@@ -412,7 +412,9 @@ exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE
                         },
                         { $skip: skip },
                         { $limit: limit },
-                        { $match: { "parkingIDs": { $regex: ".*" + filter + ".*" } } },
+                        { $match: { 
+                            "parkingIDs": { $regex: ".*" + idFilter + ".*" }
+                        } },
                         {
                             $lookup:
                             {
@@ -421,7 +423,10 @@ exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE
                                 foreignField: "parkingID",
                                 as: "parking"
                             }
-                        }
+                        },
+                        { $match: {
+                            "parking.name": { $regex: ".*" + nameFilter + ".*" }
+                        }}
                     ],
                     {},
                     function (e, o) {

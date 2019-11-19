@@ -699,7 +699,8 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            let filter = req.query.filter;
+            let idFilter = req.query.idFilter;
+            let nameFilter = req.query.nameFilter;
             let rangeHeader = req.header("range");
             let rangeStart = 0;
             let rangeEnd = 50;
@@ -714,7 +715,7 @@ module.exports = app => {
                 }
             }
 
-            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, filter, function (error, parkings) {
+            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, function (error, parkings) {
                 if (error != null) {
                     res.status(500).send("Could not get parkings for this user.");
                 } else {
@@ -729,7 +730,8 @@ module.exports = app => {
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
-                            filter: ''
+                            idFilter: '',
+                            nameFilter: ''
                         });
                     } else {
                         res.render('parkings-part.html', {
@@ -742,7 +744,8 @@ module.exports = app => {
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
-                            filter: filter
+                            idFilter: idFilter,
+                            nameFilter: nameFilter
                         });
                     }
                 }
