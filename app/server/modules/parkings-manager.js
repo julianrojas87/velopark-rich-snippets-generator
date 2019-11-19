@@ -45,9 +45,9 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = (skip, limit, idFilter) => {
+exports.listAllParkings = (skip, limit, idFilter, nameFilter) => {
     return new Promise(async (resolve, reject) => {
-        dbAdapter.findParkingsWithCompanies(skip, limit, idFilter)
+        dbAdapter.findParkingsWithCompanies(skip, limit, idFilter, nameFilter)
             .then(res => {
                 returnTableData(res, function (error, result) {
                     if (error != null) {

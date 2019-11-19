@@ -343,11 +343,16 @@ exports.deleteAccounts = function (callback) {
     Parkings: lookup
 */
 
-exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '') {
+exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '') {
     return new Promise((resolve, reject) => {
         parkings.aggregate(
             [
-                { $match: { "parkingID": { $regex: ".*" + filter + ".*" } } },
+                {
+                    $match: {
+                        "parkingID": { $regex: ".*" + idFilter + ".*" },
+                        "name": { $regex: ".*" + nameFilter + ".*" }
+                    }
+                },
                 { $skip: skip },
                 { $limit: limit },
                 {

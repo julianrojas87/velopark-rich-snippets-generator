@@ -251,7 +251,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter)
+                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter)
                             .then(parkings => {
                                 if (!rangeHeader) {
                                     res.render('admin-parkings.html', {
