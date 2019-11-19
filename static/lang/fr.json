@@ -488,7 +488,7 @@
   "parkings" : {
     "title" : "Parkings à ",
     "th" : [
-      "URI du parking", "Nom du parking", "Approuvé", "Actions"
+      "URI du parking", "Nom du parking", "Région", "Approuvé", "Actions"
     ]
   },
   "admin" : {

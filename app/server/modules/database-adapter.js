@@ -407,26 +407,21 @@ exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE
                                 name: o.companyName
                             }
                         },
-                        {
-                            $unwind: "$parkingIDs"
-                        },
+                        { $unwind: "$parkingIDs" },
                         { $skip: skip },
                         { $limit: limit },
                         { $match: { 
                             "parkingIDs": { $regex: ".*" + idFilter + ".*" }
                         } },
                         {
-                            $lookup:
-                            {
+                            $lookup: {
                                 from: "parkings",
                                 localField: "parkingIDs",
                                 foreignField: "parkingID",
                                 as: "parking"
                             }
                         },
-                        { $match: {
-                            "parking.name": { $regex: ".*" + nameFilter + ".*" }
-                        }}
+                        { $match: { "parking.name": { $regex: ".*" + nameFilter + ".*" }}}
                     ],
                     {},
                     function (e, o) {

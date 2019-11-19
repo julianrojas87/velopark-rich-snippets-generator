@@ -488,7 +488,7 @@
   "parkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Regio", "Goedgekeurd", "Acties"
     ]
   },
   "admin" : {

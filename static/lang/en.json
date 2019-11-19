@@ -489,7 +489,7 @@
   "parkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Region", "Approved", "Actions"
     ]
   },
   "admin" : {

@@ -16,8 +16,9 @@
                     <span transl-id="parkings.th[1]">Parking Name</span>
                     <input id="filterByName" value="<%= nameFilter %>" class="searchbar" type="text" placeholder="Search for parking...">
                 </th>
-                <th class="text-left" transl-id="parkings.th[2]">Approved</th>
-                <th class="text-left" transl-id="parkings.th[3]">Actions</th>
+                <th class="text-left" transl-id="parkings.th[2]">Region</th>
+                <th class="text-left" transl-id="parkings.th[3]">Approved</th>
+                <th class="text-left" transl-id="parkings.th[4]">Actions</th>
             </tr>
             </thead>
             <tbody class="table-hover">
@@ -29,6 +30,22 @@
                 </td>
                 <td class="text-left" style="font-size: 20px;">
                     <%= parkings[i]['name'][0]['@value'] ? parkings[i]['name'][0]['@value'] : parkings[i]['name'] %>
+                </td>
+                <td>
+                    <div class="parking-region-dummy" data-long="<%= parkings[i]['location']['lon'] %>" data-lat="<%= parkings[i]['location']['lat'] %>">
+                        <svg class="loading-icon lds-dual-ring" width="15px"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"
+                                    ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"
+                                    fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"
+                                    stroke-dasharray="62.83185307179586 62.83185307179586"
+                                    transform="rotate(244.478 50 50)">
+                                <animateTransform attributeName="transform" type="rotate" calcMode="linear"
+                                                    values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"
+                                                    repeatCount="indefinite"></animateTransform>
+                            </circle>
+                        </svg>
+                    </div>
                 </td>
                 <td class="text-left" style="font-size: 20px;">
                     <% if(parkings[i]['approvedstatus']){ %>
