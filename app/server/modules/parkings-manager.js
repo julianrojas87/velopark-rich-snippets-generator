@@ -75,7 +75,7 @@ exports.listParkingsByEmail = async (username, skip, limit, idFilter, nameFilter
     });
 };
 
-exports.listParkingsInCity = function (cityName, skip, limit, filter, callback) {
+exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilter, callback) {
     dbAdapter.findParkingsByCityName(cityName, (error, res) => {
         if (error != null) {
             console.error("Error: " + error);
@@ -83,7 +83,7 @@ exports.listParkingsInCity = function (cityName, skip, limit, filter, callback) 
         } else {
             returnTableData(res, callback);
         }
-    }, skip, limit, filter);
+    }, skip, limit, idFilter, nameFilter);
 };
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {

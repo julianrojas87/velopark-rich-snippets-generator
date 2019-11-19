@@ -920,13 +920,14 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '') {
+exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '') {
     cities.findOne({ 'properties.cityname': cityName }, {}, function (error, city) {
         if (error != null) {
             callback(error);
         } else {
             parkings.find({
-                "parkingID": { $regex: ".*" + filter + ".*" },
+                'parkingID': { $regex: ".*" + idFilter + ".*" },
+                'name': { $regex: ".*" + nameFilter + ".*" },
                 'location': {
                     '$geoWithin': {
                         '$geometry': city.geometry

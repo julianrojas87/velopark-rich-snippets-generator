@@ -556,7 +556,8 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
-                        let filter = req.query.filter;
+                        let idFilter = req.query.idFilter;
+                        let nameFilter = req.query.nameFilter;
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
@@ -572,7 +573,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, filter, function (error, parkings) {
+                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, function (error, parkings) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send('failed');
@@ -592,7 +593,8 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: ''
+                                        idFilter: '',
+                                        nameFilter: ''
                                     });
                                 } else {
                                     res.render('city-parkings-part.html', {
@@ -609,7 +611,8 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: filter
+                                        idFilter: idFilter,
+                                        nameFilter: nameFilter
                                     });
                                 }
                             }
