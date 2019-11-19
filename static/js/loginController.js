@@ -123,7 +123,6 @@ let currentLang = 'nl';
                         style.innerHTML = '.select2-results__option[id*="-' + childObject['name_NL'] + '"] {' +
                             ' background-color: ' + getColorForAdminLevel(childObject['adminLevel']) + ";" +
                             '}' + style.innerHTML;
-                        console.log(childObject['adminLevel']);
                         for(let i in childObject.childAreas){
                             addChildLevel(select, childObject.childAreas[i]);
                         }

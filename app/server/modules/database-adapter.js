@@ -911,6 +911,32 @@ exports.insertCompany = function (companyName, callback) {
     Cities: lookup
 */
 
+exports.findAllMunicipalities = async () => {
+    return new Promise((resolve, reject) => {
+        let names = [];
+        cities.aggregate([
+            {
+                $match: { 'properties.adminLevel': 4 }
+            },
+            {
+                $sort: { 'properties.cityname': 1 }
+            },
+            {
+                $project: { 'properties.cityname': 1, _id: 0 }
+            }
+        ]).forEach(function(c) {
+            names.push(c['properties']['cityname']);
+        }, err => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(names);
+            }
+        });
+    });
+    
+};
+
 exports.findAllCityNames = function (callback) {
     let citynames = [];
     cities.find().project({ 'properties.cityname': 1, _id: 0 }).forEach(function (res) {

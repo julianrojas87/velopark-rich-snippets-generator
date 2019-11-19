@@ -4,6 +4,10 @@ exports.listAllCities = function(callback){
     dbAdapter.findAllCityNames(callback);
 };
 
+exports.listAllMunicipalities = async () => {
+    return await dbAdapter.findAllMunicipalities();
+};
+
 exports.listRegionHierarchy = function(){
     return dbAdapter.getRegionHierarchy();
 };

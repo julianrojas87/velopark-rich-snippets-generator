@@ -45,21 +45,38 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = (skip, limit, idFilter, nameFilter) => {
+exports.listAllParkings = (skip, limit, idFilter, nameFilter, regionFilter) => {
     return new Promise(async (resolve, reject) => {
-        dbAdapter.findParkingsWithCompanies(skip, limit, idFilter, nameFilter)
-            .then(res => {
-                returnTableData(res, function (error, result) {
-                    if (error != null) {
-                        reject(error);
-                    } else {
-                        resolve(result);
-                    }
+        if (regionFilter) {
+            dbAdapter.findParkingsByCityName(regionFilter, (error, res) => {
+                if (error != null) {
+                    console.error("Error: " + error);
+                    reject(error);
+                } else {
+                    returnTableData(res, (err, result) => {
+                        if (error != null) {
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                }
+            }, skip, limit, idFilter, nameFilter);
+        } else {
+            dbAdapter.findParkingsWithCompanies(skip, limit, idFilter, nameFilter)
+                .then(res => {
+                    returnTableData(res, function (error, result) {
+                        if (error != null) {
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                })
+                .catch(error => {
+                    reject(error);
                 });
-            })
-            .catch(error => {
-                reject(error);
-            });
+        }
     });
 
 };
@@ -687,7 +704,7 @@ async function initCatalog() {
             }
 
             // Hack to add the name of the parking to the DB. Only meant to be run once.
-            if(!dbParking.name) {
+            if (!dbParking.name) {
                 let name = d['name'][0]['@value'];
                 dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, () => {
                     console.log('Parking ' + localId + ' name added to DB');

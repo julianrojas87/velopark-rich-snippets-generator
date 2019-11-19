@@ -87,16 +87,24 @@ function registerParkingListButtons(){
             '                </svg>\n' +
             '            </div>');
         
-        let filter = $('#filterById').val();
+        let idFilter = $('#filterById').val();
+        let nameFilter = $('#filterByName').val();
+        let regionFilter = $('#filterByRegion').val();
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=' + $(this).attr('rangeStart') + '-' + $(this).attr('rangeEnd') },
-            data: { filter: filter },
+            data: { 
+                idFilter: idFilter,
+                nameFilter: nameFilter,
+                regionFilter: regionFilter
+            },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
-                registerFilters();
-                registerParkingListButtons();
-                translate();
+                populateRegions().then(() => {
+                    registerFilters();
+                    registerParkingListButtons();
+                    translate();
+                });
             },
             error: e => {
                 alert('Error: ' + e.responseText);

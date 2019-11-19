@@ -235,6 +235,7 @@ module.exports = app => {
                     // Parkings filters
                     let idFilter = req.query.idFilter;
                     let nameFilter = req.query.nameFilter;
+                    let regionFilter = req.query.regionFilter;
                     if (value === true) {
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
@@ -251,7 +252,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter)
+                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter)
                             .then(parkings => {
                                 if (!rangeHeader) {
                                     res.render('admin-parkings.html', {
@@ -268,7 +269,8 @@ module.exports = app => {
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
                                         idFilter: '',
-                                        nameFilter: ''
+                                        nameFilter: '',
+                                        regionFilter: ''
                                     });
                                 } else {
                                     res.render('admin-parkings-part.html', {
@@ -285,7 +287,8 @@ module.exports = app => {
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
                                         idFilter: idFilter,
-                                        nameFilter: nameFilter
+                                        nameFilter: nameFilter,
+                                        regionFilter: regionFilter
                                     });
                                 }
                             })
@@ -983,6 +986,14 @@ module.exports = app => {
                 res.status(200).json(result);
             }
         });
+    });
+
+    app.get('/municipalities', async function (req, res) {
+        try {
+            res.status(200).json(await CiM.listAllMunicipalities());
+        } catch(err) {
+            res.status(500).send('failed');
+        }
     });
 
     app.get('/regionhierarchy', async function (req, res) {

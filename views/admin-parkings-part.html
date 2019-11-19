@@ -18,7 +18,13 @@
                     <input id="filterByName" value="<%= nameFilter %>" class="searchbar" type="text" placeholder="Search for parking...">
                 </th>
                 <th class="text-left" transl-id="adminParkings.th[2]">Company</th>
-                <th class="text-left" transl-id="adminParkings.th[3]">Region</th>
+                <th class="text-left region-filter">
+                    <span transl-id="adminParkings.th[3]">Region</span>
+                    <select id="filterByRegion" data-selected="<%= regionFilter %>" placeholder="Select Region">
+                        <option value=""></option>
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                </th>
                 <th class="text-left" transl-id="adminParkings.th[4]">Approved</th>
                 <th class="text-left" transl-id="adminParkings.th[5]">Last Modified</th>
                 <th class="text-left" transl-id="adminParkings.th[6]">Actions</th>
