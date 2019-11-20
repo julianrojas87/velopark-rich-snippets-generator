@@ -489,7 +489,7 @@
   "parkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Region", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Actions"
     ]
   },
   "admin" : {
@@ -501,12 +501,12 @@
   "adminParkings" : {
     "title" : "Manage Parkings",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Last Modified", "Actions"
+      "Parking Facility URI", "Parking Name", "Company", "Municipality", "Approved", "Last Modified", "Actions"
     ],
     "filter": {
       "id": "Search for URI...",
       "name": "Search for name...",
-      "region": "Filter by region"
+      "municipality": "Filter by municipality"
     },
     "transfer" : {
       "title" : "Transfer parking",
