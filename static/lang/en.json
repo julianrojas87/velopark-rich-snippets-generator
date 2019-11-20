@@ -503,6 +503,11 @@
     "th" : [
       "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Last Modified", "Actions"
     ],
+    "filter": {
+      "id": "Search for URI...",
+      "name": "Search for name...",
+      "region": "Filter by region"
+    },
     "transfer" : {
       "title" : "Transfer parking",
       "text" : "Select the company you want to transfer this parking to.",

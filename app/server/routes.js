@@ -708,6 +708,8 @@ module.exports = app => {
         } else {
             let idFilter = req.query.idFilter;
             let nameFilter = req.query.nameFilter;
+            let regionFilter = req.query.regionFilter;
+            let lang = req.query.lang;
             let rangeHeader = req.header("range");
             let rangeStart = 0;
             let rangeEnd = 50;
@@ -722,7 +724,7 @@ module.exports = app => {
                 }
             }
 
-            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, function (error, parkings) {
+            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, function (error, parkings) {
                 if (error != null) {
                     res.status(500).send("Could not get parkings for this user.");
                 } else {
@@ -738,7 +740,8 @@ module.exports = app => {
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
                             idFilter: '',
-                            nameFilter: ''
+                            nameFilter: '',
+                            regionFilter: ''
                         });
                     } else {
                         res.render('parkings-part.html', {
@@ -752,7 +755,8 @@ module.exports = app => {
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
                             idFilter: idFilter,
-                            nameFilter: nameFilter
+                            nameFilter: nameFilter,
+                            regionFilter: regionFilter
                         });
                     }
                 }

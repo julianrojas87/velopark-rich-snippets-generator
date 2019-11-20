@@ -112,6 +112,10 @@ function registerFilters() {
                     registerFilters();
                     registerParkingListButtons();
                 });
+
+                if(filter === '') {
+                    translate(undefined, true);
+                }
             },
             error: e => {
                 alert('Error: ' + e.responseText);

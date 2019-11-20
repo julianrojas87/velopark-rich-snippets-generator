@@ -502,6 +502,11 @@
     "th" : [
       "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
     ],
+    "filter": {
+      "id": "Zoeken naar URI...",
+      "name": "Zoeken naar naam...",
+      "region": "Filteren op regio"
+    },
     "transfer" : {
       "title" : "Parking Overdragen",
       "text" : "Selecteer het bedrijf naar waar je deze parking wil overdragen.",

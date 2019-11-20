@@ -392,7 +392,9 @@ function translate(lang, first){
 
                         // Deal with select2 elements
                         if($(this).is('select')) {
-                            $(this).select2('destroy');
+                            if($(this).hasClass('select2-hidden-accessible')) {
+                                $(this).select2('destroy');
+                            }
                             $(this).select2({
                                 minimumResultsForSearch: 20,
                                 dropdownParent: $(this).next('.dropDownSelect2'),
@@ -483,7 +485,6 @@ function translate(lang, first){
                 // Regions filter translation
                 if($('#filterByRegion').length > 0 && !first) {
                     populateRegions().then(() => {
-                        console.log('herrreee')
                         insertParkingRegions();
                     });
                 }
