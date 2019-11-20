@@ -3,6 +3,7 @@ const dookie = require('dookie');
 const fs = require('fs');
 const utils = require('../utils/utils');
 const nazka = require('./nazka');
+const jsts = require('jsts');
 
 const USE_NAZKA = true;
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
@@ -978,18 +979,46 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '') => {
+exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter) => {
     let city = null;
-    if (lang === 'en') {
-        city = await cities.findOne({ 'properties.name_EN': cityName, 'properties.adminLevel': 4 });
-    } else if (lang === 'fr') {
-        city = await cities.findOne({ 'properties.name_FR': cityName, 'properties.adminLevel': 4 });
-    } else if (lang === 'de') {
-        city = await cities.findOne({ 'properties.name_DE': cityName, 'properties.adminLevel': 4 });
-    } else if (lang === 'nl') {
-        city = await cities.findOne({ 'properties.name_NL': cityName, 'properties.adminLevel': 4 });
+
+    if (regionFilter) {
+        city = await cities.findOne({ 'properties.cityname': cityName });
+        let reader = new jsts.io.GeoJSONReader();
+        let filter = null;
+
+        if (lang === 'en') {
+            filter = await cities.findOne({ 'properties.name_EN': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'fr') {
+            filter = await cities.findOne({ 'properties.name_FR': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'de') {
+            filter = await cities.findOne({ 'properties.name_DE': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'nl') {
+            filter = await cities.findOne({ 'properties.name_NL': regionFilter, 'properties.adminLevel': 4 });
+        } else {
+            filter = await cities.findOne({ 'properties.cityname': regionFilter, 'properties.adminLevel': 4 });
+        }
+
+        let mainGeom = reader.read(city.geometry);
+        let filterGeom = reader.read(filter.geometry);
+
+        if(filterGeom.intersects(mainGeom)) {
+            city = filter;
+        } else {
+            return [];
+        }
     } else {
-        city = await cities.findOne({ 'properties.cityname': cityName, 'properties.adminLevel': 4 });
+        if (lang === 'en') {
+            city = await cities.findOne({ 'properties.name_EN': cityName });
+        } else if (lang === 'fr') {
+            city = await cities.findOne({ 'properties.name_FR': cityName });
+        } else if (lang === 'de') {
+            city = await cities.findOne({ 'properties.name_DE': cityName });
+        } else if (lang === 'nl') {
+            city = await cities.findOne({ 'properties.name_NL': cityName });
+        } else {
+            city = await cities.findOne({ 'properties.cityname': cityName });
+        }
     }
 
     if (city) {

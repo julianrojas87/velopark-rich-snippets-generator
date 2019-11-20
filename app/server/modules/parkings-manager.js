@@ -80,12 +80,12 @@ exports.listParkingsByEmail = async (username, skip, limit, idFilter, nameFilter
     returnTableData(res, callback);
 };
 
-exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilter, callback) {
-    dbAdapter.findParkingsByCityName(cityName, lang = 'nl', skip, limit, idFilter, nameFilter).then(res => {
+exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilter, regionFilter, lang, callback) {
+    dbAdapter.findParkingsByCityName(cityName, lang, skip, limit, idFilter, nameFilter, regionFilter).then(res => {
         returnTableData(res, callback);
     }).catch(err => {
-        console.error("Error: " + error);
-        callback(error);
+        console.error("Error: " + err);
+        callback(err);
     }); 
 };
 

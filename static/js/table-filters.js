@@ -102,10 +102,14 @@ function registerFilters() {
 
     filterByRegion.change(function () {
         let filter = $(this).val();
+        let lang = localStorage.languagePref;
+        if((!filter || filter === '') && window.location.href.indexOf('cityname=') > 0) {
+            lang = undefined;
+        }
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=0-50' },
-            data: { regionFilter: filter, lang: localStorage.languagePref },
+            data: { regionFilter: filter, lang: lang },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
                 populateRegions().then(() => {

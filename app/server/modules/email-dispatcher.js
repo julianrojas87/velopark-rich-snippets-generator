@@ -272,7 +272,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "A new user (" + email + ") just signed up on Velopark!<br>";
-        html += "You can review his membership through the <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>admin console</a>.<br><br>";
+        html += "You can review her/his membership through the <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>admin console</a>.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -305,7 +305,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Een nieuwe gebruiker (" + email + ") heeft zonet een account aangemaakt bij Velopark!<br>";
-        html += "U kunt zijn lidmaatschap bekijken via de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>beheerdersconsole</a>.<br><br>";
+        html += "U kunt haar/zijn lidmaatschap bekijken via de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>beheerdersconsole</a>.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";

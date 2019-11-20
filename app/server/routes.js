@@ -562,6 +562,8 @@ module.exports = app => {
                     if (value === true) {
                         let idFilter = req.query.idFilter;
                         let nameFilter = req.query.nameFilter;
+                        let regionFilter = req.query.regionFilter;
+                        let lang = req.query.lang;
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
@@ -577,7 +579,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, function (error, parkings) {
+                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, function (error, parkings) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send('failed');
@@ -598,7 +600,8 @@ module.exports = app => {
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
                                         idFilter: '',
-                                        nameFilter: ''
+                                        nameFilter: '',
+                                        regionFilter: ''
                                     });
                                 } else {
                                     res.render('city-parkings-part.html', {
@@ -616,7 +619,8 @@ module.exports = app => {
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
                                         idFilter: idFilter,
-                                        nameFilter: nameFilter
+                                        nameFilter: nameFilter,
+                                        regionFilter: regionFilter
                                     });
                                 }
                             }
