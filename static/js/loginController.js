@@ -328,7 +328,7 @@ let currentLang = 'nl';
 })(jQuery);
 
 //if no lang parameter given, setting is loaded from localStorage
-function translate(lang){
+function translate(lang, first){
     if(lang && user && user.name){
         //send preference to the server (async)
         let domain = domainName !== '' ? '/' + domainName : '';
@@ -463,6 +463,7 @@ function translate(lang){
 
                 // Trigger change on data input language to adapt languages names
                 $('#language-selection-container #dutch').trigger('change');
+
                 handleResize();
 
                 //fix select2
@@ -478,6 +479,14 @@ function translate(lang){
                     });
                 });
                 select2El.change();
+
+                // Regions filter translation
+                if($('#filterByRegion').length > 0 && !first) {
+                    populateRegions().then(() => {
+                        console.log('herrreee')
+                        insertParkingRegions();
+                    });
+                }
             },
             error: e => {
                 console.error('Error: ' + e.responseText);

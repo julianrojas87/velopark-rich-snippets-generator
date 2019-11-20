@@ -69,23 +69,28 @@
     registerParkingListButtons();
 })(jQuery);
 
-function registerParkingListButtons(){
+function insertParkingRegions() {
+    let domain = domainName !== '' ? '/' + domainName : '';
+    $('.parking-region-dummy').each(function(){
+        let lat = $(this).attr('data-lat');
+        let lon = $(this).attr('data-long');
+        $(this).html(getLoadingIcon());
+        $.ajax({
+            type: "GET",
+            url: domain + '/cityrep/get-regions/' + lat + '/' + lon,
+            success: data => {
+                $(this).parent().html('<span class="parking-region-dummy" data-long="' + lon + '" data-lat="' + lat + '">' + data.toString() + '</span>');
+            },
+            error: e => {
+                $(this).html("[Error]");
+            }
+        });
+    });
+}
 
-    $('.pageButton').on('click', function(){
-        $('.paginationContainer').html('<div class="loading-icon">' +
-            '                <svg class="lds-dual-ring" width="24px"\n' +
-            '                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">\n' +
-            '                    <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"\n' +
-            '                            ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"\n' +
-            '                            fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"\n' +
-            '                            stroke-dasharray="62.83185307179586 62.83185307179586"\n' +
-            '                            transform="rotate(244.478 50 50)">\n' +
-            '                        <animateTransform attributeName="transform" type="rotate" calcMode="linear"\n' +
-            '                                          values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"\n' +
-            '                                          repeatCount="indefinite"></animateTransform>\n' +
-            '                    </circle>\n' +
-            '                </svg>\n' +
-            '            </div>');
+function registerParkingListButtons() {
+    $('.pageButton').on('click', function() {
+        $('.paginationContainer').html(getLoadingIcon());
         
         let idFilter = $('#filterById').val();
         let nameFilter = $('#filterByName').val();
@@ -96,14 +101,14 @@ function registerParkingListButtons(){
             data: { 
                 idFilter: idFilter,
                 nameFilter: nameFilter,
-                regionFilter: regionFilter
+                regionFilter: regionFilter,
+                lang: localStorage.languagePref
             },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
                 populateRegions().then(() => {
                     registerFilters();
                     registerParkingListButtons();
-                    translate();
                 });
             },
             error: e => {
@@ -113,21 +118,7 @@ function registerParkingListButtons(){
     });
 
     //insert regions in admin parking overview
-    let domain = domainName !== '' ? '/' + domainName : '';
-    $('.parking-region-dummy').each(function(){
-        let lat = $(this).attr('data-lat');
-        let lon = $(this).attr('data-long');
-        $.ajax({
-            type: "GET",
-            url: domain + '/cityrep/get-regions/' + lat + '/' + lon,
-            success: data => {
-                $(this).parent().html(data.toString());
-            },
-            error: e => {
-                $(this).html("[Error]");
-            }
-        });
-    });
+    insertParkingRegions();
 
     $('#parking-list input[title=Edit]').each(function () {
         $(this).on('click', function () {
@@ -240,8 +231,6 @@ function registerParkingListButtons(){
         });
     });
 
-
-
     $('#button-create-new-company').on('click', function () {
         $(this).hide();
         $(this).prev('.loading-icon').show();
@@ -311,4 +300,21 @@ function registerParkingListButtons(){
     $('#transfer-parking_close_button').on('click', () => {
         $('#transfer-parking-form').toggle();
     });
+}
+
+function getLoadingIcon() {
+    return '<div class="loading-icon">' +
+    '                <svg class="lds-dual-ring" width="24px"\n' +
+    '                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">\n' +
+    '                    <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"\n' +
+    '                            ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"\n' +
+    '                            fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"\n' +
+    '                            stroke-dasharray="62.83185307179586 62.83185307179586"\n' +
+    '                            transform="rotate(244.478 50 50)">\n' +
+    '                        <animateTransform attributeName="transform" type="rotate" calcMode="linear"\n' +
+    '                                          values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"\n' +
+    '                                          repeatCount="indefinite"></animateTransform>\n' +
+    '                    </circle>\n' +
+    '                </svg>\n' +
+    '            </div>';
 }

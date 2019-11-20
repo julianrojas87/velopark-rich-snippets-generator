@@ -236,6 +236,7 @@ module.exports = app => {
                     let idFilter = req.query.idFilter;
                     let nameFilter = req.query.nameFilter;
                     let regionFilter = req.query.regionFilter;
+                    let lang = req.query.lang;
                     if (value === true) {
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
@@ -252,7 +253,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter)
+                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang)
                             .then(parkings => {
                                 if (!rangeHeader) {
                                     res.render('admin-parkings.html', {
@@ -990,7 +991,7 @@ module.exports = app => {
 
     app.get('/municipalities', async function (req, res) {
         try {
-            res.status(200).json(await CiM.listAllMunicipalities());
+            res.status(200).json(await CiM.listAllMunicipalities(req.query.lang));
         } catch(err) {
             res.status(500).send('failed');
         }

@@ -10,8 +10,16 @@ function populateRegions() {
         $.ajax({
             type: "GET",
             url: domain + '/municipalities',
+            data: { lang: localStorage.languagePref },
             success: data => {
                 let filter = $('#filterByRegion');
+                // Clean and restore
+                if ($(filter).hasClass('select2-hidden-accessible')) {
+                    $(filter).select2('destroy');
+                }
+                $(filter).empty();
+                $(filter).append('<option value=""></option>');
+                // Add new values
                 for (var i = 0; i < data.length; i++) {
                     $(filter).append('<option value="' + data[i] + '">' + data[i] + '</option>');
                 }
@@ -65,7 +73,6 @@ function registerFilters() {
                 populateRegions().then(() => {
                     registerFilters();
                     registerParkingListButtons();
-                    translate();
                 });
             },
             error: e => {
@@ -85,7 +92,6 @@ function registerFilters() {
                 populateRegions().then(() => {
                     registerFilters();
                     registerParkingListButtons();
-                    translate();
                 });
             },
             error: e => {
@@ -99,19 +105,17 @@ function registerFilters() {
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=0-50' },
-            data: { regionFilter: filter },
+            data: { regionFilter: filter, lang: localStorage.languagePref },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
                 populateRegions().then(() => {
                     registerFilters();
                     registerParkingListButtons();
-                    translate();
                 });
             },
             error: e => {
                 alert('Error: ' + e.responseText);
             }
         });
-
     });
 }

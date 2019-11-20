@@ -45,23 +45,17 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = (skip, limit, idFilter, nameFilter, regionFilter) => {
+exports.listAllParkings = (skip, limit, idFilter, nameFilter, regionFilter, lang) => {
     return new Promise(async (resolve, reject) => {
         if (regionFilter) {
-            dbAdapter.findParkingsByCityName(regionFilter, (error, res) => {
-                if (error != null) {
-                    console.error("Error: " + error);
-                    reject(error);
+            let parkings = await dbAdapter.findParkingsByCityName(regionFilter, lang, skip, limit, idFilter, nameFilter);
+            returnTableData(parkings, (err, result) => {
+                if (err != null) {
+                    reject(err);
                 } else {
-                    returnTableData(res, (err, result) => {
-                        if (error != null) {
-                            reject(error);
-                        } else {
-                            resolve(result);
-                        }
-                    });
+                    resolve(result);
                 }
-            }, skip, limit, idFilter, nameFilter);
+            });
         } else {
             dbAdapter.findParkingsWithCompanies(skip, limit, idFilter, nameFilter)
                 .then(res => {
@@ -93,14 +87,12 @@ exports.listParkingsByEmail = async (username, skip, limit, idFilter, nameFilter
 };
 
 exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilter, callback) {
-    dbAdapter.findParkingsByCityName(cityName, (error, res) => {
-        if (error != null) {
-            console.error("Error: " + error);
-            callback(error);
-        } else {
-            returnTableData(res, callback);
-        }
-    }, skip, limit, idFilter, nameFilter);
+    dbAdapter.findParkingsByCityName(cityName, lang = 'nl', skip, limit, idFilter, nameFilter).then(res => {
+        returnTableData(res, callback);
+    }).catch(err => {
+        console.error("Error: " + error);
+        callback(error);
+    }); 
 };
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {

@@ -911,7 +911,7 @@ exports.insertCompany = function (companyName, callback) {
     Cities: lookup
 */
 
-exports.findAllMunicipalities = async () => {
+exports.findAllMunicipalities = async lang => {
     return new Promise((resolve, reject) => {
         let names = [];
         cities.aggregate([
@@ -920,12 +920,19 @@ exports.findAllMunicipalities = async () => {
             },
             {
                 $sort: { 'properties.cityname': 1 }
-            },
-            {
-                $project: { 'properties.cityname': 1, _id: 0 }
             }
         ]).forEach(function(c) {
-            names.push(c['properties']['cityname']);
+            if(lang === 'en') {
+                names.push(c['properties']['name_EN']);
+            } else if(lang === 'nl') {
+                names.push(c['properties']['name_NL']);
+            } else if(lang === 'fr') {
+                names.push(c['properties']['name_FR']);
+            } else if(lang === 'de') {
+                names.push(c['properties']['name_DE']);
+            } else {
+                names.push(c['properties']['name_NL']);
+            }
         }, err => {
             if(err) {
                 reject(err);
@@ -946,28 +953,37 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '') {
-    cities.findOne({ 'properties.cityname': cityName }, {}, function (error, city) {
-        if (error != null) {
-            callback(error);
-        } else {
-            parkings.find({
-                'parkingID': { $regex: ".*" + idFilter + ".*" },
-                'name': { $regex: ".*" + nameFilter + ".*" },
-                'location': {
-                    '$geoWithin': {
-                        '$geometry': city.geometry
-                    }
+exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '') => {
+    let city = null;
+    if (lang === 'en') {
+        city = await cities.findOne({ 'properties.name_EN': cityName, 'properties.adminLevel': 4 });
+    } else if (lang === 'fr') {
+        city = await cities.findOne({ 'properties.name_FR': cityName, 'properties.adminLevel': 4 });
+    } else if (lang === 'de') {
+        city = await cities.findOne({ 'properties.name_DE': cityName, 'properties.adminLevel': 4 });
+    } else if (lang === 'nl'){
+        city = await cities.findOne({ 'properties.name_NL': cityName,'properties.adminLevel': 4 });
+    } else {
+        city = await cities.findOne({ 'properties.cityname': cityName,'properties.adminLevel': 4 });
+    }
+
+    if(city) {
+        return parkings.find({
+            'parkingID': { $regex: ".*" + idFilter + ".*" },
+            'name': { $regex: ".*" + nameFilter + ".*" },
+            'location': {
+                '$geoWithin': {
+                    '$geometry': city.geometry
                 }
-            }).skip(skip).limit(limit).toArray(function (error, result) {
-                if (error != null) {
-                    callback(error);
-                } else {
-                    callback(null, result);
-                }
-            });
-        }
-    });
+            }
+        })
+        .skip(skip)
+        .limit(limit)
+        .toArray();
+        
+    } else {
+        throw new Error(`The municipality ${cityName} does not exist`);
+    }
 };
 
 exports.findCitiesByLocation = function (lat, lng, lang, callback) {
