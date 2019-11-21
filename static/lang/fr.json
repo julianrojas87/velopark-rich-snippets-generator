@@ -471,7 +471,7 @@
   "signUp" : {
     "title" : "Créer un nouveau compte",
     "companyMember" : "Opérateur de Stationnement",
-    "cityRep" : "Représentant des villes",
+    "cityRep" : "Représentant du Gouvernement",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Mot de passe",
     "selectCompany" : {
