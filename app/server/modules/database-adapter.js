@@ -417,7 +417,7 @@ exports.findParkingByID = id => {
     return parkings.findOne({ parkingID: id });
 };
 
-exports.findParkingsByEmail = async function (email, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter = '', lang) {
+exports.findParkingsByEmail = async function (email, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter = '', lang, sort = -1) {
     try {
         let account = await accounts.findOne({ email: email, companyEnabled: true });
         let parkings = [];
@@ -460,6 +460,7 @@ exports.findParkingsByEmail = async function (email, skip = 0, limit = Number.MA
                         }
                     }
                 },
+                { $sort: { "parking.lastModified": sort } },
                 { $skip: skip },
                 { $limit: limit },
             ]).forEach(p => {
@@ -483,6 +484,7 @@ exports.findParkingsByEmail = async function (email, skip = 0, limit = Number.MA
                     }
                 },
                 { $match: { "parking.name": { $regex: ".*" + nameFilter + ".*" } } },
+                { $sort: { "parking.lastModified": sort } },
                 { $skip: skip },
                 { $limit: limit },
             ]).forEach(p => {
@@ -1001,7 +1003,7 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter) => {
+exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter, sort = -1) => {
     let city = null;
 
     if (regionFilter) {
@@ -1053,6 +1055,7 @@ exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number
                 }
             }
         })
+            .sort({ 'lastModified': sort })
             .skip(skip)
             .limit(limit)
             .toArray();

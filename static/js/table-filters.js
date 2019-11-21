@@ -56,6 +56,7 @@ function sortByDate(sort) {
                 registerFilters();
                 registerParkingListButtons();
             });
+            translate(undefined, true);
         },
         error: e => {
             alert('Error: ' + e.responseText);

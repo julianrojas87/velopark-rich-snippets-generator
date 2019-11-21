@@ -489,7 +489,7 @@
   "parkings" : {
     "title" : "Parkplätze in ",
     "th" : [
-      "URI der Parkanlage", "Parkname", "Gemeinde", "Genehmigt", "Aktionen"
+      "URI der Parkanlage", "Parkname", "Gemeinde", "Genehmigt", "Zuletzt Geändert", "Aktionen"
     ]
   },
   "admin" : {

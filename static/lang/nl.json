@@ -488,7 +488,7 @@
   "parkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
     ]
   },
   "admin" : {
@@ -539,7 +539,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
     ]
   },
   "pswdReset": {

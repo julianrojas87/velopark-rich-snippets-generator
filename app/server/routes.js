@@ -567,6 +567,7 @@ module.exports = app => {
                         let nameFilter = req.query.nameFilter;
                         let regionFilter = req.query.regionFilter;
                         let lang = req.query.lang;
+                        let dateSort = req.query.dateSort ? parseInt(req.query.dateSort) : -1;
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
@@ -582,7 +583,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, function (error, parkings) {
+                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, dateSort, function (error, parkings) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send('failed');
@@ -604,7 +605,8 @@ module.exports = app => {
                                         rangeEnd: rangeEnd,
                                         idFilter: '',
                                         nameFilter: '',
-                                        regionFilter: ''
+                                        regionFilter: '',
+                                        dateSort: dateSort
                                     });
                                 } else {
                                     res.render('city-parkings-part.html', {
@@ -623,7 +625,8 @@ module.exports = app => {
                                         rangeEnd: rangeEnd,
                                         idFilter: idFilter,
                                         nameFilter: nameFilter,
-                                        regionFilter: regionFilter
+                                        regionFilter: regionFilter,
+                                        dateSort: dateSort
                                     });
                                 }
                             }
@@ -717,6 +720,7 @@ module.exports = app => {
             let nameFilter = req.query.nameFilter;
             let regionFilter = req.query.regionFilter;
             let lang = req.query.lang;
+            let dateSort = req.query.dateSort ? parseInt(req.query.dateSort) : -1;
             let rangeHeader = req.header("range");
             let rangeStart = 0;
             let rangeEnd = 50;
@@ -731,7 +735,7 @@ module.exports = app => {
                 }
             }
 
-            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, function (error, parkings) {
+            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, dateSort, function (error, parkings) {
                 if (error != null) {
                     res.status(500).send("Could not get parkings for this user.");
                 } else {
@@ -748,7 +752,8 @@ module.exports = app => {
                             rangeEnd: rangeEnd,
                             idFilter: '',
                             nameFilter: '',
-                            regionFilter: ''
+                            regionFilter: '',
+                            dateSort: dateSort
                         });
                     } else {
                         res.render('parkings-part.html', {
@@ -763,7 +768,8 @@ module.exports = app => {
                             rangeEnd: rangeEnd,
                             idFilter: idFilter,
                             nameFilter: nameFilter,
-                            regionFilter: regionFilter
+                            regionFilter: regionFilter,
+                            dateSort: dateSort
                         });
                     }
                 }

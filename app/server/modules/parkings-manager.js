@@ -59,13 +59,13 @@ exports.listAllParkings = async (skip, limit, idFilter, nameFilter, regionFilter
 
 };
 
-exports.listParkingsByEmail = async (username, skip, limit, idFilter, nameFilter, regionFilter, lang, callback) => {
-    let res = await dbAdapter.findParkingsByEmail(username, skip, limit, idFilter, nameFilter, regionFilter, lang);
+exports.listParkingsByEmail = async (username, skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort, callback) => {
+    let res = await dbAdapter.findParkingsByEmail(username, skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort);
     returnTableData(res, callback);
 };
 
-exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilter, regionFilter, lang, callback) {
-    dbAdapter.findParkingsByCityName(cityName, lang, skip, limit, idFilter, nameFilter, regionFilter).then(res => {
+exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort, callback) {
+    dbAdapter.findParkingsByCityName(cityName, lang, skip, limit, idFilter, nameFilter, regionFilter, dateSort).then(res => {
         returnTableData(res, callback);
     }).catch(err => {
         console.error("Error: " + err);

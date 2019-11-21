@@ -489,7 +489,7 @@
   "parkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Last Modified", "Actions"
     ]
   },
   "admin" : {
@@ -540,7 +540,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Last Modified", "Actions"
     ]
   },
   "pswdReset": {
