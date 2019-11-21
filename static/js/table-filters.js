@@ -45,10 +45,37 @@ function populateRegions() {
     });
 }
 
+function sortByDate(sort) {
+    $.ajax({
+        url: window.location.href,
+        headers: { 'Range': 'pages=0-50' },
+        data: { dateSort: sort },
+        success: function (data) {
+            $('#parkingsContainer').replaceWith(data);
+            populateRegions().then(() => {
+                registerFilters();
+                registerParkingListButtons();
+            });
+        },
+        error: e => {
+            alert('Error: ' + e.responseText);
+        }
+    });
+}
+
 function registerFilters() {
     let filterById = $('#filterById');
     let filterByName = $('#filterByName');
     let filterByRegion = $('#filterByRegion');
+    let dateSort = $('#sort-des').data('sort');
+
+    if(dateSort === -1) {
+        $('#sort-des').show();
+        $('#sort-asc').hide();
+    } else {
+        $('#sort-des').hide();
+        $('#sort-asc').show();
+    }
 
     if (filterById.val() !== '') {
         let num = filterById.val();
@@ -67,7 +94,7 @@ function registerFilters() {
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=0-50' },
-            data: { idFilter: filter },
+            data: { idFilter: filter, dateSort: dateSort },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
                 populateRegions().then(() => {
@@ -86,7 +113,7 @@ function registerFilters() {
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=0-50' },
-            data: { nameFilter: filter },
+            data: { nameFilter: filter, dateSort: dateSort },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
                 populateRegions().then(() => {
@@ -103,13 +130,17 @@ function registerFilters() {
     filterByRegion.change(function () {
         let filter = $(this).val();
         let lang = localStorage.languagePref;
-        if((!filter || filter === '') && window.location.href.indexOf('cityname=') > 0) {
+        if ((!filter || filter === '') && window.location.href.indexOf('cityname=') > 0) {
             lang = undefined;
         }
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=0-50' },
-            data: { regionFilter: filter, lang: lang },
+            data: { 
+                regionFilter: filter, 
+                lang: lang,
+                dateSort: dateSort
+            },
             success: function (data) {
                 $('#parkingsContainer').replaceWith(data);
                 populateRegions().then(() => {
@@ -117,7 +148,7 @@ function registerFilters() {
                     registerParkingListButtons();
                 });
 
-                if(filter === '') {
+                if (filter === '') {
                     translate(undefined, true);
                 }
             },
@@ -125,5 +156,17 @@ function registerFilters() {
                 alert('Error: ' + e.responseText);
             }
         });
+    });
+
+    $('#sort-des').click(function () {
+        $(this).toggle();
+        $('#sort-asc').toggle();
+        sortByDate(1);
+    });
+
+    $('#sort-asc').click(function () {
+        $(this).toggle();
+        $('#sort-des').toggle();
+        sortByDate(-1);
     });
 }

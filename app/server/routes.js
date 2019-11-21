@@ -237,6 +237,7 @@ module.exports = app => {
                     let nameFilter = req.query.nameFilter;
                     let regionFilter = req.query.regionFilter;
                     let lang = req.query.lang;
+                    let dateSort = req.query.dateSort ? parseInt(req.query.dateSort) : -1;
                     if (value === true) {
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
@@ -253,7 +254,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang)
+                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, dateSort)
                             .then(parkings => {
                                 if (!rangeHeader) {
                                     res.render('admin-parkings.html', {
@@ -271,7 +272,8 @@ module.exports = app => {
                                         rangeEnd: rangeEnd,
                                         idFilter: '',
                                         nameFilter: '',
-                                        regionFilter: ''
+                                        regionFilter: '',
+                                        dateSort: dateSort
                                     });
                                 } else {
                                     res.render('admin-parkings-part.html', {
@@ -289,7 +291,8 @@ module.exports = app => {
                                         rangeEnd: rangeEnd,
                                         idFilter: idFilter,
                                         nameFilter: nameFilter,
-                                        regionFilter: regionFilter
+                                        regionFilter: regionFilter,
+                                        dateSort: dateSort
                                     });
                                 }
                             })

@@ -45,32 +45,16 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = (skip, limit, idFilter, nameFilter, regionFilter, lang) => {
+exports.listAllParkings = async (skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort) => {
     return new Promise(async (resolve, reject) => {
-        if (regionFilter) {
-            let parkings = await dbAdapter.findParkingsByCityName(regionFilter, lang, skip, limit, idFilter, nameFilter);
-            returnTableData(parkings, (err, result) => {
-                if (err != null) {
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        } else {
-            dbAdapter.findParkingsWithCompanies(skip, limit, idFilter, nameFilter)
-                .then(res => {
-                    returnTableData(res, function (error, result) {
-                        if (error != null) {
-                            reject(error);
-                        } else {
-                            resolve(result);
-                        }
-                    });
-                })
-                .catch(error => {
-                    reject(error);
-                });
-        }
+        let parkings = await dbAdapter.findParkingsWithCompanies(skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort);
+        returnTableData(parkings, function (error, result) {
+            if (error != null) {
+                reject(error);
+            } else {
+                resolve(result);
+            }
+        });
     });
 
 };
@@ -86,7 +70,7 @@ exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilt
     }).catch(err => {
         console.error("Error: " + err);
         callback(err);
-    }); 
+    });
 };
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
@@ -126,6 +110,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
         let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-');
         let parkingID = encodeURIComponent(park_obj['@id']);
         let name = park_obj['name'][0]['@value'];
+        let lastModified = new Date(park_obj['dateModified']);
         let location;
         try {
             location = {
@@ -136,7 +121,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
             console.error("Could not extract location from parking. " + e);
         }
 
-        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, companyName, async function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, lastModified, companyName, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -284,6 +269,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
     let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-');
     let parkingID = encodeURIComponent(park_obj['@id']);
     let name = park_obj['name'][0]['@value'];
+    let lastModified = new Date(park_obj['dateModified']);
     let location;
     try {
         location = {
@@ -295,7 +281,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
     }
 
     if (companyName) {
-        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, companyName, async function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, lastModified, companyName, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -309,7 +295,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
             }
         });
     } else {
-        dbAdapter.saveParkingAsAdmin(parkingID, localId + '.jsonld', approved, location, name, async function (e, res) {
+        dbAdapter.saveParkingAsAdmin(parkingID, localId + '.jsonld', approved, location, name, lastModified, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -689,11 +675,12 @@ async function initCatalog() {
                 parkings.set(d['@id'], localId);
             }
 
-            // Hack to add the name of the parking to the DB. Only meant to be run once.
-            if (!dbParking.name) {
+            // Hack to add the name of the parking and the last modified date to the DB. Only meant to be run once.
+            if (!dbParking.name || !dbParking.lastModified) {
                 let name = d['name'][0]['@value'];
-                dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, () => {
-                    console.log('Parking ' + localId + ' name added to DB');
+                let lastModified = new Date(d['dateModified']);
+                dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, lastModified, () => {
+                    console.log('Parking ' + localId + ' name and last modified date added to DB');
                 });
             }
         }

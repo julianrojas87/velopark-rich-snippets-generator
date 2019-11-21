@@ -344,48 +344,69 @@ exports.deleteAccounts = function (callback) {
     Parkings: lookup
 */
 
-exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '') {
-    return new Promise((resolve, reject) => {
-        parkings.aggregate(
-            [
-                {
-                    $match: {
-                        "parkingID": { $regex: ".*" + idFilter + ".*" },
-                        "name": { $regex: ".*" + nameFilter + ".*" }
-                    }
-                },
-                { $skip: skip },
-                { $limit: limit },
-                {
-                    $lookup:
-                    {
-                        from: "companies",
-                        localField: "parkingID",
-                        foreignField: "parkingIDs",
-                        as: "company"
+exports.findParkingsWithCompanies = async (skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter, lang, sort = -1) => {
+    if (regionFilter) {
+        let city = null;
+
+        if (lang === 'en') {
+            city = await cities.findOne({ 'properties.name_EN': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'fr') {
+            city = await cities.findOne({ 'properties.name_FR': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'de') {
+            city = await cities.findOne({ 'properties.name_DE': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'nl') {
+            city = await cities.findOne({ 'properties.name_NL': regionFilter, 'properties.adminLevel': 4 });
+        } else {
+            city = await cities.findOne({ 'properties.cityname': regionFilter, 'properties.adminLevel': 4 });
+        }
+
+        return parkings.aggregate([
+            {
+                $match: {
+                    "parkingID": { $regex: ".*" + idFilter + ".*" },
+                    "name": { $regex: ".*" + nameFilter + ".*" },
+                    "location": {
+                        '$geoWithin': {
+                            '$geometry': city.geometry
+                        }
                     }
                 }
-            ],
-            {},
-            function (error, res) {
-                if (error != null) {
-                    reject(error);
-                } else {
-                    if (res != null) {
-                        res.toArray(function (error, documents) {
-                            if (error != null) {
-                                reject(error);
-                            } else {
-                                resolve(documents);
-                            }
-                        })
-                    } else {
-                        resolve();
-                    }
+            },
+            { $sort: { "lastModified": sort } },
+            { $skip: skip },
+            { $limit: limit },
+            {
+                $lookup:
+                {
+                    from: "companies",
+                    localField: "parkingID",
+                    foreignField: "parkingIDs",
+                    as: "company"
                 }
             }
-        );
-    });
+        ]).toArray();
+    } else {
+        return parkings.aggregate([
+            {
+                $match: {
+                    "parkingID": { $regex: ".*" + idFilter + ".*" },
+                    "name": { $regex: ".*" + nameFilter + ".*" },
+                }
+            },
+            { $sort: { "lastModified": sort } },
+            { $skip: skip },
+            { $limit: limit },
+            {
+                $lookup:
+                {
+                    from: "companies",
+                    localField: "parkingID",
+                    foreignField: "parkingIDs",
+                    as: "company"
+                }
+            }
+        ]).toArray();
+    }
 };
 
 exports.findParkings = (skip, limit) => {
@@ -557,7 +578,7 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
     Parkings: save
 */
 
-let updateOrCreateParking = function (id, filename, approvedStatus, location, name, callback) {
+let updateOrCreateParking = function (id, filename, approvedStatus, location, name, lastModified, callback) {
     parkings.findOneAndUpdate(
         {
             parkingID: id
@@ -567,7 +588,8 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, na
                 filename: filename,
                 approvedstatus: approvedStatus,
                 location: location,
-                name: name
+                name: name,
+                lastModified: lastModified
             },
         },
         {
@@ -613,17 +635,17 @@ exports.updateParkingAsCityRep = function (id, filename, location, approved, cal
         });
 };
 
-exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, name, callback) {
-    updateOrCreateParking(id, filename, approvedStatus, location, name, callback);
+exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, name, lastModified, callback) {
+    updateOrCreateParking(id, filename, approvedStatus, location, name, lastModified, callback);
 };
 
-exports.saveParkingToCompany = function (id, filename, approvedStatus, location, name, companyName, callback) {
+exports.saveParkingToCompany = function (id, filename, approvedStatus, location, name, lastModified, companyName, callback) {
     exports.updateCompanyParkingIDs(companyName, id, function (error, result) {
         if (error != null) {
             callback(error);
         } else {
             if (result != null) {
-                updateOrCreateParking(id, filename, approvedStatus, location, name, callback);
+                updateOrCreateParking(id, filename, approvedStatus, location, name, lastModified, callback);
             } else {
                 //Company not found
                 callback("This company does not exist");
@@ -1002,7 +1024,7 @@ exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number
         let mainGeom = reader.read(city.geometry);
         let filterGeom = reader.read(filter.geometry);
 
-        if(filterGeom.intersects(mainGeom)) {
+        if (filterGeom.intersects(mainGeom)) {
             city = filter;
         } else {
             return [];
