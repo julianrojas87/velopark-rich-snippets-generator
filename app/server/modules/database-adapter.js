@@ -3,6 +3,7 @@ const dookie = require('dookie');
 const fs = require('fs');
 const utils = require('../utils/utils');
 const nazka = require('./nazka');
+const jsts = require('jsts');
 
 const USE_NAZKA = true;
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
@@ -343,43 +344,69 @@ exports.deleteAccounts = function (callback) {
     Parkings: lookup
 */
 
-exports.findParkingsWithCompanies = function (skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '') {
-    return new Promise((resolve, reject) => {
-        parkings.aggregate(
-            [
-                { $match: { "parkingID": { $regex: ".*" + filter + ".*" } } },
-                { $skip: skip },
-                { $limit: limit },
-                {
-                    $lookup:
-                    {
-                        from: "companies",
-                        localField: "parkingID",
-                        foreignField: "parkingIDs",
-                        as: "company"
+exports.findParkingsWithCompanies = async (skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter, lang, sort = -1) => {
+    if (regionFilter) {
+        let city = null;
+
+        if (lang === 'en') {
+            city = await cities.findOne({ 'properties.name_EN': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'fr') {
+            city = await cities.findOne({ 'properties.name_FR': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'de') {
+            city = await cities.findOne({ 'properties.name_DE': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'nl') {
+            city = await cities.findOne({ 'properties.name_NL': regionFilter, 'properties.adminLevel': 4 });
+        } else {
+            city = await cities.findOne({ 'properties.cityname': regionFilter, 'properties.adminLevel': 4 });
+        }
+
+        return parkings.aggregate([
+            {
+                $match: {
+                    "parkingID": { $regex: ".*" + idFilter + ".*" },
+                    "name": { $regex: ".*" + nameFilter + ".*" },
+                    "location": {
+                        '$geoWithin': {
+                            '$geometry': city.geometry
+                        }
                     }
                 }
-            ],
-            {},
-            function (error, res) {
-                if (error != null) {
-                    reject(error);
-                } else {
-                    if (res != null) {
-                        res.toArray(function (error, documents) {
-                            if (error != null) {
-                                reject(error);
-                            } else {
-                                resolve(documents);
-                            }
-                        })
-                    } else {
-                        resolve();
-                    }
+            },
+            { $sort: { "lastModified": sort } },
+            { $skip: skip },
+            { $limit: limit },
+            {
+                $lookup:
+                {
+                    from: "companies",
+                    localField: "parkingID",
+                    foreignField: "parkingIDs",
+                    as: "company"
                 }
             }
-        );
-    });
+        ]).toArray();
+    } else {
+        return parkings.aggregate([
+            {
+                $match: {
+                    "parkingID": { $regex: ".*" + idFilter + ".*" },
+                    "name": { $regex: ".*" + nameFilter + ".*" },
+                }
+            },
+            { $sort: { "lastModified": sort } },
+            { $skip: skip },
+            { $limit: limit },
+            {
+                $lookup:
+                {
+                    from: "companies",
+                    localField: "parkingID",
+                    foreignField: "parkingIDs",
+                    as: "company"
+                }
+            }
+        ]).toArray();
+    }
 };
 
 exports.findParkings = (skip, limit) => {
@@ -390,59 +417,86 @@ exports.findParkingByID = id => {
     return parkings.findOne({ parkingID: id });
 };
 
-exports.findParkingsByEmail = function (email, skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '', callback) {
-    accounts.findOne({ email: email, companyEnabled: true }, function (e, o) {
-        if (o != null) {
-            if (o.companyName != null) {
-                //User is part of a company, the parkings of this company are to be returned
-                companies.aggregate(
-                    [
-                        {
-                            $match: {
-                                name: o.companyName
+exports.findParkingsByEmail = async function (email, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter = '', lang, sort = -1) {
+    try {
+        let account = await accounts.findOne({ email: email, companyEnabled: true });
+        let parkings = [];
+
+        if (regionFilter !== '') {
+            let city = null;
+            if (lang === 'en') {
+                city = await cities.findOne({ 'properties.name_EN': regionFilter, 'properties.adminLevel': 4 });
+            } else if (lang === 'fr') {
+                city = await cities.findOne({ 'properties.name_FR': regionFilter, 'properties.adminLevel': 4 });
+            } else if (lang === 'de') {
+                city = await cities.findOne({ 'properties.name_DE': regionFilter, 'properties.adminLevel': 4 });
+            } else if (lang === 'nl') {
+                city = await cities.findOne({ 'properties.name_NL': regionFilter, 'properties.adminLevel': 4 });
+            } else {
+                city = await cities.findOne({ 'properties.cityname': regionFilter, 'properties.adminLevel': 4 });
+            }
+
+            await companies.aggregate([
+                {
+                    $match: {
+                        name: account.companyName
+                    }
+                },
+                { $unwind: "$parkingIDs" },
+                {
+                    $lookup: {
+                        from: "parkings",
+                        localField: "parkingIDs",
+                        foreignField: "parkingID",
+                        as: "parking"
+                    }
+                },
+                {
+                    $match: {
+                        "parking.location": {
+                            '$geoWithin': {
+                                '$geometry': city.geometry
                             }
-                        },
-                        {
-                            $unwind: "$parkingIDs"
-                        },
-                        { $skip: skip },
-                        { $limit: limit },
-                        { $match: { "parkingIDs": { $regex: ".*" + filter + ".*" } } },
-                        {
-                            $lookup:
-                            {
-                                from: "parkings",
-                                localField: "parkingIDs",
-                                foreignField: "parkingID",
-                                as: "parking"
-                            }
-                        }
-                    ],
-                    {},
-                    function (e, o) {
-                        if (e) {
-                            callback(e);
-                        } else {
-                            let parkingArray;
-                            o.toArray().then(res => {
-                                parkingArray = res;
-                                for (i in parkingArray) {
-                                    parkingArray[i] = parkingArray[i].parking[0];
-                                }
-                                callback(null, parkingArray);
-                            }).catch(err => {
-                                callback(err);
-                            });
                         }
                     }
-                );
-            } else {
-                callback("User does not belong to a company.");
-            }
+                },
+                { $sort: { "parking.lastModified": sort } },
+                { $skip: skip },
+                { $limit: limit },
+            ]).forEach(p => {
+                parkings.push(p.parking[0]);
+            });
         } else {
-            callback(e || "User does not exist or his membership to his company has not been approved yet.");
+            await companies.aggregate([
+                {
+                    $match: {
+                        name: account.companyName
+                    }
+                },
+                { $unwind: "$parkingIDs" },
+                { $match: { "parkingIDs": { $regex: ".*" + idFilter + ".*" } } },
+                {
+                    $lookup: {
+                        from: "parkings",
+                        localField: "parkingIDs",
+                        foreignField: "parkingID",
+                        as: "parking"
+                    }
+                },
+                { $match: { "parking.name": { $regex: ".*" + nameFilter + ".*" } } },
+                { $sort: { "parking.lastModified": sort } },
+                { $skip: skip },
+                { $limit: limit },
+            ]).forEach(p => {
+                parkings.push(p.parking[0]);
+            });
         }
-    });
+
+        return parkings;
+
+    } catch (err) {
+        throw err;
+    }
 };
 
 exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
@@ -526,7 +580,7 @@ exports.findParkingByEmailAndParkingId = function (email, parkingId, callback) {
     Parkings: save
 */
 
-let updateOrCreateParking = function (id, filename, approvedStatus, location, callback) {
+let updateOrCreateParking = function (id, filename, approvedStatus, location, name, lastModified, callback) {
     parkings.findOneAndUpdate(
         {
             parkingID: id
@@ -535,7 +589,9 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, ca
             $set: {
                 filename: filename,
                 approvedstatus: approvedStatus,
-                location: location
+                location: location,
+                name: name,
+                lastModified: lastModified
             },
         },
         {
@@ -581,17 +637,17 @@ exports.updateParkingAsCityRep = function (id, filename, location, approved, cal
         });
 };
 
-exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, callback) {
-    updateOrCreateParking(id, filename, approvedStatus, location, callback);
+exports.saveParkingAsAdmin = function (id, filename, approvedStatus, location, name, lastModified, callback) {
+    updateOrCreateParking(id, filename, approvedStatus, location, name, lastModified, callback);
 };
 
-exports.saveParkingToCompany = function (id, filename, approvedStatus, location, companyName, callback) {
+exports.saveParkingToCompany = function (id, filename, approvedStatus, location, name, lastModified, companyName, callback) {
     exports.updateCompanyParkingIDs(companyName, id, function (error, result) {
         if (error != null) {
             callback(error);
         } else {
             if (result != null) {
-                updateOrCreateParking(id, filename, approvedStatus, location, callback);
+                updateOrCreateParking(id, filename, approvedStatus, location, name, lastModified, callback);
             } else {
                 //Company not found
                 callback("This company does not exist");
@@ -905,6 +961,39 @@ exports.insertCompany = function (companyName, callback) {
     Cities: lookup
 */
 
+exports.findAllMunicipalities = async lang => {
+    return new Promise((resolve, reject) => {
+        let names = [];
+        cities.aggregate([
+            {
+                $match: { 'properties.adminLevel': 4 }
+            },
+            {
+                $sort: { 'properties.cityname': 1 }
+            }
+        ]).forEach(function (c) {
+            if (lang === 'en') {
+                names.push(c['properties']['name_EN']);
+            } else if (lang === 'nl') {
+                names.push(c['properties']['name_NL']);
+            } else if (lang === 'fr') {
+                names.push(c['properties']['name_FR']);
+            } else if (lang === 'de') {
+                names.push(c['properties']['name_DE']);
+            } else {
+                names.push(c['properties']['name_NL']);
+            }
+        }, err => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(names);
+            }
+        });
+    });
+
+};
+
 exports.findAllCityNames = function (callback) {
     let citynames = [];
     cities.find().project({ 'properties.cityname': 1, _id: 0 }).forEach(function (res) {
@@ -914,27 +1003,66 @@ exports.findAllCityNames = function (callback) {
     });
 };
 
-exports.findParkingsByCityName = function (cityName, callback, skip = 0, limit = Number.MAX_SAFE_INTEGER, filter = '') {
-    cities.findOne({ 'properties.cityname': cityName }, {}, function (error, city) {
-        if (error != null) {
-            callback(error);
+exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number.MAX_SAFE_INTEGER, idFilter = '', nameFilter = '', regionFilter, sort = -1) => {
+    let city = null;
+
+    if (regionFilter) {
+        city = await cities.findOne({ 'properties.cityname': cityName });
+        let reader = new jsts.io.GeoJSONReader();
+        let filter = null;
+
+        if (lang === 'en') {
+            filter = await cities.findOne({ 'properties.name_EN': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'fr') {
+            filter = await cities.findOne({ 'properties.name_FR': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'de') {
+            filter = await cities.findOne({ 'properties.name_DE': regionFilter, 'properties.adminLevel': 4 });
+        } else if (lang === 'nl') {
+            filter = await cities.findOne({ 'properties.name_NL': regionFilter, 'properties.adminLevel': 4 });
         } else {
-            parkings.find({
-                "parkingID": { $regex: ".*" + filter + ".*" },
-                'location': {
-                    '$geoWithin': {
-                        '$geometry': city.geometry
-                    }
-                }
-            }).skip(skip).limit(limit).toArray(function (error, result) {
-                if (error != null) {
-                    callback(error);
-                } else {
-                    callback(null, result);
-                }
-            });
+            filter = await cities.findOne({ 'properties.cityname': regionFilter, 'properties.adminLevel': 4 });
         }
-    });
+
+        let mainGeom = reader.read(city.geometry);
+        let filterGeom = reader.read(filter.geometry);
+
+        if (filterGeom.intersects(mainGeom)) {
+            city = filter;
+        } else {
+            return [];
+        }
+    } else {
+        if (lang === 'en') {
+            city = await cities.findOne({ 'properties.name_EN': cityName });
+        } else if (lang === 'fr') {
+            city = await cities.findOne({ 'properties.name_FR': cityName });
+        } else if (lang === 'de') {
+            city = await cities.findOne({ 'properties.name_DE': cityName });
+        } else if (lang === 'nl') {
+            city = await cities.findOne({ 'properties.name_NL': cityName });
+        } else {
+            city = await cities.findOne({ 'properties.cityname': cityName });
+        }
+    }
+
+    if (city) {
+        return parkings.find({
+            'parkingID': { $regex: ".*" + idFilter + ".*" },
+            'name': { $regex: ".*" + nameFilter + ".*" },
+            'location': {
+                '$geoWithin': {
+                    '$geometry': city.geometry
+                }
+            }
+        })
+            .sort({ 'lastModified': sort })
+            .skip(skip)
+            .limit(limit)
+            .toArray();
+
+    } else {
+        throw new Error(`The municipality ${cityName} does not exist`);
+    }
 };
 
 exports.findCitiesByLocation = function (lat, lng, lang, callback) {

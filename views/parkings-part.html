@@ -10,11 +10,26 @@
             <tr>
                 <th class="text-left">
                     <span transl-id="parkings.th[0]">Parking Facility URI</span>
-                    <input id="filterById" value="<%= filter %>" class="searchbar" type="text" placeholder="Search for URI...">
+                    <input id="filterById" value="<%= idFilter %>" class="searchbar" type="text" placeholder="Search for URI..." transl-id-placeholder="adminParkings.filter.id">
                 </th>
-                <th class="text-left" transl-id="parkings.th[1]">Parking Name</th>
-                <th class="text-left" transl-id="parkings.th[2]">Approved</th>
-                <th class="text-left" transl-id="parkings.th[3]">Actions</th>
+                <th class="text-left" >
+                    <span transl-id="parkings.th[1]">Parking Name</span>
+                    <input id="filterByName" value="<%= nameFilter %>" class="searchbar" type="text" placeholder="Search for name..." transl-id-placeholder="adminParkings.filter.name">
+                </th>
+                <th class="text-left region-filter" >
+                        <span transl-id="parkings.th[2]">Municipality</span>
+                        <select id="filterByRegion" data-selected="<%= regionFilter %>" placeholder="Filter by municipality" transl-id-placeholder="adminParkings.filter.municipality">
+                            <option value=""></option>
+                        </select>
+                        <div class="dropDownSelect2"></div>
+                </th>
+                <th class="text-left" transl-id="parkings.th[3]">Approved</th>
+                <th class="text-left">
+                    <span transl-id="parkings.th[4]">Last Modified</span>
+                    <input id="sort-des" data-sort="<%=dateSort%>" type="image" title="descending" class="info_button" style="display: none; width: 30px; float: right;" src="static/images/icons/descending.png">
+                    <input id="sort-asc" data-sort="<%=dateSort%>" type="image" title="ascending" class="info_button" style="display: none; width: 30px; float: right;" src="static/images/icons/ascending.png">
+                </th>
+                <th class="text-left" transl-id="parkings.th[5]">Actions</th>
             </tr>
             </thead>
             <tbody class="table-hover">
@@ -27,12 +42,31 @@
                 <td class="text-left" style="font-size: 20px;">
                     <%= parkings[i]['name'][0]['@value'] ? parkings[i]['name'][0]['@value'] : parkings[i]['name'] %>
                 </td>
+                <td>
+                    <div class="parking-region-dummy" data-long="<%= parkings[i]['location']['lon'] %>" data-lat="<%= parkings[i]['location']['lat'] %>">
+                        <svg class="loading-icon lds-dual-ring" width="15px"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"
+                                    ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"
+                                    fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"
+                                    stroke-dasharray="62.83185307179586 62.83185307179586"
+                                    transform="rotate(244.478 50 50)">
+                                <animateTransform attributeName="transform" type="rotate" calcMode="linear"
+                                                    values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"
+                                                    repeatCount="indefinite"></animateTransform>
+                            </circle>
+                        </svg>
+                    </div>
+                </td>
                 <td class="text-left" style="font-size: 20px;">
                     <% if(parkings[i]['approvedstatus']){ %>
                     <i class="far fa-check-circle" style="color:#00b417"></i>
                     <% } else { %>
                     <i class="fas fa-times" style="color:red"></i>
                     <% } %>
+                </td>
+                <td class="text-left" style="font-size: 15px;">
+                    <%= parkings[i]['dateModified'] %>
                 </td>
                 <td class="text-left">
                     <input title="Edit" type="image" src="static/images/icons/edit.png" style="float: left; width: 40px;">

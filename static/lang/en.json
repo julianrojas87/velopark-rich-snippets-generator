@@ -489,7 +489,7 @@
   "parkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Last Modified", "Actions"
     ]
   },
   "admin" : {
@@ -501,8 +501,13 @@
   "adminParkings" : {
     "title" : "Manage Parkings",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Company", "Region", "Approved", "Last Modified", "Actions"
+      "Parking Facility URI", "Parking Name", "Company", "Municipality", "Approved", "Last Modified", "Actions"
     ],
+    "filter": {
+      "id": "Search for URI...",
+      "name": "Search for name...",
+      "municipality": "Filter by municipality"
+    },
     "transfer" : {
       "title" : "Transfer parking",
       "text" : "Select the company you want to transfer this parking to.",
@@ -535,7 +540,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Actions"
+      "Parking Facility URI", "Parking Name", "Municipality", "Approved", "Last Modified", "Actions"
     ]
   },
   "pswdReset": {

@@ -488,7 +488,7 @@
   "parkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
     ]
   },
   "admin" : {
@@ -500,8 +500,13 @@
   "adminParkings" : {
     "title" : "Beheer Parkings",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Regio", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Bedrijf", "Gemeente", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
     ],
+    "filter": {
+      "id": "Zoeken naar URI...",
+      "name": "Zoeken naar naam...",
+      "municipality": "Filteren op gemeente"
+    },
     "transfer" : {
       "title" : "Parking Overdragen",
       "text" : "Selecteer het bedrijf naar waar je deze parking wil overdragen.",
@@ -534,7 +539,7 @@
   "cityRepParkings" : {
     "title" : "Parkings in ",
     "th" : [
-      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Acties"
+      "Parkingfaciliteit URI", "Naam Parking", "Gemeente", "Goedgekeurd", "Laatst Gewijzigd", "Acties"
     ]
   },
   "pswdReset": {

@@ -489,7 +489,7 @@
   "parkings" : {
     "title" : "Parkplätze in ",
     "th" : [
-      "URI der Parkanlage", "Parkname", "Genehmigt", "Aktionen"
+      "URI der Parkanlage", "Parkname", "Gemeinde", "Genehmigt", "Zuletzt Geändert", "Aktionen"
     ]
   },
   "admin" : {
@@ -501,8 +501,13 @@
   "adminParkings" : {
     "title" : "Parkplätze verwalten",
     "th" : [
-      "URI der Parkanlage", "Parkname", "Unternehmen", "Region", "Genehmigt", "Zuletzt Geändert", "Aktionen"
+      "URI der Parkanlage", "Parkname", "Unternehmen", "Gemeinde", "Genehmigt", "Zuletzt Geändert", "Aktionen"
     ],
+    "filter": {
+      "id": "Suchen sie nach URI...",
+      "name": "Suche nach namen...",
+      "municipality": "Nach gemeinde filtern"
+    },
     "transfer" : {
       "title" : "Transfer parken",
       "text" : "Wählen Sie die Firma aus, an die Sie diesen Parkplatz übertragen möchten.",

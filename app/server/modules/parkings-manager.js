@@ -45,45 +45,32 @@ let returnTableData = function (parkings, callback) {
     callback(null, tableData);
 };
 
-exports.listAllParkings = (skip, limit, filter) => {
+exports.listAllParkings = async (skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort) => {
     return new Promise(async (resolve, reject) => {
-        dbAdapter.findParkingsWithCompanies(skip, limit, filter)
-            .then(res => {
-                returnTableData(res, function (error, result) {
-                    if (error != null) {
-                        reject(error);
-                    } else {
-                        resolve(result);
-                    }
-                });
-            })
-            .catch(error => {
+        let parkings = await dbAdapter.findParkingsWithCompanies(skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort);
+        returnTableData(parkings, function (error, result) {
+            if (error != null) {
                 reject(error);
-            });
+            } else {
+                resolve(result);
+            }
+        });
     });
 
 };
 
-exports.listParkingsByEmail = async (username, skip, limit, filter, callback) => {
-    dbAdapter.findParkingsByEmail(username, skip, limit, filter, function (error, res) {
-        if (error != null) {
-            console.error("Error: " + error);
-            callback(error);
-        } else {
-            returnTableData(res, callback);
-        }
-    });
+exports.listParkingsByEmail = async (username, skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort, callback) => {
+    let res = await dbAdapter.findParkingsByEmail(username, skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort);
+    returnTableData(res, callback);
 };
 
-exports.listParkingsInCity = function (cityName, skip, limit, filter, callback) {
-    dbAdapter.findParkingsByCityName(cityName, (error, res) => {
-        if (error != null) {
-            console.error("Error: " + error);
-            callback(error);
-        } else {
-            returnTableData(res, callback);
-        }
-    }, skip, limit, filter);
+exports.listParkingsInCity = function (cityName, skip, limit, idFilter, nameFilter, regionFilter, lang, dateSort, callback) {
+    dbAdapter.findParkingsByCityName(cityName, lang, skip, limit, idFilter, nameFilter, regionFilter, dateSort).then(res => {
+        returnTableData(res, callback);
+    }).catch(err => {
+        console.error("Error: " + err);
+        callback(err);
+    });
 };
 
 exports.toggleParkingEnabled = function (parkingid, enabled, callback) {
@@ -122,6 +109,8 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
         let park_obj = JSON.parse(parking);
         let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-');
         let parkingID = encodeURIComponent(park_obj['@id']);
+        let name = park_obj['name'][0]['@value'];
+        let lastModified = new Date(park_obj['dateModified']);
         let location;
         try {
             location = {
@@ -132,7 +121,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
             console.error("Could not extract location from parking. " + e);
         }
 
-        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, companyName, async function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, lastModified, companyName, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -279,6 +268,8 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
     let park_obj = JSON.parse(parking);
     let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-');
     let parkingID = encodeURIComponent(park_obj['@id']);
+    let name = park_obj['name'][0]['@value'];
+    let lastModified = new Date(park_obj['dateModified']);
     let location;
     try {
         location = {
@@ -290,7 +281,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
     }
 
     if (companyName) {
-        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, companyName, async function (e, res) {
+        dbAdapter.saveParkingToCompany(parkingID, localId + '.jsonld', approved, location, name, lastModified, companyName, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -304,7 +295,7 @@ exports.saveParkingAsSuperAdmin = async (companyName, parking, approved, callbac
             }
         });
     } else {
-        dbAdapter.saveParkingAsAdmin(parkingID, localId + '.jsonld', approved, location, async function (e, res) {
+        dbAdapter.saveParkingAsAdmin(parkingID, localId + '.jsonld', approved, location, name, lastModified, async function (e, res) {
             if (e != null) {
                 console.log("Error saving parking in database:");
                 console.log(e);
@@ -678,8 +669,19 @@ async function initCatalog() {
         if (p.indexOf('catalog.jsonld') < 0) {
             let d = JSON.parse(await readFile(data + '/public/' + p));
             let localId = (d['ownedBy']['companyName'] + '_' + d['identifier']).replace(/\s/g, '-');
-            if ((await dbAdapter.findParkingByID(encodeURIComponent(d['@id']))).approvedstatus) {
+            let dbParking = await dbAdapter.findParkingByID(encodeURIComponent(d['@id']));
+
+            if (dbParking.approvedstatus) {
                 parkings.set(d['@id'], localId);
+            }
+
+            // Hack to add the name of the parking and the last modified date to the DB. Only meant to be run once.
+            if (!dbParking.name || !dbParking.lastModified) {
+                let name = d['name'][0]['@value'];
+                let lastModified = new Date(d['dateModified']);
+                dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, lastModified, () => {
+                    console.log('Parking ' + localId + ' name and last modified date added to DB');
+                });
             }
         }
     }));

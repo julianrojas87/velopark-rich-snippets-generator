@@ -123,7 +123,6 @@ let currentLang = 'nl';
                         style.innerHTML = '.select2-results__option[id*="-' + childObject['name_NL'] + '"] {' +
                             ' background-color: ' + getColorForAdminLevel(childObject['adminLevel']) + ";" +
                             '}' + style.innerHTML;
-                        console.log(childObject['adminLevel']);
                         for(let i in childObject.childAreas){
                             addChildLevel(select, childObject.childAreas[i]);
                         }
@@ -329,7 +328,7 @@ let currentLang = 'nl';
 })(jQuery);
 
 //if no lang parameter given, setting is loaded from localStorage
-function translate(lang){
+function translate(lang, first){
     if(lang && user && user.name){
         //send preference to the server (async)
         let domain = domainName !== '' ? '/' + domainName : '';
@@ -393,7 +392,9 @@ function translate(lang){
 
                         // Deal with select2 elements
                         if($(this).is('select')) {
-                            $(this).select2('destroy');
+                            if($(this).hasClass('select2-hidden-accessible')) {
+                                $(this).select2('destroy');
+                            }
                             $(this).select2({
                                 minimumResultsForSearch: 20,
                                 dropdownParent: $(this).next('.dropDownSelect2'),
@@ -464,6 +465,7 @@ function translate(lang){
 
                 // Trigger change on data input language to adapt languages names
                 $('#language-selection-container #dutch').trigger('change');
+
                 handleResize();
 
                 //fix select2
@@ -479,6 +481,13 @@ function translate(lang){
                     });
                 });
                 select2El.change();
+
+                // Regions filter translation
+                if($('#filterByRegion').length > 0 && !first) {
+                    populateRegions().then(() => {
+                        insertParkingRegions();
+                    });
+                }
             },
             error: e => {
                 console.error('Error: ' + e.responseText);

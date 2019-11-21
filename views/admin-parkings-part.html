@@ -11,13 +11,26 @@
             <tr>
                 <th class="text-left">
                     <span transl-id="adminParkings.th[0]">Parking Facility URI</span>
-                    <input id="filterById" value="<%= filter %>" class="searchbar" type="text" placeholder="Search for URI...">
+                    <input id="filterById" value="<%= idFilter %>" class="searchbar" type="text" placeholder="Search for URI..." transl-id-placeholder="adminParkings.filter.id">
                 </th>
-                <th class="text-left" transl-id="adminParkings.th[1]">Parking Name</th>
+                <th class="text-left" >
+                    <span transl-id="adminParkings.th[1]">Parking Name</span>
+                    <input id="filterByName" value="<%= nameFilter %>" class="searchbar" type="text" placeholder="Search for name..." transl-id-placeholder="adminParkings.filter.name">
+                </th>
                 <th class="text-left" transl-id="adminParkings.th[2]">Company</th>
-                <th class="text-left" transl-id="adminParkings.th[3]">Region</th>
+                <th class="text-left region-filter">
+                    <span transl-id="adminParkings.th[3]">Municipality</span>
+                    <select id="filterByRegion" data-selected="<%= regionFilter %>" placeholder="Filter by municipality" transl-id-placeholder="adminParkings.filter.municipality">
+                        <option value=""></option>
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                </th>
                 <th class="text-left" transl-id="adminParkings.th[4]">Approved</th>
-                <th class="text-left" transl-id="adminParkings.th[5]">Last Modified</th>
+                <th class="text-left">
+                    <span transl-id="adminParkings.th[5]">Last Modified</span>
+                    <input id="sort-des" data-sort="<%=dateSort%>" type="image" title="descending" class="info_button" style="display: none; width: 30px; float: right;" src="static/images/icons/descending.png">
+                    <input id="sort-asc" data-sort="<%=dateSort%>" type="image" title="ascending" class="info_button" style="display: none; width: 30px; float: right;" src="static/images/icons/ascending.png">
+                </th>
                 <th class="text-left" transl-id="adminParkings.th[6]">Actions</th>
             </tr>
             </thead>

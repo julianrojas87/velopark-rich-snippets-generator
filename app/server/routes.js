@@ -232,7 +232,12 @@ module.exports = app => {
                     console.error(error);
                     res.redirect(domain + '/home');
                 } else {
-                    let filter = req.query.filter;
+                    // Parkings filters
+                    let idFilter = req.query.idFilter;
+                    let nameFilter = req.query.nameFilter;
+                    let regionFilter = req.query.regionFilter;
+                    let lang = req.query.lang;
+                    let dateSort = req.query.dateSort ? parseInt(req.query.dateSort) : -1;
                     if (value === true) {
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
@@ -249,7 +254,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, filter)
+                        PM.listAllParkings(rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, dateSort)
                             .then(parkings => {
                                 if (!rangeHeader) {
                                     res.render('admin-parkings.html', {
@@ -265,7 +270,10 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: ''
+                                        idFilter: '',
+                                        nameFilter: '',
+                                        regionFilter: '',
+                                        dateSort: dateSort
                                     });
                                 } else {
                                     res.render('admin-parkings-part.html', {
@@ -281,7 +289,10 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: filter
+                                        idFilter: idFilter,
+                                        nameFilter: nameFilter,
+                                        regionFilter: regionFilter,
+                                        dateSort: dateSort
                                     });
                                 }
                             })
@@ -552,7 +563,11 @@ module.exports = app => {
                     res.redirect(domain + '/home');
                 } else {
                     if (value === true) {
-                        let filter = req.query.filter;
+                        let idFilter = req.query.idFilter;
+                        let nameFilter = req.query.nameFilter;
+                        let regionFilter = req.query.regionFilter;
+                        let lang = req.query.lang;
+                        let dateSort = req.query.dateSort ? parseInt(req.query.dateSort) : -1;
                         let rangeHeader = req.header("range");
                         let rangeStart = 0;
                         let rangeEnd = 50;
@@ -568,7 +583,7 @@ module.exports = app => {
                             }
                         }
 
-                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, filter, function (error, parkings) {
+                        PM.listParkingsInCity(cityname, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, dateSort, function (error, parkings) {
                             if (error != null) {
                                 console.error(error);
                                 res.status(500).send('failed');
@@ -588,7 +603,10 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: ''
+                                        idFilter: '',
+                                        nameFilter: '',
+                                        regionFilter: '',
+                                        dateSort: dateSort
                                     });
                                 } else {
                                     res.render('city-parkings-part.html', {
@@ -605,7 +623,10 @@ module.exports = app => {
                                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                                         rangeStart: rangeStart,
                                         rangeEnd: rangeEnd,
-                                        filter: filter
+                                        idFilter: idFilter,
+                                        nameFilter: nameFilter,
+                                        regionFilter: regionFilter,
+                                        dateSort: dateSort
                                     });
                                 }
                             }
@@ -695,7 +716,11 @@ module.exports = app => {
             let domain = domainName != '' ? '/' + domainName : '';
             res.redirect(domain + '/');
         } else {
-            let filter = req.query.filter;
+            let idFilter = req.query.idFilter;
+            let nameFilter = req.query.nameFilter;
+            let regionFilter = req.query.regionFilter;
+            let lang = req.query.lang;
+            let dateSort = req.query.dateSort ? parseInt(req.query.dateSort) : -1;
             let rangeHeader = req.header("range");
             let rangeStart = 0;
             let rangeEnd = 50;
@@ -710,7 +735,7 @@ module.exports = app => {
                 }
             }
 
-            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, filter, function (error, parkings) {
+            PM.listParkingsByEmail(req.session.user.email, rangeStart, rangeEnd - rangeStart, idFilter, nameFilter, regionFilter, lang, dateSort, function (error, parkings) {
                 if (error != null) {
                     res.status(500).send("Could not get parkings for this user.");
                 } else {
@@ -725,7 +750,10 @@ module.exports = app => {
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
-                            filter: ''
+                            idFilter: '',
+                            nameFilter: '',
+                            regionFilter: '',
+                            dateSort: dateSort
                         });
                     } else {
                         res.render('parkings-part.html', {
@@ -738,7 +766,10 @@ module.exports = app => {
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                             rangeStart: rangeStart,
                             rangeEnd: rangeEnd,
-                            filter: filter
+                            idFilter: idFilter,
+                            nameFilter: nameFilter,
+                            regionFilter: regionFilter,
+                            dateSort: dateSort
                         });
                     }
                 }
@@ -973,6 +1004,14 @@ module.exports = app => {
                 res.status(200).json(result);
             }
         });
+    });
+
+    app.get('/municipalities', async function (req, res) {
+        try {
+            res.status(200).json(await CiM.listAllMunicipalities(req.query.lang));
+        } catch(err) {
+            res.status(500).send('failed');
+        }
     });
 
     app.get('/regionhierarchy', async function (req, res) {

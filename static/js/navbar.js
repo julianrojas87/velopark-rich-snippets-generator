@@ -100,7 +100,7 @@ var select2Promise = null;
 $(window).on('load', function () {
     select2Promise = initSelect2();
     select2Promise.then(() => {
-        translate();
+        translate(undefined, true);
         handleResize();
     });
 });
