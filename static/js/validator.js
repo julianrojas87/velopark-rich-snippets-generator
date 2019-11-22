@@ -74,12 +74,6 @@ function validate(input, finalValidation=true) {
             return false;
         }
     } else if($(input).attr('type') === 'time') {
-        let openInput = $(input).parent().parent().find('.input100[type=time]:first');
-        let closeInput = $(input).parent().parent().find('.input100[type=time]:last');
-        
-        if(openInput.val() != '' && closeInput.val() != '' && openInput.val() > closeInput.val()) {
-            return false;
-        }
     } else {
         if ($(input).val().trim() == '') {
             return false;

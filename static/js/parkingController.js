@@ -35,12 +35,12 @@ function processObject(obj, oldPath, input) {
     }
     try {
         let keys = Object.keys(obj);
-        if(obj["@type"] === "TimeSpecification"){
+        if (obj["@type"] === "TimeSpecification") {
             //timeStartValue and timeEndValue need to be converted to an interval and should therefore be passed together
             path.push("timeIntervalDuration");
-            loadParkingValue(path, [ obj["timeStartValue"], obj["timeEndValue"] ], false, input);
+            loadParkingValue(path, [obj["timeStartValue"], obj["timeEndValue"]], false, input);
             path.pop();
-            if(obj["timeUnit"]){
+            if (obj["timeUnit"]) {
                 path.push("timeUnit");
                 loadParkingValue(path, obj["timeUnit"], false, input);
                 path.pop();
@@ -138,8 +138,8 @@ function processArray(path, arr, input) {
             } else {
                 inputs = $('[name^="' + lastPath + '"]') || input;
             }
-            if ((!isFeature && i > 0) 
-                || (isFeature && isGeneralFeature && numGeneralFeatures > 1) 
+            if ((!isFeature && i > 0)
+                || (isFeature && isGeneralFeature && numGeneralFeatures > 1)
                 || (isFeature && !isGeneralFeature && numSecurityFeatures > 1)) {
                 let last = $(inputs[inputs.length - 1]);
                 if (last.is('div')) {
@@ -271,23 +271,29 @@ function loadParkingValue(path, value, override, inpt) {
                 let currentDay = value[i];
                 if (usedDays.has(currentDay['dayOfWeek']) || (lastOpens && currentDay['opens'] !== lastOpens)
                     || (lastCloses && currentDay['closes'] !== lastCloses)) {
-                    usedDays.clear();
-                    input.next().click();
-                    let inputs = input.parent().find('[name="' + name + '"]');
-                    input = $(inputs[inputs.length - 1]);
-                    input.find('input[type="checkbox"]').each(function () {
-                        $(this).prop('checked', false);
-                    });
+                    if (currentDay['opens'] !== '00:00' && value[i - 1]['closes'] !== '23:59') {
+                        usedDays.clear();
+                        input.next().click();
+                        let inputs = input.parent().find('[name="' + name + '"]');
+                        input = $(inputs[inputs.length - 1]);
+                        input.find('input[type="checkbox"]').each(function () {
+                            $(this).prop('checked', false);
+                        });
+                    }
                 }
 
-                input.find('input[value="' + currentDay['dayOfWeek'] + '"]').prop('checked', true);
                 let time = input.find('input[type="time"]');
-                $(time[0]).val(currentDay['opens']);
-                $(time[1]).val(currentDay['closes']);
 
-                usedDays.add(currentDay['dayOfWeek']);
-                lastOpens = currentDay['opens'];
-                lastCloses = currentDay['closes'];
+                if (currentDay['opens'] === '00:00' && value[i - 1]['closes'] === '23:59') {
+                    $(time[1]).val(currentDay['closes']);
+                } else {
+                    input.find('input[value="' + currentDay['dayOfWeek'] + '"]').prop('checked', true);
+                    $(time[0]).val(currentDay['opens']);
+                    $(time[1]).val(currentDay['closes']);
+                    usedDays.add(currentDay['dayOfWeek']);
+                    lastOpens = currentDay['opens'];
+                    lastCloses = currentDay['closes'];
+                }
             }
         }
     }
@@ -306,8 +312,8 @@ function valueToString(value) {
 }
 
 function reverseFormatValue(name, value) {
-    if(name === "timeIntervalDuration"){
-        if(value && value.length === 2) {
+    if (name === "timeIntervalDuration") {
+        if (value && value.length === 2) {
             return value[1] - value[0];
         }
     } else if (context[`${name}`]) {
