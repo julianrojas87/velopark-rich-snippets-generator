@@ -206,6 +206,8 @@ exports.saveParkingAsCityRep = async (parking, userCities, approved, company, ca
     let park_obj = JSON.parse(parking);
     let localId = (park_obj['ownedBy']['companyName'] + '_' + park_obj['identifier']).replace(/[\*\s]/g, '-');
     let parkingID = encodeURIComponent(park_obj['@id']);
+    let name = park_obj['name'][0]['@value'];
+    let lastModified = new Date(park_obj['dateModified']);
     let location;
     try {
         location = {
@@ -230,7 +232,7 @@ exports.saveParkingAsCityRep = async (parking, userCities, approved, company, ca
                 }
             }
             if (isCityRep) {
-                dbAdapter.updateParkingAsCityRep(parkingID, localId + '.jsonld', location, approved, async function (e, result) {
+                dbAdapter.updateParkingAsCityRep(parkingID, localId + '.jsonld', location, approved, name, lastModified, async function (e, result) {
                     if (e != null) {
                         console.log("Error saving parking in database:");
                         console.log(e);
@@ -353,18 +355,16 @@ exports.getParking = async (user, parkingId, callback) => {
                             });
                         } else {
                             //Maybe user is city-rep for this parking
-                            AM.isAccountCityRepForParkingID(user, parkingId, async function (error, value) {
-                                if (value === true) {
-                                    //user is city-rep, load data from disk
-                                    let p = await dbAdapter.findParkingByID(parkingId);
-                                    let result = fs.readFileSync(data + '/public/' + p.filename);
-                                    dbAdapter.findCompanyByParkingId(parkingId, function (error, account, company) {
-                                        callback(null, result, p.approvedstatus, company);
-                                    });
-                                } else {
-                                    callback("This parking does not belong to you.");
-                                }
-                            });
+                            if (await AM.isAccountCityRepForParkingID(user, parkingId)) {
+                                //user is city-rep, load data from disk
+                                let p = await dbAdapter.findParkingByID(parkingId);
+                                let result = fs.readFileSync(data + '/public/' + p.filename);
+                                dbAdapter.findCompanyByParkingId(parkingId, function (error, account, company) {
+                                    callback(null, result, p.approvedstatus, company);
+                                });
+                            } else {
+                                callback("This parking does not belong to you.");
+                            }
                         }
                     }
                 });
@@ -389,7 +389,7 @@ exports.deleteParking = async (user, parkingId, callback) => {
                         callback();
                     } else {
                         //no error, but nothing found to delete. Are you admin?
-                        AM.isUserSuperAdmin(user, function (error, res) {
+                        AM.isUserSuperAdmin(user, async function (error, res) {
                             if (error != null) {
                                 calback(error);
                             } else {
@@ -410,26 +410,24 @@ exports.deleteParking = async (user, parkingId, callback) => {
                                     });
                                 } else {
                                     // Is the user a city-rep for this parking?
-                                    AM.isAccountCityRepForParkingID(user, parkingId, (err, value) => {
-                                        if (value === true) {
-                                            dbAdapter.deleteParkingById(parkingId, async function (error, res) {
-                                                if (error != null) {
-                                                    callback(error);
+                                    if (await AM.isAccountCityRepForParkingID(user, parkingId)) {
+                                        dbAdapter.deleteParkingById(parkingId, async function (error, res) {
+                                            if (error != null) {
+                                                callback(error);
+                                            } else {
+                                                if (res === true) {
+                                                    console.log("delete successfull " + res);
+                                                    await removeParkingFromCatalog(localId);
+                                                    fs.unlinkSync(data + '/public/' + parking.filename);
+                                                    callback();
                                                 } else {
-                                                    if (res === true) {
-                                                        console.log("delete successfull " + res);
-                                                        await removeParkingFromCatalog(localId);
-                                                        fs.unlinkSync(data + '/public/' + parking.filename);
-                                                        callback();
-                                                    } else {
-                                                        callback("No parking found to be deleted.");
-                                                    }
+                                                    callback("No parking found to be deleted.");
                                                 }
-                                            });
-                                        } else {
-                                            callback("Unauthorized to delete this parking");
-                                        }
-                                    });
+                                            }
+                                        });
+                                    } else {
+                                        callback("Unauthorized to delete this parking");
+                                    }
                                 }
                             }
                         });

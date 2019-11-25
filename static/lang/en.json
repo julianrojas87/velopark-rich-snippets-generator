@@ -472,7 +472,7 @@
   "signUp" : {
     "title" : "Create a new account",
     "companyMember" : "Parking Operator",
-    "cityRep" : "City Representative",
+    "cityRep" : "Government Representative",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Password",
     "selectCompany" : {

@@ -1,15 +1,9 @@
 {
-  "name": "node-login",
-  "version": "1.7.0",
-  "description": "A template for quickly building login systems on top of Node.js & MongoDb",
-  "author": "Stephen Braitsch <stephen@braitsch.io>",
-  "website": {
-    "url": "https://nodejs-login.herokuapp.com"
-  },
-  "private": false,
+  "name": "velopark-rich-snippets-generator",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:braitsch/node-login.git"
+    "url": "git+https://github.com/julianrojas87/velopark-rich-snippets-generator.git"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

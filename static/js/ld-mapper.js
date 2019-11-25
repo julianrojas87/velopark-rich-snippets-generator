@@ -312,10 +312,10 @@ function processElement(jsonld, element) {
                     }
                 } else {
                     //Is not an array. Add value to referenced object
-                    if(dName[i] === "timeIntervalDuration"){
+                    if (dName[i] === "timeIntervalDuration") {
                         temp_obj[`timeStartValue`] = last_price_spec_inverval_end;
                         temp_obj[`timeEndValue`] = last_price_spec_inverval_end + Number(element.val());
-                        if(timeUnit){
+                        if (timeUnit) {
                             temp_obj["timeUnit"] = timeUnit;
                         }
                         last_price_spec_inverval_end = last_price_spec_inverval_end + Number(element.val());
@@ -347,7 +347,7 @@ function processElement(jsonld, element) {
                         let x = temp_obj[temp_obj.length - 1][`${dName[i]}`];
                         if (x) {
                             let nextName = `${dName[i + 1]}`;
-                            if(nextName === "timeIntervalDuration"){
+                            if (nextName === "timeIntervalDuration") {
                                 nextName = "timeEndValue";
                             }
                             if (x[nextName] && x[nextName] !== '') {
@@ -358,7 +358,7 @@ function processElement(jsonld, element) {
                                         "@type": type
                                     }
                                 });
-                                if(x["timeUnit"]){
+                                if (x["timeUnit"]) {
                                     timeUnit = x["timeUnit"];
                                 }
                             }
@@ -390,21 +390,46 @@ function setElementValue(el, jsonEl, name) {
     } else if (el.is('div')) {
         let options = el.find('input[type="checkbox"]:checked');
         let opcl = el.find('input[type="time"]');
+        let weekDays = [
+            'http://schema.org/Monday',
+            'http://schema.org/Tuesday',
+            'http://schema.org/Wednesday',
+            'http://schema.org/Thursday',
+            'http://schema.org/Friday',
+            'http://schema.org/Saturday',
+            'http://schema.org/Sunday'
+        ];
+
         for (let i = 0; i < options.length; i++) {
             let day = $(options[i]).val();
-            let newObj = {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": day,
-                "opens": $(opcl[0]).val(),
-                "closes": $(opcl[1]).val()
-            };
-            if (jsonEl.length == 1 && jsonEl[0]['opens'] == '' && jsonEl[0]['closes'] == '') {
-                jsonEl[0] = newObj;
-            } else {
-                jsonEl.push(newObj);
-            }
-        }
+            let ohs = [];
+            if ($(opcl[0]).val() >= $(opcl[1]).val()) {
+                ohs.push({
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": day,
+                    "opens": $(opcl[0]).val(),
+                    "closes": "23:59"
+                });
 
+                let di = weekDays.indexOf(day);
+
+                ohs.push({
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": di >= 6 ? weekDays[0] : weekDays[di + 1],
+                    "opens": "00:00",
+                    "closes": $(opcl[1]).val()
+                });
+            } else {
+                ohs.push({
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": day,
+                    "opens": $(opcl[0]).val(),
+                    "closes": $(opcl[1]).val()
+                });
+            }
+
+            jsonEl = jsonEl.concat(ohs);
+        }
         return jsonEl;
     }
 }

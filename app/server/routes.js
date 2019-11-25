@@ -864,7 +864,7 @@ module.exports = app => {
                 }
             } else if (user.cityNames.length > 0) {
                 //check if parking is within your regions
-                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, req.body['approved'] === 'true', req.body['parkingCompany'], function (error, result) {
+                PM.saveParkingAsCityRep(req.body['jsonld'], user.cityNames, true, req.body['parkingCompany'], function (error, result) {
                     if (error != null) {
                         console.log(error);
                         res.status(500).send(error);
