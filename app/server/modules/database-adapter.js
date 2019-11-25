@@ -1034,17 +1034,21 @@ exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number
             return [];
         }
     } else {
-        if (lang === 'en') {
-            city = await cities.findOne({ 'properties.name_EN': cityName });
-        } else if (lang === 'fr') {
-            city = await cities.findOne({ 'properties.name_FR': cityName });
-        } else if (lang === 'de') {
-            city = await cities.findOne({ 'properties.name_DE': cityName });
-        } else if (lang === 'nl') {
-            city = await cities.findOne({ 'properties.name_NL': cityName });
-        } else {
-            city = await cities.findOne({ 'properties.cityname': cityName });
-        }
+            if (lang === 'en') {
+                city = await cities.findOne({ 'properties.name_EN': cityName });
+            } else if (lang === 'fr') {
+                city = await cities.findOne({ 'properties.name_FR': cityName });
+            } else if (lang === 'de') {
+                city = await cities.findOne({ 'properties.name_DE': cityName });
+            } else if (lang === 'nl') {
+                city = await cities.findOne({ 'properties.name_NL': cityName });
+            } else {
+                city = await cities.findOne({ 'properties.cityname': cityName });
+            }
+
+            if(city === null) {
+                city = await cities.findOne({ 'properties.cityname': cityName });
+            }
     }
 
     if (city) {
@@ -1207,13 +1211,12 @@ exports.isAccountCityRepForParkingID = async function (email, parkingID, callbac
         }
     ]).toArray();
 
-    for(let i in parkingRegions) {
-        for(let j in accountRegions) {
-            if(parkingRegions[i]['properties']['NIS_CODE'] === accountRegions[j]['city'][0]['properties']['NIS_CODE']) {
+    for (let i in parkingRegions) {
+        for (let j in accountRegions) {
+            if (parkingRegions[i]['properties']['NIS_CODE'] === accountRegions[j]['city'][0]['properties']['NIS_CODE']) {
                 return true;
             }
         }
     }
     return false;
 };
-// FIRST BUTTON ON REGION MANAGER FAILS
