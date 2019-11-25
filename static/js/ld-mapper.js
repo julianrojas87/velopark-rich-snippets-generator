@@ -121,13 +121,19 @@ function saveJSONLD() {
             }
         });
     } else {
+        // Approve new parkings by default for Region Managers
+        let approved = false;
+        if(user.cityrep) {
+            approved = true;
+        }
         $.ajax({
             type: "POST",
             url: domain + '/save-parking',
             data: {
                 'user': parkingOwner.email ? parkingOwner.email : (parkingOwner.company ? null : username),
                 'jsonld': JSON.stringify(resultingObject),
-                'company': parkingOwner.company
+                'company': parkingOwner.company,
+                'approved': approved
             },
             success: () => {
                 originalId = resultingObject['@id'];
