@@ -284,7 +284,7 @@ function loadParkingValue(path, value, override, inpt) {
 
                 let time = input.find('input[type="time"]');
 
-                if (currentDay['opens'] === '00:00' && value[i - 1]['closes'] === '23:59') {
+                if (i > 0 && currentDay['opens'] === '00:00' && value[i - 1]['closes'] === '23:59') {
                     $(time[1]).val(currentDay['closes']);
                 } else {
                     input.find('input[value="' + currentDay['dayOfWeek'] + '"]').prop('checked', true);

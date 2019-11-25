@@ -607,7 +607,7 @@ let updateOrCreateParking = function (id, filename, approvedStatus, location, na
         });
 };
 
-exports.updateParkingAsCityRep = function (id, filename, location, approved, callback) {
+exports.updateParkingAsCityRep = function (id, filename, location, approved, name, lastModified, callback) {
     //1. find account of city rep
     //2. make sure the city rep is responsible for this parking location
     //3. update the parking itself, leaving the owning company as is
@@ -618,7 +618,9 @@ exports.updateParkingAsCityRep = function (id, filename, location, approved, cal
         {
             $set: {
                 filename: filename,
-                location: location
+                location: location,
+                name: name,
+                lastModified: lastModified
             },
             $setOnInsert: {
                 approvedstatus: approved
@@ -1172,8 +1174,20 @@ exports.insertRegionHierarchy = function (hierarchy) {
     Mixed: lookup
 */
 
-exports.isAccountCityRepForParkingID = function (email, parkingID, callback) {
-    accounts.aggregate([
+exports.isAccountCityRepForParkingID = async function (email, parkingID, callback) {
+    let parking = await parkings.findOne({ "parkingID": parkingID });
+    let parkingRegions = await cities.find({
+        'geometry': {
+            '$geoIntersects': {
+                '$geometry': {
+                    type: "Point",
+                    coordinates: parking.location.coordinates
+                }
+            }
+        }
+    }).toArray();
+
+    let accountRegions = await accounts.aggregate([
         {
             $match: { email: email }
         },
@@ -1191,50 +1205,15 @@ exports.isAccountCityRepForParkingID = function (email, parkingID, callback) {
                 as: "city"
             }
         }
-    ],
-        {},
-        function (error, cursor) {
-            cursor.toArray(function (error, accountcities) {
-                if (error != null) {
-                    callback(error);
-                } else {
-                    let callbackcalled = false;
-                    let numtolook = accountcities.length;
-                    for (let i = 0; i < accountcities.length; i++) {
-                        if (accountcities[i].city && accountcities[i].city.length > 0) {
-                            exports.findParkingsByCityName(accountcities[i].city[0].properties.cityname, function (error, parkings) {
-                                if (error != null) {
-                                    callback(error);
-                                } else {
-                                    numtolook += parkings.length;
-                                    for (let j = 0; j < parkings.length; j++) {
-                                        if (parkings[j].parkingID === parkingID && !callbackcalled) {
-                                            callbackcalled = true;
-                                            callback(null, true);
-                                        }
-                                        numtolook--;
-                                        if (numtolook === 0 && !callbackcalled) {
-                                            callback(null, false);
-                                        }
-                                    }
-                                    numtolook--;
-                                    if (numtolook === 0 && !callbackcalled) {
-                                        callback(null, false);
-                                    }
-                                }
-                            });
-                        } else {
-                            numtolook--;
-                            if (numtolook === 0 && !callbackcalled) {
-                                callback(null, false);
-                            }
-                        }
-                    }
-                }
-            });
-        });
+    ]).toArray();
+
+    for(let i in parkingRegions) {
+        for(let j in accountRegions) {
+            if(parkingRegions[i]['properties']['NIS_CODE'] === accountRegions[j]['city'][0]['properties']['NIS_CODE']) {
+                return true;
+            }
+        }
+    }
+    return false;
 };
-
-
-
-
+// FIRST BUTTON ON REGION MANAGER FAILS

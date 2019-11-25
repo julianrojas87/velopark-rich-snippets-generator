@@ -124,7 +124,6 @@ function registerParkingListButtons() {
         $(this).on('click', function () {
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
-            console.log(parkingId);
             window.location.href = domain + '/home?parkingId=' + parkingId;
         });
     });
