@@ -784,7 +784,7 @@ module.exports = app => {
         } else {
             //2 valid possibilities: user is superadmin / user is cityrep for a region that contains this parking
             //First check for admin:
-            AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
+            AM.isUserSuperAdmin(req.session.user.email, async function (error, value) {
                 if (error != null) {
                     console.error(error);
                     res.status(500).send();
@@ -804,24 +804,22 @@ module.exports = app => {
                         });
                     } else {
                         //User is not superAdmin, maybe he is cityrep for the region of this parking?
-                        AM.isAccountCityRepForParkingID(req.session.user.email, encodeURIComponent(req.body['parkingId']), function (error, value) {
-                            if (value === true) {
-                                PM.toggleParkingEnabled(encodeURIComponent(req.body['parkingId']), req.body['parkingEnabled'] === "true", function (error, result) {
-                                    if (error != null) {
-                                        console.error(error);
-                                        res.status(500).send();
+                        if (await AM.isAccountCityRepForParkingID(req.session.user.email, encodeURIComponent(req.body['parkingId']))) {
+                            PM.toggleParkingEnabled(encodeURIComponent(req.body['parkingId']), req.body['parkingEnabled'] === "true", function (error, result) {
+                                if (error != null) {
+                                    console.error(error);
+                                    res.status(500).send();
+                                } else {
+                                    if (result != null) {
+                                        res.status(200).json(result);
                                     } else {
-                                        if (result != null) {
-                                            res.status(200).json(result);
-                                        } else {
-                                            res.status(409).send('Could not enable/disable parking.');
-                                        }
+                                        res.status(409).send('Could not enable/disable parking.');
                                     }
-                                });
-                            } else {
-                                res.status(401).send('You are not authorized to do that.');
-                            }
-                        });
+                                }
+                            });
+                        } else {
+                            res.status(401).send('You are not authorized to do that.');
+                        }
                     }
 
                 }
