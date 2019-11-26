@@ -460,8 +460,6 @@ function handleLoginFeatures() {
             });
             $(this).change();
         });
-        newSelect.find('.featuredescription').val('');
-        newSelect.find('.featuredescription').attr('disabled', true);
         newSelect.slideDown('slow');    //animate
         return false;
     });
@@ -509,9 +507,6 @@ function handleLoginFeatures() {
 
             $(this).before(newSection);
         }
-
-        newSection.find('.featuredescription').val('');
-        newSection.find('.featuredescription').attr('disabled', true);
 
         section.parent().find('.js-select2').each(function () {
             $(this).select2({
@@ -625,21 +620,6 @@ function handleLoginFeatures() {
         }
     });
 
-    $('[name="amenityFeature._.@type"]').on('change', function () {
-        let isGeneralFeature = $(this).attr('generalfeature') === "true";
-        let features;
-        if (isGeneralFeature) {
-            features = myGeneralFeatures;
-        } else {
-            features = mySecurityFeatures;
-        }
-        for (let i in features) {
-            if (features[i]['@id'] === $(this).val()) {
-                $(this).closest('div.wrap-input100').next().find('.featuredescription').val(features[i]['comment'][currentLang]);
-            }
-        }
-    });
-
 })(jQuery);
 
 
@@ -684,9 +664,6 @@ function addFacilitySection() {
         newFacilitySection.find('textarea').each(function () {
             $(this).val('');
         });
-
-        newFacilitySection.find('.featuredescription').val('');
-        newFacilitySection.find('.featuredescription').attr('disabled', true);
 
 
         //re-enable select2 (original section and cloned section)

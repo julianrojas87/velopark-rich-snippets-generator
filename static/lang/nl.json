@@ -85,7 +85,7 @@
       "description" : {
         "field" : "Beschrijving",
         "infoText" : "Schrijf hier wat algemene informatie die u belangrijk vindt voor bezoekers om te zien.<br><br>Voorbeeld: <i>Stalling onder het De Somerplein, staat open voor alle types fietsen (geen bromfietsen), maximum 1 week, geen personeel ter plaatse, wel camerabewaking.</i>",
-        "placeholder" : "Geef een beschrijving"
+        "placeholder" : "Voer algemene informatie over deze fietsenstalling in"
       },
       "address" :  {
         "title" : "Adres Informatie",
@@ -339,7 +339,11 @@
           "field": "Voorziening",
           "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Bicycle Pump</i>",
           "placeholder" : "Selecteer een voorziening",
-          "description": "Omschrijving"
+          "description": {
+            "field": "Omschrijving",
+            "placeholder": "Voeg extra informatie over deze functie toe",
+            "infoText": "Plaats hier wat extra informatie over deze functie die u belangrijk vindt voor bezoekers om te zien.<br><br>Voorbeeld: <i>Fietspomp bevindt zich naast de ingang.</i>"
+          }
         },
         "addExtra" : "Voeg extra voorziening toe"
       },
@@ -350,7 +354,11 @@
           "field": "Voorziening",
           "infoText": "Selecteer de diensten die beschikbaar zijn of gebruikt kunnen worden in deze fietsenstalling.<br><br>Voorbeeld: <i>Camera Bewaking</i>",
           "placeholder" : "Selecteer een Beveiligingsvoorziening",
-          "description": "Omschrijving"
+          "description": {
+            "field": "Omschrijving",
+            "placeholder": "Voeg extra informatie over deze functie toe",
+            "infoText": "Plaats hier wat extra informatie over deze functie die u belangrijk vindt voor bezoekers om te zien.<br><br>Voorbeeld: <i>Fietspomp bevindt zich naast de ingang.</i>"
+          }
         },
         "addExtra" : "Voeg extra beveiligingsvoorziening toe"
       },

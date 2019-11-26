@@ -169,7 +169,7 @@
                                        src="static/images/icons/close_white.png"
                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
                                 <div transl-id="step.parkInfo.description.infoText">
-                                    <span style="display: inherit; padding-left: 15px;">Put here some general information that is you find important for visitors to see.</span><br>
+                                    <span style="display: inherit; padding-left: 15px;">Put here some general information that you find important for visitors to see.</span><br>
                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Parking under the plaza, is open for all types of bicycles, maximum 1 week, no staff on site but camera surveillance available.</i></span>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@
                                 <div class="translatable-free-text">
                                     <span></span>
                                     <textarea class="input100" name="address.description"
-                                              placeholder="Describe how to arrive here"
+                                              placeholder="Enter general information about this bike parking"
                                               transl-id-placeholder="step.parkInfo.description.placeholder"></textarea>
                                 </div>
                             </div>
@@ -1115,9 +1115,9 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.features.generalservices.feature.infoText">
+                                                <div style="padding-left: 10px;" transl-id="step.features.generalservices.feature.infoText">
                                                     <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Toilet Service  - Bike Sharing - Bicycle Pump - etc.</i></span>
                                                 </div>
                                             </div>
                                             <div>
@@ -1130,9 +1130,29 @@
                                                 <div class="dropDownSelect2"></div>
                                             </div>
                                         </div>
-                                        <div class="wrap-input100 bg2">
-                                            <span class="label-input100" transl-id="step.features.generalservices.feature.description">Description</span>
-                                            <textarea class="featuredescription input100" type="text" disabled></textarea>
+                                        <div class="wrap-input100 bg0">
+                                            <span class="label-input100" transl-id="step.features.generalservices.feature.description.field">Description</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <div style="padding-left: 10px;" transl-id="step.features.generalservices.feature.description.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Put here some extra information about this feature that you find important for visitors to see.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Bicylce pump is located next to the entrance.</i></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100" name="amenityFeature._.description"
+                                                              generalfeature="true"
+                                                              placeholder="Describe how to arrive here"
+                                                              transl-id-placeholder="step.features.generalservices.feature.description.placeholder"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                         <span class="contact100-form-subsubsection" style="width: 90%;"
                                               transl-id="step.features.availableHours.title">
@@ -1243,7 +1263,7 @@
                                                 <input type="image" title="close" class="info_close_button"
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
-                                                <div transl-id="step.features.security.feature.infoText">
+                                                <div style="padding-left: 10px;" transl-id="step.features.security.feature.infoText">
                                                     <span style="display: inherit; padding-left: 15px;">Select the services or facilities that are available or can be used in this section of the parking garage.</span><br>
                                                     <span style="display: inherit; padding-left: 15px;">Example: <i>Personnel Supervision  - Camera Surveillance - Bicycle Pump - etc.</i></span>
                                                 </div>
@@ -1258,9 +1278,29 @@
                                                 <div class="featuredescription"></div>
                                             </div>
                                         </div>
-                                        <div class="wrap-input100 bg2">
-                                            <span class="label-input100" transl-id="step.features.security.feature.description">Description</span>
-                                            <textarea class="featuredescription input100" type="text" disabled></textarea>
+                                        <div class="wrap-input100 bg0">
+                                            <span class="label-input100" transl-id="step.features.security.feature.description.field">Description</span>
+                                            <input type="image" title="about" class="info_button"
+                                                   src="static/images/icons/info.png">
+                                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                                <h2 style="margin-bottom: 15px;"></h2>
+                                                <input type="image" title="close" class="info_close_button"
+                                                       src="static/images/icons/close_white.png"
+                                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                                <div style="padding-left: 10px;" transl-id="step.features.security.feature.description.infoText">
+                                                    <span style="display: inherit; padding-left: 15px;">Put here some extra information about this feature that you find important for visitors to see.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>Bicylce pump is located next to the entrance.</i></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="translatable-free-text">
+                                                    <span></span>
+                                                    <textarea class="input100" name="amenityFeature._.description"
+                                                              generalfeature="false"
+                                                              placeholder="Describe how to arrive here"
+                                                              transl-id-placeholder="step.features.generalservices.feature.description.placeholder"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                         <span class="contact100-form-subsubsection" style="width: 90%;"
                                               transl-id="step.features.availableHours.title">

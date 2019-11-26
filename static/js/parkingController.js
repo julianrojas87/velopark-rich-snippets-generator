@@ -210,7 +210,8 @@ function processObjectWithLanguage(obj, path, inputs) {
     let lang = obj["@language"];
     let value = obj["@value"];
     if (inputs) {
-        inputs.filter('[name="' + name + '"][lang="' + lang + '"]').val(value);
+        let filtered = inputs.filter('[name="' + name + '"][lang="' + lang + '"]');
+        $(filtered[filtered.length - 1]).val(value);
     } else {
         $('.input100[name="' + name + '"][lang="' + lang + '"]').val(value);
     }
