@@ -339,7 +339,11 @@
           "field": "Merkmal",
           "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Bicycle Pump</i>",
           "placeholder" : "Wählen Sie eine Eigenschaft",
-          "description": "Beschreibung"
+          "description": {
+            "field": "Beschreibung",
+            "placeholder": "Fügen Sie zusätzliche Informationen zu dieser Funktion hinzu",
+            "infoText": "Fügen Sie hier einige zusätzliche Informationen zu dieser Funktion ein, die für die Besucher wichtig sind.<br><br>Beispiel: <i>Die Fahrradpumpe befindet sich neben dem Eingang.</i>"
+          }
         },
         "addExtra" : "Zusätzliche Funktion hinzufügen"
       },
@@ -350,7 +354,11 @@
           "field": "Merkmal",
           "infoText": "Wählen Sie die Dienste oder Einrichtungen aus, die in diesem Bereich des Parkhauses verfügbar sind oder genutzt werden können.<br><br>Beispiel: <i>Camera Surveillance</i>",
           "placeholder" : "Wählen Sie eine Eigenschaft",
-          "description": "Beschreibung"
+          "description": {
+            "field": "Beschreibung",
+            "placeholder": "Fügen Sie zusätzliche Informationen zu dieser Funktion hinzu",
+            "infoText": "Fügen Sie hier einige zusätzliche Informationen zu dieser Funktion ein, die für die Besucher wichtig sind.<br><br>Beispiel: <i>Die Fahrradpumpe befindet sich neben dem Eingang.</i>"
+          }
         },
         "addExtra" : "Zusätzliche Funktion hinzufügen"
       },

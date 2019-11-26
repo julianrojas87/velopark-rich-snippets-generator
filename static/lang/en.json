@@ -340,7 +340,11 @@
           "field": "Feature",
           "infoText": "Select the services or facilities that are available or can be used in this section of the parking garage.<br><br>Example: <i>Bicycle Pump</i>",
           "placeholder" : "Select a Feature",
-          "description": "Description"
+          "description": {
+            "field": "Description",
+            "placeholder": "Include any extra information about this feature",
+            "infoText": "Put here some extra information about this feature that you find important for visitors to see.<br><br>Example: <i>Bicylce pump is located next to the entrance.</i>"
+          }
         },
         "addExtra" : "Add extra feature"
       },
@@ -351,7 +355,11 @@
           "field": "Feature",
           "infoText": "Select the security features that are available or can be used in this section of the parking garage.<br><br>Example: <i>Camera Surveillance</i>",
           "placeholder" : "Select a Security Feature",
-          "description": "Description"
+          "description": {
+            "field": "Description",
+            "placeholder": "Include any extra information about this feature",
+            "infoText": "Put here some extra information about this feature that you find important for visitors to see.<br><br>Example: <i>Bicylce pump is located next to the entrance.</i>"
+          }
         },
         "addExtra" : "Add extra security feature"
       },
