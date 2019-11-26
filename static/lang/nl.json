@@ -85,7 +85,7 @@
       "description" : {
         "field" : "Beschrijving",
         "infoText" : "Schrijf hier wat algemene informatie die u belangrijk vindt voor bezoekers om te zien.<br><br>Voorbeeld: <i>Stalling onder het De Somerplein, staat open voor alle types fietsen (geen bromfietsen), maximum 1 week, geen personeel ter plaatse, wel camerabewaking.</i>",
-        "placeholder" : "Geef een beschrijving"
+        "placeholder" : "Voer algemene informatie over deze fietsenstalling in"
       },
       "address" :  {
         "title" : "Adres Informatie",

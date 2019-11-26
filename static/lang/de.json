@@ -85,7 +85,7 @@
       "description" : {
         "field" : "Beschreibung",
         "infoText" : "Schreiben Sie hier einige allgemeine Informationen, die für die Besucher wichtig sind.<br><br>Beispiel: <i>Das Parken unter dem Platz ist für alle Arten von Fahrrädern möglich, maximal 1 Woche. Kein Personal vor Ort, aber Kameraüberwachung verfügbar.</i>",
-        "placeholder" : "Beschreiben Sie, wie Sie hier ankommen"
+        "placeholder" : "Geben Sie allgemeine Informationen zu diesem Fahrradparkplatz ein"
       },
       "address" :  {
         "title" : "Adresse",

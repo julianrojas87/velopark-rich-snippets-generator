@@ -85,7 +85,7 @@
       "description" : {
         "field" : "Description",
         "infoText" : "Écrivez ici des informations générales que vous trouvez importantes pour les visiteurs.<br><br>Exemple: <i>Parking sous la place est ouvert pour tous les types de vélos, maximum 1 semaine, pas de personnel sur place mais surveillance vidéo disponible.</i>",
-        "placeholder" : "Décrivez comment arriver ici"
+        "placeholder" : "Entrez des informations générales sur ce parking à vélos"
       },
       "address" :  {
         "title" : "Adresse",
