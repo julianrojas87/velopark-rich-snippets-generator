@@ -176,7 +176,7 @@
                             <div>
                                 <div class="translatable-free-text">
                                     <span></span>
-                                    <textarea class="input100" name="address.description"
+                                    <textarea class="input100" name="description"
                                               placeholder="Enter general information about this bike parking"
                                               transl-id-placeholder="step.parkInfo.description.placeholder"></textarea>
                                 </div>
@@ -885,6 +885,29 @@
                                            placeholder="Enter the longitude"
                                            transl-id-placeholder="step.loc.point.lon.placeholder">
                                 </div>
+                                <div class="wrap-input100 bg0">
+                                    <span class="label-input100" transl-id="step.loc.point.description.field">Description</span>
+                                    <input type="image" title="about" class="info_button"
+                                           src="static/images/icons/info.png">
+                                    <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                        <h2 style="margin-bottom: 15px;"></h2>
+                                        <input type="image" title="close" class="info_close_button"
+                                               src="static/images/icons/close_white.png"
+                                               style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                        <div style="padding-left: 10px;" transl-id="step.loc.point.description.infoText">
+                                            <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of this parking.</span><br>
+                                            <span style="display: inherit; padding-left: 15px;">Example: <i>Main entrance is under the bridge.</i></span>
+                                        </div>
+                                    </div>
+                                    <div id="address_description">
+                                        <div class="translatable-free-text">
+                                            <span></span>
+                                            <textarea class="input100"
+                                                      placeholder="Enter directions to find this entrance"
+                                                      transl-id-placeholder="step.loc.point.description.placeholder"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <span class="contact100-form-subsubsection" transl-id="step.loc.entrance.title">
                             Extra Entrances
@@ -953,8 +976,8 @@
                                                        src="static/images/icons/close_white.png"
                                                        style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
                                                 <div transl-id="step.loc.entrance.description.infoText">
-                                                    <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking (if there are multiple entrances, use the + symbol).</span><br>
-                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>De ingang bevindt zich aan beide zijden van het plein. Opgelet: verboden te fietsen in de stalling!</i></span>
+                                                    <span style="display: inherit; padding-left: 15px;">Describe how users can find the entrance of the parking.</span><br>
+                                                    <span style="display: inherit; padding-left: 15px;">Example: <i>The entrance is on both sides of the square. Attention: forbidden to cycle in the garage!</i></span>
                                                 </div>
                                             </div>
                                             <div>

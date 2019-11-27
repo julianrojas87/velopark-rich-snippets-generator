@@ -257,6 +257,11 @@
           "infoText": "Duid op de kaart de locatie van deze Faciliteitssectie aan.",
           "placeholder": "Vul de lengtegraad in",
           "validation": "Vul de lengtegraad in"
+        },
+        "description": {
+          "field": "Beschrijving",
+          "placeholder": "Voer een routebeschrijving in om deze ingang te vinden",
+          "infoText": "Beschrijf hoe gebruikers de ingang van deze parkeerplaats kunnen vinden.<br><br>Voorbeeld: <i>Hoofdingang is onder de brug.</i>"
         }
       },
       "polygon" : {

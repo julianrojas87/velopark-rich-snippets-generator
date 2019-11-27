@@ -257,6 +257,11 @@
           "infoText": "Geben Sie auf der Karte die Position dieses Abschnitts des Fahrradabstellplatzes an.",
           "placeholder": "Geben Sie den Längengrad ein",
           "validation": "Geben Sie den Längengrad ein"
+        },
+        "description": {
+          "field": "Beschreibung",
+          "placeholder": "Geben Sie eine Wegbeschreibung ein, um diesen Eingang zu finden",
+          "infoText": "Beschreiben Sie, wie Benutzer die Einfahrt zu diesem Parkplatz finden können.<br><br>Beispiel: <i>Der Haupteingang befindet sich unter der Brücke.</i>"
         }
       },
       "polygon" : {

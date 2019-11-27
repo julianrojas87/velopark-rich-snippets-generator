@@ -20,7 +20,15 @@ function loadParkingValues() {
         originalId = parking['@id'];
         //reset languages
         $('#language-selection-container input[type="checkbox"]').prop('checked', false).trigger("change");
+        // Hack to deal with address description
+        let desc = $('div[parking-section=0]').find('#address_description');
+        $(desc).find('textarea').attr('name', 'address.description');
+        // Load all values
         processObject(parking);
+        // Complete address description hack
+        $(desc).find('textarea').each(function() {
+            $(this).removeAttr('name');
+        });
         // leave Parking Facility URI empty if @id was set automatically
         if (parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
             $('input[name="@id"]').val('');

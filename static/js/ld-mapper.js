@@ -228,6 +228,15 @@ function fillAutomaticData(jsonld) {
         "url": 'https://www.openstreetmap.org/#map=18/' + lonlat[1] + '/' + lonlat[0]
     };
 
+    // Deal with the address description that is entered in the sections. Take only the first section.
+    let desc = $('div[parking-section=0]').find('#address_description');
+    let tas = $(desc).find('textarea');
+    for(let i = 0; i < tas.length; i++) {
+        $(tas[i]).attr('name', 'address.description');
+        processElement(jsonld, $(tas[i]));
+        $(tas[i]).removeAttr('name');
+    }
+
     return true;
 }
 

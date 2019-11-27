@@ -257,6 +257,11 @@
           "infoText": "Indiquez sur la carte l'emplacement de cette section du parking pour vélos.",
           "placeholder": "Entrez la longitude",
           "validation": "Entrez la longitude"
+        },
+        "description": {
+          "field": "La Description",
+          "placeholder": "Entrez les directions pour trouver cette entrée",
+          "infoText": "Décrivez comment les utilisateurs peuvent trouver l'entrée de ce parking.<br><br>Exemple: <i>L'entrée principale est sous le pont.</i>"
         }
       },
       "polygon" : {

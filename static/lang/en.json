@@ -258,6 +258,11 @@
           "infoText": "Indicate on the map the location of this section of the bicycle parking.",
           "placeholder": "Enter the longitude",
           "validation": "Enter the longitude"
+        },
+        "description": {
+          "field": "Description",
+          "placeholder": "Enter directions to find this entrance",
+          "infoText": "Describe how users can find the entrance of this parking.<br><br>Example: <i>Main entrance is under the bridge.</i>"
         }
       },
       "polygon" : {
