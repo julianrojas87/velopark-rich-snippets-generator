@@ -438,7 +438,7 @@
         },
         "description" : {
           "field": "Beschreibung",
-          "infoText": "Beschreiben Sie, wie diese Preisspezifikation funktioniert.<br><br>Beispiel: <i>Gratis voor het eerste uur</i>",
+          "infoText": "Beschreiben Sie, wie diese Preisspezifikation funktioniert.<br><br>Beispiel: <i>Frei für die erste stunde</i>",
           "placeholder" : "Beschreiben Sie diese Preisdefinition (z. B. kostenlos für die erste Stunde)."
         },
         "addExtra" : "Zusätzliches Preisspezifikationsintervall hinzufügen"
