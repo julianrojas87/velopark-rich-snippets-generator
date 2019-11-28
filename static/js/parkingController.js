@@ -20,7 +20,15 @@ function loadParkingValues() {
         originalId = parking['@id'];
         //reset languages
         $('#language-selection-container input[type="checkbox"]').prop('checked', false).trigger("change");
+        // Hack to deal with address description
+        let desc = $('div[parking-section=0]').find('#address_description');
+        $(desc).find('textarea').attr('name', 'address.description');
+        // Load all values
         processObject(parking);
+        // Complete address description hack
+        $(desc).find('textarea').each(function() {
+            $(this).removeAttr('name');
+        });
         // leave Parking Facility URI empty if @id was set automatically
         if (parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
             $('input[name="@id"]').val('');
@@ -272,7 +280,7 @@ function loadParkingValue(path, value, override, inpt) {
                 let currentDay = value[i];
                 if (usedDays.has(currentDay['dayOfWeek']) || (lastOpens && currentDay['opens'] !== lastOpens)
                     || (lastCloses && currentDay['closes'] !== lastCloses)) {
-                    if (currentDay['opens'] !== '00:00' && value[i - 1]['closes'] !== '23:59') {
+                    if (currentDay['opens'] !== '00:00' && lastCloses !== '23:59') {
                         usedDays.clear();
                         input.next().click();
                         let inputs = input.parent().find('[name="' + name + '"]');
@@ -285,7 +293,7 @@ function loadParkingValue(path, value, override, inpt) {
 
                 let time = input.find('input[type="time"]');
 
-                if (i > 0 && currentDay['opens'] === '00:00' && value[i - 1]['closes'] === '23:59' && (value[i - 1]['closes'] < value[i - 1]['opens'])) {
+                if (i > 0 && currentDay['opens'] === '00:00' && lastCloses === '23:59' && (lastOpens > '00:00')) {
                     $(time[1]).val(currentDay['closes']);
                 } else {
                     input.find('input[value="' + currentDay['dayOfWeek'] + '"]').prop('checked', true);

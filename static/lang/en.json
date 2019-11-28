@@ -177,7 +177,7 @@
         "validation" : "Enter the facility name"
       },
       "type": {
-        "field": "Parking Type",
+        "field": "Parking Type *",
         "infoText": "Select what type of bicycle parking applies to this section.<br><br>Example: <i>Bicycle parking station</i>",
         "placeholder" : "Select parking type"
       },
@@ -187,9 +187,10 @@
         "placeholder": "Enter the number of levels"
       },
       "public": {
-        "field": "Public Access",
+        "field": "Public Access *",
         "infoText": "Can anybody park her / his bike here, or do you need a key or badge?<br><br>Example: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Select a value"
       },
       "maxDur": {
         "field": "Maximum parking duration (days) *",
@@ -222,6 +223,7 @@
         "always" : "Open 24/7",
         "infoText" : "Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.<br><br>Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Please add at least one opening hour entry.",
+        "validation": "Please select at least one day",
         "open": {
           "field": "Opening Time *",
           "placeholder": "Enter the opening time",
@@ -258,6 +260,11 @@
           "infoText": "Indicate on the map the location of this section of the bicycle parking.",
           "placeholder": "Enter the longitude",
           "validation": "Enter the longitude"
+        },
+        "description": {
+          "field": "Description",
+          "placeholder": "Enter directions to find this entrance",
+          "infoText": "Describe how users can find the entrance of this parking.<br><br>Example: <i>Main entrance is under the bridge.</i>"
         }
       },
       "polygon" : {
@@ -314,7 +321,7 @@
       "infoAlert" : "Here you can enter the different types of bicycles someone can store in this facility section.",
       "noItemsError" : "Please add at least one bicycle type that is allowed in this facility section.",
       "type" : {
-        "field": "Bicycle Type",
+        "field": "Bicycle Type *",
         "infoText": "Select here the types of bicycles allowed in this parking section.<br><br>Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
         "placeholder" : "Select bicycle type"
       },
@@ -438,7 +445,7 @@
         },
         "description" : {
           "field": "Description",
-          "infoText": "Describe how this price specification operates.<br><br>Example: <i>Gratis voor het eerste uur</i>",
+          "infoText": "Describe how this price specification operates.<br><br>Example: <i>Gratis for the first hour</i>",
           "placeholder" : "Describe this pricing definition (e.g. free for the first hour)"
         },
         "addExtra" : "Add extra price specification interval"

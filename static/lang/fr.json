@@ -176,7 +176,7 @@
         "validation" : "Entrez le nom du parking"
       },
       "type": {
-        "field": "Type de Stationnement",
+        "field": "Type de Stationnement *",
         "infoText": "Sélectionnez le type de stationnement pour vélos applicable à cette section.<br><br>Exemple: <i>Bicycle parking station</i>",
         "placeholder" : "Sélectionnez le type de stationnement"
       },
@@ -186,9 +186,10 @@
         "placeholder": "Entrez le nombre de niveaux"
       },
       "public": {
-        "field": "Accès Publique",
+        "field": "Accès Publique *",
         "infoText": "Pouvez-vous garer votre vélo ici ou avez-vous besoin d'une clé ou d'un badge?<br><br>Exemple: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Sélectionnez une valeur"
       },
       "maxDur": {
         "field": "Durée Maximale de Stationnement (jours) *",
@@ -221,6 +222,7 @@
         "always" : "Ouvert 24/7",
         "infoText" : "Indiquer quand cette section est ouverte (s'il n'y a qu'un seul tronçon, cela concerne l'ensemble du parking vélo). Vous pouvez ajouter des jours avec le symbole d'ajout si les heures d'ouverture diffèrent d'un jour à l'autre.<br><br>Exemple: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Veuillez ajouter au moins une heure d'ouverture.",
+        "validation": "Veuillez sélectionner au moins un jour",
         "open": {
           "field": "Heure d'ouverture *",
           "placeholder": "Entrez l'heure d'ouverture",
@@ -257,6 +259,11 @@
           "infoText": "Indiquez sur la carte l'emplacement de cette section du parking pour vélos.",
           "placeholder": "Entrez la longitude",
           "validation": "Entrez la longitude"
+        },
+        "description": {
+          "field": "La Description",
+          "placeholder": "Entrez les directions pour trouver cette entrée",
+          "infoText": "Décrivez comment les utilisateurs peuvent trouver l'entrée de ce parking.<br><br>Exemple: <i>L'entrée principale est sous le pont.</i>"
         }
       },
       "polygon" : {
@@ -313,7 +320,7 @@
       "infoAlert" : "Vous pouvez y entrer les différents types de vélos que quelqu'un peut stocker dans cette section.",
       "noItemsError" : "Veuillez ajouter au moins un type de vélo autorisé dans cette section.",
       "type" : {
-        "field": "Type de vélo",
+        "field": "Type de vélo *",
         "infoText": "Sélectionnez ici les types de vélos autorisés dans cette section de stationnement.<br><br>Exemple: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
         "placeholder" : "Sélectionnez le type de vélo"
       },

@@ -176,7 +176,7 @@
         "validation" : "Vul de parkingsectie-naam in"
       },
       "type": {
-        "field": "Type Parking",
+        "field": "Type Parking *",
         "infoText": "Selecteer welk type fietsenparking van toepassing is op deze sectie.<br><br>Voorbeeld: <i>Bicycle parking station</i>",
         "placeholder" : "Selecteer het parking-type"
       },
@@ -186,9 +186,10 @@
         "placeholder": "Geef het aantal verdiepingen op"
       },
       "public": {
-        "field": "Publiek toegankelijk",
+        "field": "Publiek toegankelijk *",
         "infoText": "Kan iedereen zijn of haar fiets in deze parking plaatsen of heb je een sleutel of badge nodig?<br><br>Voorbeeld: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Selecteer een waarde"
       },
       "maxDur": {
         "field": "Maximale parkeertijd (dagen) *",
@@ -221,6 +222,7 @@
         "always" : "Open 24/7",
         "infoText": "Geef aan wanneer deze sectie open is (als er slechts één sectie is, geldt dit voor de gehele fietsenparking). Je kan verschillende uren toevoegen via de \"Voeg extra uren toe\"-knop, als de openingsuren verschillen van dag tot dag.<br><br>Voorbeeld: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Vul aub tenminste één openingsuur in.",
+        "validation": "Selecteer minimaal één dag",
         "open": {
           "field": "Openingstijd *",
           "placeholder": "Vul de openingstijd in",
@@ -257,6 +259,11 @@
           "infoText": "Duid op de kaart de locatie van deze Faciliteitssectie aan.",
           "placeholder": "Vul de lengtegraad in",
           "validation": "Vul de lengtegraad in"
+        },
+        "description": {
+          "field": "Beschrijving",
+          "placeholder": "Voer een routebeschrijving in om deze ingang te vinden",
+          "infoText": "Beschrijf hoe gebruikers de ingang van deze parkeerplaats kunnen vinden.<br><br>Voorbeeld: <i>Hoofdingang is onder de brug.</i>"
         }
       },
       "polygon" : {
@@ -313,7 +320,7 @@
       "infoAlert" : "Hier kan je de verschillende types fietsen opgeven dat iemand in deze Faciliteitssectie kan plaatsen.",
       "noItemsError" : "Voeg aub tenminste één type fiets toe.",
       "type" : {
-        "field": "Type Fiets",
+        "field": "Type Fiets *",
         "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
         "placeholder" : "Selecteer een fietstype"
       },

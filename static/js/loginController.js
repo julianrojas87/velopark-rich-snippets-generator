@@ -481,6 +481,11 @@ function translate(lang, first){
                     });
                 });
                 select2El.change();
+                // Fix placeholder of alerted selects
+                $('.alert-validate').each(function() {
+                    $(this).find('.select2-selection__arrow').hide();
+                    $(this).find('.select2-selection__placeholder').hide();
+                });
 
                 // Regions filter translation
                 if($('#filterByRegion').length > 0 && !first) {

@@ -176,7 +176,7 @@
         "validation" : "Geben Sie den Namen der Einrichtung ein"
       },
       "type": {
-        "field": "Parkart",
+        "field": "Parkart *",
         "infoText": "Wählen Sie aus, welche Art von Fahrradparken für diesen Abschnitt gilt.<br><br>Beispiel: <i>Bicycle parking station</i>",
         "placeholder" : "Parkart auswählen"
       },
@@ -186,9 +186,10 @@
         "placeholder": "Geben Sie die Anzahl der Ebenen ein"
       },
       "public": {
-        "field": "Öffentlicher Zugang",
+        "field": "Öffentlicher Zugang *",
         "infoText": "Kann hier jemand sein Fahrrad parken oder brauchen Sie einen Schlüssel oder einen Ausweis?<br><br>Beispiel: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Wähle einen wert"
       },
       "maxDur": {
         "field": "Maximale Parkdauer (Tage) *",
@@ -221,6 +222,7 @@
         "always" : "24/7 Geöffnet",
         "infoText" : "Geben Sie an, wann dieser Abschnitt geöffnet ist (wenn es nur einen Abschnitt gibt, gilt dies für das gesamte Abstellen von Fahrrädern). Sie können Tage mit dem Symbol + hinzufügen, wenn die Öffnungszeiten von Tag zu Tag unterschiedlich sind.<br><br>Beispiel: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Bitte fügen Sie mindestens einen Öffnungszeiteneintrag hinzu.",
+        "validation": "Bitte wählen Sie mindestens einen Tag aus",
         "open": {
           "field": "Öffnungszeit *",
           "placeholder": "Geben Sie die Öffnungszeit ein",
@@ -257,6 +259,11 @@
           "infoText": "Geben Sie auf der Karte die Position dieses Abschnitts des Fahrradabstellplatzes an.",
           "placeholder": "Geben Sie den Längengrad ein",
           "validation": "Geben Sie den Längengrad ein"
+        },
+        "description": {
+          "field": "Beschreibung",
+          "placeholder": "Geben Sie eine Wegbeschreibung ein, um diesen Eingang zu finden",
+          "infoText": "Beschreiben Sie, wie Benutzer die Einfahrt zu diesem Parkplatz finden können.<br><br>Beispiel: <i>Der Haupteingang befindet sich unter der Brücke.</i>"
         }
       },
       "polygon" : {
@@ -313,7 +320,7 @@
       "infoAlert" : "Hier können Sie die verschiedenen Fahrradtypen eingeben, die jemand in diesem Bereich unterbringen kann.",
       "noItemsError" : "Bitte fügen Sie mindestens einen Fahrradtyp hinzu, der in diesem Bereich zulässig ist.",
       "type" : {
-        "field": "Fahrradtyp",
+        "field": "Fahrradtyp *",
         "infoText": "Wählen Sie hier die Fahrradtypen aus, die in diesem Parkbereich zugelassen sind.<br><br>Beispiel: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
         "placeholder" : "Fahrradtyp auswählen"
       },
@@ -438,7 +445,7 @@
         },
         "description" : {
           "field": "Beschreibung",
-          "infoText": "Beschreiben Sie, wie diese Preisspezifikation funktioniert.<br><br>Beispiel: <i>Gratis voor het eerste uur</i>",
+          "infoText": "Beschreiben Sie, wie diese Preisspezifikation funktioniert.<br><br>Beispiel: <i>Frei für die erste stunde</i>",
           "placeholder" : "Beschreiben Sie diese Preisdefinition (z. B. kostenlos für die erste Stunde)."
         },
         "addExtra" : "Zusätzliches Preisspezifikationsintervall hinzufügen"
