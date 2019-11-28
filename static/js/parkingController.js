@@ -280,7 +280,7 @@ function loadParkingValue(path, value, override, inpt) {
                 let currentDay = value[i];
                 if (usedDays.has(currentDay['dayOfWeek']) || (lastOpens && currentDay['opens'] !== lastOpens)
                     || (lastCloses && currentDay['closes'] !== lastCloses)) {
-                    if (currentDay['opens'] !== '00:00' && value[i - 1]['closes'] !== '23:59') {
+                    if (currentDay['opens'] !== '00:00' && lastCloses !== '23:59') {
                         usedDays.clear();
                         input.next().click();
                         let inputs = input.parent().find('[name="' + name + '"]');
@@ -293,7 +293,7 @@ function loadParkingValue(path, value, override, inpt) {
 
                 let time = input.find('input[type="time"]');
 
-                if (i > 0 && currentDay['opens'] === '00:00' && value[i - 1]['closes'] === '23:59' && (value[i - 1]['closes'] < value[i - 1]['opens'])) {
+                if (i > 0 && currentDay['opens'] === '00:00' && lastCloses === '23:59' && (lastOpens > '00:00')) {
                     $(time[1]).val(currentDay['closes']);
                 } else {
                     input.find('input[value="' + currentDay['dayOfWeek'] + '"]').prop('checked', true);
