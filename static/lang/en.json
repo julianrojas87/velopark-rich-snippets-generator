@@ -187,9 +187,10 @@
         "placeholder": "Enter the number of levels"
       },
       "public": {
-        "field": "Public Access",
+        "field": "Public Access *",
         "infoText": "Can anybody park her / his bike here, or do you need a key or badge?<br><br>Example: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Select a value"
       },
       "maxDur": {
         "field": "Maximum parking duration (days) *",
@@ -222,6 +223,7 @@
         "always" : "Open 24/7",
         "infoText" : "Indicate when this section is open (if there is only one section, this goes for the entire bicycle parking). You can add days with the + symbol if the opening hours differ from day to day.<br><br>Example: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Please add at least one opening hour entry.",
+        "validation": "Please select at least one day",
         "open": {
           "field": "Opening Time *",
           "placeholder": "Enter the opening time",

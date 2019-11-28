@@ -5,14 +5,51 @@
     $('#ld_generate').on('click', () => {
         var check = true;
         let wrongInput = null;
-        let input = $('.validate-input .input100, .input100[type=time]');
+        let toValidate = $('.validate-input');
 
-        for (var i = 0; i < input.length; i++) {
-            if (validate(input[i]) == false) {
-                wrongInput = input[i];
-                showValidate(input[i]);
-                check = false;
-                break;
+        for (let i = 0; i < toValidate.length; i++) {
+            let inp = $(toValidate[i]).find('.input100, .js-select2');
+            if (inp.length > 0) {
+                if (validate(inp) == false) {
+                    wrongInput = inp;
+                    showValidate(inp);
+                    check = false;
+                    break;
+                }
+            } else {
+                let unchecked = true;
+                $(toValidate[i]).find('input[type=checkbox]').each(function () {
+                    if ($(this).is(':checked')) {
+                        unchecked = false;
+                    }
+                });
+
+                if (unchecked) {
+                    check = false;
+                    wrongInput = $(toValidate[i]);
+                    if ($(toValidate[i]).find('#vld-close').length < 1) {
+                        $(toValidate[i]).prepend('<span id="vld-close" style="color: red; cursor: pointer">X</span>');
+                        $(toValidate[i]).prepend('<span id="vld-message" style="color: red;">' + $(toValidate[i]).attr('data-validate') + '</span>');
+                        $(toValidate[i]).find('#vld-close').click(function () {
+                            $(toValidate).find('#vld-message').remove();
+                            $(this).remove();
+                        });
+                    }
+
+                    $(toValidate[i]).find('input[type=checkbox]').each(function () {
+                        $(this).change(function () {
+                            $(toValidate).find('#vld-message').remove();
+                            $(toValidate).find('#vld-close').remove();
+                        });
+                    });
+                    //jump to the correct wizard page
+                    $('#' + $(toValidate[i]).closest('fieldset').attr('id').replace("-p-", "-t-")).get(0).click();
+                    //scroll the validation warning into view
+                    setTimeout(function () {
+                        $(toValidate[i])[0].scrollIntoViewIfNeeded();
+                    }, 800);
+                    break;
+                }
             }
         }
 
@@ -123,7 +160,7 @@ function saveJSONLD() {
     } else {
         // Approve new parkings by default for Region Managers
         let approved = false;
-        if(user.cityrep) {
+        if (user.cityrep) {
             approved = true;
         }
         $.ajax({
@@ -231,7 +268,7 @@ function fillAutomaticData(jsonld) {
     // Deal with the address description that is entered in the sections. Take only the first section.
     let desc = $('div[parking-section=0]').find('#address_description');
     let tas = $(desc).find('textarea');
-    for(let i = 0; i < tas.length; i++) {
+    for (let i = 0; i < tas.length; i++) {
         $(tas[i]).attr('name', 'address.description');
         processElement(jsonld, $(tas[i]));
         $(tas[i]).removeAttr('name');

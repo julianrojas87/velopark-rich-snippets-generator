@@ -186,9 +186,10 @@
         "placeholder": "Entrez le nombre de niveaux"
       },
       "public": {
-        "field": "Accès Publique",
+        "field": "Accès Publique *",
         "infoText": "Pouvez-vous garer votre vélo ici ou avez-vous besoin d'une clé ou d'un badge?<br><br>Exemple: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Sélectionnez une valeur"
       },
       "maxDur": {
         "field": "Durée Maximale de Stationnement (jours) *",
@@ -221,6 +222,7 @@
         "always" : "Ouvert 24/7",
         "infoText" : "Indiquer quand cette section est ouverte (s'il n'y a qu'un seul tronçon, cela concerne l'ensemble du parking vélo). Vous pouvez ajouter des jours avec le symbole d'ajout si les heures d'ouverture diffèrent d'un jour à l'autre.<br><br>Exemple: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Veuillez ajouter au moins une heure d'ouverture.",
+        "validation": "Veuillez sélectionner au moins un jour",
         "open": {
           "field": "Heure d'ouverture *",
           "placeholder": "Entrez l'heure d'ouverture",

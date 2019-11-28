@@ -73,7 +73,6 @@ function validate(input, finalValidation=true) {
         if ($(input).val() == '' || parseInt($(input).val()) < parseInt($(input).attr('min')) || parseInt($(input).val()) > parseInt($(input).attr('max'))) {
             return false;
         }
-    } else if($(input).attr('type') === 'time') {
     } else {
         if ($(input).val().trim() == '') {
             return false;
@@ -102,14 +101,26 @@ function validateLang(freeTextContainer){
 }
 
 function showValidate(input) {
-    var thisAlert = $(input).parent();
+    var thisAlert = null;
+    if($(input).is('select')) {
+        thisAlert = $(input).parent().parent();
+        $(thisAlert).find('.select2-selection__arrow').hide();
+        $(thisAlert).find('.select2-selection__placeholder').hide();
+    } else {
+        thisAlert = $(input).parent();
+    }
 
     $(thisAlert).addClass('alert-validate');
+
 
     $(thisAlert).append('<span class="btn-hide-validate">&#xf136;</span>')
     $('.btn-hide-validate').each(function () {
         $(this).on('click', function () {
             hideValidate(this);
+            if($(input).is('select')) {
+                $(thisAlert).find('.select2-selection__placeholder').show();
+                $(thisAlert).find('.select2-selection__arrow').show();
+            }
         });
     });
 

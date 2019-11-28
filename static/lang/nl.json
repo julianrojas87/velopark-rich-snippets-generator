@@ -186,9 +186,10 @@
         "placeholder": "Geef het aantal verdiepingen op"
       },
       "public": {
-        "field": "Publiek toegankelijk",
+        "field": "Publiek toegankelijk *",
         "infoText": "Kan iedereen zijn of haar fiets in deze parking plaatsen of heb je een sleutel of badge nodig?<br><br>Voorbeeld: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Selecteer een waarde"
       },
       "maxDur": {
         "field": "Maximale parkeertijd (dagen) *",
@@ -221,6 +222,7 @@
         "always" : "Open 24/7",
         "infoText": "Geef aan wanneer deze sectie open is (als er slechts één sectie is, geldt dit voor de gehele fietsenparking). Je kan verschillende uren toevoegen via de \"Voeg extra uren toe\"-knop, als de openingsuren verschillen van dag tot dag.<br><br>Voorbeeld: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Vul aub tenminste één openingsuur in.",
+        "validation": "Selecteer minimaal één dag",
         "open": {
           "field": "Openingstijd *",
           "placeholder": "Vul de openingstijd in",

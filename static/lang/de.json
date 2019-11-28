@@ -186,9 +186,10 @@
         "placeholder": "Geben Sie die Anzahl der Ebenen ein"
       },
       "public": {
-        "field": "Öffentlicher Zugang",
+        "field": "Öffentlicher Zugang *",
         "infoText": "Kann hier jemand sein Fahrrad parken oder brauchen Sie einen Schlüssel oder einen Ausweis?<br><br>Beispiel: <i>Yes</i>",
-        "placeholder": "Yes/No"
+        "placeholder": "Yes/No",
+        "validation": "Wähle einen wert"
       },
       "maxDur": {
         "field": "Maximale Parkdauer (Tage) *",
@@ -221,6 +222,7 @@
         "always" : "24/7 Geöffnet",
         "infoText" : "Geben Sie an, wann dieser Abschnitt geöffnet ist (wenn es nur einen Abschnitt gibt, gilt dies für das gesamte Abstellen von Fahrrädern). Sie können Tage mit dem Symbol + hinzufügen, wenn die Öffnungszeiten von Tag zu Tag unterschiedlich sind.<br><br>Beispiel: <i>Mon, Tue, Wed, Thu 09:00 - 17:00<br>Fri, Sat, Sun 10:00 - 16:00</i>",
         "noItemsError" : "Bitte fügen Sie mindestens einen Öffnungszeiteneintrag hinzu.",
+        "validation": "Bitte wählen Sie mindestens einen Tag aus",
         "open": {
           "field": "Öffnungszeit *",
           "placeholder": "Geben Sie die Öffnungszeit ein",

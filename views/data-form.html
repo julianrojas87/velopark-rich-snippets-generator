@@ -540,9 +540,10 @@
                                        placeholder="Enter the number of levels"
                                        transl-id-placeholder="step.operation.levels.placeholder">
                             </div>
-                            <div class="wrap-input100 input100-select bg1 rs2-wrap-input100">
+                            <div class="wrap-input100 validate-input input100-select bg1 rs2-wrap-input100" 
+                                 data-validate="Select a value" transl-id-validate="step.operation.public.validation">
                                 <span class="label-input100"
-                                      transl-id="step.operation.public.field">Public Access</span>
+                                      transl-id="step.operation.public.field">Public Access *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -692,7 +693,8 @@
                                      class="wrap-contact100-subsection dynamic-section">
                                     <button type="button" class="minus_button minus_button_input"><i
                                             class="fas fa-trash-alt"></i></button>
-                                    <div style="display: flex;">
+                                    <div class="validate-input" style="display: flex;" data-validate="Please select at least one day"
+                                         transl-id-validate="step.operation.openingHours.validation">
                                         <div class="wrap-input100 week-day-selector" style="flex-grow: 1;">
                                             <span class="label-input100"
                                                   transl-id="step.operation.openingHours.day[0]">Mon </span>
