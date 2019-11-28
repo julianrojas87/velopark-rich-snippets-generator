@@ -321,7 +321,7 @@
       "infoAlert" : "Here you can enter the different types of bicycles someone can store in this facility section.",
       "noItemsError" : "Please add at least one bicycle type that is allowed in this facility section.",
       "type" : {
-        "field": "Bicycle Type",
+        "field": "Bicycle Type *",
         "infoText": "Select here the types of bicycles allowed in this parking section.<br><br>Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
         "placeholder" : "Select bicycle type"
       },

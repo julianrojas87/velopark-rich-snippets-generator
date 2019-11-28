@@ -1031,8 +1031,9 @@
                                     <div class="wrap-contact100-subsection dynamic-section">
                                         <button type="button" class="minus_button minus_button_input"><i
                                                 class="fas fa-trash-alt"></i></button>
-                                        <div class="wrap-input100 input100-select bg1">
-                                            <span class="label-input100" transl-id="step.allowed.type.field">Bicycle Type</span>
+                                        <div class="wrap-input100 validate-input input100-select bg1"
+                                             data-validate="Select a value" transl-id-validate="step.operation.public.validation">
+                                            <span class="label-input100" transl-id="step.allowed.type.field">Bicycle Type *</span>
                                             <input type="image" title="about" class="info_button"
                                                    src="static/images/icons/info.png">
                                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -1049,6 +1050,7 @@
                                                 <select class="js-select2" name="allows._AllowedBicycle.bicycleType"
                                                         bike-types="true" placeholder="Select bicycle type"
                                                         transl-id-placeholder="step.allowed.type.placeholder">
+                                                    <option value=""></option>
                                                 </select>
                                                 <div class="dropDownSelect2"></div>
                                             </div>

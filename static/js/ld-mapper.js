@@ -9,6 +9,14 @@
 
         for (let i = 0; i < toValidate.length; i++) {
             let inp = $(toValidate[i]).find('.input100, .js-select2');
+            if($(inp).is('select')) {
+                $(toValidate[i]).click(function() {
+                    $(this).removeClass('alert-validate');
+                    $(this).find('.btn-hide-validate').remove();
+                    $(this).find('.select2-selection__placeholder').show();
+                    $(this).find('.select2-selection__arrow').show();
+                });
+            }
             if (inp.length > 0) {
                 if (validate(inp) == false) {
                     wrongInput = inp;

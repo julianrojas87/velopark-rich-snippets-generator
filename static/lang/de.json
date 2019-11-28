@@ -320,7 +320,7 @@
       "infoAlert" : "Hier können Sie die verschiedenen Fahrradtypen eingeben, die jemand in diesem Bereich unterbringen kann.",
       "noItemsError" : "Bitte fügen Sie mindestens einen Fahrradtyp hinzu, der in diesem Bereich zulässig ist.",
       "type" : {
-        "field": "Fahrradtyp",
+        "field": "Fahrradtyp *",
         "infoText": "Wählen Sie hier die Fahrradtypen aus, die in diesem Parkbereich zugelassen sind.<br><br>Beispiel: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
         "placeholder" : "Fahrradtyp auswählen"
       },

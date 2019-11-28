@@ -320,7 +320,7 @@
       "infoAlert" : "Vous pouvez y entrer les différents types de vélos que quelqu'un peut stocker dans cette section.",
       "noItemsError" : "Veuillez ajouter au moins un type de vélo autorisé dans cette section.",
       "type" : {
-        "field": "Type de vélo",
+        "field": "Type de vélo *",
         "infoText": "Sélectionnez ici les types de vélos autorisés dans cette section de stationnement.<br><br>Exemple: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
         "placeholder" : "Sélectionnez le type de vélo"
       },
