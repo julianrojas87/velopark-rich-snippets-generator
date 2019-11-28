@@ -176,7 +176,7 @@
         "validation" : "Geben Sie den Namen der Einrichtung ein"
       },
       "type": {
-        "field": "Parkart",
+        "field": "Parkart *",
         "infoText": "Wählen Sie aus, welche Art von Fahrradparken für diesen Abschnitt gilt.<br><br>Beispiel: <i>Bicycle parking station</i>",
         "placeholder" : "Parkart auswählen"
       },

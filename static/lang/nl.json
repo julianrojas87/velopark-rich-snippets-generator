@@ -176,7 +176,7 @@
         "validation" : "Vul de parkingsectie-naam in"
       },
       "type": {
-        "field": "Type Parking",
+        "field": "Type Parking *",
         "infoText": "Selecteer welk type fietsenparking van toepassing is op deze sectie.<br><br>Voorbeeld: <i>Bicycle parking station</i>",
         "placeholder" : "Selecteer het parking-type"
       },

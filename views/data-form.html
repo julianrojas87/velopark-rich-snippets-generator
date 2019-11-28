@@ -499,8 +499,9 @@
 
                             </div>
 
-                            <div class="wrap-input100 input100-select bg1 rs2-wrap-input100">
-                                <span class="label-input100" transl-id="step.operation.type.field">Parking Type</span>
+                            <div class="wrap-input100 validate-input input100-select bg1 rs2-wrap-input100"
+                                 data-validate="Select a value" transl-id-validate="step.operation.public.validation">
+                                <span class="label-input100" transl-id="step.operation.type.field">Parking Type *</span>
                                 <input type="image" title="about" class="info_button"
                                        src="static/images/icons/info.png">
                                 <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -517,6 +518,7 @@
                                     <select name="@type" parking-types="true" class="js-select2"
                                             placeholder="Select parking type"
                                             transl-id-placeholder="step.operation.type.placeholder">
+                                        <option value=""></option>
                                     </select>
                                     <div class="dropDownSelect2"></div>
                                 </div>

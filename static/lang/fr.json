@@ -176,7 +176,7 @@
         "validation" : "Entrez le nom du parking"
       },
       "type": {
-        "field": "Type de Stationnement",
+        "field": "Type de Stationnement *",
         "infoText": "Sélectionnez le type de stationnement pour vélos applicable à cette section.<br><br>Exemple: <i>Bicycle parking station</i>",
         "placeholder" : "Sélectionnez le type de stationnement"
       },

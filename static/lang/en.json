@@ -177,7 +177,7 @@
         "validation" : "Enter the facility name"
       },
       "type": {
-        "field": "Parking Type",
+        "field": "Parking Type *",
         "infoText": "Select what type of bicycle parking applies to this section.<br><br>Example: <i>Bicycle parking station</i>",
         "placeholder" : "Select parking type"
       },
