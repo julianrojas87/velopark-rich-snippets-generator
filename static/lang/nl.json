@@ -175,6 +175,11 @@
         "placeholder": "Naam Parkingssectie",
         "validation" : "Vul de parkingsectie-naam in"
       },
+      "covered": {
+        "field": "Overdekt",
+        "infoText": "Is dit gedeelte beschut of heeft het enige vorm van dak?<br><br>Voorbeeld: <i>Yes</i>",
+        "placeholder": "Yes/No"
+      },
       "type": {
         "field": "Type Parking *",
         "infoText": "Selecteer welk type fietsenparking van toepassing is op deze sectie.<br><br>Voorbeeld: <i>Bicycle parking station</i>",

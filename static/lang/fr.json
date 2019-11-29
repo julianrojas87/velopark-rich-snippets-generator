@@ -175,6 +175,11 @@
         "placeholder": "Nom de la section de stationnement",
         "validation" : "Entrez le nom du parking"
       },
+      "covered": {
+        "field": "Couvert",
+        "infoText": "Cette section est-elle abritée ou a-t-elle un toit quelconque?<br><br>Exemple: <i>Yes</i>",
+        "placeholder": "Yes/No"
+      },
       "type": {
         "field": "Type de Stationnement *",
         "infoText": "Sélectionnez le type de stationnement pour vélos applicable à cette section.<br><br>Exemple: <i>Bicycle parking station</i>",
