@@ -175,6 +175,11 @@
         "placeholder": "Name des Parkplatzes",
         "validation" : "Geben Sie den Namen der Einrichtung ein"
       },
+      "covered": {
+        "field": "Bedeckt",
+        "infoText": "Ist dieser Abschnitt geschützt oder hat er irgendein Dach?<br><br>Beispiel: <i>Yes</i>",
+        "placeholder": "Yes/No"
+      },
       "type": {
         "field": "Parkart *",
         "infoText": "Wählen Sie aus, welche Art von Fahrradparken für diesen Abschnitt gilt.<br><br>Beispiel: <i>Bicycle parking station</i>",

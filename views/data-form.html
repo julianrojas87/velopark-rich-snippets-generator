@@ -471,7 +471,7 @@
                                     If the parking has only one section, the information entered here will be valid for the entire facility.
                                 </span>
                             </p>
-                            <div class="wrap-input100 bg1"
+                            <div class="wrap-input100 bg1 rs2-wrap-input100"
                                  data-validate="Enter the facility name"
                                  transl-id-validate="step.operation.sectionName.validation">
                                 <span class="label-input100"
@@ -496,7 +496,32 @@
                                                transl-id-placeholder="step.operation.sectionName.placeholder">
                                     </div>
                                 </div>
+                            </div>
 
+                            <div class="wrap-input100 validate-input input100-select bg1 rs2-wrap-input100">
+                                <span class="label-input100"
+                                      transl-id="step.operation.covered.field">Sheltered</span>
+                                <input type="image" title="about" class="info_button"
+                                       src="static/images/icons/info.png">
+                                <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                    <h2 style="margin-bottom: 15px;"></h2>
+                                    <input type="image" title="close" class="info_close_button"
+                                           src="static/images/icons/close_white.png"
+                                           style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                    <div style="padding-left: 10px;" transl-id="step.operation.covered.infoText">
+                                        <span style="display: inherit; padding-left: 15px;">Is this section sheltered or has any kind of roof?</span><br>
+                                        <span style="display: inherit; padding-left: 15px;">Example: <i>Yes</i></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <select class="js-select2" name="covered" placeholder="Yes/No"
+                                            transl-id-placeholder="step.operation.covered.placeholder">
+                                        <option value=""></option>
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
                             </div>
 
                             <div class="wrap-input100 validate-input input100-select bg1 rs2-wrap-input100"
@@ -542,6 +567,7 @@
                                        placeholder="Enter the number of levels"
                                        transl-id-placeholder="step.operation.levels.placeholder">
                             </div>
+
                             <div class="wrap-input100 validate-input input100-select bg1 rs2-wrap-input100" 
                                  data-validate="Select a value" transl-id-validate="step.operation.public.validation">
                                 <span class="label-input100"

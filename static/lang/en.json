@@ -176,6 +176,11 @@
         "placeholder": "Parking section name",
         "validation" : "Enter the facility name"
       },
+      "covered": {
+        "field": "Sheltered",
+        "infoText": "Is this section sheltered or has any kind of roof?<br><br>Example: <i>Yes</i>",
+        "placeholder": "Yes/No"
+      },
       "type": {
         "field": "Parking Type *",
         "infoText": "Select what type of bicycle parking applies to this section.<br><br>Example: <i>Bicycle parking station</i>",
