@@ -266,7 +266,16 @@ function fillAutomaticData(jsonld) {
         }
         jsonld['@graph'][i]['totalCapacity'] = tc;
 
+        // Assign the same opening hours as the section to features that don't have any
+        for(let j in jsonld['@graph'][i]['amenityFeature']) {
+            let feature = jsonld['@graph'][i]['amenityFeature'][j];
+            if(!feature['hoursAvailable'] || feature['hoursAvailable'].length < 1) {
+                jsonld['@graph'][i]['amenityFeature'][j]['hoursAvailable'] = jsonld['@graph'][i]['openingHoursSpecification'];
+            }
+        }
     }
+
+    // Set hasMap attribute using the main entrance location of the first section
     let lonlat = [jsonld['@graph'][0]['geo'][0]['longitude'], jsonld['@graph'][0]['geo'][0]['latitude']];
     jsonld['hasMap'] = {
         "@type": "Map",
