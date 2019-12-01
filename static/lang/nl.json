@@ -82,6 +82,11 @@
         "infoText" : "De link / URL waar informatie over deze stalling kan gevonden worden.\n\nVoorbeeld: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
         "placeholder" : "Vul de link in naar het regelement"
       },
+      "temporarilyClosed": {
+        "field": "Tijdelijk Gesloten",
+        "infoText": "Geeft aan of de parkeervoorziening gesloten is vanwege werkzaamheden, evenementen, onderhoud, enz.",
+        "placeholder": "Yes/No"
+      },
       "description" : {
         "field" : "Beschrijving",
         "infoText" : "Schrijf hier wat algemene informatie die u belangrijk vindt voor bezoekers om te zien.<br><br>Voorbeeld: <i>Stalling onder het De Somerplein, staat open voor alle types fietsen (geen bromfietsen), maximum 1 week, geen personeel ter plaatse, wel camerabewaking.</i>",

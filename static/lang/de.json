@@ -82,6 +82,11 @@
         "infoText" : "Der Link / URL, über den Informationen zum Fahrradabstellplatz abgerufen werden können.\n\nBeispiel: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
         "placeholder" : "Geben Sie den Link für das Reglement ein"
       },
+      "temporarilyClosed": {
+        "field": "Vorübergehend Geschlossen",
+        "infoText": "Zeigt an, ob die Parkanlage aufgrund von Arbeiten, Ereignissen, Wartungsarbeiten usw. Geschlossen ist.",
+        "placeholder": "Yes/No"
+      },
       "description" : {
         "field" : "Beschreibung",
         "infoText" : "Schreiben Sie hier einige allgemeine Informationen, die für die Besucher wichtig sind.<br><br>Beispiel: <i>Das Parken unter dem Platz ist für alle Arten von Fahrrädern möglich, maximal 1 Woche. Kein Personal vor Ort, aber Kameraüberwachung verfügbar.</i>",

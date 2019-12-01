@@ -83,6 +83,11 @@
         "infoText" : "The link / URL where information can be found about the bicycle parking.\n\nExample: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
         "placeholder" : "Enter the link for the regulations document"
       },
+      "temporarilyClosed": {
+        "field": "Temporarily Closed",
+        "infoText": "Indicates if the parking facility is closed due to works, events, maintenance, etc.",
+        "placeholder": "Yes/No"
+      },
       "description" : {
         "field" : "Description",
         "infoText" : "Put here some general information that you find important for visitors to know.<br><br>Example: <i>Parking under the plaza, is open for all types of bicycles, maximum 1 week, no staff on site but camera surveillance available.</i>",
