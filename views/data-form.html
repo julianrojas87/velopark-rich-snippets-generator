@@ -141,7 +141,7 @@
                                    transl-id-placeholder="step.parkInfo.closingDate.placeholder">
                         </div>
 
-                        <div class="wrap-input100 bg1">
+                        <div class="wrap-input100 bg1 rs2-wrap-input100">
                             <span class="label-input100" transl-id="step.parkInfo.regulations.field">Regulations</span>
                             <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
                             <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
@@ -157,6 +157,31 @@
                             <input class="input100" type="url" name="rights"
                                    placeholder="Enter the link for the regulations document"
                                    transl-id-placeholder="step.parkInfo.regulations.placeholder">
+                        </div>
+
+                        <div class="wrap-input100 validate-input input100-select bg1 rs2-wrap-input100">
+                            <span class="label-input100"
+                                  transl-id="step.parkInfo.temporarilyClosed.field">Temporarily Closed</span>
+                            <input type="image" title="about" class="info_button"
+                                   src="static/images/icons/info.png">
+                            <div class="log-form" style="padding-bottom: 20px; word-wrap: break-word;">
+                                <h2 style="margin-bottom: 15px;"></h2>
+                                <input type="image" title="close" class="info_close_button"
+                                       src="static/images/icons/close_white.png"
+                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                <div style="padding-left: 10px;" transl-id="step.parkInfo.temporarilyClosed.infoText">
+                                    <span style="display: inherit; padding-left: 15px;">Indicates if the parking facility is closed due to works, events, maintenance, etc.</span>
+                                </div>
+                            </div>
+                            <div>
+                                <select class="js-select2" name="temporarilyClosed" placeholder="Yes/No"
+                                        transl-id-placeholder="step.parkInfo.temporarilyClosed.placeholder">
+                                    <option value=""></option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <div class="dropDownSelect2"></div>
+                            </div>
                         </div>
 
                         <div class="wrap-input100 bg0">

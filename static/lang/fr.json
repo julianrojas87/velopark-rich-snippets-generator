@@ -82,6 +82,11 @@
         "infoText" : "Le lien où l'information se trouve sur le parking de vélos.\n\nExemple: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
         "placeholder" : "Entrez le lien pour le document de réglementation"
       },
+      "temporarilyClosed": {
+        "field": "Fermé Temporairement",
+        "infoText": "Indique si le parking est fermé en raison de travaux, d'événements, de maintenance, etc.",
+        "placeholder": "Yes/No"
+      },
       "description" : {
         "field" : "Description",
         "infoText" : "Écrivez ici des informations générales que vous trouvez importantes pour les visiteurs.<br><br>Exemple: <i>Parking sous la place est ouvert pour tous les types de vélos, maximum 1 semaine, pas de personnel sur place mais surveillance vidéo disponible.</i>",
