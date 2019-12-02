@@ -121,7 +121,7 @@ EM.dispatchNewParkingToRegionReps = function (regionReps, parkingId) {
     }
 };
 
-EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, freeText) {
+EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, name, freeText) {
     return new Promise((resolve, reject) => {
         for (i in reps) {
             server.send({
@@ -129,7 +129,7 @@ EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, 
                 to: reps[i].email,
                 subject: 'New Bicycle Parking suggestion',
                 text: 'something went wrong... :(',
-                attachment: EM.composeNewParkingSuggestionEmail(location, region, freeText, reps[i].lang)
+                attachment: EM.composeNewParkingSuggestionEmail(location, region, name, freeText, reps[i].lang)
             }, function (e, m) {
                 if (!e) {
                     console.log("Mail sent to Region rep: new parking suggestion", m.header.to);
@@ -361,13 +361,14 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
     return [{ data: html, alternative: true }];
 };
 
-EM.composeNewParkingSuggestionEmail = function (location, region, freeText, lang) {
+EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText, lang) {
     let html;
     if (lang === 'en') {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "A user has suggested to include a new bike parking in one of the regions you are managing.<br><br>";
         html += "<ul>";
+        html += "<li>Name: <i>" + name + "</i></li>";
         html += "<li>Region: " + region + "</li>";
         html += '<li>Suggested Location: <a href="' + location + '" target="_blank">See in OpenStreetMap</a></li>';
         html += "<li>Description: <em>" + freeText + "</em></li>";
@@ -380,6 +381,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, freeText, lang
         html += "Hallo!<br><br>";
         html += "Ein Benutzer hat vorgeschlagen, in eine der von Ihnen verwalteten Regionen einen neuen Fahrradparkplatz aufzunehmen.<br><br>";
         html += "<ul>";
+        html += "<li>Name: <i>" + name + "</i></li>";
         html += "<li>Regio: " + region + "</li>";
         html += '<li>Vorgeschlagener Standort: <a href="' + location + '" target="_blank">Siehe in OpenStreetMap</a></li>';
         html += "<li>Beschreibung: <em>" + freeText + "</em></li>";
@@ -392,6 +394,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, freeText, lang
         html += "Bonjour!<br><br>";
         html += "Un utilisateur a suggéré d’inclure un nouveau parking pour vélos dans l’une des régions que vous gérez.<br><br>";
         html += "<ul>";
+        html += "<li>Prénom: <i>" + name + "</i></li>";
         html += "<li>Region: " + region + "</li>";
         html += '<li>Suggested Location: <a href="' + location + '" target="_blank">Voir dans OpenStreetMap</a></li>';
         html += "<li>Description: <em>" + freeText + "</em></li>";
@@ -404,6 +407,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, freeText, lang
         html += "¡Hola!<br><br>";
         html += "Un usuario ha sugerido incluir un nuevo parqueadero de bicicletas en una de las regiones que administras.<br><br>";
         html += "<ul>";
+        html += "<li>Nombre: <i>" + name + "</i></li>";
         html += "<li>Región: " + region + "</li>";
         html += '<li>Ubicación sugerida: <a href="' + location + '" target="_blank">Ver en OpenStreetMap</a></li>';
         html += "<li>Descripción: <em>" + freeText + "</em></li>";
@@ -417,6 +421,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, freeText, lang
         html += "Hallo!<br><br>";
         html += "Een gebruiker heeft voorgesteld om een ​​nieuwe fietsenstalling op te nemen in een van de regio's die u beheert.<br><br>";
         html += "<ul>";
+        html += "<li>Naam: <i>" + name + "</i></li>";
         html += "<li>Regio: " + region + "</li>";
         html += '<li>Voorgestelde locatie: <a href="' + location + '" target="_blank">Zie in OpenStreetMap</a></li>';
         html += "<li>Omschrijving: <em>" + freeText + "</em></li>";

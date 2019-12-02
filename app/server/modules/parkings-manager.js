@@ -157,13 +157,13 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
     Sends an email notification for a new parking suggestion to all the city representatives of a certain region
 */
 
-exports.newParkingSuggestion = async (lat, lon, freeText) => {
+exports.newParkingSuggestion = async (lat, lon, name, freeText) => {
     let regions = await dbAdapter.findCitiesByLocation(parseFloat(lat), parseFloat(lon));
     if (regions.length > 0) {
         let reps = await dbAdapter.findCityRepsForRegions(regions);
         if (reps.length > 0) {
             let location = 'https://www.openstreetmap.org/?mlat=' + lat + '&mlon=' + lon + '#map=19/' + lat + '/' + lon + '&layers=CN';
-            await EM.dispatchNewParkingSuggestionToRegionReps(reps, location, regions[regions.length - 1], freeText);
+            await EM.dispatchNewParkingSuggestionToRegionReps(reps, location, regions[regions.length - 1], name, freeText);
             return reps.map(rep => rep.email);
         } else {
             return [];
