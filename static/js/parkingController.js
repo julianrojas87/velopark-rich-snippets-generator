@@ -26,7 +26,7 @@ function loadParkingValues() {
         // Load all values
         processObject(parking);
         // Complete address description hack
-        $(desc).find('textarea').each(function() {
+        $(desc).find('textarea').each(function () {
             $(this).removeAttr('name');
         });
         // leave Parking Facility URI empty if @id was set automatically
@@ -276,10 +276,10 @@ function loadParkingValue(path, value, override, inpt) {
                 $(this).prop('checked', false);
             });
 
-            for (let i in value) {
+            for (let i = 0; i < value.length; i++) {
                 let currentDay = value[i];
-                if (usedDays.has(currentDay['dayOfWeek']) || (lastOpens && currentDay['opens'] !== lastOpens)
-                    || (lastCloses && currentDay['closes'] !== lastCloses)) {
+
+                if (usedDays.has(currentDay['dayOfWeek'])) {
                     if (currentDay['opens'] !== '00:00' && lastCloses !== '23:59') {
                         usedDays.clear();
                         input.next().click();
@@ -289,12 +289,38 @@ function loadParkingValue(path, value, override, inpt) {
                             $(this).prop('checked', false);
                         });
                     }
+                } else if (lastOpens && currentDay['opens'] !== lastOpens
+                    || lastCloses && currentDay['closes'] !== lastCloses) {
+
+                    if (currentDay['opens'] !== '00:00' && lastCloses !== '23:59') {
+
+                        if (value[i + 1]) {
+                            if (currentDay['closes'] === '23:59' && value[i + 1]['closes'] !== lastCloses) {
+                                usedDays.clear();
+                                input.next().click();
+                                let inputs = input.parent().find('[name="' + name + '"]');
+                                input = $(inputs[inputs.length - 1]);
+                                input.find('input[type="checkbox"]').each(function () {
+                                    $(this).prop('checked', false);
+                                });
+                            }
+                        } else {
+                            usedDays.clear();
+                            input.next().click();
+                            let inputs = input.parent().find('[name="' + name + '"]');
+                            input = $(inputs[inputs.length - 1]);
+                            input.find('input[type="checkbox"]').each(function () {
+                                $(this).prop('checked', false);
+                            });
+                        }
+                    }
                 }
 
                 let time = input.find('input[type="time"]');
 
                 if (i > 0 && currentDay['opens'] === '00:00' && lastCloses === '23:59' && (lastOpens > '00:00')) {
                     $(time[1]).val(currentDay['closes']);
+                    lastCloses = currentDay['closes'];
                 } else {
                     input.find('input[value="' + currentDay['dayOfWeek'] + '"]').prop('checked', true);
                     $(time[0]).val(currentDay['opens']);
