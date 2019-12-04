@@ -161,13 +161,12 @@ exports.newParkingSuggestion = async (lat, lon, name, freeText) => {
     let regions = await dbAdapter.findCitiesByLocation(parseFloat(lat), parseFloat(lon));
     if (regions.length > 0) {
         let reps = await dbAdapter.findCityRepsForRegions(regions);
-        if (reps.length > 0) {
-            let location = 'https://www.openstreetmap.org/?mlat=' + lat + '&mlon=' + lon + '#map=19/' + lat + '/' + lon + '&layers=CN';
-            await EM.dispatchNewParkingSuggestionToRegionReps(reps, location, regions[regions.length - 1], name, freeText);
-            return reps.map(rep => rep.email);
-        } else {
-            return [];
+        if (reps.length < 1) {
+            reps = await dbAdapter.findSuperAdminEmailsAndLang();
         }
+        let location = 'https://www.openstreetmap.org/?mlat=' + lat + '&mlon=' + lon + '#map=19/' + lat + '/' + lon;
+        await EM.dispatchNewParkingSuggestionToRegionReps(reps, location, regions[regions.length - 1], name, freeText);
+        return reps.map(rep => rep.email);
     } else {
         return null;
     }
