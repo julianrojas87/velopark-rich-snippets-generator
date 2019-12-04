@@ -157,7 +157,7 @@ exports.saveParkingAsCompanyUser = async (companyName, parking, approved, callba
     Sends an email notification for a new parking suggestion to all the city representatives of a certain region
 */
 
-exports.newParkingSuggestion = async (lat, lon, name, freeText) => {
+exports.newParkingSuggestion = async (lat, lon, name, freeText, userEmail) => {
     let regions = await dbAdapter.findCitiesByLocation(parseFloat(lat), parseFloat(lon));
     if (regions.length > 0) {
         let reps = await dbAdapter.findCityRepsForRegions(regions);
@@ -165,7 +165,7 @@ exports.newParkingSuggestion = async (lat, lon, name, freeText) => {
             reps = await dbAdapter.findSuperAdminEmailsAndLang();
         }
         let location = 'https://www.openstreetmap.org/?mlat=' + lat + '&mlon=' + lon + '#map=19/' + lat + '/' + lon;
-        await EM.dispatchNewParkingSuggestionToRegionReps(reps, location, regions[regions.length - 1], name, freeText);
+        await EM.dispatchNewParkingSuggestionToRegionReps(reps, location, regions[regions.length - 1], name, freeText, userEmail);
         return reps.map(rep => rep.email);
     } else {
         return null;
@@ -176,10 +176,10 @@ exports.newParkingSuggestion = async (lat, lon, name, freeText) => {
     Sends an email notification for a data correction suggestion to all the people responsible for a given parking
 */
 
-exports.parkingCorrectionSuggestion = async (parkingUri, suggestion) => {
+exports.parkingCorrectionSuggestion = async (parkingUri, suggestion, userEmail) => {
     let parking = (await dbAdapter.findParkingsWithCompanies(0, 1, encodeURIComponent(parkingUri)))[0];
     if (parking) {
-        let reps = null;
+        let reps = [];
         let localId = parking.filename.substring(0, parking.filename.indexOf('.jsonld'));
         if (parking.company[0]) {
             reps = await dbAdapter.findAccountsByCompany(parking.company[0].name);
@@ -187,12 +187,11 @@ exports.parkingCorrectionSuggestion = async (parkingUri, suggestion) => {
             let regions = await dbAdapter.findCitiesByLocation(parking.location.coordinates[1], parking.location.coordinates[0]);
             reps = await dbAdapter.findCityRepsForRegions(regions);
         }
-        if (reps.length > 0) {
-            await EM.dispatchParkingCorrectionSuggestion(reps, parkingUri, localId, suggestion);
-            return reps.map(rep => rep.email);
-        } else {
-            return [];
+        if (reps.length < 1) {
+            reps = await dbAdapter.findSuperAdminEmailsAndLang();
         }
+        await EM.dispatchParkingCorrectionSuggestion(reps, parkingUri, localId, suggestion, userEmail);
+        return reps.map(rep => rep.email);
     } else {
         return null;
     }

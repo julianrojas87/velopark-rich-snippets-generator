@@ -1167,7 +1167,7 @@ module.exports = app => {
             'Access-Control-Allow-Headers': '*'
         });
         if (req.header('Content-Type') === 'application/json') {
-            let reps = await PM.newParkingSuggestion(req.body.lat, req.body.lon, req.body.name, req.body.description);
+            let reps = await PM.newParkingSuggestion(req.body.lat, req.body.lon, req.body.name, req.body.description, req.body.userEmail);
             if (reps) {
                 if (reps[0]) {
                     res.status(200).json({ msg: 'Email notification sent!', recipients: reps });
@@ -1189,7 +1189,7 @@ module.exports = app => {
             'Access-Control-Allow-Headers': '*'
         });
         if (req.header('Content-Type') === 'application/json') {
-            let reps = await PM.parkingCorrectionSuggestion(req.body.parkingId, req.body.correction);
+            let reps = await PM.parkingCorrectionSuggestion(req.body.parkingId, req.body.correction, req.body.userEmail);
             if (reps) {
                 if (reps[0]) {
                     res.status(200).json({ msg: 'Email notification sent!', recipients: reps });

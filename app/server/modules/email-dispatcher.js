@@ -121,7 +121,7 @@ EM.dispatchNewParkingToRegionReps = function (regionReps, parkingId) {
     }
 };
 
-EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, name, freeText) {
+EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, name, freeText, userEmail) {
     return new Promise((resolve, reject) => {
         for (i in reps) {
             server.send({
@@ -129,7 +129,7 @@ EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, 
                 to: reps[i].email,
                 subject: 'New Bicycle Parking suggestion',
                 text: 'something went wrong... :(',
-                attachment: EM.composeNewParkingSuggestionEmail(location, region, name, freeText, reps[i].lang)
+                attachment: EM.composeNewParkingSuggestionEmail(location, region, name, freeText, userEmail, reps[i].lang)
             }, function (e, m) {
                 if (!e) {
                     console.log("Mail sent to Region rep: new parking suggestion", m.header.to);
@@ -144,7 +144,7 @@ EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, 
     });
 };
 
-EM.dispatchParkingCorrectionSuggestion = (reps, parkingUri, localId, freeText) => {
+EM.dispatchParkingCorrectionSuggestion = (reps, parkingUri, localId, freeText, userEmail) => {
     return new Promise((resolve, reject) => {
         for (i in reps) {
             server.send({
@@ -152,7 +152,7 @@ EM.dispatchParkingCorrectionSuggestion = (reps, parkingUri, localId, freeText) =
                 to: reps[i].email,
                 subject: 'New Bicycle Parking suggestion',
                 text: 'something went wrong... :(',
-                attachment: EM.composeParkingCorrectionEmail(parkingUri, localId, freeText, reps[i].lang)
+                attachment: EM.composeParkingCorrectionEmail(parkingUri, localId, freeText, userEmail, reps[i].lang)
             }, function (e, m) {
                 if (!e) {
                     console.log("Mail sent to Region rep: new parking suggestion", m.header.to);
@@ -361,7 +361,7 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
     return [{ data: html, alternative: true }];
 };
 
-EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText, lang) {
+EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText, userEmail, lang) {
     let html;
     if (lang === 'en') {
         html = "<html><body>";
@@ -372,6 +372,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText
         html += "<li>Region: " + region + "</li>";
         html += '<li>Suggested Location: <a href="' + location + '" target="_blank">See in OpenStreetMap</a></li>';
         html += "<li>Description: <em>" + freeText + "</em></li>";
+        if (userEmail) { html += "<li>User email: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -385,6 +386,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText
         html += "<li>Regio: " + region + "</li>";
         html += '<li>Vorgeschlagener Standort: <a href="' + location + '" target="_blank">Siehe in OpenStreetMap</a></li>';
         html += "<li>Beschreibung: <em>" + freeText + "</em></li>";
+        if (userEmail) { html += "<li>Benutzer Email: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -398,6 +400,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText
         html += "<li>Region: " + region + "</li>";
         html += '<li>Suggested Location: <a href="' + location + '" target="_blank">Voir dans OpenStreetMap</a></li>';
         html += "<li>Description: <em>" + freeText + "</em></li>";
+        if (userEmail) { html += "<li>Email d'utilisateur: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -411,6 +414,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText
         html += "<li>Región: " + region + "</li>";
         html += '<li>Ubicación sugerida: <a href="' + location + '" target="_blank">Ver en OpenStreetMap</a></li>';
         html += "<li>Descripción: <em>" + freeText + "</em></li>";
+        if (userEmail) { html += "<li>Email de Usuario: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -425,6 +429,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText
         html += "<li>Regio: " + region + "</li>";
         html += '<li>Voorgestelde locatie: <a href="' + location + '" target="_blank">Zie in OpenStreetMap</a></li>';
         html += "<li>Omschrijving: <em>" + freeText + "</em></li>";
+        if (userEmail) { html += "<li>E-mailadres Gebruiker: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
@@ -433,7 +438,7 @@ EM.composeNewParkingSuggestionEmail = function (location, region, name, freeText
     return [{ data: html, alternative: true }];
 };
 
-EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeText, lang) {
+EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeText, userEmail, lang) {
     let html;
     if (lang === 'en') {
         html = "<html><body>";
@@ -443,6 +448,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += '<li>Bike parking: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestion: <em>" + freeText + "</em></li>";
         html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        if (userEmail) { html += "<li>User email: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -455,6 +461,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += '<li>Fahrradabstellplatz: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Vorschlag: <em>" + freeText + "</em></li>";
         html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        if (userEmail) { html += "<li>Benutzer Email: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -467,6 +474,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += '<li>Parking à vélos: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestion: <em>" + freeText + "</em></li>";
         html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        if (userEmail) { html += "<li>Email d'utilisateur: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -479,6 +487,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += '<li>Parqueadero: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Sugerencia: <em>" + freeText + "</em></li>";
         html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        if (userEmail) { html += "<li>Email de Usuario: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -492,6 +501,7 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += '<li>Fietsenstalling: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestie: <em>" + freeText + "</em></li>";
         html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        if (userEmail) { html += "<li>E-mailadres Gebruiker: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
