@@ -144,6 +144,15 @@ function saveJSONLD() {
                         'parkingCompany': parkingOwner.parkingCompany
                     },
                     success: () => {
+                        if(photos2Delete.length > 0) {
+                            for(let p in photos2Delete) {
+                                jQuery.ajax({
+                                    url: photos2Delete[p],
+                                    method: 'DELETE',
+                                    type: 'DELETE', // For jQuery < 1.9
+                                });
+                            }
+                        }
                         originalId = resultingObject['@id'];
                         alert('Parking Facility \n' + resultingObject['@id'] + ' \nupdated successfully', 'Success!', 'success');
                         $('#json-ld-saved-status>.saved-icon, #save_button').show();
@@ -265,12 +274,18 @@ function fillAutomaticData(jsonld) {
             tc += jsonld['@graph'][i]['allows'][j]['bicyclesAmount'] != '' ? parseInt(jsonld['@graph'][i]['allows'][j]['bicyclesAmount']) : 0;
         }
         jsonld['@graph'][i]['totalCapacity'] = tc;
-
+        
         // Assign the same opening hours as the section to features that don't have any
         for(let j in jsonld['@graph'][i]['amenityFeature']) {
             let feature = jsonld['@graph'][i]['amenityFeature'][j];
-            if(!feature['hoursAvailable'] || feature['hoursAvailable'].length < 1) {
+
+            if(feature['@type'] !== '' && (!feature['hoursAvailable'] || feature['hoursAvailable'].length < 1)) {
                 jsonld['@graph'][i]['amenityFeature'][j]['hoursAvailable'] = jsonld['@graph'][i]['openingHoursSpecification'];
+            }
+
+            // Delete any unspecified amenities 
+            if(!feature['@type'] || feature['@type'] === '') {
+                jsonld['@graph'][i]['amenityFeature'].splice(1, j);
             }
         }
     }
@@ -498,6 +513,11 @@ function setElementValue(el, jsonEl, name) {
             }
 
             jsonEl = jsonEl.concat(ohs);
+        }
+
+        // Delete empty example object from application profile
+        if(jsonEl.length === 1 && jsonEl[0]['dayOfWeek'] === "") {
+            jsonEl.pop();
         }
         return jsonEl;
     }

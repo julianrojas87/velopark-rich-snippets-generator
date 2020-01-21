@@ -8,6 +8,7 @@ let myGeneralFeatures;
 let mySecurityFeatures;
 let myBikeTypes;
 let myParkingTypes;
+let photos2Delete = [];
 
 const stepOverviewFacilityTitleFormat = '<div class="steps-overview-facility-title" facilitynum="{0}"><h4 >Facility Section {0}</h4><button type="button" class="minus_button steps-overview-remove-facility-button" facilitynum="{0}"><i class="fas fa-trash-alt"></i></button></div>';
 
@@ -352,19 +353,16 @@ function handleLoginFeatures() {
 
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
-
+        let domain = domainName !== '' ? '/' + domainName : '';
         let photoURI = myParent.find('.input100[name="photos._Photograph.image"]').val();
         myParent.find('img.imgPreview').attr('src', '');
-        if (photoURI && (photoURI.indexOf('velopark.ilabt.imec.be') > 0 || photoURI.indexOf('localhost') > 0)) {    //TODO: find better way to detect local images
+        
+        if (photoURI && ((domain !== '' && photoURI.indexOf(domain) > 0) || photoURI.indexOf('localhost') > 0)) {
             //delete photo from server
             let url = myParent.find('input[name="photos._Photograph.image"]').val();
             let filename = url.split('/')[url.split('/').length - 1];
-            let domain = domainName !== '' ? '/' + domainName : '';
-            jQuery.ajax({
-                url: domain + '/photo/' + filename,
-                method: 'DELETE',
-                type: 'DELETE', // For jQuery < 1.9
-            });
+
+            photos2Delete.push(domain + '/photo/' + filename);
         }
 
         myParent.find("input, textarea").each(function () {
