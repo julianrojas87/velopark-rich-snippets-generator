@@ -704,6 +704,9 @@ function addFacilitySection() {
     //fix maps
     let locationSection = $('#step-facility-section-2-' + currentNumFacilitySections);
 
+    //Delete address.description element
+    locationSection.find('#address_description').parent().remove();
+
     locationSection.find('.ol-polygon-map').each(function () {
         $(this).empty();
         let newMap = $(this).attr('id') + '_' + Math.floor((Math.random() * 1000000) + 1);

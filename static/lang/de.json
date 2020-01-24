@@ -83,7 +83,7 @@
         "placeholder" : "Geben Sie den Link für das Reglement ein"
       },
       "temporarilyClosed": {
-        "field": "Vorübergehend Geschlossen",
+        "field": "Vorübergehend Geschlossen *",
         "infoText": "Zeigt an, ob die Parkanlage aufgrund von Arbeiten, Ereignissen, Wartungsarbeiten usw. Geschlossen ist.",
         "placeholder": "Yes/No"
       },
@@ -181,7 +181,7 @@
         "validation" : "Geben Sie den Namen der Einrichtung ein"
       },
       "covered": {
-        "field": "Bedeckt",
+        "field": "Bedeckt *",
         "infoText": "Ist dieser Abschnitt geschützt oder hat er irgendein Dach?<br><br>Beispiel: <i>Yes</i>",
         "placeholder": "Yes/No"
       },

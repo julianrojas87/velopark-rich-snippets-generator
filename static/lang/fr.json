@@ -83,7 +83,7 @@
         "placeholder" : "Entrez le lien pour le document de réglementation"
       },
       "temporarilyClosed": {
-        "field": "Fermé Temporairement",
+        "field": "Fermé Temporairement *",
         "infoText": "Indique si le parking est fermé en raison de travaux, d'événements, de maintenance, etc.",
         "placeholder": "Yes/No"
       },
@@ -181,7 +181,7 @@
         "validation" : "Entrez le nom du parking"
       },
       "covered": {
-        "field": "Couvert",
+        "field": "Couvert *",
         "infoText": "Cette section est-elle abritée ou a-t-elle un toit quelconque?<br><br>Exemple: <i>Yes</i>",
         "placeholder": "Yes/No"
       },

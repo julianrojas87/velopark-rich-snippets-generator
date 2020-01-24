@@ -84,7 +84,7 @@
         "placeholder" : "Enter the link for the regulations document"
       },
       "temporarilyClosed": {
-        "field": "Temporarily Closed",
+        "field": "Temporarily Closed *",
         "infoText": "Indicates if the parking facility is closed due to works, events, maintenance, etc.",
         "placeholder": "Yes/No"
       },
@@ -182,7 +182,7 @@
         "validation" : "Enter the facility name"
       },
       "covered": {
-        "field": "Sheltered",
+        "field": "Sheltered *",
         "infoText": "Is this section sheltered or has any kind of roof?<br><br>Example: <i>Yes</i>",
         "placeholder": "Yes/No"
       },
