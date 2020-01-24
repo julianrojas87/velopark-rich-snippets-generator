@@ -83,7 +83,7 @@
         "placeholder" : "Vul de link in naar het regelement"
       },
       "temporarilyClosed": {
-        "field": "Tijdelijk Gesloten",
+        "field": "Tijdelijk Gesloten *",
         "infoText": "Geeft aan of de parkeervoorziening gesloten is vanwege werkzaamheden, evenementen, onderhoud, enz.",
         "placeholder": "Yes/No"
       },
@@ -181,7 +181,7 @@
         "validation" : "Vul de parkingsectie-naam in"
       },
       "covered": {
-        "field": "Overdekt",
+        "field": "Overdekt *",
         "infoText": "Is dit gedeelte beschut of heeft het enige vorm van dak?<br><br>Voorbeeld: <i>Yes</i>",
         "placeholder": "Yes/No"
       },
