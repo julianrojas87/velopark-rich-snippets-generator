@@ -82,7 +82,6 @@ function loadSections(graph) {
     for (let i in graph) {
         if (i > 0) {
             addFacilitySection();
-
             section = $('div[parking-section=' + i + ']');
         }
         let keys = Object.keys(graph[i]);
@@ -103,9 +102,6 @@ function loadSections(graph) {
     }
 }
 
-let numGeneralFeatures = 0;
-let numSecurityFeatures = 0;
-
 function processArray(path, arr, input) {
     //console.log(path);
     let lastPath = path[path.length - 1];
@@ -119,6 +115,9 @@ function processArray(path, arr, input) {
         } else {
             path.push('_' + arr[0]['@type']);
         }
+
+        let numGeneralFeatures = 0;
+        let numSecurityFeatures = 0;
 
         for (let i = 0; i < arr.length; i++) {
             let obj = arr[i];
@@ -141,7 +140,9 @@ function processArray(path, arr, input) {
                 } else {
                     numSecurityFeatures++;
                 }
-                input = $('[name^="' + lastPath + '"][generalfeature="' + (isGeneralFeature ? "true" : "false") + '"]');
+
+                let parentSection = $(input[input.length - 1]).closest('div[id^="step-facility-section-4-"]');
+                input = $(parentSection).find('[name^="' + lastPath + '"][generalfeature="' + (isGeneralFeature ? "true" : "false") + '"]');
                 inputs = input;
             } else {
                 inputs = $('[name^="' + lastPath + '"]') || input;
@@ -156,7 +157,6 @@ function processArray(path, arr, input) {
                     last.closest('.wrap-contact100-subsection').next("button").click();
                 }
 
-                //input = $('[name^="' + lastPath + '"]');
                 if (path.join('.') === "amenityFeature._") {
                     //split security features and general services
                     let isGeneralFeature = false;
