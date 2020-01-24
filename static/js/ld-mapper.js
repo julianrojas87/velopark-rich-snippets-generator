@@ -285,7 +285,7 @@ function fillAutomaticData(jsonld) {
 
             // Delete any unspecified amenities 
             if(!feature['@type'] || feature['@type'] === '') {
-                jsonld['@graph'][i]['amenityFeature'].splice(1, j);
+                jsonld['@graph'][i]['amenityFeature'].splice(j, 1);
             }
         }
     }
