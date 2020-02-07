@@ -29,7 +29,7 @@ var select2Promise = null;
         $('#drop-menu-lang').hide();
     });
 
-    $('#language-selector').hover(() => {
+    $('#language-selector').click(() => {
         $('#drop-menu-lang').show();
         $('#drop-menu').hide();
     });
@@ -44,7 +44,9 @@ var select2Promise = null;
 
     $('body,html').click(e => {
         $('#drop-menu').hide();
-        $('#drop-menu-lang').hide();
+        if(e.target.id !== 'language-selector') {
+            $('#drop-menu-lang').hide();
+        }
     });
 
     $('.lang-selector').on('click', function () {

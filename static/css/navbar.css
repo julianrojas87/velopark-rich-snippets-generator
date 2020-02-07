@@ -24,6 +24,12 @@
     border-radius: 10px;
   }
 
+  @media (max-width: 576px) {
+    #navbar a {
+      font-size: 13px;
+    }
+  }
+
   #navbar a:hover {
     background-color: rgb(43, 145, 86);
     color: white;
