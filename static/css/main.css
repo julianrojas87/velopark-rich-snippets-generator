@@ -1112,8 +1112,12 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 @media (max-width: 576px) {
+  #navbar a {
+    font-size: 16px;
+  }
+
   #page-logo-helper img {
-    max-height: 50px;
+    max-height: 36px;
   }
 }
 
