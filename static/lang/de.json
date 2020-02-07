@@ -500,14 +500,15 @@
     "cityRep" : "Regierungsvertreter",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Passwort",
+    "passwdConfirmation" : "Passwort Bestätigung",
     "selectCompany" : {
       "field" : "Unternehmen",
       "placeholder" : "Wählen Unternehmen"
     },
     "selectCity" : {
       "field" : "Region",
-      "placeholder" : "Region wählen",
-      "addExtra" : "Zusätzliche Region hinzufügen"
+      "placeholder" : "Region/Gemiende wählen",
+      "addExtra" : "Zusätzliche Region/Gemiende hinzufügen"
     },
     "signupButton" : "Anmelden"
   },

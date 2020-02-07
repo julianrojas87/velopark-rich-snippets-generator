@@ -25,10 +25,6 @@ var pointVectors = [];
 
 function initPolygonMap(target, polyid, clear, reset) {
     if(reset) {
-        myZoomedInView = new ol.View({
-            center: ol.proj.fromLonLat([4.30, 50.85]),
-            zoom: 8
-        });
         polygonVector = null;
         pointVectors = [];
     }

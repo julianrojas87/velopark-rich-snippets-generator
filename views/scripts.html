@@ -33,14 +33,12 @@
 <script>
     (function(proxied) {
         window.alert = function() {
-            // do something here
             Swal.fire({
                 title: arguments[1] || 'Error!',
                 text: arguments[0],
                 type: arguments[2] || 'error',
                 confirmButtonText: 'OK'
-            })
-            //return proxied.apply(this, arguments);
+            });
         };
     })(window.alert);
 </script>

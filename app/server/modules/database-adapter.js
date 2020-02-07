@@ -327,8 +327,8 @@ exports.insertAccount = function (data, callback) {
     Accounts: delete
 */
 
-exports.deleteAccount = function (id, callback) {
-    accounts.deleteOne({ _id: getObjectId(id) }, callback);
+exports.deleteAccount = id => {
+    accounts.deleteOne({ email: id });
 };
 
 exports.deleteAccounts = function (callback) {

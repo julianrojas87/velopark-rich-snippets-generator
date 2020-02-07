@@ -499,14 +499,15 @@
     "cityRep" : "Vertegenwoordiger Overheid",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Wachtwoord",
+    "passwdConfirmation" : "Wachtwoordbevestiging",
     "selectCompany" : {
       "field" : "Bedrijf",
       "placeholder" : "Selecteer bedrijf"
     },
     "selectCity" : {
       "field" : "Regio",
-      "placeholder" : "Selecteer Regio",
-      "addExtra" : "Voeg extra regio toe"
+      "placeholder" : "Selecteer uw exacte Gemeente/Regio",
+      "addExtra" : "Voeg extra gemeente/regio toe"
     },
     "signupButton" : "Inschrijven"
   },

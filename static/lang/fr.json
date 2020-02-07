@@ -499,14 +499,15 @@
     "cityRep" : "Représentant du Gouvernement",
     "emailPlaceholder" : "Email",
     "passwdPlaceholder" : "Mot de passe",
+    "passwdConfirmation" : "Confirmation mot de passe",
     "selectCompany" : {
       "field" : "Entreprise",
       "placeholder" : "Sélectionner une entreprise"
     },
     "selectCity" : {
       "field" : "Région",
-      "placeholder" : "Choisissez une région",
-      "addExtra" : "Ajouter une région supplémentaire"
+      "placeholder" : "Sélectionnez votre région/municipalité",
+      "addExtra" : "région/municipalité supplémentaire"
     },
     "signupButton" : "S'inscrire"
   },

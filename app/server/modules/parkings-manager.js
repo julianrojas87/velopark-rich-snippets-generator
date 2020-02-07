@@ -344,25 +344,29 @@ exports.getParking = async (user, parkingId, callback) => {
                     if (error != null) {
                         callback(error);
                     } else {
-                        if (value === true) {
-                            //user is admin, load data from disk
-                            let p = await dbAdapter.findParkingByID(parkingId);
-                            let result = fs.readFileSync(data + '/public/' + p.filename);
-                            dbAdapter.findCompanyByParkingId(parkingId, function (error, account, company) {
-                                callback(null, result, p.approvedstatus, company);
-                            });
-                        } else {
-                            //Maybe user is city-rep for this parking
-                            if (await AM.isAccountCityRepForParkingID(user, parkingId)) {
-                                //user is city-rep, load data from disk
+                        try {
+                            if (value === true) {
+                                //user is admin, load data from disk
                                 let p = await dbAdapter.findParkingByID(parkingId);
                                 let result = fs.readFileSync(data + '/public/' + p.filename);
                                 dbAdapter.findCompanyByParkingId(parkingId, function (error, account, company) {
                                     callback(null, result, p.approvedstatus, company);
                                 });
                             } else {
-                                callback("This parking does not belong to you.");
+                                //Maybe user is city-rep for this parking
+                                if (await AM.isAccountCityRepForParkingID(user, parkingId)) {
+                                    //user is city-rep, load data from disk
+                                    let p = await dbAdapter.findParkingByID(parkingId);
+                                    let result = fs.readFileSync(data + '/public/' + p.filename);
+                                    dbAdapter.findCompanyByParkingId(parkingId, function (error, account, company) {
+                                        callback(null, result, p.approvedstatus, company);
+                                    });
+                                } else {
+                                    callback("This parking does not belong to you.");
+                                }
                             }
+                        } catch (err) {
+                            callback(err);
                         }
                     }
                 });
@@ -383,7 +387,7 @@ exports.deleteParking = async (user, parkingId, callback) => {
                     if (res === true) {
                         console.log("delete successful " + res);
                         await removeParkingFromCatalog(localId);
-                        fs.unlinkSync(data + '/public/' + parking.filename);
+                        await fs.unlinkSync(data + '/public/' + parking.filename);
                         callback();
                     } else {
                         //no error, but nothing found to delete. Are you admin?
@@ -399,7 +403,7 @@ exports.deleteParking = async (user, parkingId, callback) => {
                                             if (res === true) {
                                                 console.log("delete successfull " + res);
                                                 await removeParkingFromCatalog(localId);
-                                                fs.unlinkSync(data + '/public/' + parking.filename);
+                                                await fs.unlinkSync(data + '/public/' + parking.filename);
                                                 callback();
                                             } else {
                                                 callback("No parking found to be deleted.");
@@ -416,7 +420,7 @@ exports.deleteParking = async (user, parkingId, callback) => {
                                                 if (res === true) {
                                                     console.log("delete successfull " + res);
                                                     await removeParkingFromCatalog(localId);
-                                                    fs.unlinkSync(data + '/public/' + parking.filename);
+                                                    await fs.unlinkSync(data + '/public/' + parking.filename);
                                                     callback();
                                                 } else {
                                                     callback("No parking found to be deleted.");
@@ -662,23 +666,28 @@ async function initCatalog() {
     let modificationDate = new Date().toISOString();
 
     await Promise.all((await readdir(data + '/public')).map(async p => {
-        if (p.indexOf('catalog.jsonld') < 0) {
-            let d = JSON.parse(await readFile(data + '/public/' + p));
-            let localId = (d['ownedBy']['companyName'] + '_' + d['identifier']).replace(/\s/g, '-');
-            let dbParking = await dbAdapter.findParkingByID(encodeURIComponent(d['@id']));
+        try {
+            if (p.indexOf('catalog.jsonld') < 0) {
+                let d = JSON.parse(await readFile(data + '/public/' + p));
+                let localId = (d['ownedBy']['companyName'] + '_' + d['identifier']).replace(/\s/g, '-');
+                let dbParking = await dbAdapter.findParkingByID(encodeURIComponent(d['@id']));
 
-            if (dbParking.approvedstatus) {
-                parkings.set(d['@id'], localId);
-            }
+                if (dbParking.approvedstatus) {
+                    parkings.set(d['@id'], localId);
+                }
 
-            // Hack to add the name of the parking and the last modified date to the DB. Only meant to be run once.
-            if (!dbParking.name || !dbParking.lastModified) {
-                let name = d['name'][0]['@value'];
-                let lastModified = new Date(d['dateModified']);
-                dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, lastModified, () => {
-                    console.log('Parking ' + localId + ' name and last modified date added to DB');
-                });
+                // Hack to add the name of the parking and the last modified date to the DB. Only meant to be run once.
+                if (!dbParking.name || !dbParking.lastModified) {
+                    let name = d['name'][0]['@value'];
+                    let lastModified = new Date(d['dateModified']);
+                    dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, lastModified, () => {
+                        console.log('Parking ' + localId + ' name and last modified date added to DB');
+                    });
+                }
             }
+        } catch (err) {
+            console.error(p);
+            console.error(err);
         }
     }));
 
