@@ -91,9 +91,9 @@ let currentLang = 'nl';
 
 
 
-                    function addChildLevel(select, childObject){
+                    function addChildLevel(select, childObject) {
 
-                        function getColorForAdminLevel(level){
+                        function getColorForAdminLevel(level) {
                             switch (level) {
                                 case "0":
                                 case 0:
@@ -117,18 +117,18 @@ let currentLang = 'nl';
                                     break;
                             }
                         }
-                        select.each(function() {
-                            $(this).append('<option class="region-level-' + childObject['adminLevel'] +'" value="' + childObject['name_NL'] + '">' + "&nbsp;&nbsp;&nbsp;".repeat(Number(childObject['adminLevel'])) + childObject['name_NL'] + '</option>');
+                        select.each(function () {
+                            $(this).append('<option class="region-level-' + childObject['adminLevel'] + '" value="' + childObject['name_NL'] + '">' + "&nbsp;&nbsp;&nbsp;".repeat(Number(childObject['adminLevel'])) + childObject['name_NL'] + '</option>');
                         });
                         style.innerHTML = '.select2-results__option[id*="-' + childObject['name_NL'] + '"] {' +
                             ' background-color: ' + getColorForAdminLevel(childObject['adminLevel']) + ";" +
                             '}' + style.innerHTML;
-                        for(let i in childObject.childAreas){
+                        for (let i in childObject.childAreas) {
                             addChildLevel(select, childObject.childAreas[i]);
                         }
                     }
 
-                    for(let j in data) {
+                    for (let j in data) {
                         addChildLevel($('select[city-names="true"]'), data[j]);
                     }
                     document.getElementsByTagName('head')[0].appendChild(style);
@@ -170,32 +170,38 @@ let currentLang = 'nl';
         let domain = domainName != '' ? '/' + domainName : '';
         let email = $('#signin-email').val();
         let pass = $('#signin-pass').val();
+        let pass_again = $('#signin-pass-again').val();
         let company = null;
         let cities = [];
 
-        if ($('#cm-signin').hasClass('active')) {
-            company = $('#signin-company').val();
-        } else {
-            $('.signin-city').each(function () {
-                let city = $(this).val();
-                if (city != "") {
-                    cities.push(city);
+        if (pass === pass_again) {
+            if ($('#cm-signin').hasClass('active')) {
+                company = $('#signin-company').val();
+            } else {
+                $('.signin-city').each(function () {
+                    let city = $(this).val();
+                    if (city != "") {
+                        cities.push(city);
+                    }
+                });
+            }
+
+            $.ajax({
+                type: "POST",
+                url: domain + '/signup',
+                data: { 'email': email, 'pass': pass, 'company': company, 'cities': cities },
+                success: () => {
+                    alert('Your account request has been sent! Once the admins approve it you can login with your credentials.', 'Success!', 'success');
+                    $('#signin-form').toggle();
+                },
+                error: e => {
+                    alert('Error: ' + e.responseText);
                 }
             });
+        } else {
+            alert('Your password confirmation does not match');
+            
         }
-
-        $.ajax({
-            type: "POST",
-            url: domain + '/signup',
-            data: { 'email': email, 'pass': pass, 'company': company, 'cities': cities },
-            success: () => {
-                alert('Your account request has been sent! Once the admins approve it you can login with your credentials.', 'Success!', 'success');
-                $('#signin-form').toggle();
-            },
-            error: e => {
-                alert('Error: ' + e.responseText);
-            }
-        });
         return false;
     });
 
@@ -212,7 +218,7 @@ let currentLang = 'nl';
                 console.log(user);
                 if (user.superAdmin) {
                     window.location.href = domain + '/admin';
-                } else if(user.companyName && user.companyName !== '') {
+                } else if (user.companyName && user.companyName !== '') {
                     window.location.href = domain + '/parkings';
                 } else {
                     window.location.href = domain + '/cityrep';
@@ -234,7 +240,7 @@ let currentLang = 'nl';
         $('#password-reset-form').toggle();
     });
 
-    $('#lost-password-submit-button').on('click', function(){
+    $('#lost-password-submit-button').on('click', function () {
         $(this).siblings('.loading-icon').show();
         $(this).hide();
         let domain = domainName !== '' ? '/' + domainName : '';
@@ -266,26 +272,25 @@ let currentLang = 'nl';
                     $(this).find('.region-allowed-to-represent').each(function () {
                         regions.push($(this).attr('region'));
                     });
-                    console.log(regions);
-                    function isPresent(object){
+                    function isPresent(object) {
                         let returnObject = {};
                         let children = [];
                         //Ask your children
-                        if(object.childAreas){
-                            for(let i in object.childAreas){
+                        if (object.childAreas) {
+                            for (let i in object.childAreas) {
                                 let child = isPresent(object.childAreas[i]);
-                                if(!child.name_NL && child.children && child.children.length){
+                                if (!child.name_NL && child.children && child.children.length) {
                                     children = children.concat(child.children);
-                                } else if(!jQuery.isEmptyObject(child)){
+                                } else if (!jQuery.isEmptyObject(child)) {
                                     children.push(child);
                                 }
                             }
                         }
-                        if(children.length){
+                        if (children.length) {
                             returnObject.children = children;
                         }
                         //Am I part of the list?
-                        if(regions.includes(object['name_NL'])){
+                        if (regions.includes(object['name_NL'])) {
                             returnObject['name_NL'] = object['name_NL'];
                             returnObject['adminLevel'] = object['adminLevel'];
 
@@ -293,25 +298,24 @@ let currentLang = 'nl';
                         return returnObject;
                     }
                     let globalChildren = [];
-                    for(let k in data) {
+                    for (let k in data) {
                         globalChildren = globalChildren.concat(isPresent(data[k]));
                     }
-                    console.log(globalChildren);
 
-                    function visitTreeTopDown(tableCell, object, element){
-                        if(object.name_NL){
+                    function visitTreeTopDown(tableCell, object, element) {
+                        if (object.name_NL) {
                             let elementToMove = tableCell.find('.region-allowed-to-represent[region="' + object.name_NL + '"]');
-                            elementToMove.addClass("admin-level-"+object.adminLevel);
+                            elementToMove.addClass("admin-level-" + object.adminLevel);
                             element.append(elementToMove);
                         }
-                        if(object.children){
+                        if (object.children) {
                             let newElement = tableCell.find('.region-allowed-to-represent[region="' + object.name_NL + '"]');
-                            for( let i in object.children) {
+                            for (let i in object.children) {
                                 visitTreeTopDown(tableCell, object.children[i], newElement);
                             }
                         }
                     }
-                    for( let h in globalChildren) {
+                    for (let h in globalChildren) {
                         visitTreeTopDown($(this), globalChildren[h], $(this));
                     }
 
@@ -328,8 +332,8 @@ let currentLang = 'nl';
 })(jQuery);
 
 //if no lang parameter given, setting is loaded from localStorage
-function translate(lang, first){
-    if(lang && user && user.name){
+function translate(lang, first) {
+    if (lang && user && user.name) {
         //send preference to the server (async)
         let domain = domainName !== '' ? '/' + domainName : '';
         $.ajax({
@@ -346,10 +350,10 @@ function translate(lang, first){
             }
         });
     }
-    if (typeof(Storage) !== "undefined" && lang) {
+    if (typeof (Storage) !== "undefined" && lang) {
         localStorage.setItem("languagePref", lang);
     }
-    if (lang || (typeof(Storage) !== "undefined" && localStorage.getItem("languagePref"))) {
+    if (lang || (typeof (Storage) !== "undefined" && localStorage.getItem("languagePref"))) {
         lang = localStorage.getItem("languagePref");
         currentLang = lang;
         let domain = domainName !== '' ? '/' + domainName : '';
@@ -364,10 +368,10 @@ function translate(lang, first){
                         path = $(this).attr("transl-id").split(/[\.\[\]]/);
                         let dictObj = data;
                         for (i in path) {
-                            if(path[i])
+                            if (path[i])
                                 dictObj = dictObj[path[i]];
                         }
-                        if(!dictObj){
+                        if (!dictObj) {
                             throw "Missing translation";
                         }
                         $(this).html(dictObj);
@@ -381,18 +385,18 @@ function translate(lang, first){
                         path = $(this).attr("transl-id-placeholder").split(/[\.\[\]]/);
                         let dictObj = data;
                         for (i in path) {
-                            if(path[i])
+                            if (path[i])
                                 dictObj = dictObj[path[i]];
                         }
-                        if(!dictObj){
+                        if (!dictObj) {
                             throw "Missing translation";
                         }
 
                         $(this).attr('placeholder', dictObj);
 
                         // Deal with select2 elements
-                        if($(this).is('select')) {
-                            if($(this).hasClass('select2-hidden-accessible')) {
+                        if ($(this).is('select')) {
+                            if ($(this).hasClass('select2-hidden-accessible')) {
                                 $(this).select2('destroy');
                             }
                             $(this).select2({
@@ -411,10 +415,10 @@ function translate(lang, first){
                         path = $(this).attr("transl-id-validate").split(/[\.\[\]]/);
                         let dictObj = data;
                         for (i in path) {
-                            if(path[i])
+                            if (path[i])
                                 dictObj = dictObj[path[i]];
                         }
-                        if(!dictObj){
+                        if (!dictObj) {
                             throw "Missing translation";
                         }
                         $(this).attr('data-validate', dictObj);
@@ -422,37 +426,37 @@ function translate(lang, first){
                         console.warn("Missing translation!! (" + lang + ')', path);
                     }
                 });
-                $('[transl-id-option]').each(function() {
+                $('[transl-id-option]').each(function () {
                     let optionType = $(this).attr('transl-id-option');
                     switch (optionType) {
                         case "securityfeature":
                             //find correct feature
-                            for(i in mySecurityFeatures){
-                                if($(this).attr('value') === mySecurityFeatures[i]['@id']){
+                            for (i in mySecurityFeatures) {
+                                if ($(this).attr('value') === mySecurityFeatures[i]['@id']) {
                                     $(this).html(mySecurityFeatures[i]['label'][lang]);
                                 }
                             }
                             break;
                         case "generalfeature":
                             //find correct feature
-                            for(i in myGeneralFeatures){
-                                if($(this).attr('value') === myGeneralFeatures[i]['@id']){
+                            for (i in myGeneralFeatures) {
+                                if ($(this).attr('value') === myGeneralFeatures[i]['@id']) {
                                     $(this).html(myGeneralFeatures[i]['label'][lang]);
                                 }
                             }
                             break;
-                            case "biketypes":
-                                //find correct type
-                                for(i in myBikeTypes){
-                                    if($(this).attr('value') === myBikeTypes[i]['@id']){
-                                        $(this).html(myBikeTypes[i]['label'][lang]);
-                                    }
+                        case "biketypes":
+                            //find correct type
+                            for (i in myBikeTypes) {
+                                if ($(this).attr('value') === myBikeTypes[i]['@id']) {
+                                    $(this).html(myBikeTypes[i]['label'][lang]);
                                 }
-                                break;
+                            }
+                            break;
                         case "parkingtypes":
                             //find correct type
-                            for(i in myParkingTypes){
-                                if($(this).attr('value') === myParkingTypes[i]['@id']){
+                            for (i in myParkingTypes) {
+                                if ($(this).attr('value') === myParkingTypes[i]['@id']) {
                                     $(this).html(myParkingTypes[i]['label'][lang]);
                                 }
                             }
@@ -482,13 +486,13 @@ function translate(lang, first){
                 });
                 select2El.change();
                 // Fix placeholder of alerted selects
-                $('.alert-validate').each(function() {
+                $('.alert-validate').each(function () {
                     $(this).find('.select2-selection__arrow').hide();
                     $(this).find('.select2-selection__placeholder').hide();
                 });
 
                 // Regions filter translation
-                if($('#filterByRegion').length > 0 && !first) {
+                if ($('#filterByRegion').length > 0 && !first) {
                     populateRegions().then(() => {
                         insertParkingRegions();
                     });

@@ -32,6 +32,7 @@
                 <th class="text-left" transl-id="adminUsers.th[1]">Company</th>
                 <th class="text-left" transl-id="adminUsers.th[2]">City Representative</th>
                 <th class="text-left" transl-id="adminUsers.th[3]">Admin</th>
+                <th class="text-left" transl-id="adminParkings.th[6]">Actions</th>
             </tr>
             </thead>
             <tbody class="table-hover">
@@ -58,6 +59,12 @@
                 <td class="text-left">
                     <% if(users[i]['superAdmin']){ %>
                         <i class="far fa-check-circle"></i>
+                    <% } %>
+                </td>
+                <td class="text-left">
+                    <% if(!users[i]['superAdmin']){ %>
+                        <input title="Delete" type="image" src="static/images/icons/delete.png"
+                            style="position: relative; left: 10px; bottom: 2px; float: left; width: 30px;">
                     <% } %>
                 </td>
             </tr>

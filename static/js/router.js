@@ -46,7 +46,7 @@
         window.location.href = domain + '/cityrep-parkings?cityname=' + cityName;
     });
 
-    $('#pswd-reset-button').on('click', function(){
+    $('#pswd-reset-button').on('click', function () {
         let domain = domainName !== '' ? '/' + domainName : '';
         let newPass = $('#pswd-reset-field').val();
         $.ajax({
@@ -71,7 +71,7 @@
 
 function insertParkingRegions() {
     let domain = domainName !== '' ? '/' + domainName : '';
-    $('.parking-region-dummy').each(function(){
+    $('.parking-region-dummy').each(function () {
         let lat = $(this).attr('data-lat');
         let lon = $(this).attr('data-long');
         $(this).html(getLoadingIcon());
@@ -89,16 +89,16 @@ function insertParkingRegions() {
 }
 
 function registerParkingListButtons() {
-    $('.pageButton').on('click', function() {
+    $('.pageButton').on('click', function () {
         $('.paginationContainer').html(getLoadingIcon());
-        
+
         let idFilter = $('#filterById').val();
         let nameFilter = $('#filterByName').val();
         let regionFilter = $('#filterByRegion').val();
         $.ajax({
             url: window.location.href,
             headers: { 'Range': 'pages=' + $(this).attr('rangeStart') + '-' + $(this).attr('rangeEnd') },
-            data: { 
+            data: {
                 idFilter: idFilter,
                 nameFilter: nameFilter,
                 regionFilter: regionFilter,
@@ -133,12 +133,20 @@ function registerParkingListButtons() {
             let domain = domainName !== '' ? '/' + domainName : '';
             let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
 
-            if (confirm('Are you sure to delete the ' + $(this).parent().parent().find('a').text().trim() + ' parking facility?')) {
+            Swal.fire({
+                title: `Are you sure to delete this parking?`,
+                text: `${decodeURIComponent(parkingId)} will be permanently deleted!`,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(() => {
                 $.ajax({
                     type: "DELETE",
                     url: domain + '/delete-parking?parkingId=' + parkingId,
                     success: () => {
-                        if(user.superAdmin === 'true') {
+                        if (user.superAdmin === 'true') {
                             window.location.href = domain + '/admin-parkings';
                         } else {
                             window.location.href = domain + '/parkings';
@@ -148,7 +156,36 @@ function registerParkingListButtons() {
                         alert('Error: ' + e.responseText);
                     }
                 });
-            }
+            });
+        });
+    });
+
+    $('#users-list input[title=Delete]').each(function () {
+        $(this).on('click', function () {
+            let domain = domainName !== '' ? '/' + domainName : '';
+            let email = $($(this).parent().siblings()[0]).text().trim();
+
+            Swal.fire({
+                title: `Are you sure to delete this user?`,
+                text: `${email} will be permanently deleted!`,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(() => {
+                $.ajax({
+                    type: "DELETE",
+                    url: domain + '/delete-account',
+                    data: { email: email },
+                    success: () => {
+                        window.location.href = domain + '/admin-users';
+                    },
+                    error: e => {
+                        alert('Error: ' + e.responseText);
+                    }
+                });
+            });
         });
     });
 
@@ -168,7 +205,7 @@ function registerParkingListButtons() {
         $.ajax({
             type: "POST",
             url: domain + '/admin-users/toggle-company-state/' + userEmail,
-            data: {'companyEnabled': this.checked},
+            data: { 'companyEnabled': this.checked },
             success: () => {
                 $(this).show();
                 $(this).siblings('.loading-icon').hide();
@@ -191,7 +228,7 @@ function registerParkingListButtons() {
         $.ajax({
             type: "POST",
             url: domain + '/admin-users/toggle-city-state/' + userEmail,
-            data: {'cityEnabled': this.checked, 'cityName': cityName},
+            data: { 'cityEnabled': this.checked, 'cityName': cityName },
             success: () => {
                 $(this).show();
                 $(this).prev('.loading-icon').hide();
@@ -254,7 +291,7 @@ function registerParkingListButtons() {
 
     let selectedParkingToTransfer = null;
 
-    $('.transfer-parking').on('click', function() {
+    $('.transfer-parking').on('click', function () {
         selectedParkingToTransfer = encodeURIComponent($(this).attr('parkingid'));
         $('#transfer-parking-form').show();
         let domain = domainName != '' ? '/' + domainName : '';
@@ -285,7 +322,7 @@ function registerParkingListButtons() {
         $.ajax({
             type: "POST",
             url: domain + '/admin-companies/transfer-parking',
-            data: {'newcompany': company, 'parkingid': selectedParkingToTransfer},
+            data: { 'newcompany': company, 'parkingid': selectedParkingToTransfer },
             success: () => {
                 window.location.href = domain + '/admin-parkings';
             },
@@ -303,17 +340,17 @@ function registerParkingListButtons() {
 
 function getLoadingIcon() {
     return '<div class="loading-icon">' +
-    '                <svg class="lds-dual-ring" width="24px"\n' +
-    '                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">\n' +
-    '                    <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"\n' +
-    '                            ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"\n' +
-    '                            fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"\n' +
-    '                            stroke-dasharray="62.83185307179586 62.83185307179586"\n' +
-    '                            transform="rotate(244.478 50 50)">\n' +
-    '                        <animateTransform attributeName="transform" type="rotate" calcMode="linear"\n' +
-    '                                          values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"\n' +
-    '                                          repeatCount="indefinite"></animateTransform>\n' +
-    '                    </circle>\n' +
-    '                </svg>\n' +
-    '            </div>';
+        '                <svg class="lds-dual-ring" width="24px"\n' +
+        '                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">\n' +
+        '                    <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}"\n' +
+        '                            ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}"\n' +
+        '                            fill="none" stroke-linecap="round" r="40" stroke-width="20" stroke="#1c4595"\n' +
+        '                            stroke-dasharray="62.83185307179586 62.83185307179586"\n' +
+        '                            transform="rotate(244.478 50 50)">\n' +
+        '                        <animateTransform attributeName="transform" type="rotate" calcMode="linear"\n' +
+        '                                          values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s"\n' +
+        '                                          repeatCount="indefinite"></animateTransform>\n' +
+        '                    </circle>\n' +
+        '                </svg>\n' +
+        '            </div>';
 }

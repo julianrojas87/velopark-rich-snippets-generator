@@ -22,7 +22,7 @@ module.exports = app => {
     */
 
     app.options('/*', (req, res) => {
-        res.set({ 
+        res.set({
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
@@ -1007,7 +1007,7 @@ module.exports = app => {
     app.get('/municipalities', async function (req, res) {
         try {
             res.status(200).json(await CiM.listAllMunicipalities(req.query.lang));
-        } catch(err) {
+        } catch (err) {
             res.status(500).send('failed');
         }
     });
@@ -1214,17 +1214,21 @@ module.exports = app => {
         })
     });
 
-    app.post('/delete', function (req, res) {
-        AM.deleteAccount(req.session.user._id, function (e, obj) {
-            if (!e) {
-                res.clearCookie('login');
-                req.session.destroy(function (e) {
-                    res.status(200).send('ok');
-                });
-            } else {
-                res.status(400).send('record not found');
+    app.delete('/delete-account', async (req, res) => {
+        // check if the user is logged in
+        if (req.session.user == null) {
+            let domain = domainName != '' ? '/' + domainName : '';
+            res.redirect(domain + '/');
+        } else {
+            let id = req.body.email;
+            try {
+                await AM.deleteAccount(id);
+                res.status(200).send('ok');
+            } catch (err) {
+                console.error(err);
+                res.status(400).send('Account not found');
             }
-        });
+        }
     });
 
     app.get('/reset', function (req, res) {
