@@ -249,7 +249,7 @@ async function mapData(jsonld) {
                 // Check it is valid JSON
                 data = typeof data !== 'object' ? JSON.parse(data) : data;
                 // Check it has data about this parking
-                let obj = getObjectFromArray(data['@graph'], 'https://velopark.ilabt.imec.be/data/De-Fietsambassade-Gent_Emile-Braun-Plein');
+                let obj = getObjectFromArray(data['@graph'], jsonld['@id']);
                 if(!obj) {
                     throw new Error(`This API does not contain data about this parking or is not using the same @id: ${jsonld['@id']}`);
                 }
