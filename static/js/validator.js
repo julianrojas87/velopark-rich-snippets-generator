@@ -45,6 +45,10 @@
         return false;
     });
 
+    $('#liveData').on('focus', function() {
+        $(this).css('color', '#555555');
+    });
+
 })(jQuery);
 
 //var input = $('.validate-input .input100');
@@ -146,4 +150,13 @@ function hideValidate(input) {
     $(thisAlert).removeClass('alert-validate');
     $(thisAlert).removeClass('true-validate');
     $(thisAlert).find('.btn-hide-validate').remove();
+}
+
+function validateURL(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch (err) {
+        return false;
+    }
 }

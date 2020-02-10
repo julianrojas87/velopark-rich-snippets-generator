@@ -9,8 +9,8 @@
 
         for (let i = 0; i < toValidate.length; i++) {
             let inp = $(toValidate[i]).find('.input100, .js-select2');
-            if($(inp).is('select')) {
-                $(toValidate[i]).click(function() {
+            if ($(inp).is('select')) {
+                $(toValidate[i]).click(function () {
                     $(this).removeClass('alert-validate');
                     $(this).find('.btn-hide-validate').remove();
                     $(this).find('.select2-selection__placeholder').show();
@@ -77,7 +77,6 @@
             }
         });
 
-
         if (check) {
             // JSON-LD skeleton already containing the predefined @context and data structure
             loadAPSkeleton().then(jsonld => {
@@ -123,6 +122,17 @@
 
 })(jQuery);
 
+function fetchLiveAPI(url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: data => resolve(data),
+            error: e => reject(new Error(`Live API request failed at ${url}`))
+        });
+    });
+}
+
 function saveJSONLD() {
     let domain = domainName != '' ? '/' + domainName : '';
     let username = $('#user-email').text().trim();
@@ -144,8 +154,8 @@ function saveJSONLD() {
                         'parkingCompany': parkingOwner.parkingCompany
                     },
                     success: () => {
-                        if(photos2Delete.length > 0) {
-                            for(let p in photos2Delete) {
+                        if (photos2Delete.length > 0) {
+                            for (let p in photos2Delete) {
                                 jQuery.ajax({
                                     url: photos2Delete[p],
                                     method: 'DELETE',
@@ -218,11 +228,67 @@ async function mapData(jsonld) {
         sections[i] = $('div[parking-section=' + i + ']');
     }
     await processSections(jsonld, sections);
+
     if (fillAutomaticData(jsonld)) {
         cleanEmptyValues(jsonld);
     } else {
         throw new Error('Malformed Parking URI');
     }
+
+    // Validate live data API (if any)
+    let url = $('#liveData').val().trim();
+    if (url !== '') {
+        let err = null;
+        if (!validateURL(url)) {
+            err = new Error('Invalid URI for the live data API');
+        } else {
+            try {
+                // Fetch data from API
+                let data = await fetchLiveAPI(url);
+                // Check it is valid JSON
+                data = typeof data !== 'object' ? JSON.parse(data) : data;
+                // Check it has data about this parking
+                let obj = getObjectFromArray(data['@graph'], 'https://velopark.ilabt.imec.be/data/De-Fietsambassade-Gent_Emile-Braun-Plein');
+                if(!obj) {
+                    throw new Error(`This API does not contain data about this parking or is not using the same @id: ${jsonld['@id']}`);
+                }
+                // Check if it has a lastObserved property
+                if(!data['lastObserved']) {
+                    throw new Error('This API does not provide a last observed date for this parking via the sosa:resultTime property');
+                }
+                // Check if it has current free places
+                if(!obj['capacity']['freePlaces']) {
+                    throw new Error('This API does not provide the number of free places for this parking');
+                }
+            } catch (error) {
+                err = error;
+            }
+        }
+
+        if (err) {
+            alert(err.message);
+            $('#liveData').css('color', 'red');
+            $('#' + $('#liveData').closest('fieldset').attr('id').replace("-p-", "-t-")).get(0).click();
+            $('html, body').animate({
+                scrollTop: $('#liveData').offset().top - 200
+            }, 500);
+            throw err;
+        } else {
+            // Assign live api URI to the JSON-LD object
+            jsonld['@graph'][0]['liveCapacity'] = url;
+        }
+    }
+}
+
+function getObjectFromArray(arr, objId) {
+    if (arr) {
+        for (let i in arr) {
+            if (arr[i]['@id'] === objId) {
+                return arr[i];
+            }
+        }
+    }
+    return null;
 }
 
 function processGeneral(jsonld, general) {
@@ -274,17 +340,17 @@ function fillAutomaticData(jsonld) {
             tc += jsonld['@graph'][i]['allows'][j]['bicyclesAmount'] != '' ? parseInt(jsonld['@graph'][i]['allows'][j]['bicyclesAmount']) : 0;
         }
         jsonld['@graph'][i]['totalCapacity'] = tc;
-        
+
         // Assign the same opening hours as the section to features that don't have any
-        for(let j in jsonld['@graph'][i]['amenityFeature']) {
+        for (let j in jsonld['@graph'][i]['amenityFeature']) {
             let feature = jsonld['@graph'][i]['amenityFeature'][j];
 
-            if(feature['@type'] !== '' && (!feature['hoursAvailable'] || feature['hoursAvailable'].length < 1)) {
+            if (feature['@type'] !== '' && (!feature['hoursAvailable'] || feature['hoursAvailable'].length < 1)) {
                 jsonld['@graph'][i]['amenityFeature'][j]['hoursAvailable'] = jsonld['@graph'][i]['openingHoursSpecification'];
             }
 
             // Delete any unspecified amenities 
-            if(!feature['@type'] || feature['@type'] === '') {
+            if (!feature['@type'] || feature['@type'] === '') {
                 jsonld['@graph'][i]['amenityFeature'].splice(j, 1);
             }
         }
@@ -516,7 +582,7 @@ function setElementValue(el, jsonEl, name) {
         }
 
         // Delete empty example object from application profile
-        if(jsonEl.length === 1 && jsonEl[0]['dayOfWeek'] === "") {
+        if (jsonEl.length === 1 && jsonEl[0]['dayOfWeek'] === "") {
             jsonEl.pop();
         }
         return jsonEl;
