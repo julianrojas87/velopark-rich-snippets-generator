@@ -1739,6 +1739,75 @@
                         </div>
                     </div>
                 </div>
+                <div id="step-general-info-5">
+                    <h2 transl-id="step.publish.liveTitle">Live Data Publishing</h2>
+                    <div class="wrap-contact100-section general-information">
+                        <p class="info-text"><i class="fas fa-fw fa-info-circle mr-3 mt-1"></i>
+                            <span transl-id="step.publish.liveInfoText"></span>
+                        </p>
+                        <div class="wrap-input100 bg1" data-validate="Enter a valid URI or leave it empty">
+                            <span class="label-input100" transl-id="step.publish.liveURI.field">Parking Facility URI</span>
+                            <input type="image" title="about" class="info_button" src="static/images/icons/info.png">
+                            <div id="live-data-example" class="log-form" style="height: 65%;">
+                                <h2 style="margin-bottom: 15px;"></h2>
+                                <input type="image" title="close" class="info_close_button"
+                                       src="static/images/icons/close_white.png"
+                                       style="position: relative; float: right; width: 22px; bottom: 62px; margin-bottom: 0; border-bottom: 0; margin-right: 8px;">
+                                <div style="padding-left: 10px; height: 77%;">
+                                    <span transl-id="step.publish.liveURI.infoText">This is an example of the Velopark live data structure:</span><br/><br/>
+                                    <pre style="width: 100%; height: -webkit-fill-available; max-width: inherit; display: flex">
+                                        <code id="" class="JSON">
+{
+    "@context": {
+        "mv": "http://schema.mobivoc.org/",
+        "dc": "http://purl.org/dc/terms/",
+        "sosa": "http://www.w3.org/ns/sosa/",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "RealTimeCapacity": "mv:RealTimeCapacity",
+        "Observation": "sosa:Observation",
+        "capacity": "mv:capacity",
+        "date": {
+            "@type": "xsd:dateTime",
+            "@id": "dc:date"
+        },
+        "freePlaces": {
+            "@type": "xsd:integer",
+            "@id": "mv:currentValue"
+        },
+        "totalPlaces": {
+            "@type": "xsd:integer",
+            "@id": "mv:totalCapacity"
+        },
+        "lastObserved": {
+        "@type": "xsd:dateTime",
+        "@id": "sosa:resultTime"
+        }
+    },
+    "@type": "Observation",
+    "lastObserved": "2020-02-10T10:55:20.295Z" // Last observed date
+    "@graph": [
+        {
+            "@id": "https://velopark.ilabt.imec.be/data/Parko_1", // Velopark ID
+            "capacity": {
+                "@type": "RealTimeCapacity",
+                "date": "2020-02-10T10:55:20.295Z", // Last reported date
+                "freePlaces": "31",
+                "totalPlaces": "82"
+            }
+        }
+    ]
+}
+
+                                        </code>
+                                    </pre>
+                                </div>
+                            </div>
+                            <input class="input100" type="url" id="liveData"
+                                   placeholder="For example: http://data.gent.be/parkings/fiets/35677"
+                                   transl-id-placeholder="step.publish.liveURI.placeholder">
+                        </div>
+                    </div>
+                </div>
             </fieldset>
 
             <h3 class="section-title">

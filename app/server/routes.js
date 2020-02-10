@@ -12,7 +12,7 @@ const utils = require('./utils/utils');
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const data = config['data'] || './data';
 const domainName = config['domain'] || '';
-const vocabURI = config['vocabulary'] || 'https://velopark.ilabt.imec.be';
+const vocabURI = config['vocabulary'] || 'http://velopark.ilabt.imec.be';
 
 module.exports = app => {
 
