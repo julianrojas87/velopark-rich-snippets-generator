@@ -33,6 +33,10 @@ function loadParkingValues() {
         if (parking['@id'].indexOf('https://velopark.ilabt.imec.be/data/') >= 0) {
             $('input[name="@id"]').val('');
         }
+        // Load live API URL (if any)
+        if(parking['@graph'][0]['liveCapacity']) {
+            $('#liveData').val(parking['@graph'][0]['liveCapacity']);
+        }
     }
 }
 
