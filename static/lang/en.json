@@ -473,6 +473,13 @@
         "field": "Parking Facility URI",
         "infoText": "The URL where the data about this bicycle parking will be published.<br><br>Example: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>In case you don't have one we will provide it based on the Parking Owner and the Local Identifier, and publish the data for you.<br><br>Example: <i>https://velopark.ilabt.imec.be/data/APCOA_018</i>",
         "placeholder" : "For example: http://data.gent.be/parkings/fiets/35677"
+      },
+      "liveTitle": "Live Data Publishing",
+      "liveInfoText": "If you publish live data about this parking availability following the <a onclick='showLiveExample();' role='button' tabindex='0' style='cursor: pointer; font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;'>Velopark live data model</a>, enter your API URI here. Compliance with the data structure will be automatically verified.",
+      "liveURI": {
+        "field": "Live API URI",
+        "infoText": "This is an example of the Velopark live data structure:",
+        "placeholder": "For example: http://data.gent.be/parkings/fiets/35677/live"
       }
     },
     "generate" : {

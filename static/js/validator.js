@@ -49,6 +49,15 @@
 
 //var input = $('.validate-input .input100');
 
+function showLiveExample() {
+    let infobox = $('#live-data-example');
+    infobox.find('h2').text(infobox.prev().prev().text().trim());
+    infobox.toggle();
+    console.log();
+    hljs.highlightBlock(document.querySelectorAll('pre code')[1]);
+    return false;
+}
+
 function fullValidation(input) {
     if (validate(input) == false) {
         showValidate(input);

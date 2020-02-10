@@ -466,12 +466,19 @@
       "addExtra" : "Ajouter une section"
     },
     "publish" : {
-      "title" : "Publication de données",
+      "title" : "Publication de Données",
       "infoText" : "Si vous souhaitez publier les données sur votre propre site Web, entrez l'URL dans la zone ci-dessous. <br>Si vous le laissez vide, le fichier de données sera stocké et publié à <a style='font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;' href='http://www.velopark.be'>http://www.velopark.be</a>.",
       "URI" : {
         "field": "URI du parking",
         "infoText": "L'URL où les données sur ce parking pour vélos seront publiées.<br><br>Exemple: <i>https://www.leuven.be/parkings/nl/fietsen/fietsparking-rector-de-somerplein</i><br><br>Si vous n'en avez pas, nous le fournirons en fonction du propriétaire du stationnement et de l'identificateur local et publierons les données à votre place.<br><br>Exemple: <i>https://velopark.ilabt.imec.be/data/APCOA/APCOA_018</i>",
         "placeholder" : "Par exemple: http://data.gent.be/parkings/fiets/35677"
+      },
+      "liveTitle": "Publier des Données en Direct",
+      "liveInfoText": "Si vous publiez des données en direct sur cette disponibilité de stationnement après le <a onclick='showLiveExample();' role='button' tabindex='0' style='cursor: pointer; font-size: 16px; font-family: Montserrat-SemiBold, sans-serif;'>Velopark live data model</a>, entrez votre URI API ici. La conformité à la structure des données sera automatiquement vérifiée.",
+      "liveURI": {
+        "field": "API URI en direct",
+        "infoText": "Voici un exemple de la structure de données en direct de Velopark:",
+        "placeholder": "Par exemple: http://data.gent.be/parkings/fiets/35677/live"
       }
     },
     "generate" : {
