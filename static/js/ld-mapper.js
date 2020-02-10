@@ -243,6 +243,7 @@ async function mapData(jsonld) {
             err = new Error('Invalid URI for the live data API');
         } else {
             try {
+                /* TODO: Do validation using RDF */
                 // Fetch data from API
                 let data = await fetchLiveAPI(url);
                 // Check it is valid JSON
