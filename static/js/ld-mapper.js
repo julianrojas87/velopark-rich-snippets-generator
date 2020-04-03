@@ -335,6 +335,8 @@ function fillAutomaticData(jsonld) {
 
     // Set values for each parking section
     for (let i = 0; i < jsonld['@graph'].length; i++) {
+        // Set section @id
+        jsonld['@graph'][i]['@id'] = `${jsonld['@id']}#section${i + 1}`;
         // Calculate and set totalCapacity
         let tc = 0;
         for (let j = 0; j < jsonld['@graph'][i]['allows'].length; j++) {
