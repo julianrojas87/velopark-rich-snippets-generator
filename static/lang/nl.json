@@ -331,7 +331,7 @@
       "noItemsError" : "Voeg aub tenminste één type fiets toe.",
       "type" : {
         "field": "Type Fiets *",
-        "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Normale Fiets - Elektrische Fiets - Bakfiets - Tandemfiets</i>",
         "placeholder" : "Selecteer een fietstype"
       },
       "capacity" : {
