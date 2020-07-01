@@ -265,6 +265,7 @@ iframe {
   overflow: visible;
   padding: 62px 55px 90px 55px;
   flex-grow: 1;
+  width: 75%;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -300,12 +301,12 @@ iframe {
 [  ]*/
 
 .contact100-form {
-  width: 100%;
+  /*width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
   display: -ms-flexbox;
-  display: flex;
+  display: flex;*/
   flex-wrap: wrap;
   justify-content: space-between;
 }
@@ -826,13 +827,14 @@ textarea.input100 {
 }
 
 .wizard.vertical>.steps {
-  position: fixed;
-  width: 25%;
+  /*position: fixed;*/
+  width: 30%;
   background-color: #1072ba;
   border-radius: 6px;
   max-height: 65vh;
   overflow: auto;
   margin-top: 2vh;
+  float: left;
 }
 
 @media screen and (max-width: 800px) {
@@ -849,8 +851,9 @@ textarea.input100 {
 }
 
 .wizard.vertical>.content {
-  padding-left: 35%;
-  width: 100%;
+  /*padding-left: 35%;*/
+  width: 70%;
+  float: left;
 }
 
 @media screen and (max-width: 800px) {
@@ -860,12 +863,13 @@ textarea.input100 {
 }
 
 .wizard.vertical>.actions {
-  padding-left: 35%;
+  /*padding-left: 35%;*/
   width: 100%;
+  float: right;
 }
 
 .wizard.vertical>.actions ul {
-  text-align: center;
+  text-align: right;
 }
 
 .wizard.vertical>.actions li {
@@ -1130,8 +1134,8 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 button.steps-overview-remove-facility-button {
-  position: absolute;
-  right: 10px;
+  position: relative;
+  left: 20px;
 }
 
 button.steps-overview-remove-facility-button i {

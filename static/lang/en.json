@@ -332,7 +332,7 @@
       "noItemsError" : "Please add at least one bicycle type that is allowed in this facility section.",
       "type" : {
         "field": "Bicycle Type *",
-        "infoText": "Select here the types of bicycles allowed in this parking section.<br><br>Example: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "infoText": "Select here the types of bicycles allowed in this parking section.<br><br>Example: <i>Regular Bicycle - Electrical Bicycle - Cargo Bicycle - Tandem Bicycle</i>",
         "placeholder" : "Select bicycle type"
       },
       "capacity" : {

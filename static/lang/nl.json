@@ -78,9 +78,9 @@
         "placeholder" : "Vul de sluitingsdatum in"
       },
       "regulations" : {
-        "field" : "Regelement",
+        "field" : "Reglement",
         "infoText" : "De link / URL waar informatie over deze stalling kan gevonden worden.\n\nVoorbeeld: http://www.projectgentsintpieters.be/frontend/files/userfiles/files/kaarten/150220_reglementfietsenstalling.pdf",
-        "placeholder" : "Vul de link in naar het regelement"
+        "placeholder" : "Vul de link in naar het reglement"
       },
       "temporarilyClosed": {
         "field": "Tijdelijk Gesloten *",
@@ -95,7 +95,7 @@
       "address" :  {
         "title" : "Adres Informatie",
         "street" : {
-          "field" : "Straat Naam en Nummer *",
+          "field" : "Straatnaam en Nummer *",
           "infoText" : "De naam van de straat en de nummer waar de parkin zich bevindt.<br><br>Voorbeeld: <i>Rector De Somerplein 8</i>",
           "placeholder" : "Vul straatnaam en nummer in",
           "validation" : "Vul straatnaam en nummer in"
@@ -219,8 +219,8 @@
       },
       "removal": {
         "field": "Voorwaarden voor verwijdering",
-        "infoText": "Beschrijf bij welke voowarden een fiets verwijderd zal worden van de parking. Voorbeeld: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i>",
-        "placeholder": "Beschrijf bij welke voowarden een fiets verwijderd zal worden (bv. Maximum parkeertijd overschreden)"
+        "infoText": "Beschrijf bij welke voorwaarden een fiets verwijderd zal worden van de parking. Voorbeeld: <i>Fietsen die foutief of meer dan 14 dagen gestald zijn, worden verwijderd.</i>",
+        "placeholder": "Beschrijf bij welke voorwaarden een fiets verwijderd zal worden (bv. Maximum parkeertijd overschreden)"
       },
       "postRemoval": {
         "field": "Actie na verwijdering",
@@ -331,12 +331,12 @@
       "noItemsError" : "Voeg aub tenminste één type fiets toe.",
       "type" : {
         "field": "Type Fiets *",
-        "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Regular bicycle - Electrical bicycle - Cargo bicycle</i>",
+        "infoText": "Selecteer het type fiets dat toegelaten wordt in deze faciliteitssectie.<br><br>Voorbeeld: <i>Normale Fiets - Elektrische Fiets - Bakfiets - Tandemfiets</i>",
         "placeholder" : "Selecteer een fietstype"
       },
       "capacity" : {
         "field": "Capaciteit *",
-        "infoText": "Geef het miximum aantal fietsen van dit type op dat toegelaten worden in deze faciliteitssectie.<br><br>Voorbeeld: <i>250</i>",
+        "infoText": "Geef het maximum aantal fietsen van dit type op dat toegelaten worden in deze faciliteitssectie.<br><br>Voorbeeld: <i>250</i>",
         "placeholder": "Vul de toegelaten capaciteit in",
         "validation" : "Vul een waarde in"
       },

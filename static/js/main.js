@@ -588,7 +588,7 @@ function handleLoginFeatures() {
             type: 'POST', // For jQuery < 1.9
             success: function (data) {
                 let locationPath = location.pathname.substr(0, location.pathname.lastIndexOf('/'));
-                var url = [location.protocol, '//', location.host, locationPath].join('');
+                var url = ['https://', location.host, locationPath].join('');
                 let uriInput = parent.find('input[name="photos._Photograph.image"]');
                 uriInput.val(url + data);
                 uriInput.prop('disabled', true);
