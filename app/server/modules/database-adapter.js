@@ -409,6 +409,26 @@ exports.findParkingsWithCompanies = async (skip = 0, limit = Number.MAX_SAFE_INT
     }
 };
 
+exports.getRegionParkings = async nis => {
+    const region = await cities.findOne({ 'properties.NIS_CODE': nis });
+    if (region) {
+        let arr = [];
+        await parkings.find({
+            "approvedstatus": true,
+            "location": {
+                '$geoWithin': {
+                    '$geometry': region.geometry
+                }
+            }
+        }).forEach(p => {
+            arr.push(decodeURIComponent(p['parkingID']));
+        });
+        return arr;
+    } else {
+        return null;
+    }
+};
+
 exports.findParkings = (skip, limit) => {
     return parkings.find().skip(skip).limit(limit).toArray();
 };
@@ -698,8 +718,8 @@ exports.deleteParkingByIdAndEmail = function (parkingId, email, callback) {
                     parkingIDs: parkingId,
                     name: res.companyName
                 }, {
-                        $pull: { parkingIDs: parkingId }
-                    },
+                    $pull: { parkingIDs: parkingId }
+                },
                     {},
                     function (error, res) {
                         if (error != null) {
@@ -728,8 +748,8 @@ exports.deleteParkingById = function (parkingId, callback) {
     companies.findOneAndUpdate({
         parkingIDs: parkingId
     }, {
-            $pull: { parkingIDs: parkingId }
-        },
+        $pull: { parkingIDs: parkingId }
+    },
         {},
         function (error, res) {
             if (error != null) {
@@ -1034,21 +1054,21 @@ exports.findParkingsByCityName = async (cityName, lang, skip = 0, limit = Number
             return [];
         }
     } else {
-            if (lang === 'en') {
-                city = await cities.findOne({ 'properties.name_EN': cityName });
-            } else if (lang === 'fr') {
-                city = await cities.findOne({ 'properties.name_FR': cityName });
-            } else if (lang === 'de') {
-                city = await cities.findOne({ 'properties.name_DE': cityName });
-            } else if (lang === 'nl') {
-                city = await cities.findOne({ 'properties.name_NL': cityName });
-            } else {
-                city = await cities.findOne({ 'properties.cityname': cityName });
-            }
+        if (lang === 'en') {
+            city = await cities.findOne({ 'properties.name_EN': cityName });
+        } else if (lang === 'fr') {
+            city = await cities.findOne({ 'properties.name_FR': cityName });
+        } else if (lang === 'de') {
+            city = await cities.findOne({ 'properties.name_DE': cityName });
+        } else if (lang === 'nl') {
+            city = await cities.findOne({ 'properties.name_NL': cityName });
+        } else {
+            city = await cities.findOne({ 'properties.cityname': cityName });
+        }
 
-            if(city === null) {
-                city = await cities.findOne({ 'properties.cityname': cityName });
-            }
+        if (city === null) {
+            city = await cities.findOne({ 'properties.cityname': cityName });
+        }
     }
 
     if (city) {
@@ -1096,20 +1116,20 @@ exports.findCitiesByLocation = function (lat, lng, lang, callback) {
                 }
             }
         }, {
-                sort: { "properties.adminLevel": 1 },
-                projection: { "properties": 1 }
-            }).forEach(function (res) {
-                cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
-            }, function (error) {
-                if (callback) {
-                    callback(error, cityNames);
-                }
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(cityNames);
-                }
-            });
+            sort: { "properties.adminLevel": 1 },
+            projection: { "properties": 1 }
+        }).forEach(function (res) {
+            cityNames.push(res.properties[propertyName] || res.properties["cityname"]);
+        }, function (error) {
+            if (callback) {
+                callback(error, cityNames);
+            }
+            if (error) {
+                reject(error);
+            } else {
+                resolve(cityNames);
+            }
+        });
     });
 };
 

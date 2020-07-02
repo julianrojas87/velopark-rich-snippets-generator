@@ -1236,4 +1236,26 @@ module.exports = app => {
             res.redirect('/print');
         });
     });
+
+    /**
+     * Geospatial traditional API:
+     * It returns all the authorized parkings that exist
+     * within a certain region (specified by Belgian NIS code)
+     */
+
+    app.get('/api/:nis', async (req, res) => {
+        res.set({
+            'accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*'
+        });
+
+        const nis = parseInt(req.params.nis);
+        const parkings = await PM.getParkingsByNISCode(nis);
+        if (parkings) {
+            res.json(parkings);
+        } else {
+            res.status(401).send(`Undefined region ${req.params.nis}`);
+        }
+    });
 };
