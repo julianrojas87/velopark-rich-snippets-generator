@@ -571,6 +571,10 @@ exports.getSecurityFeatures = async () => {
     return types;
 };
 
+exports.getParkingsByNISCode = nis => {
+    return dbAdapter.getRegionParkings(nis);
+};
+
 async function getTermsRDF() {
     return new Promise((resolve, reject) => {
         try {
