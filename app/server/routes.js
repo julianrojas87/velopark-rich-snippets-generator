@@ -1255,7 +1255,7 @@ module.exports = app => {
         if (parkings) {
             res.json(parkings);
         } else {
-            res.status(401).send(`Undefined region ${req.params.nis}`);
+            res.status(400).send(`Undefined region ${req.params.nis}`);
         }
     });
 };
