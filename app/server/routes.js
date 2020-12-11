@@ -16,7 +16,6 @@ const vocabURI = config['vocabulary'] || 'https://velopark.ilabt.imec.be';
 
 module.exports = app => {
 
-
     /*
         index
     */

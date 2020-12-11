@@ -12,7 +12,7 @@ var db, accounts, parkings, companies, cities, regionHierarchy;
 
 exports.initDbAdapter = function () {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (e, client) {
+        MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, client) {
             if (e) {
                 console.error(e);
             } else {
