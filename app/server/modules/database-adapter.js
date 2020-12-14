@@ -12,11 +12,11 @@ var db, accounts, parkings, companies, cities, regionHierarchy;
 
 exports.initDbAdapter = function () {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, client) {
+        MongoClient.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, client) {
             if (e) {
                 console.error(e);
             } else {
-                db = client.db(process.env.DB_NAME);
+                db = client.db(process.env.MONGO_NAME);
                 accounts = db.collection('accounts');
                 parkings = db.collection('parkings');
                 companies = db.collection('companies');
@@ -27,7 +27,7 @@ exports.initDbAdapter = function () {
                 cities.createIndex({ geometry: "2dsphere" });
                 // index fields 'user' & 'email' for faster new account validation //
                 accounts.createIndex({ user: 1, email: 1 });
-                console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
+                console.log('mongo :: connected to database :: "' + process.env.MONGO_NAME + '"');
 
                 initDB();
                 resolve();
