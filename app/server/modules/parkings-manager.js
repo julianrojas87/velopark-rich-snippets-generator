@@ -577,7 +577,7 @@ exports.getParkingsByNISCode = nis => {
 async function getTermsRDF() {
     return new Promise((resolve, reject) => {
         try {
-            const vocabURI = process.env.VOCAB_URL || 'http://velopark.ilabt.imec.be/openvelopark';
+            const vocabURI = process.env.VOCAB_URL || 'https://velopark.ilabt.imec.be/openvelopark';
             request(vocabURI + '/terms', (err, res, body) => {
                 try {
                     if (err) {

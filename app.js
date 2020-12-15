@@ -26,11 +26,11 @@ process.env.MONGO_HOST = process.env.MONGO_HOST || 'localhost'
 process.env.MONGO_PORT = process.env.MONGO_PORT || 27017;
 process.env.MONGO_NAME = process.env.MONGO_NAME || 'node-login';
 
-if (app.get('env') != 'live'){
-	process.env.MONGO_URL = 'mongodb://'+process.env.MONGO_HOST+':'+process.env.MONGO_PORT;
-}	else {
-// prepend url with authentication credentials // 
-	process.env.MONGO_URL = 'mongodb://'+process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@'+process.env.MONGO_HOST+':'+process.env.MONGO_PORT;
+if (app.get('env') != 'live') {
+	process.env.MONGO_URL = 'mongodb://' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT;
+} else {
+	// prepend url with authentication credentials // 
+	process.env.MONGO_URL = 'mongodb://' + process.env.MONGO_USER + ':' + process.env.MONGO_PASS + '@' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT;
 }
 
 app.use(session({
@@ -39,12 +39,17 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true,
 	store: new MongoStore({ url: process.env.MONGO_URL })
-	})
+})
 );
+
+app.all('/*', function (req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	next();
+});
 
 require('./app/server/routes')(app);
 
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
