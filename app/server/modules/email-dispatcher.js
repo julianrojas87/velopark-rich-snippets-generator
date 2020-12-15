@@ -4,8 +4,7 @@ const email = require("emailjs/email");
 
 let EM = {};
 const config_secret = JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8'));
-const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
-const domainName = config['domain'] || '';
+const domainName = process.env.BASE_URL || '';
 let activatedAccounts = {};
 
 var server = email.server.connect({
@@ -173,7 +172,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "You requested a password reset for your Velopark account.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Click here to reset your password</a><br><br>";
+        html += "<a href='" + domainName + "/reset-password?key=" + passKey + "'>Click here to reset your password</a><br><br>";
         html += "If you did not request a password reset, you can safely ignore this email.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
@@ -182,7 +181,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Sie haben ein Zurücksetzen des Passworts für Ihr Velopark-Konto angefordert.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
+        html += "<a href='" + domainName + "/reset-password?key=" + passKey + "'>Klicken Sie hier, um ein neues Passwort festzulegen</a><br><br>";
         html += "Wenn Sie kein Zurücksetzen des Kennworts angefordert haben, können Sie diese E-Mail ignorieren.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
@@ -191,7 +190,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Vous avez demandé une réinitialisation du mot de passe pour votre compte Velopark.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
+        html += "<a href='" + domainName + "/reset-password?key=" + passKey + "'>Cliquez ici pour définir un nouveau mot de passe</a><br><br>";
         html += "Si vous n'avez pas demandé de réinitialisation de mot de passe, vous pouvez ignorer cet email en toute sécurité.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
@@ -200,7 +199,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Usted solicitó un restablecimiento de contraseña para su cuenta Velopark.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
+        html += "<a href='" + domainName + "/reset-password?key=" + passKey + "'>Haga clic aquí para establecer una nueva contraseña</a><br><br>";
         html += "Si no solicitó un restablecimiento de contraseña, puede ignorar este correo electrónico de forma segura.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
@@ -210,7 +209,7 @@ EM.composePasswordResetEmail = function (passKey, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Je hebt een wachtwoordreset aangevraagd voor je Velopark account.<br>";
-        html += "<a href='https://velopark.ilabt.imec.be/rich-snippets-generator/reset-password?key=" + passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
+        html += "<a href='" + domainName + "/reset-password?key=" + passKey + "'>Klik hier om een nieuw wachtwoord in te stellen</a><br><br>";
         html += "Indien je deze reset niet zelf hebt aangevraagd kan je deze mail gewoon negeren.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
@@ -225,7 +224,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "We are pleased to inform you that the registration of your Velopark account has been activated.<br>";
-        html += "You can now <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>log in to your account</a> using <b>" + email + "</b> as your email address and the password you provided during the signup process.<br><br>";
+        html += "You can now <a href='" + domainName + "'>log in to your account</a> using <b>" + email + "</b> as your email address and the password you provided during the signup process.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -233,7 +232,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Wir freuen uns, Ihnen mitteilen zu können, dass die Registrierung Ihres Velopark-Kontos aktiviert wurde.<br>";
-        html += "Sie können sich jetzt mit <b>" + email + "</b> als E-Mail-Adresse und dem Kennwort, das Sie während des Anmeldevorgangs angegeben haben, <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>in Ihrem Konto anmelden</a>.<br><br>";
+        html += "Sie können sich jetzt mit <b>" + email + "</b> als E-Mail-Adresse und dem Kennwort, das Sie während des Anmeldevorgangs angegeben haben, <a href='" + domainName + "'>in Ihrem Konto anmelden</a>.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -241,7 +240,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Nous avons le plaisir de vous informer que l'enregistrement de votre compte Velopark a été activé.<br>";
-        html += "Vous pouvez maintenant <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>vous connecter à votre compte</a> en utilisant <b>" + email + "</b> comme adresse électronique et le mot de passe que vous avez fourni lors de la procédure d'inscription.<br><br>";
+        html += "Vous pouvez maintenant <a href='" + domainName + "'>vous connecter à votre compte</a> en utilisant <b>" + email + "</b> comme adresse électronique et le mot de passe que vous avez fourni lors de la procédure d'inscription.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -249,7 +248,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Nos complace informarle que el registro de su cuenta Velopark ha sido activado.<br>";
-        html += "Ahora puede <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>iniciar sesión</a> en su cuenta utilizando <b>" + email + "</b> como su dirección de correo electrónico y la contraseña que proporcionó durante el proceso de registro.<br><br>";
+        html += "Ahora puede <a href='" + domainName + "'>iniciar sesión</a> en su cuenta utilizando <b>" + email + "</b> como su dirección de correo electrónico y la contraseña que proporcionó durante el proceso de registro.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -258,7 +257,7 @@ EM.composeAccountEnabledEmail = function (email, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "We zijn blij je te kunnen meedelen dat de registratie van je Velopark account geactiveerd werd.<br>";
-        html += "Je kan je nu <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/'>aanmelden in je account</a> door gebruik te maken van  <b>" + email + "</b> als je email adres en het wachtwoord dat je tijdens het registratieprocess hebt opgegeven.<br><br>";
+        html += "Je kan je nu <a href='" + domainName + "'>aanmelden in je account</a> door gebruik te maken van  <b>" + email + "</b> als je email adres en het wachtwoord dat je tijdens het registratieprocess hebt opgegeven.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -272,7 +271,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "A new user (" + email + ") just signed up on Velopark!<br>";
-        html += "You can review her/his membership through the <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>admin console</a>.<br><br>";
+        html += "You can review her/his membership through the <a href='" + domainName + "/admin'>admin console</a>.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -280,7 +279,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Ein neuer Benutzer (" + email + ") hat sich gerade bei Velopark angemeldet!<br>";
-        html += "Sie können seine Mitgliedschaft über die <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>Administratorkonsole überprüfen</a>.<br><br>";
+        html += "Sie können seine Mitgliedschaft über die <a href='" + domainName + "/admin'>Administratorkonsole überprüfen</a>.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -288,7 +287,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Un nouvel utilisateur (" + email + ") vient de s'inscrire sur Velopark!<br>";
-        html += "Vous pouvez consulter son abonnement via <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>la console d'administration</a>.<br><br>";
+        html += "Vous pouvez consulter son abonnement via <a href='" + domainName + "/admin'>la console d'administration</a>.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -296,7 +295,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Un nuevo usuario (" + email + ") acaba de registrarse en Velopark!<br>";
-        html += "Puede revisar su membresía a través de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>la consola de administración</a>.<br><br>";
+        html += "Puede revisar su membresía a través de <a href='" + domainName + "/admin'>la consola de administración</a>.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -305,7 +304,7 @@ EM.composeUserSignedUp = function (email, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Een nieuwe gebruiker (" + email + ") heeft zonet een account aangemaakt bij Velopark!<br>";
-        html += "U kunt haar/zijn lidmaatschap bekijken via de <a href='https://velopark.ilabt.imec.be/rich-snippets-generator/admin'>beheerdersconsole</a>.<br><br>";
+        html += "U kunt haar/zijn lidmaatschap bekijken via de <a href='" + domainName + "/admin'>beheerdersconsole</a>.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -320,7 +319,7 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
         html = "<html><body>";
         html += "Hello!<br><br>";
         html += "We would like you to know that a new parking has been added in a region you are managing.<br>";
-        html += "The URI of this new parking is <b>" + decodeURIComponent(parkingId) + "</b></b>. You can find it in the <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>Regions Dashboard</a></i> where you can edit or approve this parking.<br><br>";
+        html += "The URI of this new parking is <b>" + decodeURIComponent(parkingId) + "</b></b>. You can find it in the <i><a href='" + domainName + "/cityrep'>Regions Dashboard</a></i> where you can edit or approve this parking.<br><br>";
         html += "Greetings,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -328,7 +327,7 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "Wir möchten Sie darüber informieren, dass in der von Ihnen verwalteten Region ein neuer Parkplatz hinzugefügt wurde.<br>";
-        html += "Die URI dieses neuen Parkplatzes lautet <b>" + decodeURIComponent(parkingId) + "</b></b>. Sie finden es im <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>Regions-Dashboard</a></i>, in dem Sie diesen Parkplatz bearbeiten oder genehmigen können.<br><br>";
+        html += "Die URI dieses neuen Parkplatzes lautet <b>" + decodeURIComponent(parkingId) + "</b></b>. Sie finden es im <i><a href='" + domainName + "/cityrep'>Regions-Dashboard</a></i>, in dem Sie diesen Parkplatz bearbeiten oder genehmigen können.<br><br>";
         html += "Schöne Grüße,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -336,7 +335,7 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
         html = "<html><body>";
         html += "Bonjour!<br><br>";
         html += "Nous aimerions que vous sachiez qu'un nouveau parking a été ajouté dans une région que vous gérez.<br>";
-        html += "L'URI de ce nouveau parking est <b>" + decodeURIComponent(parkingId) + "</b></b>. Vous pouvez le trouver dans <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>le Tableau de Bord Régions</a></i> où vous pouvez éditer ou approuver ce parking.<br><br>";
+        html += "L'URI de ce nouveau parking est <b>" + decodeURIComponent(parkingId) + "</b></b>. Vous pouvez le trouver dans <i><a href='" + domainName + "/cityrep'>le Tableau de Bord Régions</a></i> où vous pouvez éditer ou approuver ce parking.<br><br>";
         html += "Salutations,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -344,7 +343,7 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
         html = "<html><body>";
         html += "¡Hola!<br><br>";
         html += "Nos gustaría que sepa que se agregó un nuevo estacionamiento en la región que está administrando.<br>";
-        html += "La URI de este nuevo aparcamiento es <b>" + decodeURIComponent(parkingId) + "</b></b>. Puede encontrarlo en <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>el Panel de Regiones</a></i> donde puede editar o aprobar este estacionamiento.<br><br>";
+        html += "La URI de este nuevo aparcamiento es <b>" + decodeURIComponent(parkingId) + "</b></b>. Puede encontrarlo en <i><a href='" + domainName + "/cityrep'>el Panel de Regiones</a></i> donde puede editar o aprobar este estacionamiento.<br><br>";
         html += "Saludos,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -353,7 +352,7 @@ EM.composeNewParkingEmail = function (parkingId, lang) {
         html = "<html><body>";
         html += "Hallo!<br><br>";
         html += "We willen u graag laten weten dat er een nieuwe parking is toegevoegd in een regio die u beheert.<br>";
-        html += "De URI van deze nieuwe parking is <b>" + decodeURIComponent(parkingId) + "</b></b>. U kan ze terugvinden in het <i><a href='https://velopark.ilabt.imec.be/rich-snippets-generator/cityrep'>Regio's Dashboard</a></i> waar u de parking kan aanpassen en goedkeuren.<br><br>";
+        html += "De URI van deze nieuwe parking is <b>" + decodeURIComponent(parkingId) + "</b></b>. U kan ze terugvinden in het <i><a href='" + domainName + "/cityrep'>Regio's Dashboard</a></i> waar u de parking kan aanpassen en goedkeuren.<br><br>";
         html += "Vriendelijke groeten,<br>";
         html += "Velopark Team<br>";
         html += "</body></html>";
@@ -445,9 +444,9 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "Hello!<br><br>";
         html += "A user has suggested a correction/addition to the information about a bike parking you are managing:<br><br>";
         html += "<ul>";
-        html += '<li>Bike parking: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += '<li>Bike parking: <a href="https://www.velopark.be/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestion: <em>" + freeText + "</em></li>";
-        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="' + domainName + '/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         if (userEmail) { html += "<li>User email: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Greetings,<br>";
@@ -458,9 +457,9 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "Hallo!<br><br>";
         html += "Ein Benutzer hat eine Korrektur/Ergänzung der Informationen zu einem von Ihnen verwalteten Fahrradparkplatz vorgeschlagen:<br><br>";
         html += "<ul>";
-        html += '<li>Fahrradabstellplatz: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += '<li>Fahrradabstellplatz: <a href="https://www.velopark.be/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Vorschlag: <em>" + freeText + "</em></li>";
-        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="' + domainName + '/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         if (userEmail) { html += "<li>Benutzer Email: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Schöne Grüße,<br>";
@@ -471,9 +470,9 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "Bonjour!<br><br>";
         html += "Un utilisateur a suggéré une correction/un ajout aux informations sur un parking pour vélo que vous gérez:<br><br>";
         html += "<ul>";
-        html += '<li>Parking à vélos: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += '<li>Parking à vélos: <a href="https://www.velopark.be/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestion: <em>" + freeText + "</em></li>";
-        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="' + domainName + '/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         if (userEmail) { html += "<li>Email d'utilisateur: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Greetings,<br>";
@@ -484,9 +483,9 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "¡Hola!<br><br>";
         html += "Un usuario ha sugerido una correción/adición a la información acerca de uno de los parqueaderos de bicicletas que estan a tu cargo:<br><br>";
         html += "<ul>";
-        html += '<li>Parqueadero: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += '<li>Parqueadero: <a href="https://www.velopark.be/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Sugerencia: <em>" + freeText + "</em></li>";
-        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="' + domainName + '/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         if (userEmail) { html += "<li>Email de Usuario: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Saludos,<br>";
@@ -498,9 +497,9 @@ EM.composeParkingCorrectionEmail = function (parkingUri, parkingLocalId, freeTex
         html += "Hallo!<br><br>";
         html += "Een gebruiker heeft een correctie/aanvulling voorgesteld op de informatie over een fietsenstalling die u beheert:<br><br>";
         html += "<ul>";
-        html += '<li>Fietsenstalling: <a href="https://velopark.dev.nazkamapps.com/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
+        html += '<li>Fietsenstalling: <a href="https://www.velopark.be/static/data/' + parkingLocalId + '" target="_blank">' + parkingLocalId + '</a></li>';
         html += "<li>Suggestie: <em>" + freeText + "</em></li>";
-        html += '<li><a href="https://velopark.ilabt.imec.be/rich-snippets-generator/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
+        html += '<li><a href="' + domainName + '/home?parkingId=' + encodeURIComponent(parkingUri) + '" target="_blank">Edit in Velopark tool</a></li>';
         if (userEmail) { html += "<li>E-mailadres Gebruiker: " + userEmail + "</li>" };
         html += "</ul><br><br>";
         html += "Vriendelijke groeten,<br>";

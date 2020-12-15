@@ -6,12 +6,13 @@ const nazka = require('./nazka');
 const jsts = require('jsts');
 
 const USE_NAZKA = true;
-const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+const superAdmins = process.env.SUPER_ADMINS.split(",");
 
 var db, accounts, parkings, companies, cities, regionHierarchy;
 
 exports.initDbAdapter = function () {
     return new Promise((resolve, reject) => {
+        console.log(`Connecting to MongoDB on ${process.env.MONGO_URL}`);
         MongoClient.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, client) {
             if (e) {
                 console.error(e);
@@ -42,8 +43,8 @@ let getObjectId = function (id) {
 
 async function initDB() {
     // Create Super Admin accounts
-    if (config['superAdmins']) {
-        config['superAdmins'].forEach(async sa => {
+    if (superAdmins) {
+        superAdmins.forEach(async sa => {
             if (!(await accounts.findOne({ email: sa }))) {
                 accounts.insertOne({
                     email: sa,

@@ -6,7 +6,7 @@
 
 function populateRegions() {
     return new Promise((resolve, reject) => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/municipalities',

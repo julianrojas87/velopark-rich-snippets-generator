@@ -59,7 +59,7 @@ let currentLang = 'nl';
         $('#login-form').hide();
         $('#cm-signin').click();
         $('#signin-form').show();
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         if (!signinformcompaniesloaded) {
             $.ajax({
                 type: "GET",
@@ -155,7 +155,7 @@ let currentLang = 'nl';
     });
 
     $('#logout').on('click', () => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         $.ajax({
             type: "POST",
             url: domain + '/logout',
@@ -167,7 +167,7 @@ let currentLang = 'nl';
     });
 
     $('#signin-button').on('click', () => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let email = $('#signin-email').val();
         let pass = $('#signin-pass').val();
         let pass_again = $('#signin-pass-again').val();
@@ -206,7 +206,7 @@ let currentLang = 'nl';
     });
 
     $('#login-button').on('click', () => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let email = $('#login-email').val();
         let pass = $('#login-pass').val();
 
@@ -243,7 +243,7 @@ let currentLang = 'nl';
     $('#lost-password-submit-button').on('click', function () {
         $(this).siblings('.loading-icon').show();
         $(this).hide();
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         let email = $('#password-reset-email').val();
         $.ajax({
             type: "POST",
@@ -262,7 +262,7 @@ let currentLang = 'nl';
 
     let regionTrees = $('.region-tree[state="flat"]');
     if (regionTrees.length) {
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/regionhierarchy',
@@ -335,7 +335,7 @@ let currentLang = 'nl';
 function translate(lang, first) {
     if (lang && user && user.name) {
         //send preference to the server (async)
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         $.ajax({
             type: "POST",
             url: domain + '/user/update-lang',
@@ -356,7 +356,7 @@ function translate(lang, first) {
     if (lang || (typeof (Storage) !== "undefined" && localStorage.getItem("languagePref"))) {
         lang = localStorage.getItem("languagePref");
         currentLang = lang;
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/static/lang/' + lang + '.json',
