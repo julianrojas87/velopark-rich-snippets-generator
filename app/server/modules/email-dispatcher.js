@@ -3,14 +3,13 @@ const fs = require('fs');
 const email = require("emailjs/email");
 
 let EM = {};
-const config_secret = JSON.parse(fs.readFileSync('./config_secret.json', 'utf-8'));
 const domainName = process.env.BASE_URL || '';
 let activatedAccounts = {};
 
 var server = email.server.connect({
-    user: config_secret.NL_EMAIL_USER,
-    password: config_secret.NL_EMAIL_PASS,
-    host: config_secret.NL_EMAIL_HOST,
+    user: process.env.EMAIL_USER,
+    password: process.env.EMAIL_PASS,
+    host: process.env.EMAIL_HOST,
     ssl: true
 });
 
@@ -47,7 +46,7 @@ function sendRecentAccountActivatedEmails() {
 
 EM.dispatchResetPasswordLink = function (account, callback) {
     server.send({
-        from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from: process.env.EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Password Reset',
         text: 'something went wrong... :(',
@@ -74,7 +73,7 @@ EM.removeActivatedAccountToBeMailed = function (account) {
 
 EM.dispatchAccountActivated = function (account, callback) {
     server.send({
-        from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+        from: process.env.EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
         to: account.email,
         subject: 'Account activated',
         text: 'something went wrong... :(',
@@ -85,7 +84,7 @@ EM.dispatchAccountActivated = function (account, callback) {
 EM.dispatchUserSignedUp = function (newUser, adminEmails) {
     for (i in adminEmails) {
         server.send({
-            from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+            from: process.env.EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
             to: adminEmails[i].email,
             subject: 'New User Registration',
             text: 'something went wrong... :(',
@@ -104,7 +103,7 @@ EM.dispatchUserSignedUp = function (newUser, adminEmails) {
 EM.dispatchNewParkingToRegionReps = function (regionReps, parkingId) {
     for (i in regionReps) {
         server.send({
-            from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+            from: process.env.EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
             to: regionReps[i].email,
             subject: 'New Bicycle Parking',
             text: 'something went wrong... :(',
@@ -124,7 +123,7 @@ EM.dispatchNewParkingSuggestionToRegionReps = function (reps, location, region, 
     return new Promise((resolve, reject) => {
         for (i in reps) {
             server.send({
-                from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+                from: process.env.EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
                 to: reps[i].email,
                 subject: 'New Bicycle Parking suggestion',
                 text: 'something went wrong... :(',
@@ -147,7 +146,7 @@ EM.dispatchParkingCorrectionSuggestion = (reps, parkingUri, localId, freeText, u
     return new Promise((resolve, reject) => {
         for (i in reps) {
             server.send({
-                from: config_secret.NL_EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
+                from: process.env.EMAIL_FROM || 'Velopark <do-not-reply@gmail.com>',
                 to: reps[i].email,
                 subject: 'New Bicycle Parking suggestion',
                 text: 'something went wrong... :(',
