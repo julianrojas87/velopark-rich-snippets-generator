@@ -9,13 +9,11 @@ const PM = require('./modules/parkings-manager');
 const ToM = require('./modules/token-manager');
 const utils = require('./utils/utils');
 
-const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
-const data = config['data'] || './data';
-const domainName = config['domain'] || '';
-const vocabURI = config['vocabulary'] || 'https://velopark.ilabt.imec.be';
+const data = process.env.DATA_PATH || './data';
+const domainName = process.env.BASE_URL || '';
+const vocabURI = process.env.VOCAB_URL || 'https://velopark.ilabt.imec.be/openvelopark';
 
 module.exports = app => {
-
 
     /*
         index
@@ -46,7 +44,7 @@ module.exports = app => {
             AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) {
                 if (o) {
                     AM.autoLogin(o.email, o.pass, function (o) {
-                        let domain = domainName != '' ? '/' + domainName : '';
+                        let domain = domainName != '' ? domainName : '';
                         req.session.user = o;
                         res.redirect(domain + '/home');
                     });
@@ -140,7 +138,7 @@ module.exports = app => {
 
     app.get('/home', async function (req, res) {
         // check if the user is logged in
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         if (req.session.user == null) {
             res.redirect(domain + '/');
         } else {
@@ -188,7 +186,7 @@ module.exports = app => {
     app.get('/admin', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.status(401).redirect(domain + '/');
         } else {
             //check if user is superadmin
@@ -207,7 +205,7 @@ module.exports = app => {
                             cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                         });
                     } else {
-                        let domain = domainName != '' ? '/' + domainName : '';
+                        let domain = domainName != '' ? domainName : '';
                         res.redirect(domain + '/home');
                     }
                 }
@@ -222,7 +220,7 @@ module.exports = app => {
 
     app.get('/admin-parkings', async function (req, res) {
         // check if the user is logged in
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         if (req.session.user == null) {
             res.status(401).redirect(domain + '/');
         } else {
@@ -310,7 +308,7 @@ module.exports = app => {
     });
 
     app.get('/admin-users', async function (req, res) {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         // check if the user is logged in
         if (req.session.user == null) {
             res.status(401).redirect(domain + '/');
@@ -407,7 +405,7 @@ module.exports = app => {
     });
 
     app.get('/admin-companies', async function (req, res) {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         // check if the user is logged in
         if (req.session.user == null) {
             res.status(401).redirect(domain + '/');
@@ -521,7 +519,7 @@ module.exports = app => {
     */
     app.get('/cityrep', async function (req, res) {
         // check if the user is logged in
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         if (req.session.user == null) {
             res.status(401).redirect(domain + '/');
         } else {
@@ -538,7 +536,7 @@ module.exports = app => {
                         cityrep: req.session.user.cityNames && req.session.user.cityNames.length > 0,
                     });
                 } else {
-                    let domain = domainName != '' ? '/' + domainName : '';
+                    let domain = domainName != '' ? domainName : '';
                     res.redirect(domain + '/home');
                 }
             });
@@ -548,7 +546,7 @@ module.exports = app => {
 
     app.get('/cityrep-parkings', async function (req, res) {
         // check if the user is logged in
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let cityname = req.query.cityname;
         if (cityname == null) {
             res.status(412).redirect(domain + '/');
@@ -689,7 +687,7 @@ module.exports = app => {
     app.get('/get-all-emails', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.status(401).redirect(domain + '/');
         } else {
             AM.isUserSuperAdmin(req.session.user.email, function (error, value) {
@@ -713,7 +711,7 @@ module.exports = app => {
     app.get('/parkings', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.redirect(domain + '/');
         } else {
             let idFilter = req.query.idFilter;
@@ -830,7 +828,7 @@ module.exports = app => {
     app.post('/save-parking', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.redirect(domain + '/');
         } else {
             if (!req.body['jsonld']) {
@@ -938,7 +936,7 @@ module.exports = app => {
     app.get('/get-parking', async function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.redirect(domain + '/');
         } else if (req.query.parkingId == null) {
             res.status(400).send('No parkingId found.');
@@ -960,7 +958,7 @@ module.exports = app => {
     app.delete('/delete-parking', function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.redirect(domain + '/');
         } else {
             PM.deleteParking(req.session.user.email, encodeURIComponent(req.query.parkingId), function (error) {
@@ -977,7 +975,7 @@ module.exports = app => {
     app.get('/download', function (req, res) {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.redirect(domain + '/');
         } else {
             PM.downloadParking(req.session.user.email, encodeURIComponent(req.query.parkingId), res);
@@ -1217,7 +1215,7 @@ module.exports = app => {
     app.delete('/delete-account', async (req, res) => {
         // check if the user is logged in
         if (req.session.user == null) {
-            let domain = domainName != '' ? '/' + domainName : '';
+            let domain = domainName != '' ? domainName : '';
             res.redirect(domain + '/');
         } else {
             let id = req.body.email;

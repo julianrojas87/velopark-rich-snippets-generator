@@ -1,53 +1,53 @@
 ($ => {
 
     $('#main-title').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/';
     });
 
     $('#addParkings').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/';
     });
 
     $('#myParkings').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/parkings';
     });
 
     $('#myAdminOverview').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/admin';
     });
 
     $('#adminParkings').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/admin-parkings';
     });
 
     $('#adminUsers').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/admin-users';
     });
 
     $('#adminCompanies').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/admin-companies';
     });
 
     $('#myCityOverview').click(() => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         window.location.href = domain + '/cityrep';
     });
 
     $('.cityrep-parkings-button').on('click', function () {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let cityName = $(this).attr('cityname');
         window.location.href = domain + '/cityrep-parkings?cityname=' + cityName;
     });
 
     $('#pswd-reset-button').on('click', function () {
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         let newPass = $('#pswd-reset-field').val();
         $.ajax({
             type: "POST",
@@ -70,7 +70,7 @@
 })(jQuery);
 
 function insertParkingRegions() {
-    let domain = domainName !== '' ? '/' + domainName : '';
+    let domain = domainName !== '' ? domainName : '';
     $('.parking-region-dummy').each(function () {
         let lat = $(this).attr('data-lat');
         let lon = $(this).attr('data-long');
@@ -122,7 +122,7 @@ function registerParkingListButtons() {
 
     $('#parking-list input[title=Edit]').each(function () {
         $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
+            let domain = domainName !== '' ? domainName : '';
             let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
             window.location.href = domain + '/home?parkingId=' + parkingId;
         });
@@ -130,7 +130,7 @@ function registerParkingListButtons() {
 
     $('#parking-list input[title=Delete]').each(function () {
         $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
+            let domain = domainName !== '' ? domainName : '';
             let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
 
             Swal.fire({
@@ -162,7 +162,7 @@ function registerParkingListButtons() {
 
     $('#users-list input[title=Delete]').each(function () {
         $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
+            let domain = domainName !== '' ? domainName : '';
             let email = $($(this).parent().siblings()[0]).text().trim();
 
             Swal.fire({
@@ -191,7 +191,7 @@ function registerParkingListButtons() {
 
     $('#parking-list input[title=Download]').each(function () {
         $(this).on('click', function () {
-            let domain = domainName !== '' ? '/' + domainName : '';
+            let domain = domainName !== '' ? domainName : '';
             let parkingId = encodeURIComponent($(this).parent().parent().find('a').text().trim());
             window.location.href = domain + '/download?parkingId=' + parkingId;
         });
@@ -200,7 +200,7 @@ function registerParkingListButtons() {
     $('.checkbox-companyUserEnabled').change(function () {
         $(this).hide();
         $(this).siblings('.loading-icon').show();
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let userEmail = $(this).attr('useremail');
         $.ajax({
             type: "POST",
@@ -222,7 +222,7 @@ function registerParkingListButtons() {
     $('.checkbox-cityUserEnabled').change(function () {
         $(this).hide();
         $(this).prev('.loading-icon').show();
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let userEmail = $(this).attr('useremail');
         let cityName = $(this).attr('cityName');
         $.ajax({
@@ -245,7 +245,7 @@ function registerParkingListButtons() {
     $('.checkbox-parkingEnabled').change(function () {
         $(this).hide();
         $(this).prev('.loading-icon').show();
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let parkingid = $(this).attr('parkingid');
         $.ajax({
             type: "POST",
@@ -270,7 +270,7 @@ function registerParkingListButtons() {
     $('#button-create-new-company').on('click', function () {
         $(this).hide();
         $(this).prev('.loading-icon').show();
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         let companyName = $('#new-company-name').val();
         $.ajax({
             type: "POST",
@@ -294,7 +294,7 @@ function registerParkingListButtons() {
     $('.transfer-parking').on('click', function () {
         selectedParkingToTransfer = encodeURIComponent($(this).attr('parkingid'));
         $('#transfer-parking-form').show();
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         if (!signinformcompaniesloaded) {
             $.ajax({
                 type: "GET",
@@ -316,7 +316,7 @@ function registerParkingListButtons() {
     });
 
     $('#transfer-company-button').on('click', function () {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         let company = $('#transfer-parking-company').val();
 
         $.ajax({

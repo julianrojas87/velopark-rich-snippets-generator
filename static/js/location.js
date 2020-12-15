@@ -138,7 +138,7 @@ function initPointMap(target, latid, lonid, clear) {
     pointMap.addInteraction(point);
 
     if ((user && (user.cityrep || user.cityrep === "true")) && target.startsWith('point-map')) {
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         pointSource.on('addfeature', event => {
             $('.city-rep-location-loading-icon').css('visibility', 'visible');
             if (pointSource.getFeatures().length > 1) {

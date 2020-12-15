@@ -6,17 +6,18 @@ const nazka = require('./nazka');
 const jsts = require('jsts');
 
 const USE_NAZKA = true;
-const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+const superAdmins = process.env.SUPER_ADMINS.split(",");
 
 var db, accounts, parkings, companies, cities, regionHierarchy;
 
 exports.initDbAdapter = function () {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function (e, client) {
+        console.log(`Connecting to MongoDB on ${process.env.MONGO_URL}`);
+        MongoClient.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, client) {
             if (e) {
                 console.error(e);
             } else {
-                db = client.db(process.env.DB_NAME);
+                db = client.db(process.env.MONGO_NAME);
                 accounts = db.collection('accounts');
                 parkings = db.collection('parkings');
                 companies = db.collection('companies');
@@ -27,7 +28,7 @@ exports.initDbAdapter = function () {
                 cities.createIndex({ geometry: "2dsphere" });
                 // index fields 'user' & 'email' for faster new account validation //
                 accounts.createIndex({ user: 1, email: 1 });
-                console.log('mongo :: connected to database :: "' + process.env.DB_NAME + '"');
+                console.log('mongo :: connected to database :: "' + process.env.MONGO_NAME + '"');
 
                 initDB();
                 resolve();
@@ -42,8 +43,8 @@ let getObjectId = function (id) {
 
 async function initDB() {
     // Create Super Admin accounts
-    if (config['superAdmins']) {
-        config['superAdmins'].forEach(async sa => {
+    if (superAdmins) {
+        superAdmins.forEach(async sa => {
             if (!(await accounts.findOne({ email: sa }))) {
                 accounts.insertOne({
                     email: sa,

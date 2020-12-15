@@ -28,7 +28,7 @@ function loadAPSkeleton() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: vocabURI + '/openvelopark/application-profile',
+            url: vocabURI + '/application-profile',
             success: data => resolve(data),
             error: e => reject(e)
         });
@@ -37,7 +37,7 @@ function loadAPSkeleton() {
 
 function getListOfTerms() {
     return new Promise((resolve, reject) => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/terms',
@@ -54,7 +54,7 @@ function getListOfTerms() {
 
 function getParkingTypes() {
     return new Promise((resolve, reject) => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/parkingTypes',
@@ -71,7 +71,7 @@ function getParkingTypes() {
 
 function getBikeTypes(done) {
     return new Promise((resolve, reject) => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/bikeTypes',
@@ -88,7 +88,7 @@ function getBikeTypes(done) {
 
 function getFeatures(done) {
     return new Promise((resolve, reject) => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/features',
@@ -105,7 +105,7 @@ function getFeatures(done) {
 
 function getSecurityFeatures(done) {
     return new Promise((resolve, reject) => {
-        let domain = domainName != '' ? '/' + domainName : '';
+        let domain = domainName != '' ? domainName : '';
         $.ajax({
             type: "GET",
             url: domain + '/security-features',
@@ -353,7 +353,7 @@ function handleLoginFeatures() {
 
     $('.minus_button_input').on('click', function () {
         let myParent = $(this).parent();
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         let photoURI = myParent.find('.input100[name="photos._Photograph.image"]').val();
         myParent.find('img.imgPreview').attr('src', '');
         
@@ -575,7 +575,7 @@ function handleLoginFeatures() {
         parent.find('input[type=file]').hide();
         parent.find('img')[0].src = "static/images/icons/loading.gif";
 
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         var data = new FormData();
         data.append('imgFile', $(this)[0].files[0]);
         jQuery.ajax({

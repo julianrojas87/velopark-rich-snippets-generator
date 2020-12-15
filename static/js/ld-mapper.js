@@ -115,7 +115,7 @@
     });
 
     $('#save_button').on('click', () => {
-        let domain = domainName !== '' ? '/' + domainName : '';
+        let domain = domainName !== '' ? domainName : '';
         window.location.href = domain + '/download?parkingId=' + originalId;
 
     });
@@ -134,7 +134,7 @@ function fetchLiveAPI(url) {
 }
 
 function saveJSONLD() {
-    let domain = domainName != '' ? '/' + domainName : '';
+    let domain = domainName != '' ? domainName : '';
     let username = $('#user-email').text().trim();
 
     if (originalId !== null) {

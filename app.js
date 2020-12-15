@@ -1,16 +1,13 @@
-
-/**
-	* Node.js Login Boilerplate
-	* More Info : https://github.com/braitsch/node-login
-	* Copyright (c) 2013-2018 Stephen Braitsch
-**/
-
 var http = require('http');
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
+
+// Load environment params
+const dotenv = require('dotenv');
+dotenv.config();
 
 var app = express();
 
@@ -24,17 +21,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static(__dirname + '/static'));
 
-// build mongo database connection url //
-
-process.env.DB_HOST = process.env.DB_HOST || 'localhost'
-process.env.DB_PORT = process.env.DB_PORT || 27017;
-process.env.DB_NAME = process.env.DB_NAME || 'node-login';
+// build mongo database connection url
+process.env.MONGO_HOST = process.env.MONGO_HOST || 'localhost'
+process.env.MONGO_PORT = process.env.MONGO_PORT || 27017;
+process.env.MONGO_NAME = process.env.MONGO_NAME || 'node-login';
 
 if (app.get('env') != 'live'){
-	process.env.DB_URL = 'mongodb://'+process.env.DB_HOST+':'+process.env.DB_PORT;
+	process.env.MONGO_URL = 'mongodb://'+process.env.MONGO_HOST+':'+process.env.MONGO_PORT;
 }	else {
 // prepend url with authentication credentials // 
-	process.env.DB_URL = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+':'+process.env.DB_PORT;
+	process.env.MONGO_URL = 'mongodb://'+process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@'+process.env.MONGO_HOST+':'+process.env.MONGO_PORT;
 }
 
 app.use(session({
@@ -42,7 +38,7 @@ app.use(session({
 	proxy: true,
 	resave: true,
 	saveUninitialized: true,
-	store: new MongoStore({ url: process.env.DB_URL })
+	store: new MongoStore({ url: process.env.MONGO_URL })
 	})
 );
 
