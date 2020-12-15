@@ -11,7 +11,7 @@ services:
       - MONGO_HOST=192.168.1.2
       - MONGO_PORT=27018
       - DATA_PATH=/data/velopark
-      - BASE_URL=http://velopark.ilabt.imec.be/rich-snippets-generator
+      - BASE_URL=https://velopark.ilabt.imec.be/rich-snippets-generator
       - VOCAB_URL=https://velopark.ilabt.imec.be/openvelopark
       - SUPER_ADMINS=info@fietsberaad.be
       - EMAIL_HOST=smtp.gmail.com
