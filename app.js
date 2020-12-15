@@ -19,6 +19,10 @@ app.engine('html', require('ejs').renderFile);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.all('/*', function (req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	next();
+});
 app.use('/static', express.static(__dirname + '/static'));
 
 // build mongo database connection url
@@ -41,11 +45,6 @@ app.use(session({
 	store: new MongoStore({ url: process.env.MONGO_URL })
 })
 );
-
-app.all('/*', function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
-	next();
-});
 
 require('./app/server/routes')(app);
 
