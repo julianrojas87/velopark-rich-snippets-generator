@@ -1,5 +1,4 @@
 const dbAdapter = require('./database-adapter');
-const fs = require('fs');
 const email = require("emailjs/email");
 
 let EM = {};
