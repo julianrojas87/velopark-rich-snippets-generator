@@ -671,21 +671,34 @@ async function initCatalog() {
     await Promise.all((await readdir(data + '/public')).map(async p => {
         try {
             if (p.indexOf('catalog.jsonld') < 0) {
-                let d = JSON.parse(await readFile(data + '/public/' + p));
-                let localId = (d['ownedBy']['companyName'] + '_' + d['identifier']).replace(/\s/g, '-');
-                let dbParking = await dbAdapter.findParkingByID(encodeURIComponent(d['@id']));
+                const d = JSON.parse(await readFile(data + '/public/' + p));
+                const dbParking = await dbAdapter.findParkingByID(encodeURIComponent(d['@id']));
 
-                if (dbParking.approvedstatus) {
+                // Add or update the parking in the DB.
+                const localId = (d['ownedBy']['companyName'] + '_' + d['identifier']).replace(/\s/g, '-');
+                const approved = dbParking ? dbParking.approvedstatus : true;
+                const name = d['name'][0]['@value'];
+                const lastModified = new Date(d['dateModified']);
+
+
+                dbAdapter.saveParkingAsAdmin(
+                    encodeURIComponent(d['@id']),
+                    localId + '.jsonld',
+                    approved,
+                    {
+                        type: "Point",
+                        coordinates: extractLocationFromJsonld(d)
+                    },
+                    name,
+                    lastModified,
+                    () => {
+                        if(!dbParking) console.log('Parking ' + localId + ' added to DB and Catalog');
+                    }
+                );
+
+
+                if (approved) {
                     parkings.set(d['@id'], localId);
-                }
-
-                // Hack to add the name of the parking and the last modified date to the DB. Only meant to be run once.
-                if (!dbParking.name || !dbParking.lastModified) {
-                    let name = d['name'][0]['@value'];
-                    let lastModified = new Date(d['dateModified']);
-                    dbAdapter.saveParkingAsAdmin(dbParking.parkingID, dbParking.filename, dbParking.approvedstatus, dbParking.location, name, lastModified, () => {
-                        console.log('Parking ' + localId + ' name and last modified date added to DB');
-                    });
                 }
             }
         } catch (err) {
